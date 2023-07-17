@@ -1,0 +1,35 @@
+.list {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 1rem 0;
+
+  //   display: flex;
+
+  > div.title {
+    color: var(--color-neutral-50, #fafafa);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+  > div.button {
+    color: var(--color-neutral-300, #9c9c9c);
+    text-align: right;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 220% */
+    letter-spacing: 1.6px;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+  }
+}

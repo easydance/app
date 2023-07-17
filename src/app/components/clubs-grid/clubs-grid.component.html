@@ -1,0 +1,22 @@
+<div *ngIf="title"
+	class="list-header">
+	<div class="title">{{title}}</div>
+	<!-- <div (click)="rightButton.emit()"
+		class="ion-text-right button">
+		{{rightText}}
+	</div> -->
+</div>
+<div class="clubs-grid">
+	<div *ngFor="let club of clubs"
+		[ngStyle]="{ backgroundImage: 'url('+ club.covers[0].url +')' }"
+		class="mt-1">
+		<div class="footer">
+			<div>
+				<div>{{club.name}}</div>
+				<div class="city mt-2">
+					{{club.address.city}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<div>
+  <ion-card button
+    class="easycard"
+    style="background: var(--color-primary-300);"
+    (click)="events.emit()">
+    <div class="header">
+      <div>FINO A DOMENICA</div>
+      <div class="ion-text-right">
+        <ion-icon color="light"
+          name="arrow-forward-sharp"></ion-icon>
+      </div>
+    </div>
+    <div class="footer">
+      Dai un’occhiata agli eventi del weekend a
+      <font style="text-decoration: underline;">{{city}}</font>
+    </div>
+  </ion-card>
+</div>
+<div class="mt-4">
+  <ion-card button
+    class="easycard"
+    style="background: var(--color-primary-500);"
+    (click)="clubs.emit()">
+    <div class="header">
+      <div>I SOLITI POSTI</div>
+      <div class="ion-text-right">
+        <ion-icon color="light"
+          name="arrow-forward-sharp"></ion-icon>
+      </div>
+    </div>
+    <div class="footer">
+      Ricerca in base ai club che segui
+    </div>
+  </ion-card>
+</div>

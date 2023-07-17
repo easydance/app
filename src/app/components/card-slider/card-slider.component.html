@@ -1,0 +1,21 @@
+<div class="list-header" *ngIf="title">
+	<div class="title">{{title}}</div>
+</div>
+<swiper-container pagination="false"
+	slides-per-view="auto"
+	space-between="20"
+	free-mode="true">
+	<swiper-slide *ngFor="let party of parties" (click)="partyClick.emit(party)">
+		<div class="party-card">
+			<party-card [party]="party"
+				[button]="true"></party-card>
+		</div>
+	</swiper-slide>
+	<swiper-slide *ngIf="rightText"
+		class="more">
+		<div (click)="rightButton.emit()"
+			class="show-more">
+			<div class="ion-text-center">{{rightText}}</div>
+		</div>
+	</swiper-slide>
+</swiper-container>

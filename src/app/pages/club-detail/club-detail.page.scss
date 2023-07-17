@@ -1,0 +1,30 @@
+.image-header {
+  height: 40%;
+
+  swiper-container,
+  swiper-slide {
+    height: 100%;
+    width: 100%;
+  }
+
+  swiper-slide {
+    background: var(--color-neutral-600) center center no-repeat;
+    background-size: cover;
+  }
+}
+
+.info-club {
+  .title {
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 64.706% */
+  }
+  .location {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 11px; /* 78.571% */
+    letter-spacing: 0.4px;
+  }
+}

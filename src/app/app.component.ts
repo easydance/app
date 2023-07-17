@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import * as swiper from 'swiper/element/bundle';
+swiper.register();
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,14 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+
+  public isAuthenticated: boolean = false;
+
+  constructor(private readonly authManager: AuthManagerService) {
+    this.authManager.getCurrentPosition();
+    this.isAuthenticated = this.authManager.isAuthenticated();
+    this.authManager.user$.subscribe(res => {
+      this.isAuthenticated = this.authManager.isAuthenticated();
+    });
+  }
 }

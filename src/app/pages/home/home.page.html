@@ -1,0 +1,31 @@
+<ion-content>
+	<div class="title-big my-16">
+		Gli eventi di oggi
+		<br>
+		a {{city}}
+	</div>
+	<div>
+		<easy-card-list *ngIf="parties"
+			[parties]="parties"
+			[title]="'TOP 5 EVENTI CONSIGLIATI'"
+			[rightText]="'ALTRI EVENTI'"
+			(rightButton)="moreEvents()"
+			(partyClick)="goToEvent($event)"></easy-card-list>
+	</div>
+	<div *ngIf="parties"
+		class="mt-16">
+		<easy-card-slider [parties]="parties"
+			[title]="'LAST CHANGE OGGI A ' +  city"
+			[rightText]="'VEDI TUTTI'"
+			(rightButton)="moreEvents()"
+			(partyClick)="goToEvent($event)"></easy-card-slider>
+	</div>
+	<div class="mt-16">
+		<easy-suggest-buttons></easy-suggest-buttons>
+	</div>
+	<div *ngIf="clubs"
+		class="mt-16">
+		<easy-clubs-grid [clubs]="clubs"
+			[title]="'LOCALI PREFERITI'"></easy-clubs-grid>
+	</div>
+</ion-content>

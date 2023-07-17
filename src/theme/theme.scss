@@ -1,0 +1,183 @@
+:root {
+  @font-face {
+    font-family: "Space Grotesk";
+    src: url(../assets/fonts/SpaceGrotesk-VariableFont_wght.ttf);
+  }
+
+  --ion-background-color: var(--color-neutral-600);
+  --ion-background-color: black;
+  --ion-font-family: "Space Grotesk";
+  --ion-text-color: var(--color-neutral-50);
+
+  /** HEADER **/
+  ion-header.blured {
+    ion-toolbar {
+      --background: linear-gradient(
+        179deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.58) 93.61%
+      );
+      backdrop-filter: blur(50px);
+    }
+  }
+
+  ion-header.transparent {
+    ion-toolbar {
+      --background: transparent;
+    }
+  }
+
+  /** FOOTER **/
+  ion-app:has(easy-tabs) > ion-router-outlet > * > ion-content {
+    --padding-bottom: 80px;
+  }
+
+  /** ION-INPUT **/
+  ion-item:has(ion-input) {
+    --background: var(--color-neutral-500);
+    --padding-bottom: 0rem;
+    --padding-end: 0rem;
+    --padding-start: 0rem !important;
+    --padding-top: 0rem;
+    border-radius: 0.625rem;
+    border: 0.063rem solid var(--color-neutral-500);
+    transition: border-color 0.15s;
+
+    ion-icon[slot="start"] {
+      margin-left: 1.25rem !important;
+      font-size: 0.875rem;
+    }
+
+    ion-icon[slot="end"] {
+      margin-left: 1.25rem !important;
+      font-size: 0.875rem;
+    }
+
+    ion-input {
+      --color: var(--color-neutral-50);
+      --placeholder-color: var(--color-neutral-400);
+      --padding-bottom: 1.25rem;
+      --padding-end: 1.563rem;
+      --padding-start: 1.25rem !important;
+      --padding-top: 1.563rem;
+      font-size: 0.875rem;
+    }
+
+    ion-input.ion-invalid {
+      .input-wrapper {
+        border-color: var(--color-red-200);
+      }
+    }
+
+    ion-input[sm] {
+      --padding-bottom: 0.938rem;
+      --padding-end: 1.25rem;
+      --padding-start: 1.25rem;
+      --padding-top: 0.938rem;
+
+      font-size: 0.625rem;
+    }
+
+    ion-input[special] {
+      --padding-bottom: 0.938rem;
+      --padding-end: 1.25rem;
+      --padding-start: 1.25rem;
+      --padding-top: 0.938rem;
+
+      font-size: 1.625rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+
+  ion-item:has(ion-input):has(ion-icon[slot="start"]) {
+    ion-input {
+      --padding-start: 0 !important;
+    }
+  }
+  ion-item:has(ion-input):has(ion-icon[slot="end"]) {
+    ion-input {
+      --padding-end: 0 !important;
+    }
+  }
+
+  ion-item:has(ion-input.has-focus) {
+    border-color: var(--color-neutral-400);
+    transition: all 0.15s;
+  }
+
+  ion-item:has(ion-input[outline]) {
+    --background: transparent;
+    border-radius: 5rem;
+    border: 0.063rem solid var(--color-neutral-500);
+  }
+
+  /** ION-BUTTON **/
+
+  ion-button {
+    text-transform: uppercase;
+  }
+
+  ion-button[sm] {
+    --padding-bottom: 0rem;
+    --padding-end: 1rem;
+    --padding-start: 1rem;
+    --padding-top: 0rem;
+    --border-radius: 0.5rem;
+  }
+
+  ion-button[size="lg"] {
+    --padding-bottom: 1.563rem;
+    --padding-end: 2.188rem;
+    --padding-start: 2.188rem;
+    --padding-top: 1.563rem;
+  }
+
+  /** ION-CHIP **/
+  ion-chip {
+    margin: 0;
+  }
+
+  /** CARD **/
+  ion-card.easycard {
+    border-radius: 15px;
+    margin: 0;
+  }
+
+  /** LABEL **/
+  .label-lg {
+    font-size: 1rem;
+    font-size: 400;
+  }
+
+  /** TYPHOGRAFY **/
+  .title-big {
+    font-size: 2.25rem;
+    line-height: 2.375rem;
+  }
+
+  .paragraph {
+    width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+
+    > .title {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 14px; /* 100% */
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+    > .description {
+      color: var(--color-neutral-300);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px; /* 114.286% */
+    }
+  }
+}

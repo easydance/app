@@ -1,0 +1,102 @@
+ion-card {
+  position: relative;
+  min-height: 250px;
+
+  background: black center center no-repeat;
+  background-size: cover;
+
+  .header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+
+    > * {
+      flex: 1;
+      padding: 14px;
+
+      ion-chip {
+        --background: var(--color-neutral-600);
+        --color: var(--color-neutral-50);
+        margin: 0;
+      }
+
+      .fab {
+        border-radius: 50%;
+        background: var(--color-neutral-600);
+        width: 25px;
+        height: 25px;
+        float: right;
+        display: flex;
+        align-items: center;
+        > * {
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+
+  .footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(19, 19, 19, 0.63) 0%,
+      rgba(4, 4, 4, 0.21) 0.01%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    backdrop-filter: blur(10px);
+    height: 80px;
+    display: flex;
+    align-items: center;
+
+    > div {
+      width: 100%;
+      display: flex;
+      padding: 0px 16px;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+
+      .date {
+        color: #fff;
+        font-size: 21px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px; /* 104.762% */
+        text-transform: uppercase;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 5px;
+        flex: 0.9;
+
+        .title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 18px;
+          overflow: hidden;
+          color: var(--color-neutral-50);
+        }
+
+        .subtitle {
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 300;
+          line-height: 11px; /* 91.667% */
+          letter-spacing: 0.5px;
+          color: var(--color-neutral-50);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+<ion-header class="ion-no-border transparent absolute">
+	<ion-toolbar class="p-6 pl-0-i">
+		<ion-buttons slot="start">
+			<ion-button (click)="goBack()"
+				color="light"
+				size="icon-only"
+				fill="clear">
+				<ion-icon name="arrow-back-sharp"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<div class="image-header relative">
+		<ion-skeleton-text *ngIf="!user?.profileImage"
+			[animated]="true"
+			style="height: 100%;"></ion-skeleton-text>
+		<swiper-container *ngIf="user?.profileImage"
+			pagination="false"
+			slides-per-view="1"
+			space-between="0">
+			<swiper-slide *ngFor="let img of [user?.profileImage]"
+				[ngStyle]="{ backgroundImage: 'linear-gradient(179deg, rgba(24, 24, 24, 0) 0%, rgba(24, 24, 24, 1) 100%), url(' + img?.url + ')'}">
+
+			</swiper-slide>
+		</swiper-container>
+		<div class="flex align-center space-between absolute w-full px-4"
+			style="bottom: 12px; z-index: 1;">
+			<div class="info-user">
+				<div class="fullname">
+					{{user?.firstName}} {{user?.lastName}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="px-4">
+
+		<ion-button color="medium"
+			class="w-full">
+			MODIFICA
+		</ion-button>
+
+		<!-- INFO CLUB -->
+		<div class="paragraph mt-12">
+			<div class="title">Su di me</div>
+			<div class="description">
+				{{user?.description}}
+			</div>
+		</div>
+
+		<!-- CLUB CONTACTS -->
+		<div class="paragraph mt-12 w-full">
+			<div class="title">Contatti</div>
+			<div class="description flex w-full mt-1">
+				<div class="flex-1">
+					<div *ngIf="user?.socials?.['instagram']"
+						class="mt-1">
+						<ion-icon name="logo-instagram"></ion-icon>
+						{{user?.socials?.['instagram']}}
+					</div>
+					<div *ngIf="user?.socials?.['facebook']"
+						class="mt-1">
+						<ion-icon name="logo-facebook"></ion-icon>
+						{{user?.socials?.['facebook']}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- INTERESTS -->
+		<!-- <div class="paragraph mt-12">
+			<div class="title">Interessi</div>
+			<div class="description">
+				<ion-chip *ngFor="let tag of user?.interests"
+					[outline]="true"
+					color="light">
+					{{tag}}
+				</ion-chip>
+			</div>
+		</div> -->
+	</div>
+
+</ion-content>

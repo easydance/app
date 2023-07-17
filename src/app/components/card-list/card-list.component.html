@@ -1,0 +1,14 @@
+<div *ngIf="title"
+	class="list-header">
+	<div class="title">{{title}}</div>
+	<div (click)="rightButton.emit()"
+		class="ion-text-right button">
+		{{rightText}}
+	</div>
+</div>
+<div class="list">
+	<party-card *ngFor="let party of parties"
+		[party]="party"
+		[button]="true"
+		(click)="partyClick.emit(party)"></party-card>
+</div>

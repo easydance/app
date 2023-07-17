@@ -1,0 +1,90 @@
+<ion-header class="ion-no-border transparent absolute">
+	<ion-toolbar class="p-6 pl-0-i">
+		<ion-buttons slot="start">
+			<ion-button (click)="goBack()"
+				color="light"
+				size="icon-only"
+				fill="clear">
+				<ion-icon name="arrow-back-sharp"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<div class="image-header relative">
+		<ion-skeleton-text *ngIf="!covers"
+			[animated]="true"
+			style="height: 100%;"></ion-skeleton-text>
+		<swiper-container *ngIf="covers"
+			pagination="false"
+			slides-per-view="1"
+			space-between="0">
+			<swiper-slide *ngFor="let img of covers"
+				[ngStyle]="{ backgroundImage: 'linear-gradient(179deg, rgba(24, 24, 24, 0) 0%, rgba(24, 24, 24, 1) 100%), url(' + img?.url + ')'}">
+
+			</swiper-slide>
+		</swiper-container>
+		<div class="flex align-center space-between absolute w-full px-4"
+			style="bottom: 12px; z-index: 1;">
+			<div class="info-club">
+				<div class="title">{{club?.name}}</div>
+				<div class="location mt-3">
+					{{club?.address?.city}}
+				</div>
+			</div>
+			<div>
+				<ion-avatar>
+					<img [src]="profile?.url">
+				</ion-avatar>
+			</div>
+		</div>
+	</div>
+	<div class="px-4">
+
+		<!-- INFO CLUB -->
+		<div class="paragraph mt-12">
+			<div class="title">Info</div>
+			<div class="description">
+				{{club?.description}}
+			</div>
+		</div>
+
+		<!-- CLUB CONTACTS -->
+		<div class="paragraph mt-12 w-full">
+			<div class="title">Contatti</div>
+			<div class="description flex w-full mt-1">
+				<div class="flex-1">
+					<div *ngIf="club?.email"
+						class="mt-1">
+						<ion-icon name="mail"></ion-icon>
+						{{club?.email}}
+					</div>
+					<div *ngIf="club?.phone"
+						class="mt-1">
+						<ion-icon name="phone-portrait"></ion-icon>
+						{{club?.phone}}
+					</div>
+				</div>
+				<div class="flex-1">
+					<div *ngIf="club?.instagram"
+						class="mt-1">
+						<ion-icon name="logo-instagram"></ion-icon>
+						{{club?.instagram}}
+					</div>
+					<div *ngIf="club?.facebook"
+						class="mt-1">
+						<ion-icon name="logo-facebook"></ion-icon>
+						{{club?.facebook}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- TAGS -->
+		<div class="mt-12">
+			<easy-card-slider [parties]="parties || []"
+				[title]="'PROSSIMI EVENTI'"></easy-card-slider>
+		</div>
+	</div>
+</ion-content>

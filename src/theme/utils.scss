@@ -1,0 +1,152 @@
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.w-50 {
+  width: 50%;
+}
+.w-70 {
+  width: 70%;
+}
+.w-full {
+  width: 100%;
+}
+.uppercase {
+  text-transform: uppercase !important;
+}
+.text-none {
+  text-transform: none !important;
+}
+
+/** FLEX PROPERTIES **/
+.flex {
+  display: flex;
+}
+
+@for $value from 0 through 48 {
+  .flex-#{$value} {
+    flex: #{$value};
+  }
+}
+
+.align-center {
+  align-items: center;
+}
+.space-between {
+  justify-content: space-between;
+}
+.space-around {
+  justify-content: space-around;
+}
+
+/** MARGIN **/
+@for $value from 0 through 40 {
+  $v: calc($value * 4 / 16);
+  $positions: "left", "right", "top", "bottom";
+  @each $position in $positions {
+    .m#{str-slice($position, 0, 1)}-#{$value} {
+      margin-#{$position}: #{$v}rem;
+    }
+    .m#{str-slice($position, 0, 1)}--#{$value} {
+      margin-#{$position}: -#{$v}rem;
+    }
+
+    .m#{str-slice($position, 0, 1)}-#{$value}-i {
+      margin-#{$position}: #{$v}rem !important;
+    }
+    .m#{str-slice($position, 0, 1)}--#{$value}-i {
+      margin-#{$position}: -#{$v}rem !important;
+    }
+  }
+
+  .m-#{$value} {
+    margin: #{$v}rem;
+  }
+
+  .my-#{$value} {
+    margin-top: #{$v}rem;
+    margin-bottom: #{$v}rem;
+  }
+
+  .mx-#{$value} {
+    margin-left: #{$v}rem;
+    margin-right: #{$v}rem;
+  }
+
+  .m--#{$value} {
+    margin: -#{$v}rem;
+  }
+
+  .my--#{$value} {
+    margin-top: -#{$v}rem;
+    margin-bottom: -#{$v}rem;
+  }
+
+  .mx--#{$value} {
+    margin-left: -#{$v}rem;
+    margin-right: -#{$v}rem;
+  }
+
+  .mx-#{$value}-i {
+    margin-left: #{$v}rem !important;
+    margin-right: #{$v}rem !important;
+  }
+
+  .m--#{$value}-i {
+    margin: -#{$v}rem !important;
+  }
+
+  .my--#{$value}-i {
+    margin-top: -#{$v}rem !important;
+    margin-bottom: -#{$v}rem !important;
+  }
+
+  .mx--#{$value}-i {
+    margin-left: -#{$v}rem !important;
+    margin-right: -#{$v}rem !important;
+  }
+}
+
+/** PADDING **/
+@for $value from 0 through 40 {
+  $v: calc($value * 4 / 16);
+  $positions: "left", "right", "top", "bottom";
+  @each $position in $positions {
+    .p#{str-slice($position, 0, 1)}-#{$value} {
+      padding-#{$position}: #{$v}rem;
+    }
+    .p#{str-slice($position, 0, 1)}-#{$value}-i {
+      padding-#{$position}: #{$v}rem !important;
+    }
+  }
+
+  .p-#{$value} {
+    padding: #{$v}rem;
+  }
+
+  .py-#{$value} {
+    padding-top: #{$v}rem;
+    padding-bottom: #{$v}rem;
+  }
+
+  .px-#{$value} {
+    padding-left: #{$v}rem;
+    padding-right: #{$v}rem;
+  }
+
+  .p-#{$value}-i {
+    padding: #{$v}rem !important;
+  }
+
+  .py-#{$value}-i {
+    padding-top: #{$v}rem !important;
+    padding-bottom: #{$v}rem !important;
+  }
+
+  .px-#{$value}-i {
+    padding-left: #{$v}rem !important;
+    padding-right: #{$v}rem !important;
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "input": "https://easydance-dev.oddacoding.net/api/api-json",
+    "output": "src/@easydance/apis",
+    "ignoreUnusedModels": true,
+    "removeStaleFiles": true,
+    "servicePrefix": "",
+    "serviceSuffix": "",
+    "modelPrefix": "",
+    "modelSuffix": "",
+    "skipJsonSuffix": true,
+    "useTempDir": true,
+    "silent": false,
+    "indexFile": true
+}

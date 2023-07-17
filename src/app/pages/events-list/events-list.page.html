@@ -1,0 +1,30 @@
+<ion-header class="ion-no-border blured">
+	<ion-toolbar class="p-6 pl-0-i">
+		<ion-buttons slot="start">
+			<ion-button (click)="goBack()"
+				color="light"
+				size="icon-only"
+				fill="clear">
+				<ion-icon name="arrow-back-sharp"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-title>
+			<div class="subtitle">{{header.subtitle}}</div>
+			<div class="title">{{header.title}}</div>
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<div class="title-big my-16">{{title}}</div>
+	<div>
+		<easy-card-list *ngIf="parties"
+			[parties]="parties" (partyClick)="goToEvent($event)"></easy-card-list>
+	</div>
+  <div class="mt-16">
+    <easy-thats-all></easy-thats-all>
+  </div>
+	<div class="mt-16">
+		<easy-suggest-buttons></easy-suggest-buttons>
+	</div>
+</ion-content>

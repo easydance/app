@@ -1,0 +1,66 @@
+<ion-content class="login">
+	<div class="header">
+		<img src="../../assets/easydance-nologo.svg">
+	</div>
+	<div class="modal-content">
+		<form #loginForm="ngForm">
+			<div class="label-lg mb-4">ACCEDI</div>
+			<div class="mb-8">
+				<ion-item lines="none">
+					<ion-icon name="mail"
+						slot="start"></ion-icon>
+					<ion-input [(ngModel)]="username"
+						name="username"
+						required
+						placeholder="Email"></ion-input>
+				</ion-item>
+				<ion-item class="mt-2"
+					lines="none">
+					<ion-icon name="lock-closed"
+						slot="start"></ion-icon>
+					<ion-input [type]="showPassword ? 'text' : 'password'"
+						[(ngModel)]="password"
+						name="password"
+						required
+						placeholder="Email"></ion-input>
+					<ion-icon [name]="showPassword ? 'eye-off' : 'eye'"
+						(click)="showPassword = !showPassword"
+						slot="end"></ion-icon>
+				</ion-item>
+				<div class="ion-text-right">
+					<ion-button id="forgot-password-button"
+						fill="clear"
+						color="medium">
+						Password dimenticata?
+					</ion-button>
+				</div>
+			</div>
+			<ion-button [disabled]="loginForm.invalid"
+				(click)="login()"
+				size="lg"
+				shape="round"
+				class="w-full">
+				ACCEDI
+			</ion-button>
+			<ion-button size="lg"
+				shape="round"
+				style="--background: var(--color-primary-600)"
+				class="w-full mt-1">
+				Registarti
+			</ion-button>
+			<ion-button size="lg"
+				shape="round"
+				color="light"
+				class="w-full mt-1 text-none">
+				Login con Google
+			</ion-button>
+			<ion-button size="lg"
+				shape="round"
+				color="dark"
+				style="--background: black"
+				class="w-full mt-1 text-none">
+				Sign in con Apple
+			</ion-button>
+		</form>
+	</div>
+</ion-content>
