@@ -9,23 +9,21 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { PatchAddressRequestDtoClub } from './patchAddressRequestDtoClub';
 
 
 export interface PatchAddressRequestDto { 
-    id?: number;
-    uuid?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    deletedAt?: string;
     createdBy?: string | null;
     updatedBy?: string | null;
     deletedBy?: string | null;
-    street: string;
-    streetNumber: string;
-    zipCode: string;
-    city: string;
-    country: string;
-    lat: number | null;
-    lng: number | null;
+    street?: string | null;
+    streetNumber?: string | null;
+    zipCode?: string | null;
+    city?: string | null;
+    country?: string | null;
+    formattedAddress?: string | null;
+    lat?: number | null;
+    lng?: number | null;
+    club?: PatchAddressRequestDtoClub | null;
 }
 

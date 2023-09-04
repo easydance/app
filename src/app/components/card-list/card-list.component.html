@@ -9,6 +9,5 @@
 <div class="list">
 	<party-card *ngFor="let party of parties"
 		[party]="party"
-		[button]="true"
 		(click)="partyClick.emit(party)"></party-card>
 </div>

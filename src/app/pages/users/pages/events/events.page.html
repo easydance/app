@@ -1,0 +1,78 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar>
+		<ion-searchbar class="mt-4"
+		clearIcon="close-outline"
+		[showClearButton]="'always'"
+		[placeholder]="'Cerca...'"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<div class="bg"></div>
+
+	<div class="title-big my-4">Eventi a {{city}}</div>
+
+	<div id="filters"
+		class="mx--4">
+		<swiper-container pagination="false"
+			slides-per-view="auto"
+			space-between="16"
+			free-mode="true">
+			<swiper-slide *ngFor="let filter of filters; let i = index"
+				[ngClass]="{ 'ml-4': i === 0, 'mr-4': i === filters.length -1 }"
+				(click)="filter?.onSelect()"
+				class="filter">
+				<ion-icon [name]="filter.icon"
+					color="light"></ion-icon>
+				<div>
+					<div class="title">{{filter.title}}</div>
+					<div class="subtitle">{{filter.subtitle}}</div>
+				</div>
+			</swiper-slide>
+		</swiper-container>
+	</div>
+
+	<div *ngIf="parties"
+		class="mt-16">
+		<easy-card-slider [parties]="parties"
+			[title]="'TOP 5 CONSIGLIATI'"
+			(partyClick)="goToEvent($event)"></easy-card-slider>
+	</div>
+	<div *ngIf="parties"
+		class="mt-16">
+		<easy-card-slider [parties]="parties"
+			[title]="'QUESTA SERA'"
+			(partyClick)="goToEvent($event)"></easy-card-slider>
+	</div>
+	<div *ngIf="parties"
+		class="mt-16">
+		<easy-card-slider [parties]="parties"
+			[title]="'LAST CHANCE DI QUESTA SETTIMANA'"
+			(partyClick)="goToEvent($event)"></easy-card-slider>
+	</div>
+	<div class="mt-16 clubs-tags py-8 px-4 mx--4">
+		<div class="w-full my-2 title">I SOLITI POSTI</div>
+		<ion-button *ngFor="let club of clubs"
+			color="light"
+			fill="outline"
+			class>
+			{{club.name}}
+		</ion-button>
+	</div>
+
+	<div id="events-club">
+		<div *ngFor="let club of clubs"
+			class="mt-16">
+			<div class="title-wrapper mb-6">
+				<div class="title">
+					<div>{{club.name}}</div>
+					<div class="location mt-1">
+						{{club.address.city}}
+					</div>
+				</div>
+			</div>
+			<easy-card-slider [parties]="club.parties || []"
+				(partyClick)="goToEvent($event)"></easy-card-slider>
+		</div>
+	</div>
+</ion-content>

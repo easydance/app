@@ -1,9 +1,35 @@
 .absolute {
   position: absolute;
 }
+
+@for $value from 0 through 48 {
+  .bottom-#{$value} {
+    bottom: #{$value * 4}px;
+  }
+}
+
+@for $value from 0 through 48 {
+  .top-#{$value} {
+    top: #{$value * 4}px;
+  }
+}
+
+@for $value from 0 through 48 {
+  .left-#{$value} {
+    left: #{$value * 4}px;
+  }
+}
+
+@for $value from 0 through 48 {
+  .right-#{$value} {
+    right: #{$value * 4}px;
+  }
+}
+
 .relative {
   position: relative;
 }
+
 .w-50 {
   width: 50%;
 }
@@ -13,6 +39,23 @@
 .w-full {
   width: 100%;
 }
+
+@for $value from 0 through 48 {
+  .w-#{$value} {
+    width: #{$value * 4}px;
+  }
+}
+
+.h-full {
+  height: 100%;
+}
+
+@for $value from 0 through 48 {
+  .h-#{$value} {
+    height: #{$value * 4}px;
+  }
+}
+
 .uppercase {
   text-transform: uppercase !important;
 }
@@ -20,9 +63,17 @@
   text-transform: none !important;
 }
 
+.rounded {
+  border-radius: 3rem;
+}
+
 /** FLEX PROPERTIES **/
 .flex {
   display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 @for $value from 0 through 48 {
@@ -41,7 +92,18 @@
   justify-content: space-around;
 }
 
+@for $value from 0 through 48 {
+  .gap-#{$value} {
+    gap: #{$value * 4}px;
+  }
+}
+
 /** MARGIN **/
+
+.m-0-auto {
+  margin: 0 auto;
+}
+
 @for $value from 0 through 40 {
   $v: calc($value * 4 / 16);
   $positions: "left", "right", "top", "bottom";
@@ -149,4 +211,20 @@
     padding-left: #{$v}rem !important;
     padding-right: #{$v}rem !important;
   }
+}
+
+.square {
+  position: relative;
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

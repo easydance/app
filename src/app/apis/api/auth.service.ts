@@ -174,13 +174,14 @@ export class AuthService implements AuthServiceInterface {
     /**
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public me(fields?: string, includes?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<MeResponseDto>;
-    public me(fields?: string, includes?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<MeResponseDto>>;
-    public me(fields?: string, includes?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<MeResponseDto>>;
-    public me(fields?: string, includes?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public me(fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<MeResponseDto>;
+    public me(fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<MeResponseDto>>;
+    public me(fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<MeResponseDto>>;
+    public me(fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (fields !== undefined && fields !== null) {
@@ -190,6 +191,10 @@ export class AuthService implements AuthServiceInterface {
         if (includes !== undefined && includes !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
+        }
+        if (withDeleted !== undefined && withDeleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>withDeleted, 'withDeleted');
         }
 
         let localVarHeaders = this.defaultHeaders;

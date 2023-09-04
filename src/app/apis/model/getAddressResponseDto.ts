@@ -9,6 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { ClubBaseDto } from './clubBaseDto';
+import { PartyBaseDto } from './partyBaseDto';
 
 
 export interface GetAddressResponseDto { 
@@ -25,7 +27,10 @@ export interface GetAddressResponseDto {
     zipCode: string;
     city: string;
     country: string;
+    formattedAddress: string | null;
     lat: number | null;
     lng: number | null;
+    club: ClubBaseDto;
+    parties: Array<PartyBaseDto>;
 }
 

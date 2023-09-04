@@ -44,8 +44,9 @@ export interface AddressServiceInterface {
      * @param createAddressRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<AddressControllerCreateDefaultResponse>;
+    create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface AddressServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<AddressControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface AddressServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<AddressControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerFindOneDefaultResponse>;
 
     /**
      * 

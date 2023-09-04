@@ -41,8 +41,9 @@ export interface AuthServiceInterface {
      * 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    me(fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<MeResponseDto>;
+    me(fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<MeResponseDto>;
 
     /**
      * 

@@ -44,8 +44,9 @@ export interface FacebookEventsServiceInterface {
      * @param createFacebookEventsRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createFacebookEventsRequestDto: CreateFacebookEventsRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<FacebookEventsControllerCreateDefaultResponse>;
+    create(createFacebookEventsRequestDto: CreateFacebookEventsRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<FacebookEventsControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -63,8 +64,9 @@ export interface FacebookEventsServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<FacebookEventsControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<FacebookEventsControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -72,8 +74,9 @@ export interface FacebookEventsServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<FacebookEventsControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<FacebookEventsControllerFindOneDefaultResponse>;
 
     /**
      * 

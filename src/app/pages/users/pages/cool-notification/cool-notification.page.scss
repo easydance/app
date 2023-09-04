@@ -1,0 +1,33 @@
+ion-content {
+  > div {
+    height: 100%;
+    width: 100%;
+    background: url(../../../../../assets/feedback-bkg.png) center center no-repeat;
+    background-size: cover;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+    .title {
+      text-align: center;
+
+      /* Headings/H2 */
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 36px; /* 112.5% */
+    }
+
+    .subtitle {
+      text-align: center;
+
+      /* Body/Primary-14 */
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px; /* 114.286% */
+    }
+  }
+}

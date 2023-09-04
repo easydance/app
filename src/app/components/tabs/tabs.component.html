@@ -1,7 +1,7 @@
 <div class="footer px-4">
 	<div [routerLink]="'/home'">Home</div>
 	<div [routerLink]="'/events'">Eventi</div>
-	<div [routerLink]="'/full-immersion'">
+	<div (click)="goInFullImmersion()">
 		<ion-icon [size]="36"
 			color="#9c9c9c"
 			name="qr-code-outline"
@@ -10,3 +10,32 @@
 	<div [routerLink]="'/search'">Cerca</div>
 	<div [routerLink]="'/profile'">Profilo</div>
 </div>
+<ion-modal #modal
+	id="full-immersion-modal"
+	trigger="open-custom-dialog">
+	<ng-template>
+		<div class="wrapper p-8">
+			<div class="title">Sei ancora qui?</div>
+			<div class="my-10 subtitle">
+				{{fullImmersionService.selectedClub?.name}}
+			</div>
+			<div>
+				<ion-button [routerLink]="'/full-immersion/scan'"
+					(click)="modal.dismiss()"
+					shape="round"
+					color="dark"
+					expand="block">
+					Cambia club
+				</ion-button>
+				<ion-button [routerLink]="fullImmersionService.selectedTable ? '/full-immersion/order' : '/full-immersion/select-table'"
+					(click)="modal.dismiss()"
+					class="mt-2"
+					shape="round"
+					color="primary"
+					expand="block">
+					Si, voglio ordinare!
+				</ion-button>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

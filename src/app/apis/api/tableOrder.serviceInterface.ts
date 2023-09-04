@@ -44,8 +44,9 @@ export interface TableOrderServiceInterface {
      * @param createTableOrderRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableOrderControllerCreateDefaultResponse>;
+    create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableOrderControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface TableOrderServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableOrderControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableOrderControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface TableOrderServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableOrderControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableOrderControllerFindOneDefaultResponse>;
 
     /**
      * 

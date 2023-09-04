@@ -1,0 +1,321 @@
+<ion-content class="register">
+	<div class="header">
+		<img src="../../assets/easydance-nologo.svg">
+	</div>
+	<div class="modal-content">
+		<div class="header-modal">
+			<div class="title">
+				<ion-icon (click)="goPrev(wizard)"
+					color="light"
+					name="arrow-back-sharp"></ion-icon>
+				{{currentStep.title}}
+			</div>
+			<div class="counter">
+				<ion-icon *ngFor="let step of formSteps;"
+					[ngStyle]="{ '--fill': currentStep.index == step.index ? 'var(--color-neutral-50)' : 'var(--neutral-20016, rgba(190, 190, 190, 0.16))' }"
+					src="../../../assets/icons/guy-walk.svg"></ion-icon>
+			</div>
+		</div>
+		<!-- <pre>
+			{{getFormValidationErrors() | json}}
+		</pre> -->
+		<swiper-container #wizard
+			class="flex-1 swiper-no-swiping"
+			pagination="false"
+			id="wizard">
+
+			<!-- CREDENZIALI -->
+			<swiper-slide>
+				<form #formStep0="ngForm"
+					[validators]="validators0"
+					class="py-12">
+					<div>
+						<ion-item class="mt-2"
+							lines="none">
+							<ion-input [(ngModel)]="user.email"
+								type="email"
+								name="email"
+								required
+								label="Email"
+								labelPlacement="floating"></ion-input>
+						</ion-item>
+						<ion-item class="mt-2"
+							lines="none">
+							<ion-input [(ngModel)]="user.confirmEmail"
+								name="confirmEmail"
+								type="email"
+								required
+								label="Conferma email"
+								labelPlacement="floating"></ion-input>
+						</ion-item>
+						<div *ngIf="!getFormValidationErrors().confirmEmail?.['not-same-values'] && getFormValidationErrors().email?.['invalid-email-format']"
+							class="error">
+							<ion-text color="danger">
+								<small>
+									{{getFormValidationErrors().email?.['invalid-email-format']}}
+								</small>
+							</ion-text>
+						</div>
+						<div *ngIf="getFormValidationErrors().confirmEmail?.['not-same-values']"
+							class="error">
+							<ion-text color="danger">
+								<small>
+									{{getFormValidationErrors().confirmEmail?.['not-same-values']}}
+								</small>
+							</ion-text>
+						</div>
+					</div>
+
+					<div class="mt-8">
+						<ion-item class="mt-2"
+							lines="none">
+							<ion-input [type]="showPassword ? 'text' : 'password'"
+								[(ngModel)]="user.password"
+								name="password"
+								required
+								label="Password"
+								labelPlacement="floating"></ion-input>
+
+							<ion-icon [name]="showPassword ? 'eye-off' : 'eye'"
+								(click)="showPassword = !showPassword"
+								slot="end"></ion-icon>
+						</ion-item>
+						<ion-item class="mt-2"
+							lines="none">
+							<ion-input [type]="showPassword ? 'text' : 'password'"
+								[(ngModel)]="user.confirmPassword"
+								[errorText]
+								name="confirmPassword"
+								required
+								label="Conferma password"
+								labelPlacement="floating"></ion-input>
+							<ion-icon [name]="showPassword ? 'eye-off' : 'eye'"
+								(click)="showPassword = !showPassword"
+								slot="end"></ion-icon>
+						</ion-item>
+						<div *ngIf="!getFormValidationErrors().confirmPassword?.['not-same-values'] && getFormValidationErrors().password?.['invalid-password-format']"
+							class="error">
+							<ion-text color="danger">
+								<small>
+									{{getFormValidationErrors().password?.['invalid-password-format']}}
+								</small>
+							</ion-text>
+						</div>
+						<div *ngIf="getFormValidationErrors().confirmPassword?.['not-same-values']"
+							class="error">
+							<ion-text color="danger">
+								<small>
+									{{getFormValidationErrors().confirmPassword?.['not-same-values']}}
+								</small>
+							</ion-text>
+						</div>
+					</div>
+				</form>
+				<div id="tec"
+					class="absolute bottom-2 left-0 px-4">
+					Cliccando su “prosegui” accetterai i Termini & Condizioni d’uso e Privacy & Cookie Policy
+				</div>
+			</swiper-slide>
+
+			<!-- INFORAZIONI -->
+			<swiper-slide>
+				<form #formStep1="ngForm"
+					class="py-12">
+					<div>
+						<ion-item class="mt-5"
+							lines="none">
+							<ion-input [(ngModel)]="user.name"
+								name="name"
+								required
+								label="Nome"
+								labelPlacement="floating"></ion-input>
+						</ion-item>
+						<div *ngIf="getFormValidationErrors().name?.['required']"
+							class="error">
+							<ion-text color="danger">
+								<small>Campo richiesto</small>
+							</ion-text>
+						</div>
+					</div>
+					<div>
+						<ion-item class="mt-5"
+							lines="none">
+							<ion-input [(ngModel)]="user.surname"
+								name="surname"
+								required
+								label="Cognome"
+								labelPlacement="floating"></ion-input>
+						</ion-item>
+						<div *ngIf="getFormValidationErrors().surname?.['required']"
+							class="error">
+							<ion-text color="danger">
+								<small>Campo richiesto</small>
+							</ion-text>
+						</div>
+
+					</div>
+					<div>
+						<ion-item (click)="openDatetime()"
+							class="mt-5"
+							lines="none">
+							<ion-input [(ngModel)]="user.birth"
+								readonly="true"
+								name="birth"
+								required
+								label="Data di nascita"
+								labelPlacement="floating"></ion-input>
+							<ion-datetime-button id="datetime-button"
+								color="light"
+								datetime="datetime"
+								style="display: none;"></ion-datetime-button>
+						</ion-item>
+						<div *ngIf="getFormValidationErrors().birth?.['required']"
+							class="error">
+							<ion-text color="danger">
+								<small>Campo richiesto</small>
+							</ion-text>
+						</div>
+
+					</div>
+					<div>
+						<ion-item class="mt-5"
+							lines="none">
+							<ion-input [(ngModel)]="user.city"
+								name="city"
+								required
+								label="Città"
+								labelPlacement="floating"
+								placeholder="Città"></ion-input>
+						</ion-item>
+						<div *ngIf="getFormValidationErrors().city?.['required']"
+							class="error">
+							<ion-text color="danger">
+								<small>Campo richiesto</small>
+							</ion-text>
+						</div>
+					</div>
+				</form>
+			</swiper-slide>
+
+			<!-- FOTO PROFILO -->
+			<swiper-slide>
+				<form #formStep2="ngForm"
+					[validators]="profileValidator"
+					class="py-12">
+					<div class="photo-title">
+						Scegli un’immagine del profilo
+					</div>
+					<div class="mt-16">
+						<div id="upload-photo"
+							class="square">
+							<div [ngStyle]="{ 
+								background: 'url('+ this.user.profile + ') center center no-repeat',
+								backgroundSize: 'cover'
+							 }"
+								(click)="file.click()"
+								class="content">
+								<ion-icon name="add"></ion-icon>
+								<input #file
+									(change)="preview($event)"
+									name="profile"
+									required
+									type="file"
+									style="display: none;"
+									accept="image/*">
+							</div>
+						</div>
+					</div>
+				</form>
+			</swiper-slide>
+
+			<!-- INTERESSI -->
+			<swiper-slide id="interests-section">
+				<form #formStep3="ngForm"
+					class="pt-12">
+					<div id="interests-title">
+						Scegli i generi che preferisci!
+					</div>
+					<div id="interests-subtitle">
+						Scegli i generi che preferisci!
+					</div>
+					<div id="interests-list"
+						class="mt-8">
+						<ion-chip *ngFor="let tag of tags"
+							[ngClass]="{ active: isSelectedTag(tag) }"
+							[outline]="true"
+							(click)="toggleInterest(tag)"
+							class="mr-2"
+							color="light">
+							{{tag.name}}
+						</ion-chip>
+					</div>
+				</form>
+			</swiper-slide>
+		</swiper-container>
+
+	</div>
+</ion-content>
+<ion-footer class="ion-no-border">
+	<ion-toolbar class="ion-no-border">
+		<div class="flex align-center">
+			<ion-button (click)="goBack()"
+				class="flex-1"
+				shape="round"
+				expand="block"
+				color="neutral-500">
+				Annulla
+			</ion-button>
+			<ion-button (click)="goNext(wizard)"
+				class="flex-1"
+				shape="round"
+				expand="block"
+				color="light">
+				prosegui
+			</ion-button>
+		</div>
+	</ion-toolbar>
+</ion-footer>
+<!-- <ion-popover #dateModal trigger="bith"
+	[keepContentsMounted]="true">
+	<ng-template>
+		<ion-datetime id="datetime" presentation="date"></ion-datetime>
+	</ng-template>
+</ion-popover> -->
+
+<ion-modal [keepContentsMounted]="true">
+	<ng-template>
+		<ion-datetime (ionChange)="changeBirth($event)"
+			id="datetime"
+			presentation="date"
+			color="primary"></ion-datetime>
+	</ng-template>
+</ion-modal>
+
+<ion-modal #hurraModal>
+	<ng-template>
+		<div id="hurra"
+			class="flex align-center">
+			<div class="m-0-auto">
+				<div class="ion-text-center">
+					<ion-icon [ngStyle]="{ '--fill': 'var(--color-neutral-50)', 'font-size': '120px' }"
+						src="../../../assets/icons/guy-walk.svg"></ion-icon>
+				</div>
+				<div class="title mt-8">
+					SUUUPER, SEI DENTRO!
+				</div>
+				<div class="subtitle mt-4">
+					Conferma la registrazione tramite email
+					<br>
+					e comincia a pensare cosa fare stasera!
+				</div>
+				<div class="mt-12 ion-text-center mb-8">
+					<ion-button [routerLink]="'/home'"
+						color="light"
+						shape="round">
+						SCROPRI GLI EVENTI
+					</ion-button>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

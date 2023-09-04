@@ -1,0 +1,147 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar>
+		<ion-searchbar class="mt-4"
+		clearIcon="close-outline"
+		[showClearButton]="'always'"
+		[placeholder]="'Cerca...'"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+	<div class="bg"></div>
+
+	<div *ngIf="parties && parties.length === 0">
+		<easy-thats-all></easy-thats-all>
+	</div>
+
+	<ng-container *ngIf="!parties">
+		<div class="title-big mt-16 mb-4">
+			Gli eventi di oggi
+			<br>
+			a {{city}}
+		</div>
+		<div id="skeleton">
+			<div *ngFor="let number of [0,1,2]">
+				<ion-skeleton-text animated="true"
+					class="square mt-5">
+					<div class="content"></div>
+				</ion-skeleton-text>
+			</div>
+		</div>
+	</ng-container>
+
+	<ng-container *ngIf="parties?.length || 0 > 0">
+		<div class="title-big mt-16 mb-4">
+			Gli eventi di oggi
+			<br>
+			a {{city}}
+		</div>
+		<div>
+			<easy-card-list *ngIf="parties"
+				[parties]="parties"
+				(partyClick)="goToEvent($event)"></easy-card-list>
+		</div>
+		<div *ngIf="parties"
+			class="mt-16">
+			<div class="home-title ion-text-left mb-1">Last chance</div>
+			<div class="home-subtitle mb-4">
+				Tutti gli eventi di oggi, non farteli scappare
+			</div>
+			<easy-card-slider [parties]="parties"
+				[rightText]="'VEDI TUTTI'"
+				(rightButton)="moreEvents()"
+				(partyClick)="goToEvent($event)"></easy-card-slider>
+		</div>
+	</ng-container>
+	<!-- <div class="mt-16">
+		<easy-suggest-buttons (events)="goToEventsWeekend()"
+			(clubs)="goToClubsEventsList()"></easy-suggest-buttons>
+	</div> -->
+	<div *ngIf="clubs"
+		class="mt-16">
+		<!-- <easy-clubs-grid [clubs]="clubs"
+			[title]="'LOCALI PREFERITI'"></easy-clubs-grid> -->
+		<items-list *ngFor="let club of clubs"
+			[headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.covers[0].url}"
+			[parties]="club.parties"></items-list>
+	</div>
+	<div id="filters"
+		class="mt-20">
+		<ion-card class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>OGGI</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+
+		<ion-card class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>WEEKEND</div>
+					<div>
+						Dai un’occhiata agli eventi del fine settimana
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>CLUB</div>
+					<div>
+						Tutti gli eventi dei tuoi club Preferiti
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>CLUB</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>OGGI</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card id="all-events"
+			class="square">
+			<div class="content h-full flex align-center">
+				<div class="m-0-auto">Tutti gli eventi</div>
+			</div>
+		</ion-card>
+	</div>
+</ion-content>

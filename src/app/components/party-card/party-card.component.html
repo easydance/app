@@ -1,31 +1,56 @@
-<ion-card [button]="button" [ngStyle]="{ backgroundImage: 'url('+ party?.cover?.url +')' }"
-	class="easycard">
-	<div class="header">
-		<div>
-			<ion-chip style="zoom: 0.7812;">
-				<ion-icon color="light"
-					name="location"></ion-icon>
-				<ion-label>2 km</ion-label>
-			</ion-chip>
-		</div>
-		<div class="ion-text-right">
-			<div class="fab">
-				<ion-icon color="light"
-					name="bookmark-outline"></ion-icon>
-			</div>
-		</div>
-	</div>
-	<div class="footer">
-		<div>
-			<div class="date">
-				{{party?.from | date:'dd LLL'}}
-			</div>
-			<div class="info">
-				<div class="title">{{party?.title}}</div>
-				<div class="subtitle">
-					{{party?.club?.name}}
+<div class="square">
+	<div class="content">
+		<ion-card [button]="button"
+			[ngStyle]="{ backgroundImage: 'url('+ party?.cover?.url +')' }"
+			class="easycard">
+			<div class="header">
+				<div>
+					<ion-chip class="blured">
+						<ion-icon color="light"
+							name="location"></ion-icon>
+						<ion-label>2 km</ion-label>
+					</ion-chip>
+				</div>
+				<div class="ion-text-right">
+					<div (click)="onBookmarkClick($event)"
+						class="fab">
+						<ion-icon [name]="!!party?.saved ? 'bookmark' : 'bookmark-outline'"
+							color="light"></ion-icon>
+						<!-- <span>SALVATO!</span> -->
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="footer">
+				<div>
+					<div class="chips-info">
+						<ion-chip class="dark">
+							<ion-icon color="light"
+								name="calendar-sharp"></ion-icon>
+							<ion-label>
+								{{party?.from | date:'dd LLL'}}
+							</ion-label>
+						</ion-chip>
+						<ion-chip class="ml-2-i dark">
+							<ion-icon color="light"
+								name="location"></ion-icon>
+							<ion-label>
+								{{party?.club?.name}}
+							</ion-label>
+						</ion-chip>
+					</div>
+					<div>
+						<!-- <div class="date">
+							{{party?.from | date:'dd LLL'}}
+						</div> -->
+						<div class="info">
+							<div class="title">{{party?.title}}</div>
+							<!-- <div class="subtitle">
+								{{party?.club?.name}}
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</ion-card>
 	</div>
-</ion-card>
+</div>

@@ -44,8 +44,9 @@ export interface TranslationServiceInterface {
      * @param createTranslationRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createTranslationRequestDto: CreateTranslationRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TranslationControllerCreateDefaultResponse>;
+    create(createTranslationRequestDto: CreateTranslationRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TranslationControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface TranslationServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TranslationControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TranslationControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface TranslationServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TranslationControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TranslationControllerFindOneDefaultResponse>;
 
     /**
      * 

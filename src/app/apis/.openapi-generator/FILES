@@ -57,6 +57,7 @@ encoder.ts
 git_push.sh
 index.ts
 model/addressBaseDto.ts
+model/addressComponent.ts
 model/addressControllerCreateDefaultResponse.ts
 model/addressControllerFindAllDefaultResponse.ts
 model/addressControllerFindOneDefaultResponse.ts
@@ -68,6 +69,7 @@ model/attachmentControllerFindOneDefaultResponse.ts
 model/attachmentControllerReplaceDefaultResponse.ts
 model/attachmentControllerUpdateDefaultResponse.ts
 model/attachmentControllerUploadFileDefaultResponse.ts
+model/bounds.ts
 model/clubBaseDto.ts
 model/clubBaseDtoSocialsValueValue.ts
 model/clubControllerCreateDefaultResponse.ts
@@ -76,6 +78,7 @@ model/clubControllerFindOneDefaultResponse.ts
 model/clubControllerReplaceDefaultResponse.ts
 model/clubControllerUpdateDefaultResponse.ts
 model/createAddressRequestDto.ts
+model/createAddressRequestDtoClub.ts
 model/createAddressResponseDto.ts
 model/createAttachmentRequestDto.ts
 model/createAttachmentResponseDto.ts
@@ -96,6 +99,7 @@ model/createProductResponseDto.ts
 model/createRoleRequestDto.ts
 model/createRoleResponseDto.ts
 model/createSavedPartyRequestDto.ts
+model/createSavedPartyRequestDtoParty.ts
 model/createSavedPartyResponseDto.ts
 model/createTableCategoryRequestDto.ts
 model/createTableCategoryResponseDto.ts
@@ -131,7 +135,10 @@ model/facebookEventsControllerFindOneDefaultResponse.ts
 model/facebookEventsControllerReplaceDefaultResponse.ts
 model/facebookEventsControllerUpdateDefaultResponse.ts
 model/geo.ts
+model/geocodeResponse.ts
+model/geometry.ts
 model/getAddressResponseDto.ts
+model/getAddressResponseDtoExt.ts
 model/getAttachmentResponseDto.ts
 model/getClubResponseDto.ts
 model/getFacebookEventsResponseDto.ts
@@ -154,12 +161,14 @@ model/getUserResponseDto.ts
 model/getUserToClubFollowerResponseDto.ts
 model/getUserToUserFollowerResponseDto.ts
 model/getWarehouseResponseDto.ts
+model/googleGeoCodeResponse.ts
 model/languageBaseDto.ts
 model/languageControllerCreateDefaultResponse.ts
 model/languageControllerFindAllDefaultResponse.ts
 model/languageControllerFindOneDefaultResponse.ts
 model/languageControllerReplaceDefaultResponse.ts
 model/languageControllerUpdateDefaultResponse.ts
+model/latLng.ts
 model/loginDataDto.ts
 model/loginDto.ts
 model/loginResponseDto.ts
@@ -178,6 +187,7 @@ model/partyParticipationControllerFindOneDefaultResponse.ts
 model/partyParticipationControllerReplaceDefaultResponse.ts
 model/partyParticipationControllerUpdateDefaultResponse.ts
 model/patchAddressRequestDto.ts
+model/patchAddressRequestDtoClub.ts
 model/patchAddressResponseDto.ts
 model/patchAttachmentRequestDto.ts
 model/patchAttachmentResponseDto.ts
@@ -198,6 +208,8 @@ model/patchProductResponseDto.ts
 model/patchRoleRequestDto.ts
 model/patchRoleResponseDto.ts
 model/patchSavedPartyRequestDto.ts
+model/patchSavedPartyRequestDtoParty.ts
+model/patchSavedPartyRequestDtoUser.ts
 model/patchSavedPartyResponseDto.ts
 model/patchTableCategoryRequestDto.ts
 model/patchTableCategoryResponseDto.ts
@@ -317,6 +329,7 @@ model/updateProductResponseDto.ts
 model/updateRoleRequestDto.ts
 model/updateRoleResponseDto.ts
 model/updateSavedPartyRequestDto.ts
+model/updateSavedPartyRequestDtoUser.ts
 model/updateSavedPartyResponseDto.ts
 model/updateTableCategoryRequestDto.ts
 model/updateTableCategoryResponseDto.ts
@@ -358,6 +371,7 @@ model/userToUserFollowerControllerFindAllDefaultResponse.ts
 model/userToUserFollowerControllerFindOneDefaultResponse.ts
 model/userToUserFollowerControllerReplaceDefaultResponse.ts
 model/userToUserFollowerControllerUpdateDefaultResponse.ts
+model/viewport.ts
 model/warehouseBaseDto.ts
 model/warehouseControllerCreateDefaultResponse.ts
 model/warehouseControllerFindAllDefaultResponse.ts

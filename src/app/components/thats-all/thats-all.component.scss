@@ -3,6 +3,7 @@ ion-card {
   min-height: 250px;
   align-items: center;
   --background: transparent;
+  box-shadow: none;
 
   > div {
     margin: 0 auto;

@@ -9,14 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CreateAddressRequestDtoClub } from './createAddressRequestDtoClub';
 
 
 export interface UpdateAddressRequestDto { 
-    id?: number;
-    uuid?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    deletedAt?: string;
     createdBy?: string | null;
     updatedBy?: string | null;
     deletedBy?: string | null;
@@ -25,7 +21,9 @@ export interface UpdateAddressRequestDto {
     zipCode: string;
     city: string;
     country: string;
+    formattedAddress: string | null;
     lat: number | null;
     lng: number | null;
+    club: CreateAddressRequestDtoClub;
 }
 

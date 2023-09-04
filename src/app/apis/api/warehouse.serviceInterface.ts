@@ -44,8 +44,9 @@ export interface WarehouseServiceInterface {
      * @param createWarehouseRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createWarehouseRequestDto: CreateWarehouseRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<WarehouseControllerCreateDefaultResponse>;
+    create(createWarehouseRequestDto: CreateWarehouseRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<WarehouseControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface WarehouseServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<WarehouseControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<WarehouseControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface WarehouseServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<WarehouseControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<WarehouseControllerFindOneDefaultResponse>;
 
     /**
      * 

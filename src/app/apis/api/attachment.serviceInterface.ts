@@ -44,8 +44,9 @@ export interface AttachmentServiceInterface {
      * @param createAttachmentRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createAttachmentRequestDto: CreateAttachmentRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerUploadFileDefaultResponse>;
+    create(createAttachmentRequestDto: CreateAttachmentRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerUploadFileDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface AttachmentServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface AttachmentServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindOneDefaultResponse>;
 
     /**
      * 

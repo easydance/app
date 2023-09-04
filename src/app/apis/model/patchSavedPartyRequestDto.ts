@@ -9,20 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserBaseDto } from './userBaseDto';
-import { PartyBaseDto } from './partyBaseDto';
+import { PatchSavedPartyRequestDtoUser } from './patchSavedPartyRequestDtoUser';
+import { PatchSavedPartyRequestDtoParty } from './patchSavedPartyRequestDtoParty';
 
 
 export interface PatchSavedPartyRequestDto { 
-    id?: number;
-    uuid?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    deletedAt?: string;
     createdBy?: string | null;
     updatedBy?: string | null;
     deletedBy?: string | null;
-    user: UserBaseDto;
-    party: PartyBaseDto;
+    user?: PatchSavedPartyRequestDtoUser | null;
+    party?: PatchSavedPartyRequestDtoParty | null;
 }
 

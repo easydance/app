@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, tap } from 'rxjs';
-import { AuthService, LoginUserDataDto } from 'src/app/apis';
+import { AuthService, LoginUserDataDto, SignUpDto } from 'src/app/apis';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,22 @@ export class AuthManagerService {
           }
         )
       );
+  }
+
+  logout() {
+    this.setToken(undefined);
+    this.setUser(undefined);
+  }
+
+  signUp(signUpDto: SignUpDto) {
+    return this.authService.signUp(signUpDto).pipe(
+      tap(
+        data => {
+          const { user, accessToken } = data;
+          this.setToken(accessToken);
+          this.setUser(user);
+        }
+      ));
   }
 
   me() {

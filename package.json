@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "generate-api": "node ./generate-api.js",
     "openapi-generator-cli": "openapi-generator-cli",
-    "android:run": "ionic capacitor run android -l --external"
+    "android:run": "ionic capacitor run android"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +32,7 @@
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "angularx-flatpickr": "^7.3.0",
     "ionicons": "^7.0.0",
     "luxon": "^3.3.0",
     "rxjs": "~7.8.0",

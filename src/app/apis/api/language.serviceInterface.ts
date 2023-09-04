@@ -44,8 +44,9 @@ export interface LanguageServiceInterface {
      * @param createLanguageRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createLanguageRequestDto: CreateLanguageRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<LanguageControllerCreateDefaultResponse>;
+    create(createLanguageRequestDto: CreateLanguageRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<LanguageControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface LanguageServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<LanguageControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<LanguageControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface LanguageServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<LanguageControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<LanguageControllerFindOneDefaultResponse>;
 
     /**
      * 

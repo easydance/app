@@ -168,13 +168,14 @@ export class TableOrderService implements TableOrderServiceInterface {
      * @param createTableOrderRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TableOrderControllerCreateDefaultResponse>;
-    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TableOrderControllerCreateDefaultResponse>>;
-    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TableOrderControllerCreateDefaultResponse>>;
-    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TableOrderControllerCreateDefaultResponse>;
+    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TableOrderControllerCreateDefaultResponse>>;
+    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TableOrderControllerCreateDefaultResponse>>;
+    public create(createTableOrderRequestDto: CreateTableOrderRequestDto, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (createTableOrderRequestDto === null || createTableOrderRequestDto === undefined) {
             throw new Error('Required parameter createTableOrderRequestDto was null or undefined when calling create.');
         }
@@ -187,6 +188,10 @@ export class TableOrderService implements TableOrderServiceInterface {
         if (includes !== undefined && includes !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
+        }
+        if (withDeleted !== undefined && withDeleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>withDeleted, 'withDeleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -251,13 +256,14 @@ export class TableOrderService implements TableOrderServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TableOrderControllerFindAllDefaultResponse>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TableOrderControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TableOrderControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TableOrderControllerFindAllDefaultResponse>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TableOrderControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TableOrderControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (page !== undefined && page !== null) {
@@ -283,6 +289,10 @@ export class TableOrderService implements TableOrderServiceInterface {
         if (includes !== undefined && includes !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
+        }
+        if (withDeleted !== undefined && withDeleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>withDeleted, 'withDeleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -334,13 +344,14 @@ export class TableOrderService implements TableOrderServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findOne(id: any, fields?: string, includes?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TableOrderControllerFindOneDefaultResponse>;
-    public findOne(id: any, fields?: string, includes?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TableOrderControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TableOrderControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TableOrderControllerFindOneDefaultResponse>;
+    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TableOrderControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TableOrderControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findOne.');
         }
@@ -353,6 +364,10 @@ export class TableOrderService implements TableOrderServiceInterface {
         if (includes !== undefined && includes !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
+        }
+        if (withDeleted !== undefined && withDeleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>withDeleted, 'withDeleted');
         }
 
         let localVarHeaders = this.defaultHeaders;

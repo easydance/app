@@ -44,8 +44,9 @@ export interface TableReservationServiceInterface {
      * @param createTableReservationRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createTableReservationRequestDto: CreateTableReservationRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableReservationControllerCreateDefaultResponse>;
+    create(createTableReservationRequestDto: CreateTableReservationRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableReservationControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface TableReservationServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableReservationControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableReservationControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface TableReservationServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableReservationControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableReservationControllerFindOneDefaultResponse>;
 
     /**
      * 

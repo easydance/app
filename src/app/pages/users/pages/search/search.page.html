@@ -1,0 +1,57 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar>
+		<ion-item lines="none"
+			class="m-4">
+			<ion-input outline
+				placeholder="Cerca..."></ion-input>
+		</ion-item>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<div id="filters"
+		class="flex gap-3">
+		<ion-button xs
+			color="dark">
+			Tutti
+		</ion-button>
+		<ion-button xs
+			color="dark">
+			Luogo
+		</ion-button>
+		<ion-button xs
+			color="dark">
+			Club
+		</ion-button>
+		<ion-button xs
+			color="dark">
+			Evento
+		</ion-button>
+	</div>
+	<div>
+		<ion-list id="search-list"
+			class="mt-5">
+			<ion-item>
+				<ion-avatar slot="start">
+					<img alt="Silhouette of a person's head"
+						src="https://ionicframework.com/docs/img/demos/avatar.svg">
+				</ion-avatar>
+				<ion-label>
+					<div class="title">Avatar Item</div>
+					<div class="subtitle">Avatar Item</div>
+				</ion-label>
+			</ion-item>
+			<ion-item>
+				<ion-avatar slot="start">
+					<img alt="Silhouette of a person's head"
+						src="https://ionicframework.com/docs/img/demos/avatar.svg">
+				</ion-avatar>
+				<ion-label>
+					<div class="date">22/03/2023</div>
+					<div class="title">Avatar Item</div>
+					<div class="subtitle">Avatar Item</div>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</div>
+</ion-content>

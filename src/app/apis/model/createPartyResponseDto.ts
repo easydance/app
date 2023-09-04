@@ -34,5 +34,6 @@ export interface CreatePartyResponseDto {
     club: ClubBaseDto;
     address: AddressBaseDto;
     images: Array<AttachmentBaseDto>;
+    saved: number | null;
 }
 

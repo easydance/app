@@ -18,6 +18,6 @@ export interface CreateUserRequestDto {
     firstName: string;
     lastName: string;
     birthDate: string;
-    clubName?: string;
+    clubName: string;
 }
 

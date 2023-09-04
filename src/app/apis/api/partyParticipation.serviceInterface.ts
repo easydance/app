@@ -44,8 +44,9 @@ export interface PartyParticipationServiceInterface {
      * @param createPartyParticipationRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerCreateDefaultResponse>;
+    create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface PartyParticipationServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface PartyParticipationServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindOneDefaultResponse>;
 
     /**
      * 

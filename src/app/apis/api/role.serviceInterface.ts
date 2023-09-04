@@ -44,8 +44,9 @@ export interface RoleServiceInterface {
      * @param createRoleRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createRoleRequestDto: CreateRoleRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<RoleControllerCreateDefaultResponse>;
+    create(createRoleRequestDto: CreateRoleRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<RoleControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface RoleServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<RoleControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<RoleControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface RoleServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<RoleControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<RoleControllerFindOneDefaultResponse>;
 
     /**
      * 

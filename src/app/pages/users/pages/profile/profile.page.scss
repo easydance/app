@@ -1,0 +1,33 @@
+ion-content {
+  --padding-bottom: calc(75px + var(--ion-safe-area-bottom));
+}
+
+.image-header {
+  height: 40%;
+  background: linear-gradient(360deg, #000 0%, #000 100%);
+
+  swiper-container,
+  swiper-slide {
+    height: 100%;
+    width: 100%;
+  }
+
+  swiper-slide {
+    background: var(--color-neutral-600) center center no-repeat;
+    background-size: cover;
+  }
+}
+
+.info-user {
+  .fullname {
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 64.706% */
+  }
+}
+
+ion-skeleton-text {
+  width: 100%;
+  background: rgba($color: #282828, $alpha: 0.8);
+}

@@ -44,8 +44,9 @@ export interface UserToClubFollowerServiceInterface {
      * @param createUserToClubFollowerRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createUserToClubFollowerRequestDto: CreateUserToClubFollowerRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerCreateDefaultResponse>;
+    create(createUserToClubFollowerRequestDto: CreateUserToClubFollowerRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface UserToClubFollowerServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface UserToClubFollowerServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerFindOneDefaultResponse>;
 
     /**
      * 

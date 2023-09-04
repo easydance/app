@@ -7,22 +7,23 @@
 			<div class="label-lg mb-4">ACCEDI</div>
 			<div class="mb-8">
 				<ion-item lines="none">
-					<ion-icon name="mail"
-						slot="start"></ion-icon>
 					<ion-input [(ngModel)]="username"
 						name="username"
 						required
-						placeholder="Email"></ion-input>
+						labelPlacement="floating"
+						label="Email"
+						placeholder>
+					</ion-input>
 				</ion-item>
 				<ion-item class="mt-2"
 					lines="none">
-					<ion-icon name="lock-closed"
-						slot="start"></ion-icon>
 					<ion-input [type]="showPassword ? 'text' : 'password'"
 						[(ngModel)]="password"
 						name="password"
 						required
-						placeholder="Email"></ion-input>
+						labelPlacement="floating"
+						label="Password"
+						placeholder="Password"></ion-input>
 					<ion-icon [name]="showPassword ? 'eye-off' : 'eye'"
 						(click)="showPassword = !showPassword"
 						slot="end"></ion-icon>
@@ -42,7 +43,8 @@
 				class="w-full">
 				ACCEDI
 			</ion-button>
-			<ion-button size="lg"
+			<ion-button [routerLink]="'/register'"
+				size="lg"
 				shape="round"
 				style="--background: var(--color-primary-600)"
 				class="w-full mt-1">

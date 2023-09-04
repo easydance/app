@@ -44,8 +44,9 @@ export interface TableCategoryServiceInterface {
      * @param createTableCategoryRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createTableCategoryRequestDto: CreateTableCategoryRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableCategoryControllerCreateDefaultResponse>;
+    create(createTableCategoryRequestDto: CreateTableCategoryRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableCategoryControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface TableCategoryServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableCategoryControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableCategoryControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface TableCategoryServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<TableCategoryControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TableCategoryControllerFindOneDefaultResponse>;
 
     /**
      * 

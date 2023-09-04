@@ -10,11 +10,12 @@ import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { RouterModule } from '@angular/router';
 import { SuggestButtonsComponent } from 'src/app/components/suggest-buttons/suggest-buttons.component';
 import { ThatsAllComponent } from 'src/app/components/thats-all/thats-all.component';
+import { ItemsListComponent } from 'src/app/components/items-list/items-list.component';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
   ClubsGridComponent, TabsComponent, SuggestButtonsComponent,
-  ThatsAllComponent
+  ThatsAllComponent, ItemsListComponent
 ];
 
 @NgModule({

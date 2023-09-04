@@ -44,8 +44,9 @@ export interface UserToUserFollowerServiceInterface {
      * @param createUserToUserFollowerRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createUserToUserFollowerRequestDto: CreateUserToUserFollowerRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerCreateDefaultResponse>;
+    create(createUserToUserFollowerRequestDto: CreateUserToUserFollowerRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface UserToUserFollowerServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface UserToUserFollowerServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerFindOneDefaultResponse>;
 
     /**
      * 

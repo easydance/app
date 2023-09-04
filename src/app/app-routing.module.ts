@@ -12,36 +12,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'events',
-    loadChildren: () => import('./pages/events/events.module').then(m => m.EventsPageModule)
-  },
-  {
-    path: 'events-list',
-    loadChildren: () => import('./pages/events-list/events-list.module').then(m => m.EventsListPageModule)
-  },
-  {
-    path: 'event-detail/:id',
-    loadChildren: () => import('./pages/event-detail/event-detail.module').then(m => m.EventDetailPageModule)
-  },
-  {
-    path: 'club-detail/:id',
-    loadChildren: () => import('./pages/club-detail/club-detail.module').then(m => m.ClubDetailPageModule)
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
-  },
-  {
-    path: 'full-immersion',
-    loadChildren: () => import('./pages/full-immersion/full-immersion.module').then( m => m.FullImmersionPageModule)
-  },
-  {
-    path: 'cool-notification',
-    loadChildren: () => import('./pages/cool-notification/cool-notification.module').then( m => m.CoolNotificationPageModule)
+    path: '',
+    loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
   },
 ];
 

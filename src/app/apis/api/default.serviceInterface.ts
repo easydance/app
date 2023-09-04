@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { GeocodeResponse } from '../model/models';
 
 
 import { Configuration }                                     from '../configuration';
@@ -34,5 +35,20 @@ export interface DefaultServiceInterface {
      * 
      */
     getHello(extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param search 
+     */
+    googleGeocoding(search: string, extraHttpRequestParams?: any): Observable<GeocodeResponse>;
+
+    /**
+     * 
+     * 
+     * @param lat 
+     * @param lng 
+     */
+    googleGeocodingReverse(lat: string, lng: string, extraHttpRequestParams?: any): Observable<GeocodeResponse>;
 
 }

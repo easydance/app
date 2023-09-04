@@ -44,8 +44,9 @@ export interface ProductServiceInterface {
      * @param createProductRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createProductRequestDto: CreateProductRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<ProductControllerCreateDefaultResponse>;
+    create(createProductRequestDto: CreateProductRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<ProductControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -56,8 +57,9 @@ export interface ProductServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<ProductControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<ProductControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -65,8 +67,9 @@ export interface ProductServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<ProductControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<ProductControllerFindOneDefaultResponse>;
 
     /**
      * 

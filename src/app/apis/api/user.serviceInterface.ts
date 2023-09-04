@@ -44,8 +44,9 @@ export interface UserServiceInterface {
      * @param createUserRequestDto 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    create(createUserRequestDto: CreateUserRequestDto, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserControllerCreateDefaultResponse>;
+    create(createUserRequestDto: CreateUserRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -63,8 +64,9 @@ export interface UserServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -72,8 +74,9 @@ export interface UserServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
+     * @param withDeleted 
      */
-    findOne(id: any, fields?: string, includes?: string, extraHttpRequestParams?: any): Observable<UserControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserControllerFindOneDefaultResponse>;
 
     /**
      * 
