@@ -6,11 +6,12 @@ ion-content.login {
   padding-top: 2rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  padding-bottom: 2rem;
   background: var(--color-neutral-600);
   border-radius: 2rem 2rem 0 0;
   position: absolute;
   bottom: 0;
-  max-height: 70%;
+  // max-height: 70%;
   width: 100%;
 }
 

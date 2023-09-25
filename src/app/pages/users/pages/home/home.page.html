@@ -1,24 +1,23 @@
 <ion-header class="ion-no-border">
 	<ion-toolbar>
-		<ion-searchbar class="mt-4"
-		clearIcon="close-outline"
-		[showClearButton]="'always'"
-		[placeholder]="'Cerca...'"></ion-searchbar>
+		<ion-searchbar [showClearButton]="'always'"
+			[placeholder]="'Cerca...'"
+			class="mt-4"
+			clearIcon="close-outline"></ion-searchbar>
 	</ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
 	<div class="bg"></div>
 
+	<div class="title-big my-4 mb-8">
+		Gli eventi di oggi
+		<br>
+		a {{city}}
+	</div>
 	<div *ngIf="parties && parties.length === 0">
 		<easy-thats-all></easy-thats-all>
 	</div>
-
 	<ng-container *ngIf="!parties">
-		<div class="title-big mt-16 mb-4">
-			Gli eventi di oggi
-			<br>
-			a {{city}}
-		</div>
 		<div id="skeleton">
 			<div *ngFor="let number of [0,1,2]">
 				<ion-skeleton-text animated="true"
@@ -30,11 +29,6 @@
 	</ng-container>
 
 	<ng-container *ngIf="parties?.length || 0 > 0">
-		<div class="title-big mt-16 mb-4">
-			Gli eventi di oggi
-			<br>
-			a {{city}}
-		</div>
 		<div>
 			<easy-card-list *ngIf="parties"
 				[parties]="parties"
@@ -52,21 +46,19 @@
 				(partyClick)="goToEvent($event)"></easy-card-slider>
 		</div>
 	</ng-container>
-	<!-- <div class="mt-16">
-		<easy-suggest-buttons (events)="goToEventsWeekend()"
-			(clubs)="goToClubsEventsList()"></easy-suggest-buttons>
-	</div> -->
 	<div *ngIf="clubs"
 		class="mt-16">
-		<!-- <easy-clubs-grid [clubs]="clubs"
-			[title]="'LOCALI PREFERITI'"></easy-clubs-grid> -->
-		<items-list *ngFor="let club of clubs"
-			[headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.covers[0].url}"
-			[parties]="club.parties"></items-list>
+		<ng-container *ngFor="let club of clubs">
+			<items-list *ngIf="club.parties.length"
+				[headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.covers[0].url}"
+				[parties]="club.parties"
+				(more)="goToClubsEventsList(club)"></items-list>
+		</ng-container>
 	</div>
 	<div id="filters"
 		class="mt-20">
-		<ion-card class="square">
+		<ion-card (click)="partiesUtils.CommonFilterActions.Today()"
+			class="square">
 			<div class="content">
 				<div>
 					<ion-icon color="light"
@@ -81,7 +73,8 @@
 			</div>
 		</ion-card>
 
-		<ion-card class="square">
+		<ion-card (click)="partiesUtils.CommonFilterActions.Weekend()"
+			class="square">
 			<div class="content">
 				<div>
 					<ion-icon color="light"
@@ -95,25 +88,27 @@
 				</div>
 			</div>
 		</ion-card>
-		<ion-card class="square">
+		<ion-card (click)="partiesUtils.CommonFilterActions.Saved()"
+			class="square">
 			<div class="content">
 				<div>
 					<ion-icon color="light"
-						name='calendar-outline'></ion-icon>
+						name='bookmark'></ion-icon>
 				</div>
 				<div class="body">
-					<div>CLUB</div>
+					<div>SALVATI</div>
 					<div>
 						Tutti gli eventi dei tuoi club Preferiti
 					</div>
 				</div>
 			</div>
 		</ion-card>
-		<ion-card class="square">
+		<ion-card (click)="partiesUtils.CommonFilterActions.FavoritesClubs()"
+			class="square">
 			<div class="content">
 				<div>
 					<ion-icon color="light"
-						name='calendar-outline'></ion-icon>
+						name='wine'></ion-icon>
 				</div>
 				<div class="body">
 					<div>CLUB</div>
@@ -123,21 +118,23 @@
 				</div>
 			</div>
 		</ion-card>
-		<ion-card class="square">
+		<ion-card (click)="partiesUtils.CommonFilterActions.ForYou()"
+			class="square">
 			<div class="content">
 				<div>
 					<ion-icon color="light"
-						name='calendar-outline'></ion-icon>
+						name='sparkles'></ion-icon>
 				</div>
 				<div class="body">
-					<div>OGGI</div>
+					<div>PER TE</div>
 					<div>
 						Gli eventi di oggi stanno per terminare!
 					</div>
 				</div>
 			</div>
 		</ion-card>
-		<ion-card id="all-events"
+		<ion-card (click)="partiesUtils.CommonFilterActions.Today()"
+			id="all-events"
 			class="square">
 			<div class="content h-full flex align-center">
 				<div class="m-0-auto">Tutti gli eventi</div>

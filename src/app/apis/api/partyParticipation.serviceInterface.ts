@@ -13,11 +13,12 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreatePartyParticipationRequestDto } from '../model/models';
 import { PartyParticipationControllerCreateDefaultResponse } from '../model/models';
 import { PartyParticipationControllerFindAllDefaultResponse } from '../model/models';
 import { PartyParticipationControllerFindOneDefaultResponse } from '../model/models';
-import { PartyParticipationControllerReplaceDefaultResponse } from '../model/models';
+import { PartyParticipationControllerSetDefaultResponse } from '../model/models';
 import { PartyParticipationControllerUpdateDefaultResponse } from '../model/models';
 import { PatchPartyParticipationRequestDto } from '../model/models';
 import { UpdatePartyParticipationRequestDto } from '../model/models';
@@ -41,12 +42,25 @@ export interface PartyParticipationServiceInterface {
     /**
      * 
      * 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerCountDefaultResponse>;
+
+    /**
+     * 
+     * 
      * @param createPartyParticipationRequestDto 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerCreateDefaultResponse>;
+    create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -57,9 +71,9 @@ export interface PartyParticipationServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -67,9 +81,9 @@ export interface PartyParticipationServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerFindOneDefaultResponse>;
 
     /**
      * 
@@ -77,7 +91,17 @@ export interface PartyParticipationServiceInterface {
      * @param id 
      * @param updatePartyParticipationRequestDto 
      */
-    replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, extraHttpRequestParams?: any): Observable<PartyParticipationControllerReplaceDefaultResponse>;
+    replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, extraHttpRequestParams?: any): Observable<PartyParticipationControllerSetDefaultResponse>;
+
+    /**
+     * 
+     * 
+     * @param updatePartyParticipationRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    set(updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<PartyParticipationControllerSetDefaultResponse>;
 
     /**
      * 

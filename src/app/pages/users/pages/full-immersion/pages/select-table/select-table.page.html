@@ -1,12 +1,18 @@
 <ion-header class="ion-no-border transparent absolute">
 	<ion-toolbar class="p-6 pl-0-i">
 		<ion-buttons slot="start">
-			<ion-button (click)="goBack()"
+			<ion-fab-button (click)="goBack()"
+				class="button m-3 w-9 h-9"
+				routerDirection="back">
+				<ion-icon name="arrow-back"
+					style="font-size: 1rem;"></ion-icon>
+			</ion-fab-button>
+			<!-- <ion-button (click)="goBack()"
 				color="light"
 				size="icon-only"
 				fill="clear">
 				<ion-icon name="arrow-back-sharp"></ion-icon>
-			</ion-button>
+			</ion-button> -->
 		</ion-buttons>
 		<ion-title>
 			<div class="subtitle">

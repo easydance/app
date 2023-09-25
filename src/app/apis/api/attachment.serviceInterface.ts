@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { AddressControllerCountDefaultResponse } from '../model/models';
 import { AttachmentControllerFindAllDefaultResponse } from '../model/models';
 import { AttachmentControllerFindOneDefaultResponse } from '../model/models';
 import { AttachmentControllerReplaceDefaultResponse } from '../model/models';
@@ -41,12 +42,25 @@ export interface AttachmentServiceInterface {
     /**
      * 
      * 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerCountDefaultResponse>;
+
+    /**
+     * 
+     * 
      * @param createAttachmentRequestDto 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    create(createAttachmentRequestDto: CreateAttachmentRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerUploadFileDefaultResponse>;
+    create(createAttachmentRequestDto: CreateAttachmentRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerUploadFileDefaultResponse>;
 
     /**
      * 
@@ -57,9 +71,9 @@ export interface AttachmentServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -67,9 +81,9 @@ export interface AttachmentServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AttachmentControllerFindOneDefaultResponse>;
 
     /**
      * 

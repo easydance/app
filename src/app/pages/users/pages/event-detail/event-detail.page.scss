@@ -1,53 +1,48 @@
-.image-header {
-  height: 40%;
-
-  swiper-container,
-  swiper-slide {
-    height: 100%;
-    width: 100%;
-  }
-
-  swiper-slide {
-    background: var(--color-neutral-600) center center no-repeat;
-    background-size: cover;
-  }
-}
-
-.event-title {
-  overflow: hidden;
-  color: var(--color-green-100);
-  text-overflow: ellipsis;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 22px; /* 91.667% */
-}
-
-.event-club {
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 11px; /* 68.75% */
-  letter-spacing: 0.4px;
-}
-
-.map-title {
-  .title {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 14px; /* 100% */
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-  }
-  .address {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 17px; /* 121.429% */
-  }
-}
-
 ion-content {
   --padding-bottom: calc(75px + var(--ion-safe-area-bottom));
+
+  > div {
+    margin-bottom: calc(75px + var(--ion-safe-area-bottom));
+  }
+}
+
+#list-button-wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  ion-button {
+    width: 75%;
+    margin-left: 12.5%;
+  }
+}
+
+ion-modal {
+  --border-radius: 20px 20px 0px 0px;
+  --background: black;
+
+  .title {
+    vertical-align: middle;
+    color: var(--neutral-50-brand, #fafafa);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px; /* 125% */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+}
+
+ion-modal::part(content) {
+  background: var(--neutral-20016, rgba(190, 190, 190, 0.16));
+  backdrop-filter: blur(50px);
+}
+
+.label {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 11px; /* 91.667% */
+  letter-spacing: 1px;
 }

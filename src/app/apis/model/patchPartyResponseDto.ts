@@ -9,7 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { GetPartyParticipationResponseDto } from './getPartyParticipationResponseDto';
 import { AddressBaseDto } from './addressBaseDto';
+import { PartyParticipationBaseDto } from './partyParticipationBaseDto';
 import { ClubBaseDto } from './clubBaseDto';
 import { AttachmentBaseDto } from './attachmentBaseDto';
 
@@ -35,5 +37,7 @@ export interface PatchPartyResponseDto {
     address: AddressBaseDto;
     images: Array<AttachmentBaseDto>;
     saved: number | null;
+    participation: GetPartyParticipationResponseDto | null;
+    users: Array<PartyParticipationBaseDto>;
 }
 

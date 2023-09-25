@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreateTablePartyRuleRequestDto } from '../model/models';
 import { PatchTablePartyRuleRequestDto } from '../model/models';
 import { TablePartyRuleControllerCreateDefaultResponse } from '../model/models';
@@ -41,12 +42,25 @@ export interface TablePartyRuleServiceInterface {
     /**
      * 
      * 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerCountDefaultResponse>;
+
+    /**
+     * 
+     * 
      * @param createTablePartyRuleRequestDto 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    create(createTablePartyRuleRequestDto: CreateTablePartyRuleRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TablePartyRuleControllerCreateDefaultResponse>;
+    create(createTablePartyRuleRequestDto: CreateTablePartyRuleRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<TablePartyRuleControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -57,9 +71,9 @@ export interface TablePartyRuleServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TablePartyRuleControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<TablePartyRuleControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -67,9 +81,9 @@ export interface TablePartyRuleServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<TablePartyRuleControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<TablePartyRuleControllerFindOneDefaultResponse>;
 
     /**
      * 

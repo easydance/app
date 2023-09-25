@@ -1,90 +1,96 @@
-<ion-header class="ion-no-border transparent absolute">
+<ion-header *ngIf="!config?.hideHeader"
+	class="ion-no-border transparent absolute">
 	<ion-toolbar class="p-6 pl-0-i">
 		<ion-buttons slot="start">
-			<ion-button (click)="goBack()"
+			<ion-fab-button (click)="goBack()"
+				class="button m-3 w-9 h-9"
+				routerDirection="back">
+				<ion-icon name="arrow-back"
+					style="font-size: 1rem;"></ion-icon>
+			</ion-fab-button>
+			<!-- <ion-button (click)="goBack()"
 				color="light"
 				size="icon-only"
 				fill="clear">
 				<ion-icon name="arrow-back-sharp"></ion-icon>
-			</ion-button>
+			</ion-button> -->
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<div class="image-header">
-		<ion-skeleton-text *ngIf="!party?.club?.covers"
-			[animated]="true"
-			style="height: 100%;"></ion-skeleton-text>
-		<swiper-container *ngIf="party?.cover"
-			pagination="false"
-			slides-per-view="1"
-			space-between="0">
-			<swiper-slide *ngFor="let img of [party?.cover]"
-				[ngStyle]="{ backgroundImage: 'linear-gradient(179deg, rgba(24, 24, 24, 0) 0%, rgba(24, 24, 24, 1) 100%), url(' + img?.url + ')'}">
-
-			</swiper-slide>
-		</swiper-container>
+	<div>
+		<event-detail [party]="party"
+			[cardOptions]="config"></event-detail>
 	</div>
-	<div class="px-4">
-
-		<!-- DATETIME INFO -->
-		<div class="flex space-between my-4">
-			<ion-chip [outline]="true"
-				color="light">
-				{{party?.from | date:'dd LLL'}}
-			</ion-chip>
-			<ion-chip [outline]="true"
-				color="light">
-				Start {{party?.from | date:'HH:mm'}} - End {{party?.to | date:'HH:mm'}}
-			</ion-chip>
-		</div>
-
-		<!-- TITLE AND CLUB -->
-		<div class="mt-8">
-			<div class="event-title">{{party?.title}}</div>
-			<div class="event-club mt-3">
-				{{party?.club?.name}}
-			</div>
-		</div>
-
-		<!-- INFO EVENT -->
-		<div class="paragraph mt-12">
-			<div class="title">Info</div>
-			<div class="description">
-				{{party?.description}}
-			</div>
-		</div>
-
-		<!-- EVENT MAP -->
-		<div class="mt-12 mb-4 flex space-between map-title">
-			<div class="title">DOVE</div>
-			<div class="address">
-				{{party?.club?.address?.street}}, {{party?.club?.address?.streetNumber}}
-			</div>
-		</div>
-		<div *ngIf="party?.club?.address?.lat && party?.club?.address?.lng"
-			style="border-radius: 1rem; overflow: hidden;">
-			<google-map [options]="options"
-				[center]="center"
-				[zoom]="16"
-				[height]="250"
-				[width]="'100%'">
-				<map-marker [position]="center"></map-marker>
-			</google-map>
-		</div>
-
-		<!-- TAGS -->
-		<div class="paragraph mt-12">
-			<div class="title">Tags</div>
-			<div class="description">
-				<ion-chip *ngFor="let tag of party?.tags"
-					[outline]="true"
-					class="mr-2-i mt-2-i"
-					color="light">
-					{{tag}}
-				</ion-chip>
-			</div>
-		</div>
+	<div *ngIf="party?.isWaitingList"
+		id="list-button-wrapper">
+		<ion-button (click)="listModal.present()"
+			color="primary"
+			shape="round">
+			<ion-icon name="document-text"
+				class="mr-2"></ion-icon>
+			METTITI IN LISTA
+		</ion-button>
 	</div>
 </ion-content>
+
+<ion-modal #listModal
+	class="auto-height bottom">
+	<ng-template>
+		<div class="p-5">
+			<div class="flex space-between items-center header">
+				<div class="title flex align-center flex-1">
+					<div>Mettiti in lista</div>
+				</div>
+				<div class="close">
+					<ion-button (click)="listModal.dismiss()"
+						size="icon-only"
+						fill="clear"
+						color="light">
+						<ion-icon name="close"></ion-icon>
+					</ion-button>
+				</div>
+			</div>
+			<div class="body flex gap-4 space-between mt-8">
+				<div class="flex-2">
+					<ion-label class="label mb-2">PR di riferimento</ion-label>
+					<ion-item lines="none">
+						<ion-input [(ngModel)]="party?.participation!.pr"
+							name="pr"
+							required
+							placeholder>
+						</ion-input>
+					</ion-item>
+				</div>
+				<div class="flex-1">
+					<ion-label class="label mb-2">Partecipanti</ion-label>
+					<ion-item lines="none">
+						<ion-input [(ngModel)]="party?.participation!.participants"
+							name="partecipants"
+							type="number"
+							max="10"
+							required
+							placeholder>
+						</ion-input>
+					</ion-item>
+				</div>
+
+			</div>
+			<div class="flex space-between footer my-8">
+				<ion-button (click)="listModal.dismiss()"
+					class="flex-1"
+					shape="round"
+					color="dark">
+					CHIUDI
+				</ion-button>
+				<ion-button (click)="createOrUpdatePartecipation(listModal)"
+					class="flex-1"
+					shape="round"
+					color="primary">
+					SALVA
+				</ion-button>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

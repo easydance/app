@@ -1,12 +1,18 @@
 <ion-header class="ion-no-border transparent absolute">
 	<ion-toolbar class="p-6 pl-0-i">
 		<ion-buttons slot="start">
-			<ion-button (click)="goBack()"
+			<ion-fab-button (click)="goBack()"
+				class="button m-3 w-9 h-9"
+				routerDirection="back">
+				<ion-icon name="arrow-back"
+					style="font-size: 1rem;"></ion-icon>
+			</ion-fab-button>
+			<!-- <ion-button (click)="goBack()"
 				color="light"
 				size="icon-only"
 				fill="clear">
 				<ion-icon name="arrow-back-sharp"></ion-icon>
-			</ion-button>
+			</ion-button> -->
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -40,7 +46,23 @@
 			</div>
 		</div>
 	</div>
-	<div class="px-4">
+	<div class="px-4 mt-2">
+		<div class="flex gap-2">
+			<ion-button color="dark"
+				class="flex-2">
+				{{club?.followerCount}}
+				<ion-icon name="people"
+					slot="end"></ion-icon>
+			</ion-button>
+			<ion-button class="flex-1" *ngIf="!isFollowing"
+				color="primary" (click)="followClub()">
+				Segui
+			</ion-button>
+			<ion-button class="flex-1" *ngIf="isFollowing"
+				color="primary" (click)="unfollowClub()">
+				Smetti di serguire
+			</ion-button>
+		</div>
 
 		<!-- INFO CLUB -->
 		<div class="paragraph mt-12">
@@ -84,7 +106,7 @@
 		<!-- TAGS -->
 		<div class="mt-12">
 			<easy-card-slider [parties]="parties || []"
-				[title]="'PROSSIMI EVENTI'"></easy-card-slider>
+				[title]="'PROSSIMI EVENTI'" (partyClick)="goto($event)"></easy-card-slider>
 		</div>
 	</div>
 </ion-content>

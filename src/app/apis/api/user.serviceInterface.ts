@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreateUserRequestDto } from '../model/models';
 import { PatchUserRequestDto } from '../model/models';
 import { UpdateUserRequestDto } from '../model/models';
@@ -41,12 +42,25 @@ export interface UserServiceInterface {
     /**
      * 
      * 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerCountDefaultResponse>;
+
+    /**
+     * 
+     * 
      * @param createUserRequestDto 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    create(createUserRequestDto: CreateUserRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserControllerCreateDefaultResponse>;
+    create(createUserRequestDto: CreateUserRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -64,9 +78,9 @@ export interface UserServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -74,9 +88,9 @@ export interface UserServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<UserControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserControllerFindOneDefaultResponse>;
 
     /**
      * 

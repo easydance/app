@@ -50,17 +50,21 @@
 				class="w-full mt-1">
 				Registarti
 			</ion-button>
-			<ion-button size="lg"
+			<ion-button (click)="googleLogin()"
+				size="lg"
 				shape="round"
 				color="light"
 				class="w-full mt-1 text-none">
+				<ion-icon [src]="'assets/icons/google.svg'" slot="start"></ion-icon>
 				Login con Google
 			</ion-button>
-			<ion-button size="lg"
+			<ion-button *ngIf="platform.is('ios')"
+				size="lg"
 				shape="round"
 				color="dark"
 				style="--background: black"
 				class="w-full mt-1 text-none">
+				<ion-icon [src]="'assets/icons/applelogo.svg'" slot="start"></ion-icon>
 				Sign in con Apple
 			</ion-button>
 		</form>

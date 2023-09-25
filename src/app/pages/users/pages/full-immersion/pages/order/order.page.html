@@ -38,7 +38,7 @@
 				class="product">
 				<div>
 					<div>{{product.name}}</div>
-					<div class="mt-2"></div>
+					<div class="price mt-2">{{(product.price / 100) | currency:'€'}}</div>
 				</div>
 				<div class="flex align-center">
 					<ion-button *ngIf="cart?.getQty(product) || 0 > 0"

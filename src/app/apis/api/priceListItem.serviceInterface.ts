@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreatePriceListItemRequestDto } from '../model/models';
 import { PatchPriceListItemRequestDto } from '../model/models';
 import { PriceListItemControllerCreateDefaultResponse } from '../model/models';
@@ -41,12 +42,25 @@ export interface PriceListItemServiceInterface {
     /**
      * 
      * 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerCountDefaultResponse>;
+
+    /**
+     * 
+     * 
      * @param createPriceListItemRequestDto 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    create(createPriceListItemRequestDto: CreatePriceListItemRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PriceListItemControllerCreateDefaultResponse>;
+    create(createPriceListItemRequestDto: CreatePriceListItemRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<PriceListItemControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -57,9 +71,9 @@ export interface PriceListItemServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PriceListItemControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<PriceListItemControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -67,9 +81,9 @@ export interface PriceListItemServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<PriceListItemControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<PriceListItemControllerFindOneDefaultResponse>;
 
     /**
      * 

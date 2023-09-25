@@ -7,7 +7,7 @@ import { authGuard } from 'src/app/guards/authentication.guard';
 const routes: Routes = [
   {
     path: '',
-    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     component: UsersPage,
     children: [
       {
@@ -44,12 +44,28 @@ const routes: Routes = [
         loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
+        path: 'profile/:id',
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)
+      },
+      {
         path: 'full-immersion',
         loadChildren: () => import('./pages/full-immersion/full-immersion.module').then(m => m.FullImmersionPageModule)
       },
       {
         path: 'search',
         loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
+      },
+      {
+        path: 'stories',
+        loadChildren: () => import('./pages/stories/stories.module').then( m => m.StoriesPageModule)
+      },
+      {
+        path: 'map',
+        loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule)
+      },
+      {
+        path: 'story',
+        loadChildren: () => import('./pages/story/story.module').then( m => m.StoryPageModule)
       },
     ]
   },

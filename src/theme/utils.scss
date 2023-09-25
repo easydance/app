@@ -1,6 +1,11 @@
 .absolute {
   position: absolute;
 }
+@for $value from 0 through 10000 {
+  .z-#{$value} {
+    z-index: #{$value};
+  }
+}
 
 @for $value from 0 through 48 {
   .bottom-#{$value} {
@@ -72,6 +77,10 @@
   display: flex;
 }
 
+.flex-end {
+  flex-direction: column;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -90,6 +99,10 @@
 }
 .space-around {
   justify-content: space-around;
+}
+
+.justify-end {
+  justify-content: end;
 }
 
 @for $value from 0 through 48 {
@@ -227,4 +240,12 @@
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+ion-modal.auto-height {
+  --height: fit-content;
+}
+
+ion-modal.bottom {
+  align-items: flex-end;
 }

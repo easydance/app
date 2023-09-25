@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { CreateSavedPartyRequestDtoParty } from './createSavedPartyRequestDtoParty';
+import { CreatePartyParticipationRequestDtoParty } from './createPartyParticipationRequestDtoParty';
 
 
 export interface CreateSavedPartyRequestDto { 
-    party: CreateSavedPartyRequestDtoParty;
+    party: CreatePartyParticipationRequestDtoParty;
 }
 

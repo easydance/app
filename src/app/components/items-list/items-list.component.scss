@@ -45,6 +45,7 @@
   #body {
     width: 100%;
     ion-item {
+      --background: transparent;
       .title {
         color: var(--color-neutral-50, #fafafa);
 
@@ -89,6 +90,7 @@ ion-item {
     padding-right: 10px;
     font-size: 0.75rem;
     height: auto;
+    max-width: 60%;
 
     ion-icon {
       font-size: 0.75rem;
@@ -103,10 +105,20 @@ ion-item {
     backdrop-filter: blur(50px);
   }
 
+  ion-chip.dark-light {
+    --background: var(--color-neutral-20016);
+    --color: var(--color-neutral-50);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1rem;
+  }
   ion-chip.dark {
     --background: var(--color-neutral-600);
     --color: var(--color-neutral-50);
     margin: 0;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1rem;
   }
 }

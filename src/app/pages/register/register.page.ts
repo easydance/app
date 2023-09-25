@@ -1,10 +1,12 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, NgZone, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { AbstractControl, NgForm, ValidationErrors } from '@angular/forms';
+import { Capacitor } from '@capacitor/core';
 import { IonModal, NavController, ToastController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { AuthService, GetTagResponseDto, SignUpDto, TagService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { getFileReader } from 'src/app/utils/filereader.utils';
 import { IComparator, IValidatorConfig, getFormValidationErrors } from 'src/app/validators/form-conditions.validator';
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -100,7 +102,8 @@ export class RegisterPage implements OnInit {
     private tagsService: TagService,
     private authService: AuthManagerService,
     private navCtrl: NavController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -120,9 +123,8 @@ export class RegisterPage implements OnInit {
     if (this.currentStep.index + 1 == this.formSteps.length) {
       this.authService.signUp(this.user)
         .pipe(
-          catchError(async err => {
-            const toast = await this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione' });
-            toast.present();
+          catchError(err => {
+            this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione', duration: 3000 }).then(f => f.present());
             return throwError(() => err);
           })
         )
@@ -176,11 +178,12 @@ export class RegisterPage implements OnInit {
       return;
     }
     const file = target.files[0];
-    const reader = new FileReader();
+    const reader = getFileReader();
     reader.onloadend = () => {
       console.log('RESULT', reader.result);
       this.user.profile = reader.result as string;
       target.value = '';
+      this.ngZone.run(() => { });
     };
     reader.readAsDataURL(file);
   }
@@ -188,7 +191,6 @@ export class RegisterPage implements OnInit {
   getFormValidationErrors() {
     if (this.currentForm) {
       const errors = getFormValidationErrors(this.currentForm);
-      console.log(errors);
       return errors;
     }
     return {};

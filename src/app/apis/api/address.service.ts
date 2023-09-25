@@ -19,6 +19,8 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { AddressControllerCountDefaultResponse } from '../model/addressControllerCountDefaultResponse';
+// @ts-ignore
 import { AddressControllerCreateDefaultResponse } from '../model/addressControllerCreateDefaultResponse';
 // @ts-ignore
 import { AddressControllerFindAllDefaultResponse } from '../model/addressControllerFindAllDefaultResponse';
@@ -165,17 +167,108 @@ export class AddressService implements AddressServiceInterface {
     }
 
     /**
-     * @param createAddressRequestDto 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerCreateDefaultResponse>;
-    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerCreateDefaultResponse>>;
-    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerCreateDefaultResponse>>;
-    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerCountDefaultResponse>;
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerCountDefaultResponse>>;
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerCountDefaultResponse>>;
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (page !== undefined && page !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>page, 'page');
+        }
+        if (pageSize !== undefined && pageSize !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>pageSize, 'pageSize');
+        }
+        if (filters !== undefined && filters !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filters, 'filters');
+        }
+        if (sorting !== undefined && sorting !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>sorting, 'sorting');
+        }
+        if (fields !== undefined && fields !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>fields, 'fields');
+        }
+        if (includes !== undefined && includes !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>includes, 'includes');
+        }
+        if (deleted !== undefined && deleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>deleted, 'deleted');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/addresses/count`;
+        return this.httpClient.request<AddressControllerCountDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param createAddressRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerCreateDefaultResponse>;
+    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerCreateDefaultResponse>>;
+    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerCreateDefaultResponse>>;
+    public create(createAddressRequestDto: CreateAddressRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (createAddressRequestDto === null || createAddressRequestDto === undefined) {
             throw new Error('Required parameter createAddressRequestDto was null or undefined when calling create.');
         }
@@ -189,9 +282,9 @@ export class AddressService implements AddressServiceInterface {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
         }
-        if (withDeleted !== undefined && withDeleted !== null) {
+        if (deleted !== undefined && deleted !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withDeleted, 'withDeleted');
+            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -256,14 +349,14 @@ export class AddressService implements AddressServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerFindAllDefaultResponse>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerFindAllDefaultResponse>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (page !== undefined && page !== null) {
@@ -290,9 +383,9 @@ export class AddressService implements AddressServiceInterface {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
         }
-        if (withDeleted !== undefined && withDeleted !== null) {
+        if (deleted !== undefined && deleted !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withDeleted, 'withDeleted');
+            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -344,14 +437,14 @@ export class AddressService implements AddressServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerFindOneDefaultResponse>;
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerFindOneDefaultResponse>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findOne.');
         }
@@ -365,9 +458,9 @@ export class AddressService implements AddressServiceInterface {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
         }
-        if (withDeleted !== undefined && withDeleted !== null) {
+        if (deleted !== undefined && deleted !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withDeleted, 'withDeleted');
+            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;

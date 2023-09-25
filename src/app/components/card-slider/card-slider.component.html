@@ -3,10 +3,9 @@
 </div>
 <swiper-container pagination="false"
 	slides-per-view="auto"
-	space-between="12"
 	free-mode="true">
 	<swiper-slide *ngFor="let party of parties" (click)="partyClick.emit(party)">
-		<div class="party-card">
+		<div class="party-card mr-3">
 			<party-card [party]="party"></party-card>
 		</div>
 	</swiper-slide>

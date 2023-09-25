@@ -1,0 +1,94 @@
+#header {
+  position: absolute;
+  top: var(--ion-safe-area-top);
+  width: 100%;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    #171717 0%,
+    #171717 50%,
+    transparent 100%
+  );
+  z-index: 100000000001;
+
+  ion-button {
+    font-size: 10px;
+    letter-spacing: 1.6px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    --padding-end: 12px;
+    --padding-start: 12px;
+    --border-width: 0.5px;
+    --border-radius: 8px;
+  }
+
+  ion-button.actived {
+    --background-focused: rgba(190, 190, 190, 0.16);
+    --background: rgba(190, 190, 190, 0.16);
+    --background-activated: rgba(190, 190, 190, 0.16);
+    --border-style: solid;
+    --border-color: #9c9c9c;
+    --border-width: 0.5px;
+    --border-radius: 8px;
+  }
+}
+
+ion-fab-button.button {
+  --background: rgba(190, 190, 190, 0.16) !important;
+  --background-activated: rgba(190, 190, 190, 0.16) !important;
+}
+
+ion-modal#date-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  --max-width: 80%;
+}
+
+ion-modal.blur {
+  --background: rgba(18, 18, 18, 0.6);
+  /* Blur Card */
+  // backdrop-filter: blur(50px);
+}
+
+// ion-modal.blur::part(content) {
+//   background: rgba(18, 18, 18, 0.60);
+//   backdrop-filter: blur(50px);
+// }
+
+ion-modal {
+  --border-radius: 20px 20px 0 0;
+  --background: transparent;
+}
+
+ion-modal::part(content), ion-modal#clubModal::part(content) {
+  background: var(--neutral-20016, rgba(190, 190, 190, 0.16));
+  backdrop-filter: blur(50px);
+}
+#events-modal {
+  --border-radius: 20px !important;
+  --background: transparent;
+}
+
+#clubModal {
+  --border-radius: 20px !important;
+  --background: transparent;
+
+  .info-club {
+    .title {
+      font-size: 34px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 22px; /* 64.706% */
+    }
+    .location {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 11px; /* 78.571% */
+      letter-spacing: 0.4px;
+    }
+  }
+}

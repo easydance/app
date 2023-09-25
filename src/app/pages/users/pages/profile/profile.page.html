@@ -1,12 +1,25 @@
 <ion-header class="ion-no-border transparent absolute">
-	<ion-toolbar class="p-6 pl-0-i">
+	<ion-toolbar class="py-6">
 		<ion-buttons slot="start">
-			<ion-button (click)="goBack()"
+			<ion-fab-button (click)="goBack()"
+				class="button m-3 mr-0-i w-9 h-9"
+				routerDirection="back">
+				<ion-icon name="arrow-back"
+					style="font-size: 1rem;"></ion-icon>
+			</ion-fab-button>
+			<!-- <ion-button (click)="goBack()"
 				color="light"
 				size="icon-only"
 				fill="clear">
 				<ion-icon name="arrow-back-sharp"></ion-icon>
-			</ion-button>
+			</ion-button> -->
+		</ion-buttons>
+		<ion-buttons [slot]="'end'">
+			<ion-fab-button [routerLink]="'/full-immersion/orders'"
+				class="button m-3 w-9 h-9">
+				<ion-icon name="cart-outline"
+					style="font-size: 1rem;"></ion-icon>
+			</ion-fab-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -28,8 +41,16 @@
 			slides-per-view="1"
 			space-between="0">
 			<swiper-slide *ngFor="let img of [user?.profileImage]"
-				[ngStyle]="{ backgroundImage: 'linear-gradient(180deg, transparent 0%, black 100%), url(' + img?.url + ')'}">
+				[ngStyle]="{ backgroundImage: 'linear-gradient(180deg, transparent 0%, black 100%), url(' + img?.url + ')'}"
+				class="flex align-center justify-end">
 
+				<!-- <div class="flex items-center">
+					<ion-fab-button [routerLink]="'/full-immersion/orders'"
+						class="button m-3 w-9 h-9">
+						<ion-icon name="cart-outline"
+							style="font-size: 1rem;"></ion-icon>
+					</ion-fab-button>
+				</div> -->
 			</swiper-slide>
 		</swiper-container>
 		<div class="flex align-center space-between absolute w-full px-4"
@@ -46,11 +67,19 @@
 		<div class="flex gap-2 ">
 			<ion-button color="dark"
 				class="w-full">
-				229
+				{{user?.followers ?? '-'}}
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 			</ion-button>
-			<ion-button color="light"
+			<ion-button *ngIf="!isMe"
+				color="dark"
+				class="w-full">
+				{{user?.following ?? '-'}}
+				<ion-icon name="people"
+					slot="end"></ion-icon>
+			</ion-button>
+			<ion-button *ngIf="isMe"
+				color="primary"
 				class="w-full">
 				MODIFICA
 			</ion-button>
@@ -76,22 +105,22 @@
 		<div class="paragraph mt-12">
 			<div class="title">Tags</div>
 			<div *ngIf="!user"
-					class="w-full flex gap-2">
-					<div class="w-30">
-						<ion-skeleton-text class="h-5 rounded"
-							animated="true"></ion-skeleton-text>
-					</div>
-					<div *ngIf="!user"
-						class="w-25">
-						<ion-skeleton-text class="h-5 rounded"
-							animated="true"></ion-skeleton-text>
-					</div>
-					<div *ngIf="!user"
-						class="w-40">
-						<ion-skeleton-text class="h-5 rounded"
-							animated="true"></ion-skeleton-text>
-					</div>
+				class="w-full flex gap-2">
+				<div class="w-30">
+					<ion-skeleton-text class="h-5 rounded"
+						animated="true"></ion-skeleton-text>
 				</div>
+				<div *ngIf="!user"
+					class="w-25">
+					<ion-skeleton-text class="h-5 rounded"
+						animated="true"></ion-skeleton-text>
+				</div>
+				<div *ngIf="!user"
+					class="w-40">
+					<ion-skeleton-text class="h-5 rounded"
+						animated="true"></ion-skeleton-text>
+				</div>
+			</div>
 			<div class="description w-full">
 				<ion-chip *ngFor="let tag of user?.tags"
 					[outline]="true"

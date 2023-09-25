@@ -128,6 +128,10 @@
 
   ion-button {
     text-transform: uppercase;
+    font-size: 0.7rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    line-height: 1rem;
   }
 
   ion-button[sm] {
@@ -163,6 +167,42 @@
   /** ION-CHIP **/
   ion-chip {
     margin: 0;
+  }
+
+  ion-chip.blured,
+  ion-chip.dark {
+    font-weight: 500;
+    padding: 4px 6px;
+    padding-right: 10px;
+    font-size: 0.75rem;
+    height: auto;
+
+    ion-icon {
+      font-size: 0.75rem;
+      margin-left: 2px;
+      margin-right: 4px;
+    }
+  }
+
+  ion-chip.xl {
+    font-size: 1.125rem;
+
+    ion-icon {
+      font-size: 1.125rem;
+    }
+  }
+
+  ion-chip.blured {
+    --color: var(--color-neutral-50);
+    --background: rgba(var(--color-neutral-200), 0.16);
+    backdrop-filter: blur(50px);
+  }
+
+  ion-chip.dark {
+    --background: var(--color-neutral-600);
+    --color: var(--color-neutral-50);
+    margin: 0;
+    text-transform: uppercase;
   }
 
   /** CARD **/
@@ -220,6 +260,12 @@ ion-datetime {
   --wheel-highlight-background: var(--color-neutral-600);
 }
 
+// ion-datetime::part(calendar-day) {
+  .calendar-day {
+    font-size: 14px !important;
+  }
+// }
+
 ion-picker-internal {
   background: black;
 }
@@ -254,4 +300,15 @@ ion-searchbar {
   button {
     inset-inline-end: 1rem !important;
   }
+}
+
+:root {
+  .datetime-buttons {
+    border: none !important;
+  }
+}
+
+ion-fab-button.button {
+  --background: rgba(190, 190, 190, 0.16) !important;
+  --background-activated: rgba(190, 190, 190, 0.16) !important;
 }

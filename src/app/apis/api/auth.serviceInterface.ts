@@ -17,6 +17,7 @@ import { LoginDto } from '../model/models';
 import { LoginResponseDto } from '../model/models';
 import { MeResponseDto } from '../model/models';
 import { SignUpDto } from '../model/models';
+import { SignupResponseDataDto } from '../model/models';
 import { SignupResponseDto } from '../model/models';
 import { UpdateMeDto } from '../model/models';
 
@@ -41,16 +42,18 @@ export interface AuthServiceInterface {
      * 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    me(fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<MeResponseDto>;
+    me(fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<MeResponseDto>;
 
     /**
      * 
      * 
      * @param signUpDto 
+     * @param provider 
+     * @param authorization 
      */
-    signUp(signUpDto: SignUpDto, extraHttpRequestParams?: any): Observable<SignupResponseDto>;
+    signUp(signUpDto: SignUpDto, provider?: string, authorization?: string, extraHttpRequestParams?: any): Observable<SignupResponseDataDto>;
 
     /**
      * 

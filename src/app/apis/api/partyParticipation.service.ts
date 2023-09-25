@@ -19,6 +19,8 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { AddressControllerCountDefaultResponse } from '../model/addressControllerCountDefaultResponse';
+// @ts-ignore
 import { CreatePartyParticipationRequestDto } from '../model/createPartyParticipationRequestDto';
 // @ts-ignore
 import { PartyParticipationControllerCreateDefaultResponse } from '../model/partyParticipationControllerCreateDefaultResponse';
@@ -27,7 +29,7 @@ import { PartyParticipationControllerFindAllDefaultResponse } from '../model/par
 // @ts-ignore
 import { PartyParticipationControllerFindOneDefaultResponse } from '../model/partyParticipationControllerFindOneDefaultResponse';
 // @ts-ignore
-import { PartyParticipationControllerReplaceDefaultResponse } from '../model/partyParticipationControllerReplaceDefaultResponse';
+import { PartyParticipationControllerSetDefaultResponse } from '../model/partyParticipationControllerSetDefaultResponse';
 // @ts-ignore
 import { PartyParticipationControllerUpdateDefaultResponse } from '../model/partyParticipationControllerUpdateDefaultResponse';
 // @ts-ignore
@@ -165,17 +167,108 @@ export class PartyParticipationService implements PartyParticipationServiceInter
     }
 
     /**
-     * @param createPartyParticipationRequestDto 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerCreateDefaultResponse>;
-    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerCreateDefaultResponse>>;
-    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerCreateDefaultResponse>>;
-    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<AddressControllerCountDefaultResponse>;
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<AddressControllerCountDefaultResponse>>;
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<AddressControllerCountDefaultResponse>>;
+    public count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (page !== undefined && page !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>page, 'page');
+        }
+        if (pageSize !== undefined && pageSize !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>pageSize, 'pageSize');
+        }
+        if (filters !== undefined && filters !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filters, 'filters');
+        }
+        if (sorting !== undefined && sorting !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>sorting, 'sorting');
+        }
+        if (fields !== undefined && fields !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>fields, 'fields');
+        }
+        if (includes !== undefined && includes !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>includes, 'includes');
+        }
+        if (deleted !== undefined && deleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>deleted, 'deleted');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/party-participations/count`;
+        return this.httpClient.request<AddressControllerCountDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param createPartyParticipationRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerCreateDefaultResponse>;
+    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerCreateDefaultResponse>>;
+    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerCreateDefaultResponse>>;
+    public create(createPartyParticipationRequestDto: CreatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (createPartyParticipationRequestDto === null || createPartyParticipationRequestDto === undefined) {
             throw new Error('Required parameter createPartyParticipationRequestDto was null or undefined when calling create.');
         }
@@ -189,9 +282,9 @@ export class PartyParticipationService implements PartyParticipationServiceInter
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
         }
-        if (withDeleted !== undefined && withDeleted !== null) {
+        if (deleted !== undefined && deleted !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withDeleted, 'withDeleted');
+            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -256,14 +349,14 @@ export class PartyParticipationService implements PartyParticipationServiceInter
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerFindAllDefaultResponse>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerFindAllDefaultResponse>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (page !== undefined && page !== null) {
@@ -290,9 +383,9 @@ export class PartyParticipationService implements PartyParticipationServiceInter
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
         }
-        if (withDeleted !== undefined && withDeleted !== null) {
+        if (deleted !== undefined && deleted !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withDeleted, 'withDeleted');
+            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -344,14 +437,14 @@ export class PartyParticipationService implements PartyParticipationServiceInter
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerFindOneDefaultResponse>;
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerFindOneDefaultResponse>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findOne.');
         }
@@ -365,9 +458,9 @@ export class PartyParticipationService implements PartyParticipationServiceInter
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
         }
-        if (withDeleted !== undefined && withDeleted !== null) {
+        if (deleted !== undefined && deleted !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withDeleted, 'withDeleted');
+            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -421,9 +514,9 @@ export class PartyParticipationService implements PartyParticipationServiceInter
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerReplaceDefaultResponse>;
-    public replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerReplaceDefaultResponse>>;
-    public replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerReplaceDefaultResponse>>;
+    public replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerSetDefaultResponse>;
+    public replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerSetDefaultResponse>>;
+    public replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerSetDefaultResponse>>;
     public replace(id: number, updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling replace.');
@@ -473,10 +566,95 @@ export class PartyParticipationService implements PartyParticipationServiceInter
         }
 
         let localVarPath = `/party-participations/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<PartyParticipationControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<PartyParticipationControllerSetDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: updatePartyParticipationRequestDto,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param updatePartyParticipationRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public set(updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<PartyParticipationControllerSetDefaultResponse>;
+    public set(updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<PartyParticipationControllerSetDefaultResponse>>;
+    public set(updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<PartyParticipationControllerSetDefaultResponse>>;
+    public set(updatePartyParticipationRequestDto: UpdatePartyParticipationRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (updatePartyParticipationRequestDto === null || updatePartyParticipationRequestDto === undefined) {
+            throw new Error('Required parameter updatePartyParticipationRequestDto was null or undefined when calling set.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (fields !== undefined && fields !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>fields, 'fields');
+        }
+        if (includes !== undefined && includes !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>includes, 'includes');
+        }
+        if (deleted !== undefined && deleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>deleted, 'deleted');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/party-participations/set`;
+        return this.httpClient.request<PartyParticipationControllerSetDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: updatePartyParticipationRequestDto,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

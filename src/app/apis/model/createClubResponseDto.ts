@@ -41,5 +41,6 @@ export interface CreateClubResponseDto {
     currentCover: number;
     description: string;
     socials?: { [key: string]: { [key: string]: ClubBaseDtoSocialsValueValue; }; } | null;
+    followerCount: number;
 }
 

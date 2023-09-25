@@ -39,5 +39,9 @@ export interface LoginUserDataDto {
     previousProfileImages: Array<ProfileImageDto>;
     club: ClubBaseDto;
     clubs: Array<ClubBaseDto>;
+    savedParties: number;
+    followers: number;
+    following: number;
+    followingClubs: number;
 }
 

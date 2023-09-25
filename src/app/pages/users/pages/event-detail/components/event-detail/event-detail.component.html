@@ -1,0 +1,78 @@
+<!-- <div class="image-header">
+  <ion-skeleton-text *ngIf="!party?.club?.covers"
+    [animated]="true"
+    style="height: 100%;"></ion-skeleton-text>
+  <swiper-container *ngIf="party?.cover"
+    pagination="false"
+    slides-per-view="1"
+    space-between="0">
+    <swiper-slide *ngFor="let img of getImages()"
+      [ngStyle]="{ backgroundImage: 'linear-gradient(179deg, rgba(24, 24, 24, 0) 0%, rgba(24, 24, 24, 1) 100%), url(' + img?.url + ')'}">
+    </swiper-slide>
+  </swiper-container>
+</div>
+<div class="px-4"> -->
+
+<!-- DATETIME INFO -->
+<!-- <div class="flex space-between my-4">
+    <ion-chip [outline]="true"
+      color="light">
+      {{party?.from | date:'dd LLL'}}
+    </ion-chip>
+    <ion-chip [outline]="true"
+      color="light">
+      Start {{party?.from | date:'HH:mm'}} - End {{party?.to | date:'HH:mm'}}
+    </ion-chip>
+  </div> -->
+
+<!-- TITLE AND CLUB -->
+<!-- <div class="mt-8">
+    <div class="event-title">{{party?.title}}</div>
+    <div class="event-club mt-3">
+      {{party?.club?.name}}
+    </div>
+  </div> -->
+<party-card [party]="party"
+	[options]="cardOptions"></party-card>
+
+<div id="wrapper" class="px-4">
+
+	<!-- INFO EVENT -->
+	<div class="paragraph mt-12">
+		<div class="title">Info</div>
+		<div class="description">
+			{{party?.description}}
+		</div>
+	</div>
+
+	<!-- EVENT MAP -->
+	<div class="mt-12 mb-4 flex space-between map-title">
+		<div class="title">DOVE</div>
+		<div class="address">
+			{{party?.club?.address?.street}}, {{party?.club?.address?.streetNumber}}
+		</div>
+	</div>
+	<div *ngIf="center && party?.club?.address?.lat && party?.club?.address?.lng && !config?.hideMap"
+		style="border-radius: 1rem; overflow: hidden;">
+		<google-map [options]="options"
+			[center]="center"
+			[zoom]="16"
+			[height]="250"
+			[width]="'100%'">
+			<map-marker [position]="center"></map-marker>
+		</google-map>
+	</div>
+
+	<!-- TAGS -->
+	<div class="paragraph mt-12">
+		<div class="title">Tags</div>
+		<div class="description">
+			<ion-chip *ngFor="let tag of party?.tags"
+				[outline]="true"
+				class="mr-2-i mt-2-i"
+				color="light">
+				{{tag}}
+			</ion-chip>
+		</div>
+	</div>
+</div>

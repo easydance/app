@@ -41,5 +41,6 @@ export interface UpdateClubRequestDto {
     currentCover: number;
     description: string;
     socials?: { [key: string]: { [key: string]: ClubBaseDtoSocialsValueValue; }; } | null;
+    followerCount: number;
 }
 

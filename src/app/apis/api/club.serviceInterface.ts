@@ -13,6 +13,7 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { AddressControllerCountDefaultResponse } from '../model/models';
 import { ClubControllerCreateDefaultResponse } from '../model/models';
 import { ClubControllerFindAllDefaultResponse } from '../model/models';
 import { ClubControllerFindOneDefaultResponse } from '../model/models';
@@ -42,12 +43,25 @@ export interface ClubServiceInterface {
     /**
      * 
      * 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    count(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AddressControllerCountDefaultResponse>;
+
+    /**
+     * 
+     * 
      * @param createClubRequestDto 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    create(createClubRequestDto: CreateClubRequestDto, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<ClubControllerCreateDefaultResponse>;
+    create(createClubRequestDto: CreateClubRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ClubControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -58,9 +72,9 @@ export interface ClubServiceInterface {
      * @param sorting 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<ClubControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ClubControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -68,9 +82,9 @@ export interface ClubServiceInterface {
      * @param id 
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      */
-    findOne(id: any, fields?: string, includes?: string, withDeleted?: string, extraHttpRequestParams?: any): Observable<ClubControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ClubControllerFindOneDefaultResponse>;
 
     /**
      * 

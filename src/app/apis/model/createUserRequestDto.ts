@@ -14,7 +14,7 @@
 export interface CreateUserRequestDto { 
     email: string;
     password: string;
-    role: object;
+    role: string;
     firstName: string;
     lastName: string;
     birthDate: string;

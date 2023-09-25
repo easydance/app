@@ -1,0 +1,251 @@
+<ion-content [fullscreen]="true">
+	<div id="header">
+		<div class="flex w-full items-center">
+			<div>
+				<ion-fab-button [routerLink]="'/home'"
+					class="button"
+					class="button m-3 mr-0-i w-9 h-9"
+					routerDirection="back">
+					<ion-icon name="arrow-back"
+						style="font-size: 1rem;"></ion-icon>
+				</ion-fab-button>
+			</div>
+			<div class="flex-1 mr-3">
+				<ion-searchbar [showClearButton]="'always'"
+					[placeholder]="'Cerca...'"
+					clearIcon="close-outline"></ion-searchbar>
+			</div>
+		</div>
+		<div class="px-3 pb-10">
+			<ion-button size="small"
+				class="mr-2"
+				color="medium"
+				fill="outline">
+				<ion-icon name="location-sharp"
+					slot="start"
+					color="medium"
+					style="font-size: 13px;"></ion-icon>
+				{{city}}
+			</ion-button>
+			<ion-button id="date"
+				size="small"
+				class="mr-2"
+				color="medium"
+				fill="outline">
+				{{date || 'OGGI'}}
+			</ion-button>
+			<ion-button [fill]="searchType == 'clubs'? 'solid' : 'outline'"
+				[ngClass]="{actived: searchType == 'clubs'}"
+				[color]="searchType == 'clubs'? undefined : 'medium'"
+				(click)="changeSearchType('clubs')"
+				size="small"
+				class="mr-2"
+				fill="outline">
+				CLUB
+			</ion-button>
+			<ion-button [fill]="searchType == 'parties'? 'solid' : 'outline'"
+				[ngClass]="{actived: searchType == 'parties'}"
+				[color]="searchType == 'parties'? undefined : 'medium'"
+				(click)="changeSearchType('parties')"
+				size="small"
+				class="mr-2">
+				EVENTI
+			</ion-button>
+		</div>
+	</div>
+	<!-- <capacitor-google-map id="map"></capacitor-google-map> -->
+	<google-map #map
+		*ngIf="center"
+		[options]="options"
+		[center]="center"
+		[zoom]="12"
+		[height]="'100%'"
+		[width]="'100%'"
+		(boundsChanged)="onBoundsChanged($event, map)"
+		(mapDragend)="city = 'IN ZONA'">
+		<map-marker-clusterer [minimumClusterSize]="2"
+			[options]="clusterOptions"
+			[zoomOnClick]="false"
+			(clusterClick)="showEvents($event)">
+			<map-marker *ngFor="let party of parties"
+				[position]="{ lat: party.address.lat || 0, lng: party.address.lng || 0}"
+				[icon]="markerIcon"
+				[options]="{
+          title: ''+party.id
+         }"
+				(mapClick)="showEvent(party)"></map-marker>
+		</map-marker-clusterer>
+
+		<map-marker-clusterer [minimumClusterSize]="2"
+			[options]="clusterOptions">
+			<map-marker *ngFor="let club of clubs"
+				[position]="{ lat: club.address.lat || 0, lng: club.address.lng || 0}"
+				[icon]="markerIcon"
+				[options]="{  }"
+				(mapClick)="showClub(club)"></map-marker>
+		</map-marker-clusterer>
+	</google-map>
+
+</ion-content>
+
+<!-- DATE MODAL -->
+<ion-modal #dateModal
+	[keepContentsMounted]="true"
+	id="date-modal"
+	trigger="date">
+	<ng-template>
+		<ion-datetime #datetime
+			[firstDayOfWeek]="1"
+			[showDefaultButtons]="true"
+			(ionChange)="onChangeDate($event, dateModal)"
+			color="primary"
+			presentation="date">
+			<ion-buttons class="py-3 flex space-around"
+				slot="buttons">
+				<ion-button (click)="datetime.cancel()"
+					color="medium">
+					Chiudi
+				</ion-button>
+				<ion-button (click)="datetime.confirm()"
+					class="px-3"
+					shape="round"
+					color="light">
+					Cerca
+				</ion-button>
+			</ion-buttons>
+		</ion-datetime>
+	</ng-template>
+</ion-modal>
+
+<!-- EVENTS MODAL -->
+<ion-modal id="events-modal" #eventsModal
+	[backdropDismiss]="true"
+	[initialBreakpoint]="0.35"
+	[breakpoints]="[0, 0.8]"
+	class="blur">
+	<ng-template>
+		<ion-fab-button (click)="eventsModal.dismiss(); selectedParties = undefined;"
+			class="button m-3 mr-0-i w-9 h-9 absolute z-2000 right-4">
+			<ion-icon name="close"
+				style="font-size: 1rem;"></ion-icon>
+		</ion-fab-button>
+		<!-- MULTIPLE EVENTS -->
+		<div *ngIf="selectedParties && selectedParties.length > 1"
+			class="py-8 px-4">
+			<items-list [parties]="selectedParties"
+				[footerOpts]="{hidden: true}"
+				[headerOpts]="{ title: 'Eventi' }"></items-list>
+		</div>
+	</ng-template>
+</ion-modal>
+
+<ion-modal #detailModal
+	class="auto-height bottom blur">
+	<ng-template>
+		<ion-fab-button (click)="detailModal.dismiss(); partyDetail = undefined;"
+			class="button m-3 mr-0-i w-9 h-9 absolute z-2000 right-4">
+			<ion-icon name="close"
+				style="font-size: 1rem;"></ion-icon>
+		</ion-fab-button>
+		<!-- SINGLE EVENT -->
+		<div *ngIf="partyDetail"
+			(click)="goto(partyDetail)"
+			class="p-4">
+			<party-card [party]="partyDetail"
+				[options]="{ hideHeader: true }"></party-card>
+			<ion-button expand="block"
+				class="mt-4"
+				shape="round"
+				color="tertiary"
+				style="height: 3.5rem;">
+				VAI ALL'EVENTO
+			</ion-button>
+			<!-- <event-detail [party]="partyDetail"
+				[config]="{hideMap: true}"
+				[cardOptions]="{ height: '250px', hideHeader: true, mergeWithBg: true }"></event-detail> -->
+		</div>
+	</ng-template>
+</ion-modal>
+
+<!-- CLUB MODAL -->
+<ion-modal #clubModal
+	[initialBreakpoint]="0.5"
+	[breakpoints]="[0, 0.5, 1]"
+	id="clubModal">
+	<ng-template>
+		<ion-content style="--background: transparent">
+			<div class="my-4 mt-8"
+				style="height: 1000px;">
+				<div class="flex align-center space-between w-full px-4">
+					<div class="info-club">
+						<div class="title">
+							{{selectedClub?.name}}
+						</div>
+						<div class="location mt-3">
+							{{selectedClub?.address?.city}}
+						</div>
+					</div>
+					<div>
+						<ion-avatar>
+							<img [src]="selectedClub?.covers?.[0]?.url">
+						</ion-avatar>
+					</div>
+				</div>
+				<div class="px-4 mt-2">
+					<div class="flex gap-2">
+						<ion-button color="medium"
+							class="flex-2">
+							{{selectedClub?.followerCount}}
+							<ion-icon name="people"
+								slot="end"></ion-icon>
+						</ion-button>
+						<ion-button *ngIf="selectedClub"
+							[routerLink]="'/club-detail/' + selectedClub.id"
+							class="flex-1"
+							color="medium">
+							Vedi profilo
+						</ion-button>
+					</div>
+
+					<!-- CLUB CONTACTS -->
+					<div class="paragraph mt-12 w-full">
+						<div class="title">Contatti</div>
+						<div class="description flex w-full mt-1">
+							<div class="flex-1">
+								<div *ngIf="selectedClub?.email"
+									class="mt-1">
+									<ion-icon name="mail"></ion-icon>
+									{{selectedClub?.email}}
+								</div>
+								<div *ngIf="selectedClub?.phone"
+									class="mt-1">
+									<ion-icon name="phone-portrait"></ion-icon>
+									{{selectedClub?.phone}}
+								</div>
+							</div>
+							<div class="flex-1">
+								<div *ngIf="selectedClub?.instagram"
+									class="mt-1">
+									<ion-icon name="logo-instagram"></ion-icon>
+									{{selectedClub?.instagram}}
+								</div>
+								<div *ngIf="selectedClub?.facebook"
+									class="mt-1">
+									<ion-icon name="logo-facebook"></ion-icon>
+									{{selectedClub?.facebook}}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div *ngIf="partiesWeekend?.length"
+						class="mt-16">
+						<easy-card-slider [parties]="partiesWeekend || []"
+							[title]="'QUESTA WEEKEND'"
+							(partyClick)="goto($event)"></easy-card-slider>
+					</div>
+				</div>
+			</div>
+		</ion-content>
+	</ng-template>
+</ion-modal>

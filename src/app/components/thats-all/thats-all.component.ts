@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'easy-thats-all',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./thats-all.component.scss'],
 })
 export class ThatsAllComponent  implements OnInit {
+
+  @Input() message?: string;
 
   constructor() { }
 

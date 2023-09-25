@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { AddressBaseDto } from './addressBaseDto';
+import { PartyParticipationBaseDto } from './partyParticipationBaseDto';
 import { ClubBaseDto } from './clubBaseDto';
 import { PartyBaseDto } from './partyBaseDto';
 import { AttachmentBaseDto } from './attachmentBaseDto';

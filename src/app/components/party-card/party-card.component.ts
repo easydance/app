@@ -1,8 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { catchError, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { PartyBaseDto, SavedPartyService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+
+export type CardOptions = {
+  height?: string,
+  hideHeader?: boolean;
+  mergeWithBg?: boolean;
+};
 
 @Component({
   selector: 'party-card',
@@ -13,10 +19,11 @@ export class PartyCardComponent implements OnInit {
 
   @Input() party?: PartyBaseDto;
   @Input() button?: boolean;
+  @Input() options: CardOptions = {};
 
   @Output() bookmarkClick: EventEmitter<PartyBaseDto> = new EventEmitter();
 
-  constructor(private savedPartiesService: SavedPartyService, private toastCtrl: ToastController) { }
+  constructor(private savedPartiesService: SavedPartyService, private toastCtrl: ToastController, private authManager: AuthManagerService) { }
 
   ngOnInit() { }
 
@@ -28,6 +35,9 @@ export class PartyCardComponent implements OnInit {
       if (!this.party.saved) {
         this.savedPartiesService.create({ party: this.party.id })
           .pipe(
+            tap(x => {
+              this.authManager.me().subscribe(res => { });
+            }),
             catchError(err => {
               this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 })
                 .then(toast => {
@@ -42,6 +52,9 @@ export class PartyCardComponent implements OnInit {
       } else {
         this.savedPartiesService._delete(this.party.saved)
           .pipe(
+            tap(x => {
+              this.authManager.me().subscribe(res => { });
+            }),
             catchError(async err => {
               const toast = await this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 });
               toast.present();

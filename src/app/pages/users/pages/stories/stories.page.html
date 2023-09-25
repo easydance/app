@@ -1,0 +1,72 @@
+<ion-content [fullscreen]="true">
+	<div class="header px-4">
+		<div class="pager flex item-center gap-1 px-1">
+			<div *ngFor="let story of stories; let i = index"
+				[ngClass]="{ 'active': i < currentIndex }">
+				<ion-progress-bar *ngIf="i < currentIndex"
+					[value]="1"
+					color="light"></ion-progress-bar>
+				<ion-progress-bar *ngIf="i == currentIndex"
+					[value]="currentProgress"
+					color="light"></ion-progress-bar>
+			</div>
+		</div>
+	</div>
+	<swiper-container #swiper
+		*ngIf="stories">
+		<swiper-slide *ngFor="let story of stories"
+			[id]="story.id">
+			<div class="header px-4">
+				<div class="flex space-between mt-3">
+					<ion-chip [outline]="true"
+						color="light">
+						Start {{story.party.from | date:'HH:mm'}}
+					</ion-chip>
+					<ion-chip [outline]="true"
+						color="light">
+						End {{story.party.to | date:'HH:mm'}}
+					</ion-chip>
+				</div>
+			</div>
+			<video #video poster="assets/icons/loading.svg"
+				(click)="video.paused? video.play() : video.pause()"
+				autoplay>
+				<source [src]="story.attachment.url"
+					[type]="story.attachment.mimeType">
+				Your browser does not support the video tag.
+			</video>
+
+			<div class="footer p-4 flex space-between">
+				<div>
+					<ion-chip class="dark xl">
+						<ion-icon color="light"
+							name="location"></ion-icon>
+						<ion-label>
+							{{story.party.club.name}}
+						</ion-label>
+					</ion-chip>
+					<div class="title mt-2">
+						{{story.party.title}}
+					</div>
+				</div>
+				<div class>
+					<users-widget *ngIf="authManager.user"
+						[users]="[authManager.user]"></users-widget>
+					<div class="stories-buttons">
+						<ion-fab-button size="small">
+							<ion-icon name="heart-outline"></ion-icon>
+						</ion-fab-button>
+						<ion-fab-button size="small">
+							<ion-icon name="share-outline"></ion-icon>
+						</ion-fab-button>
+						<ion-fab-button size="small">
+							<ion-icon name="ellipsis-vertical"></ion-icon>
+						</ion-fab-button>
+					</div>
+
+				</div>
+			</div>
+		</swiper-slide>
+	</swiper-container>
+
+</ion-content>

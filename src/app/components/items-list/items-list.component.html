@@ -1,5 +1,6 @@
 <div id="list">
-	<div id="header">
+	<div *ngIf="!headerOpts?.hidden"
+		id="header">
 		<div>
 			<div class="title">
 				{{headerOpts?.title}}
@@ -8,13 +9,14 @@
 				{{headerOpts?.subtitle}}
 			</div>
 		</div>
-		<div [ngStyle]="{'backgroundImage': 'url(' + headerOpts?.avatar}"
+		<div *ngIf="headerOpts?.avatar"
+			[ngStyle]="{'backgroundImage': 'url(' + headerOpts?.avatar}"
 			class="avatar"></div>
 	</div>
 	<div id="body">
 		<ng-container *ngIf="parties">
 			<ion-item *ngFor="let party of parties"
-				[routerLink]="'/event-detail/' + party.id"
+				(click)="goto(party)"
 				detail="false"
 				lines="none">
 				<ion-thumbnail slot="start">
@@ -22,7 +24,7 @@
 				</ion-thumbnail>
 				<ion-label>
 					<div class="chips-info">
-						<ion-chip class="dark">
+						<ion-chip class="dark-light">
 							<ion-icon color="light"
 								name="calendar-sharp"></ion-icon>
 							<ion-label>
@@ -42,10 +44,11 @@
 			</ion-item>
 		</ng-container>
 	</div>
-	<div id="footer">
+	<div *ngIf="!footerOpts?.hidden"
+		id="footer">
 		<ion-button color="light"
 			expand="block"
-			shape="round">
+			shape="round" (click)="more.emit()">
 			ALTRI EVENTI
 		</ion-button>
 	</div>

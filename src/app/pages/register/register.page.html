@@ -208,12 +208,9 @@
 					<div class="mt-16">
 						<div id="upload-photo"
 							class="square">
-							<div [ngStyle]="{ 
-								background: 'url('+ this.user.profile + ') center center no-repeat',
-								backgroundSize: 'cover'
-							 }"
+							<div [ngStyle]="{backgroundImage: 'url('+ this.user.profile + ')'}"
 								(click)="file.click()"
-								class="content">
+								class="image content">
 								<ion-icon name="add"></ion-icon>
 								<input #file
 									(change)="preview($event)"
@@ -310,6 +307,7 @@
 				</div>
 				<div class="mt-12 ion-text-center mb-8">
 					<ion-button [routerLink]="'/home'"
+						(click)="hurraModal.dismiss()"
 						color="light"
 						shape="round">
 						SCROPRI GLI EVENTI

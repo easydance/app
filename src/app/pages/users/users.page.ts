@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Component({
   selector: 'app-users',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersPage implements OnInit {
 
-  constructor() { }
+  constructor(private authManager: AuthManagerService) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.authManager.me().subscribe(res => { });
   }
 
 }

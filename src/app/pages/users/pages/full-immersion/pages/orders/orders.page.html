@@ -1,13 +1,88 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>orders</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">orders</ion-title>
-    </ion-toolbar>
-  </ion-header>
+	<ion-header class="ion-no-border transparent absolute">
+		<ion-toolbar class="p-6 pl-0-i">
+			<ion-buttons slot="start">
+				<ion-fab-button (click)="goBack()"
+					class="button m-3 mr-0-i w-9 h-9"
+					routerDirection="back">
+					<ion-icon name="arrow-back"
+						style="font-size: 1rem;"></ion-icon>
+				</ion-fab-button>
+			</ion-buttons>
+			<ion-title>STORICO ORDINI</ion-title>
+		</ion-toolbar>
+	</ion-header>
+
+	<div class="mt-20">
+		<ion-card *ngFor="let o of pendingOrders"
+			class="mb-4">
+			<ion-card-content>
+				<div class="flex align-center py-5">
+					<div class="mr-8">
+						<svg xmlns="http://www.w3.org/2000/svg"
+							width="121"
+							height="107"
+							viewBox="0 0 121 107"
+							fill="none" style="zoom: 0.5">
+							<path d="M60.5 38.4032C93.6371 38.4032 120.5 30.005 120.5 19.6453C120.5 9.28565 93.6371 0.887451 60.5 0.887451C27.3629 0.887451 0.5 9.28565 0.5 19.6453C0.5 30.005 27.3629 38.4032 60.5 38.4032Z"
+								stroke="#FAFAFA"
+								stroke-linejoin="round"></path>
+							<path d="M66.2614 85.0479C80.9873 85.9556 92.1445 90.2883 92.1445 95.4913C92.1445 101.359 77.9786 106.112 60.5001 106.112C43.0217 106.112 28.8557 101.359 28.8557 95.4913C28.8557 90.4193 39.4386 86.1802 53.5951 85.1227"
+								stroke="#FAFAFA"
+								stroke-linejoin="round"></path>
+							<path d="M54.6487 95.6357V38.4028H65.3787V95.6357L65.1652 95.6872C63.6465 95.7761 62.0805 95.8182 60.4812 95.8182C58.5544 95.8182 56.6751 95.7527 54.8717 95.6263L54.6487 95.6357Z"
+								stroke="#FAFAFA"
+								stroke-linejoin="round"></path>
+						</svg>
+					</div>
+					<div class="info">
+						<div class="title">N° {{o.id}}</div>
+						<div class="list">
+							<div *ngFor="let l of o.rows" class="flex gap-2">
+                <div class="w-4">{{l.qty}} </div>
+                <div>{{l.priceListItem.product.name}}</div>
+							</div>
+							<div class="total mt-4">
+								{{(o.bill? o.bill / 100 : '-') | currency:'€'}}
+							</div>
+						</div>
+						<div class="status">
+							<ion-chip [color]="getStatusColor(o.status)">
+								{{getStatusLabel(o.status)}}
+							</ion-chip>
+						</div>
+					</div>
+				</div>
+			</ion-card-content>
+		</ion-card>
+	</div>
+	<div class="mb-20">
+		<div *ngFor="let v of getOrdersGrouped()"
+			class="order-list">
+			<div class="header">
+				<div>{{v.date}}</div>
+				<div>{{v.club}}</div>
+			</div>
+			<div *ngFor="let order of v.value"
+				class="item">
+				<div>
+					<div class="n-item ion-text-right"></div>
+					N° {{order.id}}
+					<div class="table-name mt-2">
+						{{order.table.name}}
+					</div>
+				</div>
+				<div>
+					<div class="total">
+						{{(order.bill? order.bill / 100 : '-') | currency:'€'}}
+					</div>
+					<div class="mt-2">
+						<ion-chip [color]="getStatusColor(order.status)">
+							{{getStatusLabel(order.status)}}
+						</ion-chip>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </ion-content>

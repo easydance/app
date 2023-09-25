@@ -1,0 +1,11 @@
+div {
+  display: flex;
+
+  > div {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+
+    background: center center no-repeat / cover;
+  }
+}

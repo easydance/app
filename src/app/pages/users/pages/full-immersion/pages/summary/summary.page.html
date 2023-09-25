@@ -12,7 +12,7 @@
 			<ion-title>RIEPILOGO</ion-title>
 		</ion-toolbar>
 	</ion-header>
-	<div class="px-4 mt-18 pb-17">
+	<div class="px-4 mt-18 pb-12">
 		<div class="flex space-between">
 			<div id="tabel-info">
 				<div class="table-label">TAVOLO</div>
@@ -31,7 +31,7 @@
 				<tbody>
 					<tr *ngFor="let product of cart?.getItems() ">
 						<td class="left">{{product.qty}}</td>
-						<td class="title">
+						<td class="title pr-2">
 							{{product.item.name}}
 						</td>
 						<td class="right">
@@ -41,9 +41,9 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="mt-16 pt-16"
+		<div class="mt-8 pt-8"
 			style="border-top: 1px solid #5C5C5C"></div>
-		<div class="flex space-between">
+		<div class="flex space-between mb-24">
 			<div class="flex-1">
 				<div class="total-label">TOTALE</div>
 				<div class="total-subtitle">
@@ -60,6 +60,7 @@
 		id="order-button">
 		<ion-button [disabled]="(cart?.totalQty || 0) === 0 || (cart?.total || 0) < (table?.minimumBill || 0)"
 			(click)="next()"
+			class="mx-4"
 			size="lg"
 			shape="round"
 			expand="full"

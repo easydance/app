@@ -17,12 +17,13 @@ export interface CreateAttachmentRequestDto {
     path?: string | null;
 }
 export namespace CreateAttachmentRequestDto {
-    export type EntityTypeEnum = 'PARTY.COVER' | 'USER.PROFILE' | 'CLUB.COVER' | 'CLUB.PROFILE';
+    export type EntityTypeEnum = 'PARTY.COVER' | 'USER.PROFILE' | 'CLUB.COVER' | 'CLUB.PROFILE' | 'STORY';
     export const EntityTypeEnum = {
         PartyCover: 'PARTY.COVER' as EntityTypeEnum,
         UserProfile: 'USER.PROFILE' as EntityTypeEnum,
         ClubCover: 'CLUB.COVER' as EntityTypeEnum,
-        ClubProfile: 'CLUB.PROFILE' as EntityTypeEnum
+        ClubProfile: 'CLUB.PROFILE' as EntityTypeEnum,
+        Story: 'STORY' as EntityTypeEnum
     };
 }
 

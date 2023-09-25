@@ -1,9 +1,11 @@
-<div class="square">
+<div [ngStyle]="{ height: options.height || 'auto' }"
+	class="square">
 	<div class="content">
 		<ion-card [button]="button"
 			[ngStyle]="{ backgroundImage: 'url('+ party?.cover?.url +')' }"
 			class="easycard">
-			<div class="header">
+			<div *ngIf="!options.hideHeader"
+				class="header">
 				<div>
 					<ion-chip class="blured">
 						<ion-icon color="light"
@@ -20,17 +22,19 @@
 					</div>
 				</div>
 			</div>
-			<div class="footer">
+			<div [ngClass]="{ mergeWithBg: !!options.mergeWithBg }"
+				class="footer">
 				<div>
 					<div class="chips-info">
 						<ion-chip class="dark">
-							<ion-icon color="light"
-								name="calendar-sharp"></ion-icon>
+							<!-- <ion-icon color="light"
+								name="calendar-sharp"></ion-icon> -->
 							<ion-label>
 								{{party?.from | date:'dd LLL'}}
 							</ion-label>
 						</ion-chip>
-						<ion-chip class="ml-2-i dark">
+						<ion-chip [routerLink]="'/club-detail/' + party?.club?.id"
+							class="ml-2-i dark" (click)="$event.stopPropagation()">
 							<ion-icon color="light"
 								name="location"></ion-icon>
 							<ion-label>

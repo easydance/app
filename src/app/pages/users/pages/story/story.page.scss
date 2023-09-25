@@ -1,0 +1,43 @@
+ion-content {
+  --background: radial-gradient(
+      41.86% 34.55% at 50% 50%,
+      #7f32cd 0%,
+      rgba(127, 50, 205, 0) 100%
+    ),
+    #050209;
+  --padding-bottom: calc(65px + var(--ion-safe-area-bottom));
+}
+
+.video {
+  height: 100%;
+  width: 100%;
+}
+
+#story {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+
+  #story-preview {
+    flex: 1;
+    width: 100%;
+    background: red;
+    border-radius: 2rem;
+    overflow: hidden;
+  }
+
+  #play-button {
+    border: var(--color-neutral-50, #fafafa) solid 1px;
+    padding: 4px;
+    margin: 0 auto;
+    border-radius: 50%;
+    > div {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      background: var(--color-neutral-50, #fafafa);
+    }
+  }
+}

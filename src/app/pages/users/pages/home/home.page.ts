@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
-import { ClubService, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService } from 'src/app/apis';
+import { ClubBaseDto, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 
 @Component({
   selector: 'app-home',
@@ -14,29 +15,67 @@ export class HomePage implements OnInit {
   public parties?: GetPartyResponseDto[];
   public clubs?: GetClubResponseDto[];
   public city?: string;
+  public filter: any = {};
 
   constructor(
     private readonly partiesService: PartyService,
     private readonly authManager: AuthManagerService,
-    private readonly clubsService: ClubService,
-    private readonly navCtrl: NavController
+    private readonly navCtrl: NavController,
+    private readonly clubFollowerService: UserToClubFollowerService,
+    public readonly partiesUtils: CommonPartiesUtils
   ) { }
 
   ngOnInit() {
     this.authManager.geocoding$.subscribe(res => {
-      this.city = res?.address_components?.find((ac: google.maps.GeocoderAddressComponent) => ac.types.includes('locality'))?.short_name;
+      this.city = this.authManager.currentCity;
+      this.searchEvents();
+    });
+    this.authManager.user$.subscribe(res => {
+      if(res) {
+         this.clubFollowerService.findAll(0, 4, JSON.stringify({
+        user: { id: this.authManager.user?.id || 0 }
+      }), undefined, undefined, 'club.address').subscribe(res => {
+        this.clubs = res.data.map(cf => cf.club);
+        for (let club of this.clubs) {
+          // Club parties
+          this.partiesService.findAll(0, 5, JSON.stringify({
+            to: { $gte: DateTime.now().toISO() },
+            club: { id: club.id }
+          }), '{"from":0}', undefined, 'club')
+            .subscribe(res => {
+              club.parties = res.data;
+            });
+        }
+      });
+    }
     });
   }
 
   ionViewWillEnter() {
-    this.partiesService.findAll(0, 5, undefined, undefined, undefined, 'club').subscribe(res => {
+  }
+
+  searchEvents() {
+    this.filter = {
+      ...this.filter,
+      ...this.partiesUtils.Filters.Tonight,
+      ...this.partiesUtils.Filters.InCurrentPosition()
+    };
+
+    this.partiesService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'club').subscribe(res => {
       this.parties = res.data;
     });
-    this.clubsService.findAll(0, 4, undefined, undefined, undefined, 'address').subscribe(res => {
-      this.clubs = res.data;
+    this.clubFollowerService.findAll(0, 4, JSON.stringify({
+      user: { id: this.authManager.user?.id || 0 }
+    }), undefined, undefined, 'club.address').subscribe(res => {
+      this.clubs = res.data.map(cf => cf.club);
       for (let club of this.clubs) {
         // Club parties
-        this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id } }), undefined, undefined, 'club')
+        this.partiesService.findAll(0, 5, JSON.stringify({
+          to: {
+            $gte: DateTime.now().toISO()
+          },
+          club: { id: club.id }
+        }), '{"from":0}', undefined, 'club')
           .subscribe(res => {
             club.parties = res.data;
           });
@@ -60,33 +99,23 @@ export class HomePage implements OnInit {
     this.navCtrl.navigateForward(['event-detail', party.id]);
   }
 
-  goToEventsWeekend() {
-    const dayOfWeek = (new Date().getDay() - 1 + 7) % 7;
-    const dayToFriday = dayOfWeek - 4;
-    let from = DateTime.now();
-    if (dayToFriday < 0) from = DateTime.now().startOf('day').plus({ days: Math.abs(dayToFriday) });
-    let to = DateTime.fromMillis(from.toMillis()).plus({ days: 2 }).endOf('day');
-
+  goToClubsEventsList(club: ClubBaseDto) {
     this.navCtrl.navigateForward('/events-list', {
       queryParams: {
-        title: 'Eventi di questo weekend',
+        title: 'Eventi al ' + club.name,
         header: {
-          title: 'ven - dom',
+          title: club.name,
           subtitle: 'Eventi'
         },
         filters: JSON.stringify({
-          from: {
-            $lte: from.toISO()
-          },
           to: {
-            $gte: to.toISO()
+            $gte: DateTime.now().toISO()
+          },
+          club: {
+            id: club.id
           }
         })
       }
     });
-  }
-
-  goToClubsEventsList() {
-
   }
 }

@@ -7,14 +7,16 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ApiModule, Configuration, ConfigurationParameters } from 'src/app/apis';
+import { ApiModule, BASE_PATH, Configuration, ConfigurationParameters } from 'src/app/apis';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UiModule } from 'src/app/components/ui.module';
 import { TokenInterceptor } from 'src/app/services/interceptors/token.interceptor';
+import { environment } from 'src/environments/environment';
+import "@codetrix-studio/capacitor-google-auth";
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
-    basePath: 'https://easydance-dev.oddacoding.net/api',
+    basePath: `${environment.BASE_API}/api`,
   };
   return new Configuration(params);
 }
@@ -32,7 +34,8 @@ export function apiConfigFactory(): Configuration {
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: BASE_PATH, useValue: environment.BASE_API },
   ],
   bootstrap: [AppComponent],
 })

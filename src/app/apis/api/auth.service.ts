@@ -27,6 +27,8 @@ import { MeResponseDto } from '../model/meResponseDto';
 // @ts-ignore
 import { SignUpDto } from '../model/signUpDto';
 // @ts-ignore
+import { SignupResponseDataDto } from '../model/signupResponseDataDto';
+// @ts-ignore
 import { SignupResponseDto } from '../model/signupResponseDto';
 // @ts-ignore
 import { UpdateMeDto } from '../model/updateMeDto';
@@ -174,14 +176,14 @@ export class AuthService implements AuthServiceInterface {
     /**
      * @param fields 
      * @param includes 
-     * @param withDeleted 
+     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public me(fields?: string, includes?: string, withDeleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<MeResponseDto>;
-    public me(fields?: string, includes?: string, withDeleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<MeResponseDto>>;
-    public me(fields?: string, includes?: string, withDeleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<MeResponseDto>>;
-    public me(fields?: string, includes?: string, withDeleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public me(fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<MeResponseDto>;
+    public me(fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<MeResponseDto>>;
+    public me(fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<MeResponseDto>>;
+    public me(fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (fields !== undefined && fields !== null) {
@@ -192,9 +194,9 @@ export class AuthService implements AuthServiceInterface {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>includes, 'includes');
         }
-        if (withDeleted !== undefined && withDeleted !== null) {
+        if (deleted !== undefined && deleted !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>withDeleted, 'withDeleted');
+            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -244,18 +246,26 @@ export class AuthService implements AuthServiceInterface {
 
     /**
      * @param signUpDto 
+     * @param provider 
+     * @param authorization 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public signUp(signUpDto: SignUpDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SignupResponseDto>;
-    public signUp(signUpDto: SignUpDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SignupResponseDto>>;
-    public signUp(signUpDto: SignUpDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SignupResponseDto>>;
-    public signUp(signUpDto: SignUpDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public signUp(signUpDto: SignUpDto, provider?: string, authorization?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<SignupResponseDataDto>;
+    public signUp(signUpDto: SignUpDto, provider?: string, authorization?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<SignupResponseDataDto>>;
+    public signUp(signUpDto: SignUpDto, provider?: string, authorization?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<SignupResponseDataDto>>;
+    public signUp(signUpDto: SignUpDto, provider?: string, authorization?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (signUpDto === null || signUpDto === undefined) {
             throw new Error('Required parameter signUpDto was null or undefined when calling signUp.');
         }
 
         let localVarHeaders = this.defaultHeaders;
+        if (provider !== undefined && provider !== null) {
+            localVarHeaders = localVarHeaders.set('provider', String(provider));
+        }
+        if (authorization !== undefined && authorization !== null) {
+            localVarHeaders = localVarHeaders.set('authorization', String(authorization));
+        }
 
         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (localVarHttpHeaderAcceptSelected === undefined) {
@@ -296,7 +306,7 @@ export class AuthService implements AuthServiceInterface {
         }
 
         let localVarPath = `/auth/signup`;
-        return this.httpClient.request<SignupResponseDto>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<SignupResponseDataDto>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: signUpDto,

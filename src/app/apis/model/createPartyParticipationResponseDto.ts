@@ -9,8 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserBaseDto } from './userBaseDto';
-import { PartyBaseDto } from './partyBaseDto';
+import { GetPartyParticipationResponseDtoParty } from './getPartyParticipationResponseDtoParty';
 
 
 export interface CreatePartyParticipationResponseDto { 
@@ -22,7 +21,8 @@ export interface CreatePartyParticipationResponseDto {
     createdBy?: string | null;
     updatedBy?: string | null;
     deletedBy?: string | null;
-    user: UserBaseDto;
-    party: PartyBaseDto;
+    pr: string;
+    participants?: number;
+    party: GetPartyParticipationResponseDtoParty;
 }
 

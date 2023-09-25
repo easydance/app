@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import { PatchSavedPartyRequestDtoUser } from './patchSavedPartyRequestDtoUser';
-import { PatchSavedPartyRequestDtoParty } from './patchSavedPartyRequestDtoParty';
+import { PatchPartyParticipationRequestDtoParty } from './patchPartyParticipationRequestDtoParty';
 
 
 export interface PatchSavedPartyRequestDto { 
@@ -18,6 +18,6 @@ export interface PatchSavedPartyRequestDto {
     updatedBy?: string | null;
     deletedBy?: string | null;
     user?: PatchSavedPartyRequestDtoUser | null;
-    party?: PatchSavedPartyRequestDtoParty | null;
+    party?: PatchPartyParticipationRequestDtoParty | null;
 }
 
