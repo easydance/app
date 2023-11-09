@@ -1,0 +1,163 @@
+<div *ngIf="user"
+	class="px-4 w-full">
+
+	<div class="flex gap-2 ">
+		<ion-button color="dark"
+			class="w-full">
+			{{user.followers ?? '-'}}
+			<ion-icon name="people"
+				slot="end"></ion-icon>
+		</ion-button>
+		<ion-button color="dark"
+			class="w-full">
+			{{user.following ?? '-'}}
+			<ion-icon name="people"
+				slot="end"></ion-icon>
+		</ion-button>
+		<ion-button color="light"
+			class="w-full" (click)="save()">
+			Salva
+		</ion-button>
+	</div>
+
+	<!-- PHOTO -->
+	<div class="mt-12">
+		<div class="input-title">Foto profilo</div>
+		<div class="mt-4">
+
+			<swiper-container pagination="false"
+				slides-per-view="3.5"
+				free-mode="true">
+				<swiper-slide>
+					<div [ngStyle]="{ 
+            backgroundImage: 'url(' + (editedUser?.photo || editedUser?.profileImage?.url) + ')' 
+          }"
+						(click)="file.click()"
+						class="square photo">
+						<div class="content">
+							<ion-icon name="add"
+								color="light"></ion-icon>
+							<input #file
+								(change)="preview($event)"
+								name="profile"
+								required
+								type="file"
+								style="display: none;"
+								accept="image/*">
+						</div>
+					</div>
+				</swiper-slide>
+			</swiper-container>
+		</div>
+	</div>
+
+	<!-- INFO -->
+	<div class="mt-12">
+		<!-- <div class="title">Foto</div> -->
+		<div>
+			<div class="input-title mb-4">Nome</div>
+			<ion-item lines="none">
+				<ion-input [(ngModel)]="user.firstName"
+					name="firstName"
+					required>
+				</ion-input>
+			</ion-item>
+		</div>
+
+		<div class="mt-6">
+			<div class="input-title mb-4">Cognome</div>
+			<ion-item lines="none">
+				<ion-input [(ngModel)]="user.lastName"
+					name="lastName"
+					required>
+				</ion-input>
+			</ion-item>
+		</div>
+	</div>
+
+	<!-- SOCIAL -->
+	<div class="mt-12">
+		<div class="input-title mb-4">Social</div>
+		<div *ngFor="let kv of (editedUser?.socials || {}) | keyvalue"
+			class="social-item">
+			<div>
+				<ion-icon [name]="'logo-' + kv.key"
+					slot="start"></ion-icon>
+				<div class="flex-1">
+					{{kv.value.username}}
+				</div>
+				<ion-icon name="close"
+					slot="end"></ion-icon>
+			</div>
+		</div>
+		<div id="social-buttons">
+			<div>
+				<div class="title">+ AGGIUNGI SOCIAL</div>
+				<div class="buttons">
+					<div class="button">
+						<ion-icon name="logo-facebook"></ion-icon>
+					</div>
+					<div class="button">
+						<ion-icon name="logo-instagram"></ion-icon>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- DESCRIPTION -->
+	<div class="mt-12">
+		<!-- <div class="title">Foto</div> -->
+		<div>
+			<div class="input-title mb-4">Descrizione</div>
+			<ion-item lines="none">
+				<ion-textarea [(ngModel)]="user.description"
+					[rows]="6"
+					class="px-6 py-4"
+					name="description"
+					required
+					autoGrow="true">
+				</ion-textarea>
+			</ion-item>
+			<div class="textarea-info mt-1">
+				Max {{descriptionWordLimit}} parole
+			</div>
+		</div>
+	</div>
+
+	<!-- TAGS -->
+	<div class="mt-12">
+		<!-- <div class="title">Foto</div> -->
+		<div>
+			<div class="input-title mb-4">Interessi</div>
+			<ion-item class="z-1001"
+				lines="none">
+				<ion-input [(ngModel)]="tagsSearch"
+					(ngModelChange)="searchTag()"
+					name="tagsSearch"
+					placeholder="COSA ASCOLTI?"
+					required>
+				</ion-input>
+			</ion-item>
+		</div>
+		<div *ngIf="searchedTags.length"
+			class="search-wrapper">
+			<div *ngFor="let tag of searchedTags"
+				(click)="selectTag(tag)"
+				class="pl-4 pb-3">
+				{{tag.name}}
+			</div>
+		</div>
+		<div class="mt-2">
+			<ion-chip *ngFor="let tag of editedUser?.tags"
+				class="mr-2-i mt-2-i"
+				outline="true"
+				color="light">
+				<ion-label>{{tag}}</ion-label>
+				<ion-icon (click)="deselectTag(tag)"
+					name="close"></ion-icon>
+			</ion-chip>
+		</div>
+	</div>
+
+</div>

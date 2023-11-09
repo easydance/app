@@ -1,0 +1,14 @@
+<div id="story"
+	class="p-5">
+	<div id="story-preview">
+		<canvas id="canvas"></canvas>
+	</div>
+	<div>
+		<div [ngClass]="{'recording': recording}"
+			(click)="recording ? stopVideo() : recordVideo()"
+			id="play-button"
+			class="w-14 h-14">
+			<div></div>
+		</div>
+	</div>
+</div>

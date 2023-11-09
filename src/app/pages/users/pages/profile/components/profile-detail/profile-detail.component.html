@@ -1,0 +1,98 @@
+<div *ngIf="user"
+	class="px-4">
+
+	<div class="flex gap-2 ">
+		<ion-button color="dark"
+			class="w-full">
+			{{user.followers ?? '-'}}
+			<ion-icon name="people"
+				slot="end"></ion-icon>
+		</ion-button>
+		<ion-button color="dark"
+			class="w-full">
+			{{user.following ?? '-'}}
+			<ion-icon name="people"
+				slot="end"></ion-icon>
+		</ion-button>
+		<ion-button *ngIf="isMe"
+			color="primary"
+			class="w-full" (click)="edit.emit()">
+			MODIFICA
+		</ion-button>
+	</div>
+
+	<!-- USER BIO -->
+	<div class="paragraph mt-12">
+		<div class="title">Su di me</div>
+		<div *ngIf="!user"
+			class="w-full">
+			<ion-skeleton-text animated="true"></ion-skeleton-text>
+			<ion-skeleton-text animated="true"></ion-skeleton-text>
+			<ion-skeleton-text animated="true"></ion-skeleton-text>
+			<ion-skeleton-text animated="true"></ion-skeleton-text>
+		</div>
+		<div *ngIf="user"
+			class="description">
+			{{user.description}}
+		</div>
+	</div>
+
+	<!-- USERS INTERESTS -->
+	<div class="paragraph mt-12">
+		<div class="title">Tags</div>
+		<div *ngIf="!user"
+			class="w-full flex gap-2">
+			<div class="w-30">
+				<ion-skeleton-text class="h-5 rounded"
+					animated="true"></ion-skeleton-text>
+			</div>
+			<div *ngIf="!user"
+				class="w-25">
+				<ion-skeleton-text class="h-5 rounded"
+					animated="true"></ion-skeleton-text>
+			</div>
+			<div *ngIf="!user"
+				class="w-40">
+				<ion-skeleton-text class="h-5 rounded"
+					animated="true"></ion-skeleton-text>
+			</div>
+		</div>
+		<div class="description w-full">
+			<ion-chip *ngFor="let tag of user?.tags"
+				[outline]="true"
+				class="mr-2-i mt-2-i"
+				color="light">
+				{{tag}}
+			</ion-chip>
+		</div>
+	</div>
+
+	<!-- USER CONTACTS -->
+	<div class="paragraph mt-12 w-full">
+		<div class="title">Contatti</div>
+		<div class="description w-full mt-1">
+			<div *ngIf="!user"
+				class="w-full">
+				<ion-skeleton-text animated="true"></ion-skeleton-text>
+			</div>
+			<div *ngIf="!user"
+				class="w-full">
+				<ion-skeleton-text animated="true"></ion-skeleton-text>
+			</div>
+			<div *ngIf="user"
+				class="w-full">
+				<div *ngIf="user.socials?.['instagram']"
+					class="mt-1">
+					<ion-icon name="logo-instagram"></ion-icon>
+					{{user.socials?.['instagram']?.username}}
+				</div>
+				<div *ngIf="user?.socials?.['facebook']"
+					class="mt-1">
+					<ion-icon name="logo-facebook"></ion-icon>
+					{{user.socials?.['facebook']?.username}}
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

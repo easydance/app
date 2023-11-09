@@ -15,7 +15,7 @@ export class EventDetailPage implements OnInit {
   @Input('party') public party?: PartyBaseDto;
   @Input('config') config: { hideMap?: boolean, hideHeader?: boolean; } = {
     hideMap: false,
-    hideHeader: false
+    hideHeader: true
   };
 
   constructor(

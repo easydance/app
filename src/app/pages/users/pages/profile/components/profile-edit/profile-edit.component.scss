@@ -1,0 +1,124 @@
+.input-title {
+  color: #fff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 11px; /* 84.615% */
+}
+
+.textarea-info {
+  color: var(--color-neutral-400, #6e6e6e);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 127.273% */
+}
+
+swiper-slide {
+  margin-right: 0.5rem;
+
+  .photo {
+    border-radius: 0.5rem;
+    background: var(--color-neutral-500) center center no-repeat;
+    background-size: cover;
+
+    .content {
+      display: flex;
+      align-items: center;
+
+      > * {
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+.social-item {
+  display: flex;
+  padding: 25px 20px;
+  align-items: center;
+  gap: 15px;
+  border-radius: 10px;
+  background: var(--neutral-500, #242424);
+  backdrop-filter: blur(20px);
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex: 1 0 0;
+
+    color: #bebebe;
+
+    /* Subtitle/UPPERCASE */
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 128.571% */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+}
+
+#social-buttons {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  gap: 6px;
+  align-self: stretch;
+  border-radius: 10px;
+  background: var(--neutral-2008, rgba(190, 190, 190, 0.1));
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 6px;
+
+    .title {
+      color: #bebebe;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 11px; /* 110% */
+      text-transform: uppercase;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+
+      .button {
+        border-radius: 5px;
+        background: var(--neutral-500, #242424);
+        display: flex;
+        height: 38px;
+        min-width: 38px;
+        padding: 8px;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+      }
+    }
+  }
+}
+
+.search-wrapper {
+  max-height: 200px;
+  overflow: hidden;
+  overflow-y: auto;
+  background: var(--color-neutral-500);
+  margin-top: -10px;
+  padding-top: 24px;
+  border-bottom-left-radius: 0.625rem;
+  border-bottom-right-radius: 0.625rem;
+
+  div {
+    --background: transparent;
+    font-size: 0.875rem;
+    color: var(--color-neutral-300);
+  }
+}

@@ -34,7 +34,8 @@
 
   /** ION-INPUT **/
   ion-item:has(ion-input),
-  ion-item:has(ion-datetime-button) {
+  ion-item:has(ion-datetime-button),
+  ion-item:has(ion-textarea) {
     --background: var(--color-neutral-500);
     --padding-bottom: 0rem;
     --padding-end: 0rem;
@@ -54,7 +55,7 @@
       font-size: 0.875rem;
     }
 
-    ion-input {
+    ion-input, ion-text-area {
       --color: var(--color-neutral-50);
       --placeholder-color: var(--color-neutral-400);
       --padding-top: 1.25rem;

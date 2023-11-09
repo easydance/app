@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
@@ -11,11 +11,14 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  @ViewChild('swiper') swiperRef: ElementRef<HTMLDivElement & { swiper: any; }> | undefined;
 
   public user?: LoginUserDataDto = this.authManager.user;
   public isMe: boolean = true;
+  public isEditingMode: boolean = false;
 
   constructor(
+    private ngZone: NgZone,
     private readonly usersService: UserService,
     private readonly authManager: AuthManagerService,
     private readonly route: ActivatedRoute,

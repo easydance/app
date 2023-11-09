@@ -33,7 +33,9 @@ export class ScanPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.scan();
+    setTimeout(() => {
+      this.scan();
+    }, 500);
   }
 
   ionViewWillLeave() {
@@ -76,6 +78,9 @@ export class ScanPage implements OnInit {
     );
     BarcodeScanner.startScan({ lensFacing: LensFacing.Back })
       .then(() => {
+      }).catch(error => {
+        console.error(error);
+        document.querySelector('body')?.classList.remove('barcode-scanner-active');
       });
   }
 

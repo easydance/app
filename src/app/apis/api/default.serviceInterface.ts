@@ -55,12 +55,6 @@ export interface DefaultServiceInterface {
      * 
      * 
      */
-    marker(extraHttpRequestParams?: any): Observable<{}>;
-
-    /**
-     * 
-     * 
-     */
     notify(extraHttpRequestParams?: any): Observable<{}>;
 
     /**

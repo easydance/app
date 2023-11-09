@@ -69,4 +69,8 @@ Thumbs.db
 
 
 android/
+android.old/
 ios/
+generated/
+resources/ios/**/*
+resources/android/**/*

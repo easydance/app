@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MediaCapture } from "@awesome-cordova-plugins/media-capture/ngx";
-import { File } from "@awesome-cordova-plugins/file/ngx";
 
 import { IonicModule } from '@ionic/angular';
 
 import { StoryPageRoutingModule } from './story-routing.module';
 
 import { StoryPage } from './story.page';
+import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    StoryPageRoutingModule
+    StoryPageRoutingModule,
+    RecordingVideoPreviewComponent
   ],
-  providers: [MediaCapture, File],
+  providers: [],
   declarations: [StoryPage]
 })
 export class StoryPageModule {}

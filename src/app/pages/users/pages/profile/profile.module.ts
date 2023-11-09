@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
+import { ProfileDetailComponent } from 'src/app/pages/users/pages/profile/components/profile-detail/profile-detail.component';
+import { ProfileEditComponent } from 'src/app/pages/users/pages/profile/components/profile-edit/profile-edit.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule
+    ProfilePageRoutingModule,
+    ProfileDetailComponent,
+    ProfileEditComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ProfilePage]

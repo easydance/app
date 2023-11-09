@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NavController } from "@ionic/angular";
-import { catchError, map } from "rxjs";
+import { catchError, map, throwError } from "rxjs";
 import { AuthManagerService } from "src/app/services/auth-manager.service";
 
 @Injectable()
@@ -22,12 +22,12 @@ export class TokenInterceptor implements HttpInterceptor {
         // send cloned request with header to the next handler.
         // return next.handle(authReq);
         return next.handle(authReq).pipe(
-            catchError(er => {
-                if (er.status === 401) {
+            catchError(err => {
+                if (err.status === 401) {
                     this.auth.logout();
                     this.navCtrl.navigateRoot('/login');
                 }
-                return er;
-            })) as any;
+                return throwError(() => err);
+            }));
     }
 }

@@ -18,7 +18,7 @@ export interface UpdateMeDto {
     birthDate?: string | null;
     tags?: Array<string> | null;
     socials?: { [key: string]: { [key: string]: ClubBaseDtoSocialsValueValue; }; } | null;
-    profileImage: number;
+    profile: string;
     description: string;
 }
 

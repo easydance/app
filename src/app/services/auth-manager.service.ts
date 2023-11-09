@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, tap } from 'rxjs';
-import { AuthService, LoginUserDataDto, SignUpDto } from 'src/app/apis';
+import { BehaviorSubject, map, switchMap, tap } from 'rxjs';
+import { AuthService, LoginUserDataDto, SignUpDto, UpdateMeDto } from 'src/app/apis';
 import { Geolocation } from '@capacitor/geolocation';
 import { Platform } from '@ionic/angular';
 import { HttpContext } from '@angular/common/http';
@@ -17,7 +17,7 @@ export class AuthManagerService {
   private userStore = new BehaviorSubject<LoginUserDataDto | undefined>(undefined);
   public user$ = this.userStore.asObservable();
   public get user() {
-    return this.userStore.getValue(); 
+    return this.userStore.getValue();
   }
 
   private geocodingStore = new BehaviorSubject<google.maps.GeocoderResult | undefined>(undefined);
@@ -69,6 +69,12 @@ export class AuthManagerService {
       tap(data => {
         this.setUser(data);
       })
+    );
+  }
+
+  updateMe(user: UpdateMeDto) {
+    return this.authService.updateMe(user).pipe(
+      switchMap(data => this.me())
     );
   }
 

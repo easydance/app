@@ -10,7 +10,7 @@ ion-content {
   --background: linear-gradient(
       116deg,
       rgba(127, 50, 205, 0.6) 0%,
-      rgba(5, 2, 9, 0.6) 100%
+      rgba(5, 2, 9, 0.6) 10%
     ),
     #050209;
 
@@ -88,6 +88,8 @@ ion-content {
     align-items: center;
     border-radius: 10px;
     background: rgba(190, 190, 190, 0.08);
+    font-size: 14px;
+    line-height: 16px; /* 114.286% */
 
     .price {
       color: var(--neutral-300, #9c9c9c);

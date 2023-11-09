@@ -3,13 +3,29 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.easydance',
+  appId: 'app.easydance',
   appName: 'Easydance',
   webDir: 'www',
   server: {
     hostname: 'localhost',
     iosScheme: "https",
     androidScheme: 'https'
+  },
+  android: {
+    includePlugins: [
+      '@capacitor-mlkit/barcode-scanning',
+      '@capacitor-community/camera-preview',
+      '@capacitor/app',
+      '@capacitor/geolocation',
+      '@capacitor/google-maps',
+      '@capacitor/haptics',
+      '@capacitor/keyboard',
+      '@capacitor/status-bar',
+      '@codetrix-studio/capacitor-google-auth',
+      'com.virtuoworks.cordova-plugin-canvascamera',
+      'cordova-plugin-file',
+      'cordova-plugin-media-capture'
+    ],
   },
   plugins: {
     GoogleAuth: {
@@ -20,6 +36,13 @@ const config: CapacitorConfig = {
       forceCodeForRefreshToken: true,
     }
   }
-};
+,
+    android: {
+       buildOptions: {
+          keystorePath: '/Users/addo/Documents/Workspace/@easydance/app/keys/easydance.keystore',
+          keystoreAlias: 'easydance',
+       }
+    }
+  };
 
 export default config;

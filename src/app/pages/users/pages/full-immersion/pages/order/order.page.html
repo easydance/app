@@ -36,15 +36,16 @@
 			<div *ngFor="let product of party?.products"
 				[ngClass]="{ active: cart?.getQty(product) || 0 > 0 }"
 				class="product">
-				<div>
+				<div style="width: 60%;">
 					<div>{{product.name}}</div>
-					<div class="price mt-2">{{(product.price / 100) | currency:'€'}}</div>
+					<div class="price mt-1">{{(product.price / 100) | currency:'€'}}</div>
 				</div>
 				<div class="flex align-center">
 					<ion-button *ngIf="cart?.getQty(product) || 0 > 0"
 						(click)="cart?.add(product, -1)"
 						class="flex-1"
 						fill="clear"
+						color="medium"
 						size="icon-only">
 						<ion-icon name="remove">
 							{{product.price | currency:'€'}}
@@ -55,6 +56,7 @@
 					</div>
 					<ion-button (click)="cart?.add(product, 1)"
 						class="flex-1"
+						color="medium"
 						fill="clear"
 						size="icon-only">
 						<ion-icon name="add"></ion-icon>

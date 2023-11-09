@@ -1,6 +1,4 @@
 ion-content {
-  --background: transparent;
-
   --padding-start: 1rem;
   --padding-end: 1rem;
   --padding-bottom: calc(75px + var(--ion-safe-area-bottom));
@@ -9,7 +7,6 @@ ion-content {
 .home-title {
   color: var(--color-neutral-50);
   text-align: center;
-
   /* Headings/H2 */
   font-size: 2rem;
   font-style: normal;
@@ -19,7 +16,6 @@ ion-content {
 
 .home-subtitle {
   color: var(--color-neutral-300, #9c9c9c);
-
   /* Body/Primary-14 */
   font-size: 0.875rem;
   font-style: normal;
@@ -81,7 +77,6 @@ ion-content {
 
         > div:first-child {
           color: var(--color-neutral-50);
-
           /* Subtitle/UPPERCASE */
           font-size: 14px;
           font-style: normal;
@@ -93,12 +88,11 @@ ion-content {
 
         > div:last-child {
           color: var(--color-neutral-50);
-
           /* Subtitle/Secondary-20 */
-          font-size: 20px;
+          font-size: 1rem;
           font-style: normal;
           font-weight: 500;
-          line-height: 22px; /* 110% */
+          line-height: 1.125rem; /* 110% */
           letter-spacing: -0.5px;
         }
       }
@@ -114,7 +108,6 @@ ion-content {
 }
 
 ion-content {
-  --background: transparent;
   --padding-start: 1rem;
   --padding-end: 1rem;
   --padding-bottom: calc(75px + var(--ion-safe-area-bottom));
