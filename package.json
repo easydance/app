@@ -7,7 +7,7 @@
     "ng": "ng",
     "start:dev": "npm run generate-api && ionic  serve",
     "start": "ionic  serve",
-    "build": "ng build",
+    "build": "ng build && npx cap add ios && npx cap sync ios",
     "build:dev": "npm run generate-api && ng build",
     "watch": "npm run generate-api && ng build --watch --configuration development",
     "test": "ng test",
