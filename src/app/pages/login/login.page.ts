@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonModal, ModalController, NavController, Platform, ToastController } from '@ionic/angular';
+import { NavController, Platform, ToastController } from '@ionic/angular';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { catchError, throwError } from 'rxjs';
+import {
+  SignInWithApple,
+  SignInWithAppleResponse,
+  SignInWithAppleOptions,
+} from '@capacitor-community/apple-sign-in';
 
 @Component({
   selector: 'app-login',
@@ -44,9 +49,9 @@ export class LoginPage implements OnInit {
       catchError(async err => {
         if (err.status = 401) {
           this.toastCtrl.create({ message: 'Email e/o password non valide!', duration: 3000 })
-          .then(toast => {
-            toast.present();
-          });
+            .then(toast => {
+              toast.present();
+            });
           return throwError(() => err);
         }
         this.toastCtrl.create({ message: 'Non è stato possibile accedere', duration: 3000 })
@@ -70,9 +75,45 @@ export class LoginPage implements OnInit {
       console.error(error);
     });
     if (user) {
-      this.authManagerService.signUp({}, user.authentication.accessToken).subscribe(res => {
+      this.authManagerService.signUp({}, user.authentication.accessToken, 'google').subscribe(res => {
         this.navCtrl.navigateRoot('home');
       });
+    }
+  }
+
+  async appleSignIn() {
+    let options: SignInWithAppleOptions = {
+      clientId: 'app.easydance',
+      redirectURI: '',
+      scopes: 'email name',
+      nonce: 'nonce',
+    };
+
+    try {
+      const result: SignInWithAppleResponse = await SignInWithApple.authorize(options);
+
+      if (result) {
+        this.authManagerService.signUp({
+          email: result.response.email,
+          name: result.response.givenName,
+          surname: result.response.familyName
+        }, result.response.identityToken, 'apple').pipe(
+          catchError(err => {
+            this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione', duration: 3000 }).then(toast => {
+              toast.present();
+            });
+            return throwError(() => err);
+          })
+        ).subscribe(res => {
+          this.navCtrl.navigateRoot('home');
+        });
+      }
+    } catch (error: any) {
+      if (!error.message.includes('1001')) {
+        const toast = await this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione: ' + error.message, duration: 3000 });
+        toast.present();
+      }
+
     }
   }
 

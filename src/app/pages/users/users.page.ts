@@ -15,6 +15,9 @@ export class UsersPage implements OnInit {
 
   ionViewWillEnter() {
     this.authManager.me().subscribe(res => { });
+    this.authManager.getCurrentPosition().catch(err => {
+      console.error(err);
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonModal, NavController } from '@ionic/angular';
+import { IonModal, NavController, Platform } from '@ionic/angular';
 import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/services/full-immersion.service';
 
 @Component({
@@ -10,7 +10,11 @@ import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/s
 export class TabsComponent implements OnInit {
   @ViewChild('modal') modal?: IonModal;
 
-  constructor(public fullImmersionService: FullImmersionService, private navctrl: NavController) { }
+  constructor(
+    public fullImmersionService: FullImmersionService, 
+    private navctrl: NavController,
+    public platform: Platform
+    ) { }
 
   ngOnInit() { }
 

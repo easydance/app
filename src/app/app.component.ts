@@ -13,9 +13,7 @@ export class AppComponent {
 
 
   constructor(private readonly authManager: AuthManagerService, private readonly platform: Platform) {
-    this.authManager.getCurrentPosition().catch(err => {
-      console.error(err);
-    });
+    
   }
 
 }

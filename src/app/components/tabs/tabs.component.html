@@ -1,4 +1,4 @@
-<div class="footer px-4">
+<div class="footer px-4" [ngClass]="{ 'ios-footer pt-2': platform.is('ios')}">
 	<div [routerLink]="'/home'">Home</div>
 	<div [routerLink]="'/map'">Mappa</div>
 	<div (click)="goInFullImmersion()">

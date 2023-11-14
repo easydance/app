@@ -1,6 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CanvasCamera } from 'com.virtuoworks.cordova-plugin-canvascamera';
-import { CameraPreview, CameraPreviewOptions } from '@capacitor-community/camera-preview';
 import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
 
 @Component({

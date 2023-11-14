@@ -51,8 +51,8 @@ export class AuthManagerService {
     this.setUser(undefined);
   }
 
-  signUp(signUpDto: SignUpDto, accessToken?: string) {
-    return this.authService.signUp(signUpDto, accessToken ? 'google' : undefined, accessToken).pipe(
+  signUp(signUpDto: SignUpDto, accessToken?: string, provider?: 'google' | 'apple') {
+    return this.authService.signUp(signUpDto, accessToken ? provider : undefined, accessToken).pipe(
       map(res => res.data),
       tap(
         data => {
@@ -85,9 +85,11 @@ export class AuthManagerService {
   getCurrentPosition(): Promise<{ lat: number, lng: number; }> {
     return new Promise(async (resolve, reject) => {
       if (this.platform.is('android') || this.platform.is('ios')) {
-        let permissionStatus = await Geolocation.checkPermissions();
-        if (permissionStatus.location != 'granted') {
-          permissionStatus = await Geolocation.requestPermissions({ permissions: ['location'] });
+        if (!this.platform.is('ios')) {
+          let permissionStatus = await Geolocation.checkPermissions();
+          if (permissionStatus.location != 'granted') {
+            permissionStatus = await Geolocation.requestPermissions({ permissions: ['location'] });
+          }
         }
         Geolocation.getCurrentPosition({ enableHighAccuracy: false }).then(res => {
           this.geolocation = {

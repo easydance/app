@@ -7,7 +7,7 @@ ion-content.login {
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
-  background: var(--color-neutral-600);
+  background: #131313;
   border-radius: 2rem 2rem 0 0;
   position: absolute;
   bottom: 0;
@@ -29,4 +29,13 @@ ion-content.login {
   font-size: 0.625rem;
   text-align: right;
   margin: 0;
+}
+
+#login-buttons {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 30px;
 }
