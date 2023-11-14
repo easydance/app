@@ -3,7 +3,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.easydance',
+  appId: 'app.easydance',
   appName: 'Easydance',
   webDir: 'www',
   server: {
