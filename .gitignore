@@ -68,8 +68,7 @@ testem.log
 Thumbs.db
 
 
-android/
-android.old/
+# android/
 ios/
 generated/
 resources/ios/**/*
