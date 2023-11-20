@@ -1,13 +1,68 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>order-detail</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">order-detail</ion-title>
-    </ion-toolbar>
-  </ion-header>
+	<ion-header class="ion-no-border transparent absolute">
+		<ion-toolbar class="p-6 pl-0-i">
+			<ion-buttons slot="start">
+				<ion-fab-button (click)="goBack()"
+					class="button m-3 mr-0-i w-9 h-9"
+					routerDirection="back">
+					<ion-icon name="arrow-back"
+						style="font-size: 1rem;"></ion-icon>
+				</ion-fab-button>
+			</ion-buttons>
+			<ion-title>
+				Ordine n°{{order?.id}}
+			</ion-title>
+		</ion-toolbar>
+	</ion-header>
+
+	<div id="list"
+		class="mt-20">
+		<ion-card *ngIf="order"
+			class="mb-4">
+			<ion-card-content>
+				<div class="body">
+					<div class="header">
+						<div class="item">
+							<div class="label">ORDINE</div>
+							<div class="value">{{order.id}}</div>
+						</div>
+						<div class="item">
+							<div class="label">TAVOLO</div>
+							<div class="value">
+								{{order.table.name}}
+							</div>
+						</div>
+					</div>
+					<div class="overview">
+						<div class="title">RIEPILOGO</div>
+						<div class="list">
+							<div *ngFor="let row of order.rows"
+								class="item">
+								<div class="flex align-center">
+									<div class="qty">{{row.qty}}</div>
+									<div class="product-name">
+										{{row.priceListItem.product.name}}
+									</div>
+								</div>
+								<div class="price">
+									{{(row.priceListItem.product.price / 100) | currency:'€'}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="footer">
+						<ion-chip [color]="getStatusColor(order.status)">
+							{{getStatusLabel(order.status)}}
+						</ion-chip>
+						<div class="item">
+							<div class="label text-right">TOTALE</div>
+							<div class="value">
+								{{(order.bill? order.bill / 100 : '-') | currency:'€'}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</ion-card-content>
+		</ion-card>
+	</div>
 </ion-content>

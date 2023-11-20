@@ -105,8 +105,12 @@ ion-content {
   }
 }
 
+#list {
+  margin-top: calc(72px + var(--ion-safe-area-top));
+}
+
 #order-button {
   position: fixed;
   width: 100%;
-  bottom: 80px;
+  bottom: calc(80px + var(--ion-safe-area-bottom));
 }
