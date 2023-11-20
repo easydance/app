@@ -97,6 +97,13 @@ export interface RoleServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchRoleRequestDto 
      */
     update(id: number, patchRoleRequestDto: PatchRoleRequestDto, extraHttpRequestParams?: any): Observable<RoleControllerUpdateDefaultResponse>;

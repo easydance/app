@@ -97,6 +97,13 @@ export interface TagServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchTagRequestDto 
      */
     update(id: number, patchTagRequestDto: PatchTagRequestDto, extraHttpRequestParams?: any): Observable<TagControllerUpdateDefaultResponse>;

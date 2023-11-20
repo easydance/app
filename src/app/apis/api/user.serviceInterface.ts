@@ -104,6 +104,13 @@ export interface UserServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchUserRequestDto 
      */
     update(id: number, patchUserRequestDto: PatchUserRequestDto, extraHttpRequestParams?: any): Observable<UserControllerUpdateDefaultResponse>;

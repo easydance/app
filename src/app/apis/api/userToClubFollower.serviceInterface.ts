@@ -97,6 +97,13 @@ export interface UserToClubFollowerServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchUserToClubFollowerRequestDto 
      */
     update(id: number, patchUserToClubFollowerRequestDto: PatchUserToClubFollowerRequestDto, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerUpdateDefaultResponse>;

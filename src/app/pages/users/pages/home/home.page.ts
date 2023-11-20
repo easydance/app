@@ -31,23 +31,23 @@ export class HomePage implements OnInit {
       this.searchEvents();
     });
     this.authManager.user$.subscribe(res => {
-      if(res) {
-         this.clubFollowerService.findAll(0, 4, JSON.stringify({
-        user: { id: this.authManager.user?.id || 0 }
-      }), undefined, undefined, 'club.address').subscribe(res => {
-        this.clubs = res.data.map(cf => cf.club);
-        for (let club of this.clubs) {
-          // Club parties
-          this.partiesService.findAll(0, 5, JSON.stringify({
-            to: { $gte: DateTime.now().toISO() },
-            club: { id: club.id }
-          }), '{"from":0}', undefined, 'club')
-            .subscribe(res => {
-              club.parties = res.data;
-            });
-        }
-      });
-    }
+      if (res) {
+        this.clubFollowerService.findAll(0, 4, JSON.stringify({
+          user: { id: this.authManager.user?.id || 0 }
+        }), undefined, undefined, 'club.address').subscribe(res => {
+          this.clubs = res.data.map(cf => cf.club);
+          for (let club of this.clubs) {
+            // Club parties
+            this.partiesService.findAll(0, 5, JSON.stringify({
+              to: { $gte: DateTime.now().toISO() },
+              club: { id: club.id }
+            }), '{"from":0}', undefined, 'club')
+              .subscribe(res => {
+                club.parties = res.data;
+              });
+          }
+        });
+      }
     });
   }
 
@@ -55,31 +55,35 @@ export class HomePage implements OnInit {
   }
 
   searchEvents() {
-    this.filter = {
-      ...this.filter,
-      ...this.partiesUtils.Filters.Tonight,
-      ...this.partiesUtils.Filters.InCurrentPosition()
-    };
+    return new Promise((resolve, reject) => {
 
-    this.partiesService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'club').subscribe(res => {
-      this.parties = res.data;
-    });
-    this.clubFollowerService.findAll(0, 4, JSON.stringify({
-      user: { id: this.authManager.user?.id || 0 }
-    }), undefined, undefined, 'club.address').subscribe(res => {
-      this.clubs = res.data.map(cf => cf.club);
-      for (let club of this.clubs) {
-        // Club parties
-        this.partiesService.findAll(0, 5, JSON.stringify({
-          to: {
-            $gte: DateTime.now().toISO()
-          },
-          club: { id: club.id }
-        }), '{"from":0}', undefined, 'club')
-          .subscribe(res => {
-            club.parties = res.data;
-          });
-      }
+      this.filter = {
+        ...this.filter,
+        ...this.partiesUtils.Filters().Tonight,
+        ...this.partiesUtils.Filters().InCurrentPosition()
+      };
+
+      this.partiesService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'club').subscribe(res => {
+        this.parties = res.data;
+        resolve(res.data);
+      });
+      this.clubFollowerService.findAll(0, 4, JSON.stringify({
+        user: { id: this.authManager.user?.id || 0 }
+      }), undefined, undefined, 'club.address').subscribe(res => {
+        this.clubs = res.data.map(cf => cf.club);
+        for (let club of this.clubs) {
+          // Club parties
+          this.partiesService.findAll(0, 5, JSON.stringify({
+            to: {
+              $gte: DateTime.now().toISO()
+            },
+            club: { id: club.id }
+          }), '{"from":0}', undefined, 'club')
+            .subscribe(res => {
+              club.parties = res.data;
+            });
+        }
+      });
     });
   }
 
@@ -96,7 +100,7 @@ export class HomePage implements OnInit {
   }
 
   goToEvent(party: PartyBaseDto) {
-    this.navCtrl.navigateForward(['event-detail', party.id]);
+    this.navCtrl.navigateForward('/event-detail/' + party.id);
   }
 
   goToClubsEventsList(club: ClubBaseDto) {
@@ -116,6 +120,12 @@ export class HomePage implements OnInit {
           }
         })
       }
+    });
+  }
+
+  refresh($event: any) {
+    this.searchEvents().then(res => {
+      $event.target.complete();
     });
   }
 }

@@ -97,6 +97,13 @@ export interface AddressServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchAddressRequestDto 
      */
     update(id: number, patchAddressRequestDto: PatchAddressRequestDto, extraHttpRequestParams?: any): Observable<AddressControllerUpdateDefaultResponse>;

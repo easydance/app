@@ -97,6 +97,13 @@ export interface SubscriptionServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchSubscriptionRequestDto 
      */
     update(id: number, patchSubscriptionRequestDto: PatchSubscriptionRequestDto, extraHttpRequestParams?: any): Observable<SubscriptionControllerUpdateDefaultResponse>;

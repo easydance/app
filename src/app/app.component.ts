@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { Keyboard } from "@capacitor/keyboard";
 import * as swiper from 'swiper/element/bundle';
 swiper.register();
 
@@ -12,8 +11,13 @@ swiper.register();
 export class AppComponent {
 
 
-  constructor(private readonly authManager: AuthManagerService, private readonly platform: Platform) {
-    
+  constructor() {
+    Keyboard.addListener('keyboardWillShow', () => {
+      document.body.classList.add('keyboard-open');
+    });
+    Keyboard.addListener('keyboardDidHide', () => {
+      document.body.classList.remove('keyboard-open');
+    });
   }
 
 }

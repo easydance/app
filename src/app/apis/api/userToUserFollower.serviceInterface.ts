@@ -97,6 +97,13 @@ export interface UserToUserFollowerServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchUserToUserFollowerRequestDto 
      */
     update(id: number, patchUserToUserFollowerRequestDto: PatchUserToUserFollowerRequestDto, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerUpdateDefaultResponse>;

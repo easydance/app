@@ -97,6 +97,13 @@ export interface VisualizationServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchVisualizationRequestDto 
      */
     update(id: number, patchVisualizationRequestDto: PatchVisualizationRequestDto, extraHttpRequestParams?: any): Observable<VisualizationControllerUpdateDefaultResponse>;

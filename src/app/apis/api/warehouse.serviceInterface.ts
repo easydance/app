@@ -97,6 +97,13 @@ export interface WarehouseServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchWarehouseRequestDto 
      */
     update(id: number, patchWarehouseRequestDto: PatchWarehouseRequestDto, extraHttpRequestParams?: any): Observable<WarehouseControllerUpdateDefaultResponse>;

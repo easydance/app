@@ -105,6 +105,13 @@ export interface PartyServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchPartyRequestDto 
      */
     update(id: number, patchPartyRequestDto: PatchPartyRequestDto, extraHttpRequestParams?: any): Observable<PartyControllerUpdateDefaultResponse>;

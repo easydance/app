@@ -32,9 +32,9 @@ export class ClubDetailPage implements OnInit {
       const id = res['id'];
       this.clubsService.findOne(id, undefined, 'address').subscribe(res => {
         this.club = res.data;
-        const [profile, ...covers] = this.club.covers;
-        this.profile = profile;
-        this.covers = covers;
+        // const [profile, ...covers] = this.club.covers;
+        this.profile = this.club.profile;
+        this.covers = this.club.covers;
         this.partiesService.findAll(0, 20, JSON.stringify({ club: { id } })).subscribe(res => {
           this.parties = res.data.map(d => ({
             ...d,

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { PartyBaseDto, PartyService } from 'src/app/apis';
+import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 
 @Component({
   selector: 'app-events-list',
@@ -20,17 +21,23 @@ export class EventsListPage implements OnInit {
   constructor(
     private readonly router: ActivatedRoute,
     private readonly partiesService: PartyService,
-    private readonly navCtrl: NavController
+    private readonly navCtrl: NavController,
+    public readonly partiesUtils: CommonPartiesUtils
   ) { }
 
   ngOnInit() {
     this.router.queryParams.subscribe(res => {
       this.title = res['title'];
-      this.header = { ...this.header, title: res['header'].title, subtitle: res['header'].subtitle };
+      this.header = { 
+        ...this.header, 
+        title: res['header'].title, 
+        subtitle: res['header'].subtitle 
+      };
       this.filters = res['filters'] || undefined;
-      this.partiesService.findAll(0, 20, this.filters, undefined, undefined, 'club').subscribe(res => {
-        this.parties = res.data;
-      });
+      this.partiesService.findAll(0, 20, this.filters, undefined, undefined, 'club')
+        .subscribe(res => {
+          this.parties = res.data;
+        });
     });
   }
 
@@ -49,32 +56,10 @@ export class EventsListPage implements OnInit {
   }
 
   goToEventsWeekend() {
-    const dayOfWeek = (new Date().getDay() - 1 + 7) % 7;
-    const dayToFriday = dayOfWeek - 4;
-    let from = DateTime.now();
-    if (dayToFriday < 0) from = DateTime.now().startOf('day').plus({ days: Math.abs(dayToFriday) });
-    let to = DateTime.fromMillis(from.toMillis()).plus({ days: 2 }).endOf('day');
-
-    this.navCtrl.navigateForward('/events-list', {
-      queryParams: {
-        title: 'Eventi di questo weekend',
-        header: {
-          title: 'ven - dom',
-          subtitle: 'Eventi'
-        },
-        filters: JSON.stringify({
-          from: {
-            $lte: from.toISO()
-          },
-          to: {
-            $gte: to.toISO()
-          }
-        })
-      }
-    });
+    this.partiesUtils.CommonFilterActions.Weekend();
   }
 
   goToClubsEventsList() {
-
+    this.partiesUtils.CommonFilterActions.FavoritesClubs();
   }
 }

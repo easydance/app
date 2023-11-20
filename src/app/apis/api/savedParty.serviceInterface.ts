@@ -97,6 +97,13 @@ export interface SavedPartyServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchSavedPartyRequestDto 
      */
     update(id: number, patchSavedPartyRequestDto: PatchSavedPartyRequestDto, extraHttpRequestParams?: any): Observable<SavedPartyControllerUpdateDefaultResponse>;

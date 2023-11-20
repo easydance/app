@@ -1,150 +1,162 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
 	<ion-toolbar>
 		<ion-searchbar [showClearButton]="'always'"
 			[placeholder]="'Cerca...'"
 			class="mt-4"
 			clearIcon="close-outline"></ion-searchbar>
 	</ion-toolbar>
-</ion-header>
+</ion-header> -->
+<search-header></search-header>
 <ion-content [fullscreen]="true">
+	<ion-refresher [pullFactor]="0.5"
+		[pullMin]="150"
+		[pullMax]="200"
+		(ionRefresh)="refresh($event)"
+		slot="fixed">
+		<ion-refresher-content pullingIcon="chevron-down-circle-outline"
+			pullingText=""
+			refreshingSpinner="crescent"
+			refreshingText="Caricamento...">
+		</ion-refresher-content>
+	</ion-refresher>
 	<div class="bg"></div>
 	<!-- <swiper-container #swiper pagination="false" initial-slide="1" auto-height="true">
 		<swiper-slide>
 			<recording-video-preview></recording-video-preview>
 		</swiper-slide>
 		<swiper-slide> -->
-			<div class="title-big my-4 mb-8">
-				Gli eventi di oggi
-				<br>
-				a {{city}}
+	<div class="title-big my-4 mb-8">
+		Gli eventi di oggi
+		<br>
+		a {{city}}
+	</div>
+	<div *ngIf="parties && parties.length === 0">
+		<easy-thats-all></easy-thats-all>
+	</div>
+	<ng-container *ngIf="!parties">
+		<div id="skeleton">
+			<div *ngFor="let number of [0,1,2]">
+				<ion-skeleton-text animated="true"
+					class="square mt-5">
+					<div class="content"></div>
+				</ion-skeleton-text>
 			</div>
-			<div *ngIf="parties && parties.length === 0">
-				<easy-thats-all></easy-thats-all>
-			</div>
-			<ng-container *ngIf="!parties">
-				<div id="skeleton">
-					<div *ngFor="let number of [0,1,2]">
-						<ion-skeleton-text animated="true"
-							class="square mt-5">
-							<div class="content"></div>
-						</ion-skeleton-text>
-					</div>
-				</div>
-			</ng-container>
+		</div>
+	</ng-container>
 
-			<ng-container *ngIf="parties?.length || 0 > 0">
+	<ng-container *ngIf="parties?.length || 0 > 0">
+		<div>
+			<easy-card-list *ngIf="parties"
+				[parties]="parties"
+				(partyClick)="goToEvent($event)"></easy-card-list>
+		</div>
+		<div *ngIf="parties"
+			class="mt-16">
+			<div class="home-title ion-text-left mb-1">Last chance</div>
+			<div class="home-subtitle mb-4">
+				Tutti gli eventi di oggi, non farteli scappare
+			</div>
+			<easy-card-slider [parties]="parties"
+				[rightText]="'VEDI TUTTI'"
+				(rightButton)="moreEvents()"
+				(partyClick)="goToEvent($event)"></easy-card-slider>
+		</div>
+	</ng-container>
+	<div *ngIf="clubs"
+		class="mt-16">
+		<ng-container *ngFor="let club of clubs">
+			<items-list *ngIf="club.parties?.length"
+				[headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.profile.url}"
+				[parties]="club.parties"
+				(more)="goToClubsEventsList(club)"></items-list>
+		</ng-container>
+	</div>
+	<div id="filters"
+		class="mt-20">
+		<ion-card (click)="partiesUtils.CommonFilterActions.Today()"
+			class="square">
+			<div class="content">
 				<div>
-					<easy-card-list *ngIf="parties"
-						[parties]="parties"
-						(partyClick)="goToEvent($event)"></easy-card-list>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
 				</div>
-				<div *ngIf="parties"
-					class="mt-16">
-					<div class="home-title ion-text-left mb-1">Last chance</div>
-					<div class="home-subtitle mb-4">
-						Tutti gli eventi di oggi, non farteli scappare
+				<div class="body">
+					<div>OGGI</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
 					</div>
-					<easy-card-slider [parties]="parties"
-						[rightText]="'VEDI TUTTI'"
-						(rightButton)="moreEvents()"
-						(partyClick)="goToEvent($event)"></easy-card-slider>
 				</div>
-			</ng-container>
-			<div *ngIf="clubs"
-				class="mt-16">
-				<ng-container *ngFor="let club of clubs">
-					<items-list *ngIf="club.parties?.length"
-						[headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.covers[0].url}"
-						[parties]="club.parties"
-						(more)="goToClubsEventsList(club)"></items-list>
-				</ng-container>
 			</div>
-			<div id="filters"
-				class="mt-20">
-				<ion-card (click)="partiesUtils.CommonFilterActions.Today()"
-					class="square">
-					<div class="content">
-						<div>
-							<ion-icon color="light"
-								name='calendar-outline'></ion-icon>
-						</div>
-						<div class="body">
-							<div>OGGI</div>
-							<div>
-								Gli eventi di oggi stanno per terminare!
-							</div>
-						</div>
-					</div>
-				</ion-card>
+		</ion-card>
 
-				<ion-card (click)="partiesUtils.CommonFilterActions.Weekend()"
-					class="square">
-					<div class="content">
-						<div>
-							<ion-icon color="light"
-								name='calendar-outline'></ion-icon>
-						</div>
-						<div class="body">
-							<div>WEEKEND</div>
-							<div>
-								Dai un’occhiata agli eventi del fine settimana
-							</div>
-						</div>
+		<ion-card (click)="partiesUtils.CommonFilterActions.Weekend()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>WEEKEND</div>
+					<div>
+						Dai un’occhiata agli eventi del fine settimana
 					</div>
-				</ion-card>
-				<ion-card (click)="partiesUtils.CommonFilterActions.Saved()"
-					class="square">
-					<div class="content">
-						<div>
-							<ion-icon color="light"
-								name='bookmark'></ion-icon>
-						</div>
-						<div class="body">
-							<div>SALVATI</div>
-							<div>
-								Tutti gli eventi dei tuoi club Preferiti
-							</div>
-						</div>
-					</div>
-				</ion-card>
-				<ion-card (click)="partiesUtils.CommonFilterActions.FavoritesClubs()"
-					class="square">
-					<div class="content">
-						<div>
-							<ion-icon color="light"
-								name='wine'></ion-icon>
-						</div>
-						<div class="body">
-							<div>CLUB</div>
-							<div>
-								Gli eventi di oggi stanno per terminare!
-							</div>
-						</div>
-					</div>
-				</ion-card>
-				<ion-card (click)="partiesUtils.CommonFilterActions.ForYou()"
-					class="square">
-					<div class="content">
-						<div>
-							<ion-icon color="light"
-								name='sparkles'></ion-icon>
-						</div>
-						<div class="body">
-							<div>PER TE</div>
-							<div>
-								Gli eventi di oggi stanno per terminare!
-							</div>
-						</div>
-					</div>
-				</ion-card>
-				<ion-card (click)="partiesUtils.CommonFilterActions.Today()"
-					id="all-events"
-					class="square">
-					<div class="content h-full flex align-center">
-						<div class="m-0-auto">Tutti gli eventi</div>
-					</div>
-				</ion-card>
+				</div>
 			</div>
-		<!-- </swiper-slide>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.Saved()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='bookmark'></ion-icon>
+				</div>
+				<div class="body">
+					<div>SALVATI</div>
+					<div>
+						Tutti gli eventi dei tuoi club Preferiti
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.FavoritesClubs()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='wine'></ion-icon>
+				</div>
+				<div class="body">
+					<div>CLUB</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.ForYou()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='sparkles'></ion-icon>
+				</div>
+				<div class="body">
+					<div>PER TE</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.Today()"
+			id="all-events"
+			class="square">
+			<div class="content h-full flex align-center">
+				<div class="m-0-auto">Tutti gli eventi</div>
+			</div>
+		</ion-card>
+	</div>
+	<!-- </swiper-slide>
 	</swiper-container> -->
 </ion-content>

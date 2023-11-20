@@ -52,7 +52,7 @@ export class MapPage implements OnInit, AfterViewChecked {
     lng: number;
   };
   filter: any = {
-    ...this.partiesUtils.Filters.InDay(new Date())
+    ...this.partiesUtils.Filters().InDay(new Date())
   };
   currentBounds: google.maps.LatLngBounds | null = null;
   date: string = DateTime.now().toFormat('dd LLL', { locale: 'it-IT' });
@@ -196,7 +196,7 @@ export class MapPage implements OnInit, AfterViewChecked {
       // }
       this.filter = {
         ...this.filter,
-        ...this.partiesUtils.Filters.InDay(new Date($event.detail.value))
+        ...this.partiesUtils.Filters().InDay(new Date($event.detail.value))
       };
       this.parties = [];
       this.addMarkersFromAPI(this.currentBounds);
@@ -221,7 +221,7 @@ export class MapPage implements OnInit, AfterViewChecked {
   async showClub(club: ClubBaseDto) {
     this.selectedClub = club;
     this.partiesWeekend = await this.partiesService.findAll(0, 5, JSON.stringify({
-      ...this.partiesUtils.Filters.Weekend,
+      ...this.partiesUtils.Filters().Weekend,
       club: {
         id: club.id
       }

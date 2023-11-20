@@ -105,6 +105,13 @@ export interface FacebookEventsServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchFacebookEventsRequestDto 
      */
     update(id: number, patchFacebookEventsRequestDto: PatchFacebookEventsRequestDto, extraHttpRequestParams?: any): Observable<FacebookEventsControllerUpdateDefaultResponse>;

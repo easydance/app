@@ -5,11 +5,14 @@ import { lastValueFrom } from 'rxjs';
 import { GetSavedPartyResponseDto, SavedPartyService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
-const dayOfWeek = (new Date().getDay() - 1 + 7) % 7;
-const dayToFriday = dayOfWeek - 4;
-let from = DateTime.now().startOf('day');
-if (dayToFriday < 0) from = DateTime.now().startOf('day').plus({ days: Math.abs(dayToFriday) });
-let to = DateTime.fromMillis(from.toMillis()).plus({ days: 2 }).endOf('day');
+const calcWeekend = () => {
+  const dayOfWeek = (new Date().getDay() - 1 + 7) % 7;
+  const dayToFriday = dayOfWeek - 4;
+  let from = DateTime.now().startOf('day');
+  if (dayToFriday < 0) from = DateTime.now().startOf('day').plus({ days: Math.abs(dayToFriday) });
+  let to = DateTime.fromMillis(from.toMillis()).plus({ days: 2 }).endOf('day');
+  return { to, from };
+};
 
 
 @Injectable({
@@ -24,7 +27,7 @@ export class CommonPartiesUtils {
     private clubFollowerService: UserToClubFollowerService
   ) { }
 
-  public Filters = {
+  public Filters = () => ({
     Tonight: {
       from: {
         $lte: DateTime.now().endOf('day').toISO()
@@ -35,10 +38,10 @@ export class CommonPartiesUtils {
     },
     Weekend: {
       from: {
-        $lte: from.toISO()
+        $lte: calcWeekend().to.toISO()
       },
       to: {
-        $gte: to.toISO()
+        $gte: calcWeekend().from.toISO()
       }
     },
     InCurrentPosition: () => {
@@ -64,7 +67,7 @@ export class CommonPartiesUtils {
         $gte: DateTime.fromJSDate(date).startOf('day').toISO()
       }
     })
-  };
+  });
 
   public CommonFilterActions = {
     Today: () => {
@@ -76,8 +79,8 @@ export class CommonPartiesUtils {
             subtitle: 'Eventi'
           },
           filters: JSON.stringify({
-            ...this.Filters.Tonight,
-            ...this.Filters.InCurrentPosition()
+            ...this.Filters().Tonight,
+            ...this.Filters().InCurrentPosition()
           })
         }
       });
@@ -108,8 +111,8 @@ export class CommonPartiesUtils {
             subtitle: 'Eventi'
           },
           filters: JSON.stringify({
-            ...this.Filters.Weekend,
-            ...this.Filters.InCurrentPosition()
+            ...this.Filters().Weekend,
+            ...this.Filters().InCurrentPosition()
           })
         }
       });
@@ -117,7 +120,7 @@ export class CommonPartiesUtils {
     FavoritesClubs: async () => {
       const favoritesClubs = await lastValueFrom(this.clubFollowerService.findAll(0, 100, JSON.stringify({
         user: { id: this.authManager.user?.id || 0 }
-      }), undefined, undefined, 'party'));
+      }), undefined, undefined, 'club'));
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
           title: 'Eventi nei tuoi locali preferiti',
@@ -126,8 +129,8 @@ export class CommonPartiesUtils {
             subtitle: 'Eventi'
           },
           filters: JSON.stringify({
-            ...this.Filters.Tonight,
-            $in: favoritesClubs.data.map(fc => fc.club?.id)
+            ...this.Filters().Tonight,
+            club: { id: { $in: favoritesClubs.data.map(fc => fc.club?.id) } }
           })
         }
       });

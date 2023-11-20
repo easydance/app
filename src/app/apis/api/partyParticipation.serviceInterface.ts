@@ -96,6 +96,13 @@ export interface PartyParticipationServiceInterface {
     /**
      * 
      * 
+     * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
      * @param updatePartyParticipationRequestDto 
      * @param fields 
      * @param includes 
