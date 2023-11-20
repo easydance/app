@@ -7,6 +7,7 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
 export type CardOptions = {
   height?: string,
   hideHeader?: boolean;
+  showHours?: boolean;
   mergeWithBg?: boolean;
 };
 

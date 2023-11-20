@@ -36,7 +36,7 @@ export class EventsPage implements OnInit {
           this.clubs = res.data.map(cf => cf.club);
           for (let club of this.clubs) {
             // Club parties
-            this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id } }), undefined, undefined, 'club')
+            this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: {$gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
               .subscribe(res => {
                 club.parties = res.data;
               });
@@ -110,7 +110,7 @@ export class EventsPage implements OnInit {
       this.clubs = res.data.map(cf => cf.club);
       for (let club of this.clubs) {
         // Club parties
-        this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id } }), undefined, undefined, 'club')
+        this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: {$gte: DateTime.now().toISO()} }), undefined, undefined, 'club')
           .subscribe(res => {
             club.parties = res.data;
           });

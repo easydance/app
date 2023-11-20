@@ -3,7 +3,7 @@ import { BehaviorSubject, map, switchMap, tap } from 'rxjs';
 import { AuthService, LoginUserDataDto, SignUpDto, UpdateMeDto } from 'src/app/apis';
 import { Geolocation } from '@capacitor/geolocation';
 import { Platform } from '@ionic/angular';
-import { HttpContext } from '@angular/common/http';
+import { App } from '@capacitor/app';
 
 @Injectable({
   providedIn: 'root'
@@ -86,8 +86,11 @@ export class AuthManagerService {
     return new Promise(async (resolve, reject) => {
       if (this.platform.is('android') || this.platform.is('ios')) {
         if (!this.platform.is('ios')) {
-          let permissionStatus = await Geolocation.checkPermissions();
-          if (permissionStatus.location != 'granted') {
+          let permissionStatus = await Geolocation.checkPermissions().catch(error => {
+            alert("Per poter utilizzare Easydance devi attivare la geolocalizzazione. L'app verrà chiusa dopo questo messaggio!");
+            App.exitApp();
+          });
+          if (permissionStatus?.location != 'granted') {
             permissionStatus = await Geolocation.requestPermissions({ permissions: ['location'] });
           }
         }

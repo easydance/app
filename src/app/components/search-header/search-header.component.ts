@@ -1,4 +1,5 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DateTime } from 'luxon';
 import { ClubBaseDto, ClubService, PartyBaseDto, PartyService, UserBaseDto, UserService } from 'src/app/apis';
 
 @Component({
@@ -18,7 +19,7 @@ export class SearchHeaderComponent implements OnInit {
   public parties: PartyBaseDto[] = [];
   public users: UserBaseDto[] = [];
 
-  public filterType: 'all' | 'clubs' | 'parties' = 'all';
+  public filterType: 'all' | 'clubs' | 'parties' | 'users' = 'all';
 
   constructor(
     private readonly clubsService: ClubService,
@@ -28,7 +29,7 @@ export class SearchHeaderComponent implements OnInit {
 
   ngOnInit() { }
 
-  filter(type: 'all' | 'clubs' | 'parties') {
+  filter(type: 'all' | 'clubs' | 'parties' | 'users') {
     this.filterType = type;
     this.search();
   }
@@ -56,9 +57,20 @@ export class SearchHeaderComponent implements OnInit {
         });
     }
     if (['all', 'parties'].includes(this.filterType)) {
-      this.partiesService.findAll(0, 10, JSON.stringify({ title: { $containsIgnore: this.searchTerm } }), undefined, undefined, 'club')
+      this.partiesService.findAll(0, 10, JSON.stringify({ title: { $containsIgnore: this.searchTerm }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
         .subscribe(parties => {
           this.parties = parties.data;
+        });
+    }
+    if (['all', 'users'].includes(this.filterType)) {
+      this.usersService.findAll(0, 10, JSON.stringify([
+          { email: { $containsIgnore: this.searchTerm } },
+          { socials: { instagram: { username: { $containsIgnore: this.searchTerm } } } },
+          { socials: { twitter: { username: { $containsIgnore: this.searchTerm } } } },
+          { socials: { facebook: { username: { $containsIgnore: this.searchTerm } } } },
+        ]), undefined, undefined, 'club')
+        .subscribe(users => {
+          this.users = users.data;
         });
     }
   }
