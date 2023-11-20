@@ -33,8 +33,8 @@ export class EventDetailComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['party']?.currentValue && changes['party'].currentValue.id != changes['party']?.previousValue?.id) {
       this.center = {
-        lat: this.party?.address.lat || 0,
-        lng: this.party?.address.lng || 0,
+        lat: this.party?.address?.lat || this.party?.club?.address?.lat || 0,
+        lng: this.party?.address?.lng || this.party?.club?.address?.lng || 0,
       };
     }
   }

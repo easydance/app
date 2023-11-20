@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Barcode, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { ClubService } from 'src/app/apis';
 import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/services/full-immersion.service';
@@ -23,7 +24,8 @@ export class ScanPage implements OnInit {
     private toastCtrl: ToastController,
     private readonly fullImmersionService: FullImmersionService,
     private readonly clubsService: ClubService,
-    private readonly navCtrl: NavController
+    private readonly navCtrl: NavController,
+    private readonly translateService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -65,13 +67,28 @@ export class ScanPage implements OnInit {
             const { clubId } = JSON.parse(result.barcode.displayValue);
             if (clubId) {
               this.fullImmersionService.setSelectedClub((await lastValueFrom(this.clubsService.findOne(clubId, undefined, 'address'))).data);
-              this.navCtrl.navigateForward('full-immersion/select-table');
-              this.process = false;
+              try {
+                this.fullImmersionService.setCurrentParty((await lastValueFrom(this.clubsService.getCurrentParty(clubId))));
+
+                this.navCtrl.navigateForward('full-immersion/select-table');
+                this.process = false;
+              } catch (error: any) {
+                const toast = await this.toastCtrl.create({
+                  message: this.translateService.instant(`API_RESPONSE.ERRORS.${error.error.errors.i18n}`),
+                  duration: 2000
+                });
+                toast.present();
+                setTimeout(() => {
+                  this.process = false;
+                }, 3000);
+              }
             }
           } catch (error) {
-            const toast = await this.toastCtrl.create({ message: "QR Code non valido!" });
+            const toast = await this.toastCtrl.create({ message: "QR Code non valido!", duration: 2000 });
             toast.present();
-            this.process = false;
+            setTimeout(() => {
+              this.process = false;
+            }, 3000);
           }
         }
       },
