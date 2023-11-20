@@ -102,10 +102,22 @@
 				</div>
 				<div *ngIf="editedUser?.socials" style="display: block;">
 					<ion-item class="mt-2 text-none" lines="none">
-						<ion-input label="Username" labelPlacement="floating" placeholder="Username" [ngModel]="editedUser?.socials?.[kv.key]?.username" (ionChange)="setSocialValue(kv.key, 'username', $event)" (click)="$event.stopPropagation()" />
+						<ion-input 
+							label="Username" 
+							labelPlacement="floating" 
+							placeholder="Username" 
+							[ngModel]="editedUser?.socials?.[kv.key]?.username" 
+							(ionChange)="setSocialValue(kv.key, 'username', $event)" 
+							(click)="$event.stopPropagation()" />
 					</ion-item>
 					<ion-item class="mt-2 text-none" lines="none">
-						<ion-input label="URL" labelPlacement="floating" placeholder="URL" (click)="$event.stopPropagation()" />
+						<ion-input 
+							label="URL" 
+							labelPlacement="floating" 
+							placeholder="URL" 
+							[ngModel]="editedUser?.socials?.[kv.key]?.link" 
+							(ionChange)="setSocialValue(kv.key, 'link', $event)" 
+							(click)="$event.stopPropagation()" />
 					</ion-item>
 
 					<ion-button class="mt-2" expand="block" color="success">Salva</ion-button>

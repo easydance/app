@@ -132,7 +132,10 @@ export class ProfileEditComponent implements OnInit, OnChanges {
   }
 
   addSocial(logo: string) {
-    if (this.editedUser?.socials) {
+    if (this.editedUser) {
+      if (!this.editedUser.socials) {
+        this.editedUser.socials = {};
+      }
       this.editedUser.socials[logo] = { username: '' };
       this.currentSocialEditing = logo;
     }
@@ -144,7 +147,7 @@ export class ProfileEditComponent implements OnInit, OnChanges {
 
   setSocialValue(logo: string, key: string, $event: any) {
     if (this.editedUser?.socials) {
-      if (this.editedUser.socials[logo]) {
+      if (!this.editedUser.socials[logo]) {
         this.editedUser.socials[logo] = {};
       }
       this.editedUser.socials[logo] = {

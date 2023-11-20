@@ -16,6 +16,8 @@ import { Observable }                                        from 'rxjs';
 import { LoginDto } from '../model/models';
 import { LoginResponseDto } from '../model/models';
 import { MeResponseDto } from '../model/models';
+import { RequestRecoveryDto } from '../model/models';
+import { RequestUpdatePassword } from '../model/models';
 import { SignUpDto } from '../model/models';
 import { SignupResponseDataDto } from '../model/models';
 import { SignupResponseDto } from '../model/models';
@@ -49,6 +51,13 @@ export interface AuthServiceInterface {
     /**
      * 
      * 
+     * @param requestRecoveryDto 
+     */
+    requestRecovery(requestRecoveryDto: RequestRecoveryDto, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
      * @param signUpDto 
      * @param provider 
      * @param authorization 
@@ -61,5 +70,12 @@ export interface AuthServiceInterface {
      * @param updateMeDto 
      */
     updateMe(updateMeDto: UpdateMeDto, extraHttpRequestParams?: any): Observable<SignupResponseDto>;
+
+    /**
+     * 
+     * 
+     * @param requestUpdatePassword 
+     */
+    updatePassword(requestUpdatePassword: RequestUpdatePassword, extraHttpRequestParams?: any): Observable<{}>;
 
 }

@@ -275,6 +275,8 @@ model/productControllerFindOneDefaultResponse.ts
 model/productControllerReplaceDefaultResponse.ts
 model/productControllerUpdateDefaultResponse.ts
 model/profileImageDto.ts
+model/requestRecoveryDto.ts
+model/requestUpdatePassword.ts
 model/roleBaseDto.ts
 model/roleControllerCreateDefaultResponse.ts
 model/roleControllerFindAllDefaultResponse.ts

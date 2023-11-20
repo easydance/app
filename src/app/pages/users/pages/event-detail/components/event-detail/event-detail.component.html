@@ -49,10 +49,10 @@
 	<div class="mt-12 mb-4 flex space-between map-title">
 		<div class="title">DOVE</div>
 		<div class="address">
-			{{party?.club?.address?.street}}, {{party?.club?.address?.streetNumber}}
+			{{party?.address?.street || party?.club?.address?.street}}, {{party?.address?.streetNumber || party?.club?.address?.streetNumber}}
 		</div>
 	</div>
-	<div *ngIf="center && party?.club?.address?.lat && party?.club?.address?.lng && !config?.hideMap"
+	<div *ngIf="center && (party?.address?.lat || party?.club?.address?.lat) && (party?.address?.lng || party?.club?.address?.lng) && !config?.hideMap"
 		style="border-radius: 1rem; overflow: hidden;">
 		<google-map [options]="options"
 			[center]="center"

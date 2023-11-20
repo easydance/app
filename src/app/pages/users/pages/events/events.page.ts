@@ -95,10 +95,10 @@ export class EventsPage implements OnInit {
     // Tonight parties
     this.partiesService.findAll(0, 5, JSON.stringify({
       from: {
-        $lte: DateTime.now().toISO()
+        $lte: DateTime.now().endOf('day').toISO()
       },
       to: {
-        $gte: DateTime.now().toISO()
+        $gte: DateTime.now().startOf('day').toISO()
       }
     }), undefined, undefined, 'club').subscribe(res => {
       this.partiesTonight = res.data;
