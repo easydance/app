@@ -13,8 +13,10 @@
 		</ion-toolbar>
 	</ion-header>
 
-	<div class="mt-20">
+	<div id="list"
+		class="mt-20">
 		<ion-card *ngFor="let o of pendingOrders"
+			[routerLink]="'/full-immersion/order-detail/' + o.id"
 			class="mb-4">
 			<ion-card-content>
 				<div class="flex align-center py-5">
@@ -23,7 +25,8 @@
 							width="121"
 							height="107"
 							viewBox="0 0 121 107"
-							fill="none" style="zoom: 0.5">
+							fill="none"
+							style="zoom: 0.5">
 							<path d="M60.5 38.4032C93.6371 38.4032 120.5 30.005 120.5 19.6453C120.5 9.28565 93.6371 0.887451 60.5 0.887451C27.3629 0.887451 0.5 9.28565 0.5 19.6453C0.5 30.005 27.3629 38.4032 60.5 38.4032Z"
 								stroke="#FAFAFA"
 								stroke-linejoin="round"></path>
@@ -38,9 +41,12 @@
 					<div class="info">
 						<div class="title">N° {{o.id}}</div>
 						<div class="list">
-							<div *ngFor="let l of o.rows" class="flex gap-2">
-                <div class="w-4">{{l.qty}} </div>
-                <div>{{l.priceListItem.product.name}}</div>
+							<div *ngFor="let l of o.rows"
+								class="flex gap-2">
+								<div class="w-4">{{l.qty}}</div>
+								<div>
+									{{l.priceListItem.product.name}}
+								</div>
 							</div>
 							<div class="total mt-4">
 								{{(o.bill? o.bill / 100 : '-') | currency:'€'}}
@@ -64,7 +70,7 @@
 				<div>{{v.club}}</div>
 			</div>
 			<div *ngFor="let order of v.value"
-				class="item">
+				class="item" [routerLink]="'/full-immersion/order-detail/' + order.id">
 				<div>
 					<div class="n-item ion-text-right"></div>
 					N° {{order.id}}

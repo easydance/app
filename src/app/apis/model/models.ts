@@ -210,6 +210,8 @@ export * from './productControllerFindOneDefaultResponse';
 export * from './productControllerReplaceDefaultResponse';
 export * from './productControllerUpdateDefaultResponse';
 export * from './profileImageDto';
+export * from './requestRecoveryDto';
+export * from './requestUpdatePassword';
 export * from './roleBaseDto';
 export * from './roleControllerCreateDefaultResponse';
 export * from './roleControllerFindAllDefaultResponse';

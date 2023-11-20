@@ -12,6 +12,7 @@ import { UiModule } from 'src/app/components/ui.module';
 import { TokenInterceptor } from 'src/app/services/interceptors/token.interceptor';
 import { environment } from 'src/environments/environment';
 import "@codetrix-studio/capacitor-google-auth";
+import { I18nHandlerModule } from 'src/app/i18n/custom-translator.loader';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -29,6 +30,7 @@ export function apiConfigFactory(): Configuration {
     HttpClientModule,
     ApiModule.forRoot(apiConfigFactory),
     UiModule,
+    I18nHandlerModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

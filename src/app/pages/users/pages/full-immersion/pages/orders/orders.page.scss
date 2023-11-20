@@ -119,3 +119,7 @@ ion-chip {
     border-radius: 6px;
     padding: 8px 10px;
 }
+
+#list {
+  margin-top: calc(80px + var(--ion-safe-area-top));
+}

@@ -1,0 +1,134 @@
+ion-content {
+  --background: linear-gradient(
+      116deg,
+      rgba(127, 50, 205, 0.6) 0%,
+      rgba(5, 2, 9, 0.6) 10%
+    ),
+    #050209;
+}
+
+ion-card {
+  background: var(--neutral-20016, rgba(190, 190, 190, 0.16));
+}
+
+#list {
+  margin-top: calc(80px + var(--ion-safe-area-top));
+}
+
+.body {
+  display: flex;
+  padding: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 26px;
+  width: 100%;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .overview {
+    border-top: 1px solid #bebebe42;
+    border-bottom: 1px solid #bebebe42;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+    padding-top: 24px;
+
+    .title {
+      color: var(--btn---2nd, #9c9c9c);
+
+      /* Actions/Secondary-12 */
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1rem; /* 133.333% */
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--corner-sm, 1rem);
+      width: 100%;
+      padding-bottom: 26px;
+
+      .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        flex-direction: row;
+
+        .qty {
+          color: var(--neutral-400, #6e6e6e);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 16px; /* 114.286% */
+          min-width: 20px;
+        }
+
+        .product-name {
+          color: var(--neutral-50-brand, #fafafa);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 16px; /* 114.286% */
+        }
+
+        .price {
+          color: var(--neutral-50-brand, #fafafa);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 16px; /* 114.286% */
+        }
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    .label {
+      color: var(--btn---2nd, #9c9c9c);
+
+      /* Actions/Secondary-12 */
+      font-size: 0.75rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1rem; /* 133.333% */
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .value {
+      color: var(--neutral-50-brand, #fafafa);
+
+      /* Subtitle/Primary-24 */
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.625rem; /* 108.333% */
+      letter-spacing: -0.5px;
+    }
+  }
+}
