@@ -12,11 +12,13 @@ import { SuggestButtonsComponent } from 'src/app/components/suggest-buttons/sugg
 import { ThatsAllComponent } from 'src/app/components/thats-all/thats-all.component';
 import { ItemsListComponent } from 'src/app/components/items-list/items-list.component';
 import { UsersWidgetComponent } from 'src/app/components/users-widget/users-widget.component';
+import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
   ClubsGridComponent, TabsComponent, SuggestButtonsComponent,
-  ThatsAllComponent, ItemsListComponent, UsersWidgetComponent
+  ThatsAllComponent, ItemsListComponent, UsersWidgetComponent,
+  SearchHeaderComponent
 ];
 
 @NgModule({

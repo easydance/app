@@ -97,6 +97,13 @@ export interface PriceListItemServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchPriceListItemRequestDto 
      */
     update(id: number, patchPriceListItemRequestDto: PatchPriceListItemRequestDto, extraHttpRequestParams?: any): Observable<PriceListItemControllerUpdateDefaultResponse>;

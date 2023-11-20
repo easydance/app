@@ -23,7 +23,7 @@ export interface UpdatePriceListItemRequestDto {
     updatedBy?: string | null;
     deletedBy?: string | null;
     price: number | null;
-    qta: number | null;
+    qty: number | null;
     party: PartyBaseDto;
     product: ProductBaseDto;
 }

@@ -104,6 +104,13 @@ export interface TranslationServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchTranslationRequestDto 
      */
     update(id: number, patchTranslationRequestDto: PatchTranslationRequestDto, extraHttpRequestParams?: any): Observable<TranslationControllerUpdateDefaultResponse>;

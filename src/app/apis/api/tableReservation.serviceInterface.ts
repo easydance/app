@@ -97,6 +97,13 @@ export interface TableReservationServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchTableReservationRequestDto 
      */
     update(id: number, patchTableReservationRequestDto: PatchTableReservationRequestDto, extraHttpRequestParams?: any): Observable<TableReservationControllerUpdateDefaultResponse>;

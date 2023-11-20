@@ -97,6 +97,13 @@ export interface AttachmentServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchAttachmentRequestDto 
      */
     update(id: number, patchAttachmentRequestDto: PatchAttachmentRequestDto, extraHttpRequestParams?: any): Observable<AttachmentControllerUpdateDefaultResponse>;

@@ -97,6 +97,13 @@ export interface TableOrderServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchTableOrderRequestDto 
      */
     update(id: number, patchTableOrderRequestDto: PatchTableOrderRequestDto, extraHttpRequestParams?: any): Observable<TableOrderControllerUpdateDefaultResponse>;

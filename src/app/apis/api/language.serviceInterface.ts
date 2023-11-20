@@ -97,6 +97,13 @@ export interface LanguageServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchLanguageRequestDto 
      */
     update(id: number, patchLanguageRequestDto: PatchLanguageRequestDto, extraHttpRequestParams?: any): Observable<LanguageControllerUpdateDefaultResponse>;

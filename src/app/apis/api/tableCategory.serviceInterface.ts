@@ -97,6 +97,13 @@ export interface TableCategoryServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchTableCategoryRequestDto 
      */
     update(id: number, patchTableCategoryRequestDto: PatchTableCategoryRequestDto, extraHttpRequestParams?: any): Observable<TableCategoryControllerUpdateDefaultResponse>;

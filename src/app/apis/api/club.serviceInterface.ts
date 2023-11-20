@@ -105,6 +105,13 @@ export interface ClubServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchClubRequestDto 
      */
     update(id: number, patchClubRequestDto: PatchClubRequestDto, extraHttpRequestParams?: any): Observable<ClubControllerUpdateDefaultResponse>;

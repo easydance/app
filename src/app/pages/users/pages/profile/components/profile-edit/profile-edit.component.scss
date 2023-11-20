@@ -41,6 +41,7 @@ swiper-slide {
   border-radius: 10px;
   background: var(--neutral-500, #242424);
   backdrop-filter: blur(20px);
+  margin-bottom: 0.5rem;
 
   > div {
     display: flex;

@@ -97,6 +97,13 @@ export interface StoryServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchStoryRequestDto 
      */
     update(id: number, patchStoryRequestDto: PatchStoryRequestDto, extraHttpRequestParams?: any): Observable<StoryControllerUpdateDefaultResponse>;

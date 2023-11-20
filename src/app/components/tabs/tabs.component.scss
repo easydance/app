@@ -1,5 +1,9 @@
 $height: 65px;
 
+.keyboard-open :host {
+  display: none;
+}
+
 :host {
   position: absolute;
   bottom: 0;

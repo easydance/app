@@ -97,6 +97,13 @@ export interface TablePartyRuleServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchTablePartyRuleRequestDto 
      */
     update(id: number, patchTablePartyRuleRequestDto: PatchTablePartyRuleRequestDto, extraHttpRequestParams?: any): Observable<TablePartyRuleControllerUpdateDefaultResponse>;

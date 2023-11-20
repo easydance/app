@@ -97,6 +97,13 @@ export interface ProductServiceInterface {
      * 
      * 
      * @param id 
+     */
+    restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param patchProductRequestDto 
      */
     update(id: number, patchProductRequestDto: PatchProductRequestDto, extraHttpRequestParams?: any): Observable<ProductControllerUpdateDefaultResponse>;
