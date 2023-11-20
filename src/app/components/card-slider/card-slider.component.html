@@ -9,6 +9,9 @@
 			<party-card [party]="party"></party-card>
 		</div>
 	</swiper-slide>
+	<swiper-slide *ngIf="!parties.length" style="width: 100%;">
+		<easy-thats-all message="Nessun evento trovato"></easy-thats-all>
+	</swiper-slide>
 	<swiper-slide *ngIf="rightText"
 		class="more">
 		<div (click)="rightButton.emit()"

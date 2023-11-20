@@ -33,7 +33,7 @@ swiper-slide {
   }
 }
 
-.social-item {
+.social-item, .social-item-add {
   display: flex;
   padding: 25px 20px;
   align-items: center;
@@ -60,6 +60,10 @@ swiper-slide {
     letter-spacing: 1px;
     text-transform: uppercase;
   }
+}
+
+.social-item-add {
+  display: block;
 }
 
 #social-buttons {

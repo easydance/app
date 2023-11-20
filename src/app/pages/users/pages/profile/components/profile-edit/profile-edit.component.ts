@@ -25,6 +25,10 @@ export class ProfileEditComponent implements OnInit, OnChanges {
   public descriptionWordLimit: number = 60;
   private allTags: GetTagResponseDto[] = [];
   public searchedTags: GetTagResponseDto[] = [];
+  public get socialsKeys() {
+    return ['facebook', 'instagram', 'twitter'].filter(l => !Object.keys(this.editedUser?.socials || {}).includes(l));
+  };
+  public currentSocialEditing?: string;
 
   constructor(
     private ngZone: NgZone,
@@ -127,4 +131,32 @@ export class ProfileEditComponent implements OnInit, OnChanges {
     });
   }
 
+  addSocial(logo: string) {
+    if (this.editedUser?.socials) {
+      this.editedUser.socials[logo] = { username: '' };
+      this.currentSocialEditing = logo;
+    }
+  }
+
+  toggleSocialEdit(key: string) {
+    this.currentSocialEditing = this.currentSocialEditing == key ? undefined : key;
+  }
+
+  setSocialValue(logo: string, key: string, $event: any) {
+    if (this.editedUser?.socials) {
+      if (this.editedUser.socials[logo]) {
+        this.editedUser.socials[logo] = {};
+      }
+      this.editedUser.socials[logo] = {
+        ...this.editedUser.socials[logo],
+        ...{ [key]: $event.target.value }
+      };
+    }
+  }
+
+  deleteSocial(key: string) {
+    if (this.editedUser?.socials) {
+      delete this.editedUser.socials[key];
+    }
+  }
 }

@@ -78,27 +78,46 @@
 	<!-- SOCIAL -->
 	<div class="mt-12">
 		<div class="input-title mb-4">Social</div>
-		<div *ngFor="let kv of (editedUser?.socials || {}) | keyvalue"
-			class="social-item">
-			<div>
-				<ion-icon [name]="'logo-' + kv.key"
-					slot="start"></ion-icon>
-				<div class="flex-1">
-					{{kv.value.username}}
+		<ng-container  *ngFor="let kv of (editedUser?.socials || {}) | keyvalue">
+			<div class="social-item" *ngIf="currentSocialEditing != kv.key" (click)="toggleSocialEdit(kv.key) ">
+				<div>
+					<ion-icon [name]="'logo-' + kv.key"
+						slot="start"></ion-icon>
+					<div class="flex-1 text-none">
+						{{kv.value.username}}
+					</div>
+					<ion-icon name="close"
+						slot="end" (click)="deleteSocial(kv.key)"></ion-icon>
 				</div>
-				<ion-icon name="close"
-					slot="end"></ion-icon>
 			</div>
-		</div>
-		<div id="social-buttons">
+			<div class="social-item-add" *ngIf="currentSocialEditing == kv.key" (click)="toggleSocialEdit(kv.key)">
+				<div>
+					<ion-icon [name]="'logo-twitter'"
+						slot="start"></ion-icon>
+					<div class="flex-1 uppercase">
+						{{kv.key}}
+					</div>
+					<ion-icon name="close"
+						slot="end" (click)="deleteSocial(kv.key)"></ion-icon>
+				</div>
+				<div *ngIf="editedUser?.socials" style="display: block;">
+					<ion-item class="mt-2 text-none" lines="none">
+						<ion-input label="Username" labelPlacement="floating" placeholder="Username" [ngModel]="editedUser?.socials?.[kv.key]?.username" (ionChange)="setSocialValue(kv.key, 'username', $event)" (click)="$event.stopPropagation()" />
+					</ion-item>
+					<ion-item class="mt-2 text-none" lines="none">
+						<ion-input label="URL" labelPlacement="floating" placeholder="URL" (click)="$event.stopPropagation()" />
+					</ion-item>
+
+					<ion-button class="mt-2" expand="block" color="success">Salva</ion-button>
+				</div>
+			</div>
+		</ng-container>
+		<div id="social-buttons" *ngIf="socialsKeys.length">
 			<div>
 				<div class="title">+ AGGIUNGI SOCIAL</div>
 				<div class="buttons">
-					<div class="button">
-						<ion-icon name="logo-facebook"></ion-icon>
-					</div>
-					<div class="button">
-						<ion-icon name="logo-instagram"></ion-icon>
+					<div class="button" *ngFor="let logo of socialsKeys" (click)="addSocial(logo)">
+						<ion-icon [name]="'logo-' + logo"></ion-icon>
 					</div>
 				</div>
 			</div>
