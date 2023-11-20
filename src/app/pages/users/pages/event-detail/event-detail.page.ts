@@ -13,9 +13,10 @@ import { customMapStyle } from 'src/app/utils/google-maps.utils';
 export class EventDetailPage implements OnInit {
 
   @Input('party') public party?: PartyBaseDto;
-  @Input('config') config: { hideMap?: boolean, hideHeader?: boolean; } = {
+  @Input('config') config: { hideMap?: boolean, hideHeader?: boolean; showHours: boolean;} = {
     hideMap: false,
-    hideHeader: true
+    hideHeader: true,
+    showHours: true
   };
 
   constructor(

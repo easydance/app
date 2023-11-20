@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
 import { AttachmentBaseDto, ClubBaseDto, ClubService, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
@@ -35,7 +36,7 @@ export class ClubDetailPage implements OnInit {
         // const [profile, ...covers] = this.club.covers;
         this.profile = this.club.profile;
         this.covers = this.club.covers;
-        this.partiesService.findAll(0, 20, JSON.stringify({ club: { id } })).subscribe(res => {
+        this.partiesService.findAll(0, 20, JSON.stringify({ club: { id }, to: {$gte: DateTime.now().toISO() } })).subscribe(res => {
           this.parties = res.data.map(d => ({
             ...d,
             club: this.club!

@@ -11,7 +11,7 @@ import { customMapStyle } from 'src/app/utils/google-maps.utils';
   styleUrls: ['./event-detail.component.scss'],
 })
 export class EventDetailComponent implements OnInit, OnChanges {
-  @Input() cardOptions: CardOptions = { mergeWithBg: true, hideHeader: true };
+  @Input() cardOptions: CardOptions = { mergeWithBg: true, hideHeader: true, showHours: true };
   @Input('party') public party?: PartyBaseDto;
   @Input('config') config: { hideMap?: boolean; } = {
     hideMap: false,
@@ -32,15 +32,15 @@ export class EventDetailComponent implements OnInit, OnChanges {
   constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['party']?.currentValue && changes['party'].currentValue.id != changes['party']?.previousValue?.id) {
-      this.center = { 
+      this.center = {
         lat: this.party?.address.lat || 0,
         lng: this.party?.address.lng || 0,
-       }
+      };
     }
   }
 
   ngOnInit() {
-    
+
   }
 
   getImages() {

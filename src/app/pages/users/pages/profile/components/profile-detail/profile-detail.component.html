@@ -81,15 +81,25 @@
 			</div>
 			<div *ngIf="user"
 				class="w-full">
+				<div *ngIf="user.email"
+					class="mt-1 text-none">
+					<ion-icon name="mail"></ion-icon>
+					{{user.email}}
+				</div>
 				<div *ngIf="user.socials?.['instagram']"
-					class="mt-1">
+					class="mt-1 text-none">
 					<ion-icon name="logo-instagram"></ion-icon>
 					{{user.socials?.['instagram']?.username}}
 				</div>
 				<div *ngIf="user?.socials?.['facebook']"
-					class="mt-1">
+					class="mt-1 text-none">
 					<ion-icon name="logo-facebook"></ion-icon>
 					{{user.socials?.['facebook']?.username}}
+				</div>
+				<div *ngIf="user?.socials?.['twitter']"
+					class="mt-1 text-none">
+					<ion-icon name="logo-twitter"></ion-icon>
+					{{user.socials?.['twitter']?.username}}
 				</div>
 			</div>
 		</div>

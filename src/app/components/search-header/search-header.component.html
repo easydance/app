@@ -15,8 +15,8 @@
 	id="search-wrapper">
 	<div id="filters"
 		class="flex gap-3">
-		<ion-button [fill]="filterType == 'all' ? undefined : 'outline'"
-			[color]="filterType == 'all' ? 'dark' : 'light'"
+		<ion-button [fill]="filterType != 'all' ? undefined : 'outline'"
+			[color]="filterType != 'all' ? 'dark' : 'light'"
 			(click)="filter('all')"
 			xs
 			color="dark">
@@ -26,19 +26,26 @@
 			color="dark">
 			Luogo
 		</ion-button> -->
-		<ion-button [fill]="filterType == 'clubs' ? undefined : 'outline'"
-			[color]="filterType == 'clubs' ? 'dark' : 'light'"
+		<ion-button [fill]="filterType != 'clubs' ? undefined : 'outline'"
+			[color]="filterType != 'clubs' ? 'dark' : 'light'"
 			(click)="filter('clubs')"
 			xs
 			color="dark">
 			Club
 		</ion-button>
-		<ion-button [fill]="filterType == 'parties' ? undefined : 'outline'"
-			[color]="filterType == 'parties' ? 'dark' : 'light'"
+		<ion-button [fill]="filterType != 'parties' ? undefined : 'outline'"
+			[color]="filterType != 'parties' ? 'dark' : 'light'"
 			(click)="filter('parties')"
 			xs
 			color="dark">
 			Evento
+		</ion-button>
+		<ion-button [fill]="filterType != 'users' ? undefined : 'outline'"
+			[color]="filterType != 'users' ? 'dark' : 'light'"
+			(click)="filter('users')"
+			xs
+			color="dark">
+			Persone
 		</ion-button>
 	</div>
 	<div>
@@ -74,6 +81,21 @@
 					<div class="title">{{club.name}}</div>
 					<div class="subtitle">
 						{{club.address?.city}}
+					</div>
+				</ion-label>
+			</ion-item>
+			<ion-item *ngFor="let user of users"
+				[routerLink]="'/profile/' + user.id"
+				[detail]="false"
+				lines="full">
+				<ion-avatar slot="start">
+					<img [alt]="user.profileImage.id"
+						[src]="user.profileImage.url">
+				</ion-avatar>
+				<ion-label>
+					<div class="title">{{user.email}}</div>
+					<div class="subtitle">
+						{{user.firstName}} {{user.lastName}}
 					</div>
 				</ion-label>
 			</ion-item>
