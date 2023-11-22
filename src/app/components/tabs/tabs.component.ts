@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { IonModal, NavController, Platform } from '@ionic/angular';
 import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/services/full-immersion.service';
 
@@ -9,6 +9,8 @@ import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/s
 })
 export class TabsComponent implements OnInit {
   @ViewChild('modal') modal?: IonModal;
+
+  @Output() tabClicked: EventEmitter<string> = new EventEmitter();
 
   constructor(
     public fullImmersionService: FullImmersionService, 

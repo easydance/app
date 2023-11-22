@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { ClubBaseDto, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
+import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
+import { UsersPage } from 'src/app/pages/users/users.page';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 
@@ -11,6 +13,7 @@ import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.servic
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild('searchHeader') searchHeader?: SearchHeaderComponent;
 
   public parties?: GetPartyResponseDto[];
   public clubs?: GetClubResponseDto[];
@@ -26,6 +29,12 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+
+    UsersPage.tabClicked.subscribe(res => {
+      this.searchHeader?.clearSearch();
+    });
+    
     this.authManager.geocoding$.subscribe(res => {
       this.city = this.authManager.currentCity;
       this.searchEvents();

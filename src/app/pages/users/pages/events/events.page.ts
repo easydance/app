@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClubBaseDto, ClubService, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { DateTime } from "luxon";
 import { NavController } from '@ionic/angular';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
+import { UsersPage } from 'src/app/pages/users/users.page';
+import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
 
 @Component({
   selector: 'app-events',
@@ -11,6 +13,8 @@ import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.servic
   styleUrls: ['./events.page.scss'],
 })
 export class EventsPage implements OnInit {
+
+  @ViewChild('searchHeader') searchHeader?: SearchHeaderComponent;
 
   public parties?: GetPartyResponseDto[];
   public partiesTonight?: GetPartyResponseDto[];
@@ -26,6 +30,10 @@ export class EventsPage implements OnInit {
     private readonly clubFollowerService: UserToClubFollowerService,
     public readonly partiesUtils: CommonPartiesUtils
   ) {
+
+    UsersPage.tabClicked.subscribe(res => {
+      this.searchHeader?.clearSearch();
+    });
 
     this.authManager.user$.subscribe(res => {
       if (res) {
@@ -142,4 +150,6 @@ export class EventsPage implements OnInit {
       }
     });
   }
+
+
 }
