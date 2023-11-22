@@ -59,8 +59,8 @@
 				Segui
 			</ion-button>
 			<ion-button class="flex-1" *ngIf="isFollowing"
-				color="primary" (click)="unfollowClub()">
-				Smetti di serguire
+				color="dark" (click)="unfollowClub()">
+				Seguito
 			</ion-button>
 		</div>
 
@@ -87,17 +87,20 @@
 						<ion-icon name="phone-portrait"></ion-icon>
 						{{club?.phone}}
 					</div>
-				</div>
-				<div class="flex-1">
-					<div *ngIf="club?.instagram"
+					<div *ngIf="club?.socials?.['instagram']"
 						class="mt-1">
 						<ion-icon name="logo-instagram"></ion-icon>
-						{{club?.instagram}}
+						{{club?.socials?.['instagram']?.['username']}}
 					</div>
-					<div *ngIf="club?.facebook"
+					<div *ngIf="club?.socials?.['facebook']"
 						class="mt-1">
 						<ion-icon name="logo-facebook"></ion-icon>
-						{{club?.facebook}}
+						{{club?.socials?.['facebook']?.['username']}}
+					</div>
+					<div *ngIf="club?.socials?.['twitter']"
+						class="mt-1">
+						<ion-icon name="logo-twitter"></ion-icon>
+						{{club?.socials?.['twitter']?.['username']}}
 					</div>
 				</div>
 			</div>

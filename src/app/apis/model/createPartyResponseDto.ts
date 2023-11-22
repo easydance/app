@@ -29,6 +29,7 @@ export interface CreatePartyResponseDto {
     deletedBy?: string | null;
     title: string;
     isWaitingList: boolean;
+    orderEnabled: boolean;
     hidden: boolean;
     from: string;
     to: string;

@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border blured">
-	<ion-toolbar class="p-6 pl-0-i">
+	<ion-toolbar class="pb-4 pl-0-i">
 		<ion-buttons slot="start">
 			<ion-fab-button (click)="goBack()"
 				class="button m-3 w-9 h-9"
@@ -21,16 +21,19 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" #ionContent>
+<ion-content #ionContent
+	[fullscreen]="true">
 	<div class="title-big mt-8-i my-16">{{title}}</div>
 	<div>
 		<easy-card-list *ngIf="parties"
-			[parties]="parties" (partyClick)="goToEvent($event)"></easy-card-list>
+			[parties]="parties"
+			(partyClick)="goToEvent($event)"></easy-card-list>
 	</div>
-  <div class="mt-16">
-    <easy-thats-all></easy-thats-all>
-  </div>
 	<div class="mt-16">
-		<easy-suggest-buttons (events)="goToEventsWeekend()" (clubs)="goToClubsEventsList()"></easy-suggest-buttons>
+		<easy-thats-all></easy-thats-all>
+	</div>
+	<div class="mt-16">
+		<!-- <easy-suggest-buttons (events)="goToEventsWeekend()" (clubs)="goToClubsEventsList()"></easy-suggest-buttons> -->
+		<events-filters (select)="scrollOnTop()"></events-filters>
 	</div>
 </ion-content>

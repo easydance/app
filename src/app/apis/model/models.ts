@@ -15,7 +15,6 @@ export * from './attachmentControllerUploadFileDefaultResponse';
 export * from './bounds';
 export * from './clubBaseDto';
 export * from './clubBaseDtoSocialsValueValue';
-export * from './clubControllerCreateDefaultResponse';
 export * from './clubControllerFindAllDefaultResponse';
 export * from './clubControllerFindOneDefaultResponse';
 export * from './clubControllerReplaceDefaultResponse';

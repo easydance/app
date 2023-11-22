@@ -14,7 +14,6 @@ import { HttpHeaders }                                       from '@angular/comm
 import { Observable }                                        from 'rxjs';
 
 import { AddressControllerCountDefaultResponse } from '../model/models';
-import { ClubControllerCreateDefaultResponse } from '../model/models';
 import { ClubControllerFindAllDefaultResponse } from '../model/models';
 import { ClubControllerFindOneDefaultResponse } from '../model/models';
 import { ClubControllerReplaceDefaultResponse } from '../model/models';
@@ -57,11 +56,8 @@ export interface ClubServiceInterface {
      * 
      * 
      * @param createClubRequestDto 
-     * @param fields 
-     * @param includes 
-     * @param deleted 
      */
-    create(createClubRequestDto: CreateClubRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ClubControllerCreateDefaultResponse>;
+    create(createClubRequestDto: CreateClubRequestDto, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * 

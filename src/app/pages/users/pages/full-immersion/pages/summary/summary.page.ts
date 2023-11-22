@@ -40,7 +40,7 @@ export class SummaryPage implements OnInit {
       this.navCtrl.navigateForward('/cool-notification', {
         queryParams: {
           title: 'ORDINE INVIATO',
-          subtitle: 'Goditi la serata perchè la pasticca che hai preso prima potrebbe andarti di traverso oppure farti avere un bad trip',
+          subtitle: 'A breve riceverai il tuo ordine, nel frattempo goditi la serata!',
           button: 'CHIUDI',
           returnUrl: '/home'
         }

@@ -13,12 +13,13 @@ import { ThatsAllComponent } from 'src/app/components/thats-all/thats-all.compon
 import { ItemsListComponent } from 'src/app/components/items-list/items-list.component';
 import { UsersWidgetComponent } from 'src/app/components/users-widget/users-widget.component';
 import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
+import { EventsFiltersComponent } from 'src/app/components/events-filters/events-filters.component';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
   ClubsGridComponent, TabsComponent, SuggestButtonsComponent,
   ThatsAllComponent, ItemsListComponent, UsersWidgetComponent,
-  SearchHeaderComponent
+  SearchHeaderComponent, EventsFiltersComponent
 ];
 
 @NgModule({

@@ -79,7 +79,6 @@ model/attachmentControllerUploadFileDefaultResponse.ts
 model/bounds.ts
 model/clubBaseDto.ts
 model/clubBaseDtoSocialsValueValue.ts
-model/clubControllerCreateDefaultResponse.ts
 model/clubControllerFindAllDefaultResponse.ts
 model/clubControllerFindOneDefaultResponse.ts
 model/clubControllerReplaceDefaultResponse.ts

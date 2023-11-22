@@ -37,5 +37,6 @@ export interface CreateUserResponseDto {
     followers: number;
     following: number;
     followingClubs: number;
+    isFollowing: boolean;
 }
 
