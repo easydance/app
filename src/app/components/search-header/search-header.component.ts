@@ -81,6 +81,10 @@ export class SearchHeaderComponent implements OnInit {
     }
   }
 
+  async clearSearch() {
+    this.searchTerm = '';
+    await Keyboard.hide();
+  }
 
   async onClear() {
     await Keyboard.hide();

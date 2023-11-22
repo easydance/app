@@ -92,7 +92,7 @@
 			</div>
 			<div class="social-item-add" *ngIf="currentSocialEditing == kv.key" (click)="toggleSocialEdit(kv.key)">
 				<div>
-					<ion-icon [name]="'logo-twitter'"
+					<ion-icon [name]="'logo-' + kv.key"
 						slot="start"></ion-icon>
 					<div class="flex-1 uppercase">
 						{{kv.key}}

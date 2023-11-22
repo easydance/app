@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Component({
@@ -7,6 +8,8 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
+
+  static tabClicked: EventEmitter<string> = new EventEmitter();
 
   constructor(private authManager: AuthManagerService) { }
 
@@ -18,6 +21,10 @@ export class UsersPage implements OnInit {
     this.authManager.getCurrentPosition().catch(err => {
       console.error(err);
     });
+  }
+
+  emitTabClicked($event: string) {
+    UsersPage.tabClicked.emit($event);
   }
 
 }
