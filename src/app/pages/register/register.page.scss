@@ -73,10 +73,12 @@ ion-content.register {
 #wizard {
   margin-left: -2rem;
   margin-right: -2rem;
+  overflow: auto;
 
   swiper-slide {
     padding-left: 2rem;
     padding-right: 2rem;
+    overflow: auto;
   }
 }
 
@@ -151,11 +153,10 @@ swiper-slide {
 }
 
 form > div {
-  position: relative;
+  // position: relative;
 }
 
 .error {
-  position: absolute;
   bottom: -1.2rem;
   width: 100%;
 }

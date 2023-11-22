@@ -50,7 +50,8 @@
 			[title]="'LAST CHANCE DI QUESTA SETTIMANA'"
 			(partyClick)="goToEvent($event)"></easy-card-slider>
 	</div>
-	<div class="mt-16 clubs-tags py-8 px-4 mx--4" *ngIf="clubs?.length">
+	<div *ngIf="clubs?.length"
+		class="mt-16 clubs-tags py-8 px-4 mx--4">
 		<div class="w-full my-2 title">I SOLITI POSTI</div>
 		<ion-button *ngFor="let club of clubs"
 			color="light"
@@ -63,16 +64,22 @@
 	<div id="events-club">
 		<div *ngFor="let club of clubs"
 			class="mt-16">
-			<div class="title-wrapper mb-6">
+			<!-- <div class="title-wrapper mb-6">
 				<div class="title">
 					<div>{{club.name}}</div>
 					<div class="location mt-1">
-						{{club.address.city}}
+						{{club.address?.city}}
 					</div>
 				</div>
 			</div>
 			<easy-card-slider [parties]="club.parties || []"
-				(partyClick)="goToEvent($event)"></easy-card-slider>
+				(partyClick)="goToEvent($event)"></easy-card-slider> -->
+			<div *ngIf="club.parties?.length"
+				class="mb-6">
+				<items-list [headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.profile.url}"
+					[parties]="club.parties"
+					(more)="goToClubsEventsList(club)"></items-list>
+			</div> 
 		</div>
 	</div>
 </ion-content>

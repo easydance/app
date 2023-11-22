@@ -13,7 +13,7 @@
 
 export interface CreateProductRequestDto { 
     name: string;
-    description: string;
+    description?: string;
     price: number;
     qty: number;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClubService, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
+import { ClubBaseDto, ClubService, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { DateTime } from "luxon";
 import { NavController } from '@ionic/angular';
@@ -122,4 +122,24 @@ export class EventsPage implements OnInit {
     this.navCtrl.navigateForward(['event-detail', party.id]);
   }
 
+
+  goToClubsEventsList(club: ClubBaseDto) {
+    this.navCtrl.navigateForward('/events-list', {
+      queryParams: {
+        title: 'Eventi al ' + club.name,
+        header: {
+          title: club.name,
+          subtitle: 'Eventi'
+        },
+        filters: JSON.stringify({
+          to: {
+            $gte: DateTime.now().toISO()
+          },
+          club: {
+            id: club.id
+          }
+        })
+      }
+    });
+  }
 }

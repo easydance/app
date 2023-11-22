@@ -37,5 +37,6 @@ export interface PatchUserRequestDto {
     followers: number;
     following: number;
     followingClubs: number;
+    isFollowing: boolean;
 }
 

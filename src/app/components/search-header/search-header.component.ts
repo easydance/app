@@ -1,4 +1,5 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Keyboard } from '@capacitor/keyboard';
 import { DateTime } from 'luxon';
 import { ClubBaseDto, ClubService, PartyBaseDto, PartyService, UserBaseDto, UserService } from 'src/app/apis';
 
@@ -34,22 +35,27 @@ export class SearchHeaderComponent implements OnInit {
     this.search();
   }
 
-  onChange($event: any) {
+  async onChange($event: any) {
     this.searchTerm = $event.target.value;
-    setTimeout(() => {
-      const el: HTMLDivElement = this.header?.el;
-      const headerHeight = el ? el.offsetTop + el.clientHeight || 5 : 5;
-      if (this.wrapper) {
-        this.wrapper.nativeElement.style.top = `${headerHeight}px`;
-      }
-      this.headerHeight = headerHeight;
-    }, 100);
+    const el: HTMLDivElement = this.header?.el;
+    const headerHeight = el ? el.offsetTop + el.clientHeight || 5 : 5;
+    if (this.wrapper) {
+      this.wrapper.nativeElement.style.top = `${headerHeight}px`;
+    }
+    this.headerHeight = headerHeight;
+    if (!this.searchTerm) {
+      this.wrapper.nativeElement.style.display = 'none';
+      Keyboard.hide();
+    } else {
+      this.wrapper.nativeElement.style.display = 'block';
+    }
     this.search();
   }
 
   search() {
     this.parties = [];
     this.clubs = [];
+    this.users = [];
     if (['all', 'clubs'].includes(this.filterType)) {
       this.clubsService.findAll(0, 10, JSON.stringify({ name: { $containsIgnore: this.searchTerm } }), undefined, undefined, 'address')
         .subscribe(clubs => {
@@ -64,15 +70,19 @@ export class SearchHeaderComponent implements OnInit {
     }
     if (['all', 'users'].includes(this.filterType)) {
       this.usersService.findAll(0, 10, JSON.stringify([
-          { email: { $containsIgnore: this.searchTerm } },
-          { socials: { instagram: { username: { $containsIgnore: this.searchTerm } } } },
-          { socials: { twitter: { username: { $containsIgnore: this.searchTerm } } } },
-          { socials: { facebook: { username: { $containsIgnore: this.searchTerm } } } },
-        ]), undefined, undefined, 'club')
+        { email: { $containsIgnore: this.searchTerm } },
+        { socials: { instagram: { username: { $containsIgnore: this.searchTerm } } } },
+        { socials: { twitter: { username: { $containsIgnore: this.searchTerm } } } },
+        { socials: { facebook: { username: { $containsIgnore: this.searchTerm } } } },
+      ]), undefined, undefined, 'club')
         .subscribe(users => {
           this.users = users.data;
         });
     }
   }
 
+
+  async onClear() {
+    await Keyboard.hide();
+  }
 }
