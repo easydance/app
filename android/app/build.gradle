@@ -1,28 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        debug {
-            storeFile file('/Users/addo/Documents/Workspace/@easydance/app/keys/easydance.keystore')
-            storePassword 'EasyDance2023'
-            keyPassword 'EasyDance2023'
-            keyAlias 'easydance'
-        }
-        release {
-            storeFile file('/Users/addo/Documents/Workspace/@easydance/app/keys/easydance.keystore')
-            storePassword 'EasyDance2023'
-            keyAlias 'easydance'
-            keyPassword 'EasyDance2023'
-        }
-    }
     namespace "com.easydance"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.easydance"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10300
-        versionName "1.3.0"
+        versionCode 010302
+        versionName "1.3.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -34,7 +20,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-          signingConfig signingConfigs.release
         }
     }
 }

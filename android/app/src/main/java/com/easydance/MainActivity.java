@@ -1,4 +1,4 @@
-package app.easydance;
+package com.easydance;
 
 import com.getcapacitor.BridgeActivity;
 

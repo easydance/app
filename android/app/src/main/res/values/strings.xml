@@ -4,5 +4,4 @@
     <string name="title_activity_main">Easydance</string>
     <string name="package_name">com.easydance</string>
     <string name="custom_url_scheme">com.easydance</string>
-    <string name="server_client_id">862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com</string>
 </resources>
