@@ -1,12 +1,13 @@
 #header {
   position: absolute;
-  top: var(--ion-safe-area-top);
+  top: 0;
+  padding-top: var(--ion-safe-area-top);
   width: 100%;
   left: 0;
   background: linear-gradient(
     180deg,
     #171717 0%,
-    #171717 50%,
+    #171717 55%,
     transparent 100%
   );
   z-index: 100000000001;

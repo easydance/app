@@ -1,0 +1,86 @@
+<div id="filters"
+		class="mt-20">
+		<ion-card (click)="partiesUtils.CommonFilterActions.Today(); select.emit()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>OGGI</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+
+		<ion-card (click)="partiesUtils.CommonFilterActions.Weekend(); select.emit()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='calendar-outline'></ion-icon>
+				</div>
+				<div class="body">
+					<div>WEEKEND</div>
+					<div>
+						Dai un’occhiata agli eventi del fine settimana
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.Saved(); select.emit()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='bookmark'></ion-icon>
+				</div>
+				<div class="body">
+					<div>SALVATI</div>
+					<div>
+						Tutti gli eventi dei tuoi club Preferiti
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.FavoritesClubs(); select.emit()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='wine'></ion-icon>
+				</div>
+				<div class="body">
+					<div>CLUB</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.ForYou(); select.emit()"
+			class="square">
+			<div class="content">
+				<div>
+					<ion-icon color="light"
+						name='sparkles'></ion-icon>
+				</div>
+				<div class="body">
+					<div>PER TE</div>
+					<div>
+						Gli eventi di oggi stanno per terminare!
+					</div>
+				</div>
+			</div>
+		</ion-card>
+		<ion-card (click)="partiesUtils.CommonFilterActions.Today(); select.emit()"
+			id="all-events"
+			class="square">
+			<div class="content h-full flex align-center">
+				<div class="m-0-auto">Tutti gli eventi</div>
+			</div>
+		</ion-card>
+	</div>

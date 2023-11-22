@@ -48,7 +48,7 @@
 								label="Conferma email"
 								labelPlacement="floating"></ion-input>
 						</ion-item>
-						<div *ngIf="!getFormValidationErrors().confirmEmail?.['not-same-values'] && getFormValidationErrors().email?.['invalid-email-format']"
+						<div *ngIf="formStep0?.controls?.['confirmEmail']?.touched && !getFormValidationErrors().confirmEmail?.['not-same-values'] && getFormValidationErrors().email?.['invalid-email-format']"
 							class="error">
 							<ion-text color="danger">
 								<small>
@@ -56,7 +56,7 @@
 								</small>
 							</ion-text>
 						</div>
-						<div *ngIf="getFormValidationErrors().confirmEmail?.['not-same-values']"
+						<div *ngIf="formStep0?.controls?.['confirmEmail']?.touched && getFormValidationErrors().confirmEmail?.['not-same-values']"
 							class="error">
 							<ion-text color="danger">
 								<small>
@@ -93,7 +93,7 @@
 								(click)="showPassword = !showPassword"
 								slot="end"></ion-icon>
 						</ion-item>
-						<div *ngIf="!getFormValidationErrors().confirmPassword?.['not-same-values'] && getFormValidationErrors().password?.['invalid-password-format']"
+						<div *ngIf="formStep0?.controls?.['confirmPassword']?.touched && !getFormValidationErrors().confirmPassword?.['not-same-values'] && getFormValidationErrors().password?.['invalid-password-format']"
 							class="error">
 							<ion-text color="danger">
 								<small>
@@ -101,7 +101,7 @@
 								</small>
 							</ion-text>
 						</div>
-						<div *ngIf="getFormValidationErrors().confirmPassword?.['not-same-values']"
+						<div *ngIf="formStep0?.controls?.['confirmPassword']?.touched && getFormValidationErrors().confirmPassword?.['not-same-values']"
 							class="error">
 							<ion-text color="danger">
 								<small>
@@ -110,11 +110,12 @@
 							</ion-text>
 						</div>
 					</div>
+				
+					<div id="tec"
+						class="mt-4 left-0 px-4">
+						Cliccando su “prosegui” accetterai i Termini & Condizioni d’uso e Privacy & Cookie Policy
+					</div>
 				</form>
-				<div id="tec"
-					class="absolute bottom-2 left-0 px-4">
-					Cliccando su “prosegui” accetterai i Termini & Condizioni d’uso e Privacy & Cookie Policy
-				</div>
 			</swiper-slide>
 
 			<!-- INFORAZIONI -->
@@ -130,7 +131,7 @@
 								label="Nome"
 								labelPlacement="floating"></ion-input>
 						</ion-item>
-						<div *ngIf="getFormValidationErrors().name?.['required']"
+						<div *ngIf="formStep1?.controls?.['name']?.touched && getFormValidationErrors().name?.['required']"
 							class="error">
 							<ion-text color="danger">
 								<small>Campo richiesto</small>
@@ -146,7 +147,7 @@
 								label="Cognome"
 								labelPlacement="floating"></ion-input>
 						</ion-item>
-						<div *ngIf="getFormValidationErrors().surname?.['required']"
+						<div *ngIf="formStep1?.controls?.['surname']?.touched && getFormValidationErrors().surname?.['required']"
 							class="error">
 							<ion-text color="danger">
 								<small>Campo richiesto</small>
@@ -169,7 +170,7 @@
 								datetime="datetime"
 								style="display: none;"></ion-datetime-button>
 						</ion-item>
-						<div *ngIf="getFormValidationErrors().birth?.['required']"
+						<div *ngIf="formStep1?.controls?.['birth']?.touched && getFormValidationErrors().birth?.['required']"
 							class="error">
 							<ion-text color="danger">
 								<small>Campo richiesto</small>
@@ -187,7 +188,7 @@
 								labelPlacement="floating"
 								placeholder="Città"></ion-input>
 						</ion-item>
-						<div *ngIf="getFormValidationErrors().city?.['required']"
+						<div *ngIf="formStep1?.controls?.['city']?.touched && getFormValidationErrors().city?.['required']"
 							class="error">
 							<ion-text color="danger">
 								<small>Campo richiesto</small>

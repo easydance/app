@@ -6,12 +6,14 @@
 			[debounce]="500"
 			[placeholder]="'Cerca...'"
 			(ionInput)="onChange($event)"
+			(ionChange)="onChange($event)"
+			(ionClear)="onClear()"
 			class="mt-4"
 			clearIcon="close-outline"></ion-searchbar>
 	</ion-toolbar>
 </ion-header>
 <div #wrapper
-	*ngIf="searchTerm"
+	[ngStyle]="{ display: searchTerm? 'block' : 'none'}"
 	id="search-wrapper">
 	<div id="filters"
 		class="flex gap-3">
@@ -89,8 +91,8 @@
 				[detail]="false"
 				lines="full">
 				<ion-avatar slot="start">
-					<img [alt]="user.profileImage.id"
-						[src]="user.profileImage.url">
+					<img [alt]="user.profileImage?.id"
+						[src]="user.profileImage?.url">
 				</ion-avatar>
 				<ion-label>
 					<div class="title">{{user.email}}</div>

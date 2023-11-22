@@ -21,8 +21,6 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { AddressControllerCountDefaultResponse } from '../model/addressControllerCountDefaultResponse';
 // @ts-ignore
-import { ClubControllerCreateDefaultResponse } from '../model/clubControllerCreateDefaultResponse';
-// @ts-ignore
 import { ClubControllerFindAllDefaultResponse } from '../model/clubControllerFindAllDefaultResponse';
 // @ts-ignore
 import { ClubControllerFindOneDefaultResponse } from '../model/clubControllerFindOneDefaultResponse';
@@ -261,32 +259,15 @@ export class ClubService implements ClubServiceInterface {
 
     /**
      * @param createClubRequestDto 
-     * @param fields 
-     * @param includes 
-     * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public create(createClubRequestDto: CreateClubRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ClubControllerCreateDefaultResponse>;
-    public create(createClubRequestDto: CreateClubRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ClubControllerCreateDefaultResponse>>;
-    public create(createClubRequestDto: CreateClubRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ClubControllerCreateDefaultResponse>>;
-    public create(createClubRequestDto: CreateClubRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public create(createClubRequestDto: CreateClubRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public create(createClubRequestDto: CreateClubRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public create(createClubRequestDto: CreateClubRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public create(createClubRequestDto: CreateClubRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
         if (createClubRequestDto === null || createClubRequestDto === undefined) {
             throw new Error('Required parameter createClubRequestDto was null or undefined when calling create.');
-        }
-
-        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
-        if (fields !== undefined && fields !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>fields, 'fields');
-        }
-        if (includes !== undefined && includes !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>includes, 'includes');
-        }
-        if (deleted !== undefined && deleted !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>deleted, 'deleted');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -295,7 +276,6 @@ export class ClubService implements ClubServiceInterface {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -330,11 +310,10 @@ export class ClubService implements ClubServiceInterface {
         }
 
         let localVarPath = `/clubs`;
-        return this.httpClient.request<ClubControllerCreateDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: createClubRequestDto,
-                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

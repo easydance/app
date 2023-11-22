@@ -66,4 +66,8 @@ export class EventsListPage implements OnInit {
     this.ionContent?.scrollToTop(300);
     this.partiesUtils.CommonFilterActions.FavoritesClubs();
   }
+
+  scrollOnTop() {
+    this.ionContent?.scrollToTop(300);
+  }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Keyboard } from "@capacitor/keyboard";
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import * as swiper from 'swiper/element/bundle';
 swiper.register();

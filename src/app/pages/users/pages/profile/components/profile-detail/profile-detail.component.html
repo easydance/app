@@ -15,10 +15,26 @@
 				slot="end"></ion-icon>
 		</ion-button>
 		<ion-button *ngIf="isMe"
+			(click)="edit.emit()"
 			color="primary"
-			class="w-full" (click)="edit.emit()">
+			class="w-full">
 			MODIFICA
 		</ion-button>
+		<ng-container *ngIf="!isMe">
+			<ion-button *ngIf="!isFollowing"
+				(click)="follow()"
+				color="primary"
+				class="w-full">
+				SEGUI
+			</ion-button>
+			<ion-button *ngIf="isFollowing"
+				(click)="unfollow()"
+				color="dark"
+				class="w-full">
+				Seguito
+			</ion-button>
+
+		</ng-container>
 	</div>
 
 	<!-- USER BIO -->
@@ -103,6 +119,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="mt-12 w-full">
+		<easy-clubs-grid [clubs]="clubs"></easy-clubs-grid>
 	</div>
 
 </div>

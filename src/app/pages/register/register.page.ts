@@ -9,6 +9,9 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { getFileReader } from 'src/app/utils/filereader.utils';
 import { IComparator, IValidatorConfig, getFormValidationErrors } from 'src/app/validators/form-conditions.validator';
 
+/**
+ * la password deve contenere almeno otto caratteri, almeno un numero, lettere maiuscole e minuscole e caratteri speciali
+ */
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 @Component({
@@ -82,13 +85,13 @@ export class RegisterPage implements OnInit {
       comparator: (form) => PASSWORD_REGEX.test(form.get('password')?.value),
       key: 'password',
       keyError: 'invalid-password-format',
-      messageError: "Password non valida"
+      messageError: "La password deve essere di almeno otto caratteri, deve contenere almeno un numero, una lettera maiuscola e un carattere speciale"
     },
     {
       comparator: (form) => PASSWORD_REGEX.test(form.get('confirmPassword')?.value),
       key: 'confirmPassword',
       keyError: 'invalid-password-format',
-      messageError: "Password non valida"
+      messageError: "La password deve essere di almeno otto caratteri, deve contenere almeno un numero, una lettera maiuscola e un carattere speciale"
     }
   ];
   public profileValidator: IValidatorConfig[] = [{

@@ -37,5 +37,6 @@ export interface UserBaseDto {
     followers: number;
     following: number;
     followingClubs: number;
+    isFollowing: boolean;
 }
 

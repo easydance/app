@@ -1,0 +1,77 @@
+
+#filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  
+    > ion-card#all-events {
+      flex: calc(50% - 0.5rem);
+      background: rgba(190, 190, 190, 0.08);
+      margin: 0;
+  
+      > .content {
+        display: flex;
+        padding: 20px 16px 24px 16px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        color: var(--color-neutral-50);
+        text-align: center;
+  
+        /* Actions/Secondary-12 */
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px; /* 133.333% */
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+    }
+  
+    > ion-card {
+      flex: calc(50% - 0.5rem);
+      background: rgba(190, 190, 190, 0.16);
+      margin: 0;
+  
+      > .content {
+        display: flex;
+        padding: 1rem;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-shrink: 0;
+  
+        .body {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: flex-start;
+          gap: 0.35rem;
+          flex-shrink: 0;
+          align-self: stretch;
+  
+          > div:first-child {
+            color: var(--color-neutral-50);
+            /* Subtitle/UPPERCASE */
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 18px; /* 128.571% */
+            letter-spacing: 1px;
+            text-transform: uppercase;
+          }
+  
+          > div:last-child {
+            color: var(--color-neutral-50);
+            /* Subtitle/Secondary-20 */
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.125rem; /* 110% */
+            letter-spacing: -0.5px;
+          }
+        }
+      }
+    }
+  }

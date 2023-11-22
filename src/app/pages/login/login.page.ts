@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
 
   login() {
     this.authManagerService.login(this.username, this.password).pipe(
-      catchError(async err => {
+      catchError(err => {
         if (err.status = 401) {
           this.toastCtrl.create({ message: 'Email e/o password non valide!', duration: 3000 })
             .then(toast => {
