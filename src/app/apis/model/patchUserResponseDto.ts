@@ -38,5 +38,6 @@ export interface PatchUserResponseDto {
     following: number;
     followingClubs: number;
     isFollowing: boolean;
+    city?: string;
 }
 

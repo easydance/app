@@ -110,7 +110,7 @@ export class ProfileEditComponent implements OnInit, OnChanges {
       lastName: lastName!,
       profile: this.editedUser.photo!,
       socials: socials as any,
-      tags
+      tags,
     }).pipe(
       catchError(err => {
         this.toastCtrl.create({ message: 'Non è stato possibile salvare le modifiche', duration: 3000 })

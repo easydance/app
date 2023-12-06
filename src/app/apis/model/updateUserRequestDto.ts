@@ -38,5 +38,6 @@ export interface UpdateUserRequestDto {
     following: number;
     followingClubs: number;
     isFollowing: boolean;
+    city?: string;
 }
 
