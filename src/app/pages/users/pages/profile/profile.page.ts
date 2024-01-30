@@ -1,8 +1,8 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
-import { ClubBaseDto, GetUserToClubFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
+import { AuthService, ClubBaseDto, GetUserToClubFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Component({
@@ -17,11 +17,15 @@ export class ProfilePage implements OnInit {
   public isMe: boolean = true;
   public isEditingMode: boolean = false;
 
+  public isOpenDeleteUserModal: boolean = false;
+
   constructor(
+    private readonly authService: AuthService,
     private readonly usersService: UserService,
     private readonly authManager: AuthManagerService,
     private readonly route: ActivatedRoute,
     private readonly navCtrl: NavController,
+    private readonly toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -49,5 +53,20 @@ export class ProfilePage implements OnInit {
   logout() {
     this.authManager.logout();
     this.navCtrl.navigateRoot('/login');
+  }
+
+  confirmDeleteUser() {
+    this.authService.requestDelete().subscribe(res => {
+      this.isOpenDeleteUserModal = false;
+      const message = this.authManager.user?.providerAuthName
+        ? 'L\'utente è stato cancellato con successo!'
+        : 'Ti è stata inviata una mail all\'indirizzo dell\'account, conferma l\'eliminazione sulla mail';
+      this.toastCtrl.create({ duration: 3000, message }).then(toast => {
+        toast.present();
+        if (this.authManager.user?.providerAuthName) {
+          this.logout();
+        }
+      });
+    });
   }
 }

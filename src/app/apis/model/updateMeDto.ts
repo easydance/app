@@ -20,5 +20,6 @@ export interface UpdateMeDto {
     socials?: { [key: string]: { [key: string]: ClubBaseDtoSocialsValueValue; }; } | null;
     profile: string;
     description: string;
+    city?: string;
 }
 

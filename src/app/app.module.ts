@@ -16,7 +16,7 @@ import { I18nHandlerModule } from 'src/app/i18n/custom-translator.loader';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
-    basePath: `${environment.BASE_API}/api`,
+    basePath: `${environment.BASE_API}`,
   };
   return new Configuration(params);
 }
