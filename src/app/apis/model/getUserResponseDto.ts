@@ -38,5 +38,6 @@ export interface GetUserResponseDto {
     following: number;
     followingClubs: number;
     isFollowing: boolean;
+    city?: string;
 }
 

@@ -38,5 +38,6 @@ export interface UserBaseDto {
     following: number;
     followingClubs: number;
     isFollowing: boolean;
+    city?: string;
 }
 

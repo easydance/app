@@ -19,7 +19,7 @@ export interface SignUpDto {
     profile?: string | null;
     name?: string | null;
     surname?: string | null;
-    city?: string | null;
+    city?: string;
     birth?: string | null;
     tags?: Array<string> | null;
 }
