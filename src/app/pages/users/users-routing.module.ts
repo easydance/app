@@ -7,7 +7,7 @@ import { authGuard } from 'src/app/guards/authentication.guard';
 const routes: Routes = [
   {
     path: '',
-    canActivateChild: [authGuard],
+    // canActivateChild: [authGuard],
     component: UsersPage,
     children: [
       {
@@ -41,6 +41,7 @@ const routes: Routes = [
       },
       {
         path: 'profile',
+        canActivate: [authGuard],
         loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)
       },
       {

@@ -34,7 +34,7 @@ export class HomePage implements OnInit {
     UsersPage.tabClicked.subscribe(res => {
       this.searchHeader?.clearSearch();
     });
-    
+
     this.authManager.geocoding$.subscribe(res => {
       this.city = this.authManager.currentCity;
       this.searchEvents();
@@ -76,23 +76,25 @@ export class HomePage implements OnInit {
         this.parties = res.data;
         resolve(res.data);
       });
-      this.clubFollowerService.findAll(0, 4, JSON.stringify({
-        user: { id: this.authManager.user?.id || 0 }
-      }), undefined, undefined, 'club.address').subscribe(res => {
-        this.clubs = res.data.map(cf => cf.club);
-        for (let club of this.clubs) {
-          // Club parties
-          this.partiesService.findAll(0, 5, JSON.stringify({
-            to: {
-              $gte: DateTime.now().toISO()
-            },
-            club: { id: club.id }
-          }), '{"from":0}', undefined, 'club')
-            .subscribe(res => {
-              club.parties = res.data;
-            });
-        }
-      });
+      if (this.authManager.user) {
+        this.clubFollowerService.findAll(0, 4, JSON.stringify({
+          user: { id: this.authManager.user?.id || 0 }
+        }), undefined, undefined, 'club.address').subscribe(res => {
+          this.clubs = res.data.map(cf => cf.club);
+          for (let club of this.clubs) {
+            // Club parties
+            this.partiesService.findAll(0, 5, JSON.stringify({
+              to: {
+                $gte: DateTime.now().toISO()
+              },
+              club: { id: club.id }
+            }), '{"from":0}', undefined, 'club')
+              .subscribe(res => {
+                club.parties = res.data;
+              });
+          }
+        });
+      }
     });
   }
 

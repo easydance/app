@@ -42,7 +42,7 @@
 			color="dark">
 			Evento
 		</ion-button>
-		<ion-button [fill]="filterType != 'users' ? undefined : 'outline'"
+		<ion-button *ngIf="authManager.isAuthenticated()" [fill]="filterType != 'users' ? undefined : 'outline'"
 			[color]="filterType != 'users' ? 'dark' : 'light'"
 			(click)="filter('users')"
 			xs

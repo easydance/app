@@ -22,7 +22,7 @@ export class ProfilePage implements OnInit {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UserService,
-    private readonly authManager: AuthManagerService,
+    public readonly authManager: AuthManagerService,
     private readonly route: ActivatedRoute,
     private readonly navCtrl: NavController,
     private readonly toastCtrl: ToastController
