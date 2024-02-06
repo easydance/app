@@ -2,6 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, Vie
 import { Keyboard } from '@capacitor/keyboard';
 import { DateTime } from 'luxon';
 import { ClubBaseDto, ClubService, PartyBaseDto, PartyService, UserBaseDto, UserService } from 'src/app/apis';
+import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Component({
   selector: 'search-header',
@@ -26,6 +27,7 @@ export class SearchHeaderComponent implements OnInit {
     private readonly clubsService: ClubService,
     private readonly partiesService: PartyService,
     private readonly usersService: UserService,
+    public readonly authManager: AuthManagerService,
   ) { }
 
   ngOnInit() { }
@@ -68,7 +70,7 @@ export class SearchHeaderComponent implements OnInit {
           this.parties = parties.data;
         });
     }
-    if (['all', 'users'].includes(this.filterType)) {
+    if (['all', 'users'].includes(this.filterType) && this.authManager.isAuthenticated()) {
       this.usersService.findAll(0, 10, JSON.stringify([
         { email: { $containsIgnore: this.searchTerm } },
         { socials: { instagram: { username: { $containsIgnore: this.searchTerm } } } },

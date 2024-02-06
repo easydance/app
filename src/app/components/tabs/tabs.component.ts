@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { IonModal, NavController, Platform } from '@ionic/angular';
+import { IonModal, NavController, Platform, ToastController } from '@ionic/angular';
 import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/services/full-immersion.service';
+import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Component({
   selector: 'easy-tabs',
@@ -13,14 +14,23 @@ export class TabsComponent implements OnInit {
   @Output() tabClicked: EventEmitter<string> = new EventEmitter();
 
   constructor(
-    public fullImmersionService: FullImmersionService, 
+    public fullImmersionService: FullImmersionService,
     private navctrl: NavController,
-    public platform: Platform
-    ) { }
+    private authManager: AuthManagerService,
+    public platform: Platform,
+    private toastCtrl: ToastController
+  ) { }
 
   ngOnInit() { }
 
   goInFullImmersion() {
+    if (!this.authManager.isAuthenticated()) {
+      this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })
+        .then(toast => {
+          toast.present();
+        });
+      return;
+    }
     if (this.fullImmersionService.selectedClub) {
       this.modal?.present();
       return;
