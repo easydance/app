@@ -30,7 +30,6 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
-
     UsersPage.tabClicked.subscribe(res => {
       this.searchHeader?.clearSearch();
     });

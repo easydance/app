@@ -34,7 +34,7 @@ export class TokenInterceptor implements HttpInterceptor {
                             toast.present();
                         });
                 }
-                return of();
+                return throwError(() => err);
             }));
     }
 }
