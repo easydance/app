@@ -44,7 +44,7 @@ export class EventsPage implements OnInit {
           this.clubs = res.data.map(cf => cf.club);
           for (let club of this.clubs) {
             // Club parties
-            this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: {$gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
+            this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
               .subscribe(res => {
                 club.parties = res.data;
               });
@@ -111,19 +111,21 @@ export class EventsPage implements OnInit {
     }), undefined, undefined, 'club').subscribe(res => {
       this.partiesTonight = res.data;
     });
-
-    this.clubFollowerService.findAll(0, 4, JSON.stringify({
-      user: { id: this.authManager.user?.id }
-    }), undefined, undefined, 'club.address,user').subscribe(res => {
-      this.clubs = res.data.map(cf => cf.club);
-      for (let club of this.clubs) {
-        // Club parties
-        this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: {$gte: DateTime.now().toISO()} }), undefined, undefined, 'club')
-          .subscribe(res => {
-            club.parties = res.data;
-          });
-      }
-    });
+    
+    if (this.authManager.user) {
+      this.clubFollowerService.findAll(0, 4, JSON.stringify({
+        user: { id: this.authManager.user?.id }
+      }), undefined, undefined, 'club.address,user').subscribe(res => {
+        this.clubs = res.data.map(cf => cf.club);
+        for (let club of this.clubs) {
+          // Club parties
+          this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
+            .subscribe(res => {
+              club.parties = res.data;
+            });
+        }
+      });
+    }
   }
 
   goToEvent(party: PartyBaseDto) {

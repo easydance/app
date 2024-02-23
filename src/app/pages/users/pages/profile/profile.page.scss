@@ -31,3 +31,23 @@ ion-skeleton-text {
   width: 100%;
   background: rgba($color: #282828, $alpha: 0.8);
 }
+
+ion-modal.dialog::part(content) {
+  backdrop-filter: blur(20px);
+}
+
+ion-modal.dialog {
+  --width: fit-content;
+  --min-width: 250px;
+  --max-width: 70%;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  --background: rgba(0, 0, 0, 0.8);
+  --backdrop-opacity: 0;
+
+  .bold {
+    font-weight: 700;
+  }
+
+}

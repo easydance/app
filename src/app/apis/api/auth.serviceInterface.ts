@@ -35,6 +35,13 @@ export interface AuthServiceInterface {
     /**
      * 
      * 
+     * @param code 
+     */
+    deleteUser(code: string, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
      * @param loginDto 
      */
     login(loginDto: LoginDto, extraHttpRequestParams?: any): Observable<LoginResponseDto>;
@@ -47,6 +54,12 @@ export interface AuthServiceInterface {
      * @param deleted 
      */
     me(fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<MeResponseDto>;
+
+    /**
+     * 
+     * 
+     */
+    requestDelete(extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * 

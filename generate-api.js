@@ -1,8 +1,9 @@
 // "generate-api": "openapi-generator-cli generate -i https://easydance-dev.oddacoding.net/api/api-json -g typescript-axios -o node_modules/@easydance/apis --remove-operation-id-prefix --model-package models --additional-properties=npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true && cd ./node_modules/@easydance/apis && npm run build && cd ../../../"
 const fs = require('fs');
 const { exec } = require('child_process');
+const data = require('./ng-openapi-generator.options.json')
 
-const swaggerUrl = 'https://easydance-dev.oddacoding.net/api/api-json';
+const swaggerUrl = data.input || 'https://api.easydance.app/api-json';
 const options = [
     `-i ${swaggerUrl}`,
     `-g typescript-angular`,

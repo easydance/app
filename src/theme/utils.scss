@@ -242,7 +242,16 @@
   height: 100%;
 }
 
-ion-modal.auto-height {
+ion-modal.auto-height, ion-modal.fit-height {
+  --height: fit-content;
+}
+
+ion-modal.auto-width, ion-modal.fit-width {
+  --width: fit-content;
+}
+
+ion-modal.dialog {
+  --width: fit-content;
   --height: fit-content;
 }
 

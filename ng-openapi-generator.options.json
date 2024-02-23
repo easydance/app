@@ -1,5 +1,5 @@
 {
-    "input": "https://easydance-dev.oddacoding.net/api/api-json",
+    "input": "https://api.easydance.app/api-json",
     "output": "src/@easydance/apis",
     "ignoreUnusedModels": true,
     "removeStaleFiles": true,
