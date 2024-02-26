@@ -36,7 +36,8 @@ export class EventDetailPage implements OnInit {
           this.party.participation = this.party.participation ?? {
             party: { ...party, participation: null },
             pr: '',
-            participants: 1
+            participants: 1,
+            checked: false
           };
         });
       }

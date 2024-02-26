@@ -26,5 +26,7 @@ export interface GetFacebookEventsResponseDto {
     club: string;
     cover: string;
     geoLocation: Geo;
+    sourceId: string;
+    imported: boolean;
 }
 

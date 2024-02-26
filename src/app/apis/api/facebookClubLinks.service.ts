@@ -21,37 +21,35 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { AddressControllerCountDefaultResponse } from '../model/addressControllerCountDefaultResponse';
 // @ts-ignore
-import { CreateFacebookEventsRequestDto } from '../model/createFacebookEventsRequestDto';
+import { CreateFacebookClubLinksRequestDto } from '../model/createFacebookClubLinksRequestDto';
 // @ts-ignore
-import { FacebookEventsControllerCreateDefaultResponse } from '../model/facebookEventsControllerCreateDefaultResponse';
+import { FacebookClubLinksControllerCreateDefaultResponse } from '../model/facebookClubLinksControllerCreateDefaultResponse';
 // @ts-ignore
-import { FacebookEventsControllerFindAllDefaultResponse } from '../model/facebookEventsControllerFindAllDefaultResponse';
+import { FacebookClubLinksControllerFindAllDefaultResponse } from '../model/facebookClubLinksControllerFindAllDefaultResponse';
 // @ts-ignore
-import { FacebookEventsControllerFindOneDefaultResponse } from '../model/facebookEventsControllerFindOneDefaultResponse';
+import { FacebookClubLinksControllerFindOneDefaultResponse } from '../model/facebookClubLinksControllerFindOneDefaultResponse';
 // @ts-ignore
-import { FacebookEventsControllerReplaceDefaultResponse } from '../model/facebookEventsControllerReplaceDefaultResponse';
+import { FacebookClubLinksControllerReplaceDefaultResponse } from '../model/facebookClubLinksControllerReplaceDefaultResponse';
 // @ts-ignore
-import { FacebookEventsControllerUpdateDefaultResponse } from '../model/facebookEventsControllerUpdateDefaultResponse';
+import { FacebookClubLinksControllerUpdateDefaultResponse } from '../model/facebookClubLinksControllerUpdateDefaultResponse';
 // @ts-ignore
-import { ImportEventDto } from '../model/importEventDto';
+import { PatchFacebookClubLinksRequestDto } from '../model/patchFacebookClubLinksRequestDto';
 // @ts-ignore
-import { PatchFacebookEventsRequestDto } from '../model/patchFacebookEventsRequestDto';
-// @ts-ignore
-import { UpdateFacebookEventsRequestDto } from '../model/updateFacebookEventsRequestDto';
+import { UpdateFacebookClubLinksRequestDto } from '../model/updateFacebookClubLinksRequestDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import {
-    FacebookEventsServiceInterface
-} from './facebookEvents.serviceInterface';
+    FacebookClubLinksServiceInterface
+} from './facebookClubLinks.serviceInterface';
 
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class FacebookEventsService implements FacebookEventsServiceInterface {
+export class FacebookClubLinksService implements FacebookClubLinksServiceInterface {
 
     protected basePath = 'http://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -162,7 +160,7 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        let localVarPath = `/facebook-club-links/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -259,7 +257,7 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events/count`;
+        let localVarPath = `/facebook-club-links/count`;
         return this.httpClient.request<AddressControllerCountDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -274,19 +272,19 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
     }
 
     /**
-     * @param createFacebookEventsRequestDto 
+     * @param createFacebookClubLinksRequestDto 
      * @param fields 
      * @param includes 
      * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public create(createFacebookEventsRequestDto: CreateFacebookEventsRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookEventsControllerCreateDefaultResponse>;
-    public create(createFacebookEventsRequestDto: CreateFacebookEventsRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookEventsControllerCreateDefaultResponse>>;
-    public create(createFacebookEventsRequestDto: CreateFacebookEventsRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookEventsControllerCreateDefaultResponse>>;
-    public create(createFacebookEventsRequestDto: CreateFacebookEventsRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (createFacebookEventsRequestDto === null || createFacebookEventsRequestDto === undefined) {
-            throw new Error('Required parameter createFacebookEventsRequestDto was null or undefined when calling create.');
+    public create(createFacebookClubLinksRequestDto: CreateFacebookClubLinksRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookClubLinksControllerCreateDefaultResponse>;
+    public create(createFacebookClubLinksRequestDto: CreateFacebookClubLinksRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookClubLinksControllerCreateDefaultResponse>>;
+    public create(createFacebookClubLinksRequestDto: CreateFacebookClubLinksRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookClubLinksControllerCreateDefaultResponse>>;
+    public create(createFacebookClubLinksRequestDto: CreateFacebookClubLinksRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (createFacebookClubLinksRequestDto === null || createFacebookClubLinksRequestDto === undefined) {
+            throw new Error('Required parameter createFacebookClubLinksRequestDto was null or undefined when calling create.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -350,92 +348,12 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events`;
-        return this.httpClient.request<FacebookEventsControllerCreateDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/facebook-club-links`;
+        return this.httpClient.request<FacebookClubLinksControllerCreateDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: createFacebookEventsRequestDto,
+                body: createFacebookClubLinksRequestDto,
                 params: localVarQueryParameters,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param aPIKEY 
-     * @param createFacebookEventsRequestDto 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public createMany(aPIKEY: string, createFacebookEventsRequestDto: Array<CreateFacebookEventsRequestDto>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public createMany(aPIKEY: string, createFacebookEventsRequestDto: Array<CreateFacebookEventsRequestDto>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public createMany(aPIKEY: string, createFacebookEventsRequestDto: Array<CreateFacebookEventsRequestDto>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public createMany(aPIKEY: string, createFacebookEventsRequestDto: Array<CreateFacebookEventsRequestDto>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-        if (aPIKEY === null || aPIKEY === undefined) {
-            throw new Error('Required parameter aPIKEY was null or undefined when calling createMany.');
-        }
-        if (createFacebookEventsRequestDto === null || createFacebookEventsRequestDto === undefined) {
-            throw new Error('Required parameter createFacebookEventsRequestDto was null or undefined when calling createMany.');
-        }
-
-        let localVarHeaders = this.defaultHeaders;
-        if (aPIKEY !== undefined && aPIKEY !== null) {
-            localVarHeaders = localVarHeaders.set('API-KEY', String(aPIKEY));
-        }
-
-        let localVarCredential: string | undefined;
-        // authentication (access-token) required
-        localVarCredential = this.configuration.lookupCredential('access-token');
-        if (localVarCredential) {
-            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-        }
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/facebook-events/many`;
-        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                body: createFacebookEventsRequestDto,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -456,9 +374,9 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookEventsControllerFindAllDefaultResponse>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookEventsControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookEventsControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookClubLinksControllerFindAllDefaultResponse>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookClubLinksControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookClubLinksControllerFindAllDefaultResponse>>;
     public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -529,8 +447,8 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events`;
-        return this.httpClient.request<FacebookEventsControllerFindAllDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/facebook-club-links`;
+        return this.httpClient.request<FacebookClubLinksControllerFindAllDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -551,9 +469,9 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookEventsControllerFindOneDefaultResponse>;
-    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookEventsControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookEventsControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookClubLinksControllerFindOneDefaultResponse>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookClubLinksControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookClubLinksControllerFindOneDefaultResponse>>;
     public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findOne.');
@@ -611,8 +529,8 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "any", dataFormat: undefined})}`;
-        return this.httpClient.request<FacebookEventsControllerFindOneDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/facebook-club-links/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "any", dataFormat: undefined})}`;
+        return this.httpClient.request<FacebookClubLinksControllerFindOneDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -627,96 +545,19 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
 
     /**
      * @param id 
-     * @param importEventDto 
+     * @param updateFacebookClubLinksRequestDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public importEvent(id: number, importEventDto: ImportEventDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public importEvent(id: number, importEventDto: ImportEventDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public importEvent(id: number, importEventDto: ImportEventDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public importEvent(id: number, importEventDto: ImportEventDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling importEvent.');
-        }
-        if (importEventDto === null || importEventDto === undefined) {
-            throw new Error('Required parameter importEventDto was null or undefined when calling importEvent.');
-        }
-
-        let localVarHeaders = this.defaultHeaders;
-
-        let localVarCredential: string | undefined;
-        // authentication (access-token) required
-        localVarCredential = this.configuration.lookupCredential('access-token');
-        if (localVarCredential) {
-            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-        }
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/facebook-events/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}/import`;
-        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                body: importEventDto,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param id 
-     * @param updateFacebookEventsRequestDto 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public replace(id: number, updateFacebookEventsRequestDto: UpdateFacebookEventsRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookEventsControllerReplaceDefaultResponse>;
-    public replace(id: number, updateFacebookEventsRequestDto: UpdateFacebookEventsRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookEventsControllerReplaceDefaultResponse>>;
-    public replace(id: number, updateFacebookEventsRequestDto: UpdateFacebookEventsRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookEventsControllerReplaceDefaultResponse>>;
-    public replace(id: number, updateFacebookEventsRequestDto: UpdateFacebookEventsRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public replace(id: number, updateFacebookClubLinksRequestDto: UpdateFacebookClubLinksRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookClubLinksControllerReplaceDefaultResponse>;
+    public replace(id: number, updateFacebookClubLinksRequestDto: UpdateFacebookClubLinksRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookClubLinksControllerReplaceDefaultResponse>>;
+    public replace(id: number, updateFacebookClubLinksRequestDto: UpdateFacebookClubLinksRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookClubLinksControllerReplaceDefaultResponse>>;
+    public replace(id: number, updateFacebookClubLinksRequestDto: UpdateFacebookClubLinksRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling replace.');
         }
-        if (updateFacebookEventsRequestDto === null || updateFacebookEventsRequestDto === undefined) {
-            throw new Error('Required parameter updateFacebookEventsRequestDto was null or undefined when calling replace.');
+        if (updateFacebookClubLinksRequestDto === null || updateFacebookClubLinksRequestDto === undefined) {
+            throw new Error('Required parameter updateFacebookClubLinksRequestDto was null or undefined when calling replace.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -766,11 +607,11 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<FacebookEventsControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/facebook-club-links/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        return this.httpClient.request<FacebookClubLinksControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateFacebookEventsRequestDto,
+                body: updateFacebookClubLinksRequestDto,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -830,7 +671,7 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events/restore/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        let localVarPath = `/facebook-club-links/restore/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -844,138 +685,20 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
     }
 
     /**
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public scrapingStatus(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public scrapingStatus(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public scrapingStatus(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public scrapingStatus(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-
-        let localVarHeaders = this.defaultHeaders;
-
-        let localVarCredential: string | undefined;
-        // authentication (access-token) required
-        localVarCredential = this.configuration.lookupCredential('access-token');
-        if (localVarCredential) {
-            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-        }
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/facebook-events/scraping-status`;
-        return this.httpClient.request<any>('get', `${this.configuration.basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public startScraping(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public startScraping(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public startScraping(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public startScraping(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-
-        let localVarHeaders = this.defaultHeaders;
-
-        let localVarCredential: string | undefined;
-        // authentication (access-token) required
-        localVarCredential = this.configuration.lookupCredential('access-token');
-        if (localVarCredential) {
-            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-        }
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let localVarPath = `/facebook-events/start`;
-        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
-            {
-                context: localVarHttpContext,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * @param id 
-     * @param patchFacebookEventsRequestDto 
+     * @param patchFacebookClubLinksRequestDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public update(id: number, patchFacebookEventsRequestDto: PatchFacebookEventsRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookEventsControllerUpdateDefaultResponse>;
-    public update(id: number, patchFacebookEventsRequestDto: PatchFacebookEventsRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookEventsControllerUpdateDefaultResponse>>;
-    public update(id: number, patchFacebookEventsRequestDto: PatchFacebookEventsRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookEventsControllerUpdateDefaultResponse>>;
-    public update(id: number, patchFacebookEventsRequestDto: PatchFacebookEventsRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public update(id: number, patchFacebookClubLinksRequestDto: PatchFacebookClubLinksRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<FacebookClubLinksControllerUpdateDefaultResponse>;
+    public update(id: number, patchFacebookClubLinksRequestDto: PatchFacebookClubLinksRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<FacebookClubLinksControllerUpdateDefaultResponse>>;
+    public update(id: number, patchFacebookClubLinksRequestDto: PatchFacebookClubLinksRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<FacebookClubLinksControllerUpdateDefaultResponse>>;
+    public update(id: number, patchFacebookClubLinksRequestDto: PatchFacebookClubLinksRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling update.');
         }
-        if (patchFacebookEventsRequestDto === null || patchFacebookEventsRequestDto === undefined) {
-            throw new Error('Required parameter patchFacebookEventsRequestDto was null or undefined when calling update.');
+        if (patchFacebookClubLinksRequestDto === null || patchFacebookClubLinksRequestDto === undefined) {
+            throw new Error('Required parameter patchFacebookClubLinksRequestDto was null or undefined when calling update.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -1025,11 +748,11 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
             }
         }
 
-        let localVarPath = `/facebook-events/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<FacebookEventsControllerUpdateDefaultResponse>('patch', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/facebook-club-links/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        return this.httpClient.request<FacebookClubLinksControllerUpdateDefaultResponse>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: patchFacebookEventsRequestDto,
+                body: patchFacebookClubLinksRequestDto,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

@@ -9,16 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { GetFacebookClubLinksResponseDto } from './getFacebookClubLinksResponseDto';
 
 
-export interface CreateUserRequestDto { 
-    email: string;
-    username?: string | null;
-    password: string;
-    role: string;
-    firstName: string;
-    lastName: string;
-    birthDate: string;
-    clubName: string;
+export interface FacebookClubLinksControllerFindOneDefaultResponse { 
+    data: GetFacebookClubLinksResponseDto;
 }
 

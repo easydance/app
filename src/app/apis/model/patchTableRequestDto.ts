@@ -25,7 +25,7 @@ export interface PatchTableRequestDto {
     deletedBy?: string | null;
     name: string;
     capacity: number;
-    minimumBill: number | null;
+    minimumBill: number;
     enabled: boolean;
     club: ClubBaseDto;
     tableOrders: Array<TableOrderBaseDto>;

@@ -20,6 +20,7 @@ import { FacebookEventsControllerFindAllDefaultResponse } from '../model/models'
 import { FacebookEventsControllerFindOneDefaultResponse } from '../model/models';
 import { FacebookEventsControllerReplaceDefaultResponse } from '../model/models';
 import { FacebookEventsControllerUpdateDefaultResponse } from '../model/models';
+import { ImportEventDto } from '../model/models';
 import { PatchFacebookEventsRequestDto } from '../model/models';
 import { UpdateFacebookEventsRequestDto } from '../model/models';
 
@@ -97,6 +98,14 @@ export interface FacebookEventsServiceInterface {
      * 
      * 
      * @param id 
+     * @param importEventDto 
+     */
+    importEvent(id: number, importEventDto: ImportEventDto, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
      * @param updateFacebookEventsRequestDto 
      */
     replace(id: number, updateFacebookEventsRequestDto: UpdateFacebookEventsRequestDto, extraHttpRequestParams?: any): Observable<FacebookEventsControllerReplaceDefaultResponse>;
@@ -107,6 +116,18 @@ export interface FacebookEventsServiceInterface {
      * @param id 
      */
     restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     */
+    scrapingStatus(extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     */
+    startScraping(extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * 
