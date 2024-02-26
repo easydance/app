@@ -9,10 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Geo } from './geo';
 
 
-export interface PatchFacebookEventsResponseDto { 
+export interface GetFacebookClubLinksResponseDto { 
     id?: number;
     uuid?: string;
     createdAt?: string;
@@ -21,12 +20,7 @@ export interface PatchFacebookEventsResponseDto {
     createdBy?: string | null;
     updatedBy?: string | null;
     deletedBy?: string | null;
-    title: string;
-    location: string;
-    club: string;
-    cover: string;
-    geoLocation: Geo;
-    sourceId: string;
-    imported: boolean;
+    link: string;
+    label: string;
 }
 

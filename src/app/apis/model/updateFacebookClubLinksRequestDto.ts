@@ -11,14 +11,11 @@
  */
 
 
-export interface CreateUserRequestDto { 
-    email: string;
-    username?: string | null;
-    password: string;
-    role: string;
-    firstName: string;
-    lastName: string;
-    birthDate: string;
-    clubName: string;
+export interface UpdateFacebookClubLinksRequestDto { 
+    createdBy?: string | null;
+    updatedBy?: string | null;
+    deletedBy?: string | null;
+    link: string;
+    label: string;
 }
 
