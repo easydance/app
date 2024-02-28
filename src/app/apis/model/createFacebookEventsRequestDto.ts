@@ -18,5 +18,9 @@ export interface CreateFacebookEventsRequestDto {
     club: string;
     cover: string;
     geoLocation: Geo;
+    sourceId: string;
+    description: string;
+    from?: string | null;
+    to?: string | null;
 }
 

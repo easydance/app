@@ -33,7 +33,7 @@
 								{{party?.from | date:'dd LLL'}}
 							</ion-label>
 						</ion-chip>
-						<ion-chip [routerLink]="'/club-detail/' + party?.club?.id"
+						<ion-chip [routerLink]="party?.club?.id ? '/club-detail/' + party?.club?.id : undefined"
 							(click)="$event.stopPropagation()"
 							class="ml-2-i dark">
 							<ion-icon color="light"
@@ -54,7 +54,8 @@
 							</div> -->
 						</div>
 
-						<ion-label *ngIf="options.showHours" style="color: var(--color-neutral-50)">
+						<ion-label *ngIf="options.showHours"
+							style="color: var(--color-neutral-50)">
 							da {{party?.from | date:'HH:mm'}} a {{party?.to | date:'HH:mm'}}
 						</ion-label>
 					</div>

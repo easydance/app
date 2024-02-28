@@ -12,6 +12,8 @@ api/club.service.ts
 api/club.serviceInterface.ts
 api/default.service.ts
 api/default.serviceInterface.ts
+api/facebookClubLinks.service.ts
+api/facebookClubLinks.serviceInterface.ts
 api/facebookEvents.service.ts
 api/facebookEvents.serviceInterface.ts
 api/language.service.ts
@@ -90,6 +92,8 @@ model/createAttachmentRequestDto.ts
 model/createAttachmentResponseDto.ts
 model/createClubRequestDto.ts
 model/createClubResponseDto.ts
+model/createFacebookClubLinksRequestDto.ts
+model/createFacebookClubLinksResponseDto.ts
 model/createFacebookEventsRequestDto.ts
 model/createFacebookEventsResponseDto.ts
 model/createLanguageRequestDto.ts
@@ -142,6 +146,11 @@ model/createWarehouseResponseDto.ts
 model/currentParty.ts
 model/currentPartyProduct.ts
 model/currentPartyTable.ts
+model/facebookClubLinksControllerCreateDefaultResponse.ts
+model/facebookClubLinksControllerFindAllDefaultResponse.ts
+model/facebookClubLinksControllerFindOneDefaultResponse.ts
+model/facebookClubLinksControllerReplaceDefaultResponse.ts
+model/facebookClubLinksControllerUpdateDefaultResponse.ts
 model/facebookEventsControllerCreateDefaultResponse.ts
 model/facebookEventsControllerFindAllDefaultResponse.ts
 model/facebookEventsControllerFindOneDefaultResponse.ts
@@ -154,6 +163,7 @@ model/getAddressResponseDto.ts
 model/getAddressResponseDtoExt.ts
 model/getAttachmentResponseDto.ts
 model/getClubResponseDto.ts
+model/getFacebookClubLinksResponseDto.ts
 model/getFacebookEventsResponseDto.ts
 model/getLanguageResponseDto.ts
 model/getPartyParticipationResponseDto.ts
@@ -179,6 +189,7 @@ model/getUserToUserFollowerResponseDto.ts
 model/getVisualizationResponseDto.ts
 model/getWarehouseResponseDto.ts
 model/googleGeoCodeResponse.ts
+model/importEventDto.ts
 model/keys.ts
 model/languageBaseDto.ts
 model/languageControllerCreateDefaultResponse.ts
@@ -212,6 +223,8 @@ model/patchAttachmentRequestDto.ts
 model/patchAttachmentResponseDto.ts
 model/patchClubRequestDto.ts
 model/patchClubResponseDto.ts
+model/patchFacebookClubLinksRequestDto.ts
+model/patchFacebookClubLinksResponseDto.ts
 model/patchFacebookEventsRequestDto.ts
 model/patchFacebookEventsResponseDto.ts
 model/patchLanguageRequestDto.ts
@@ -354,6 +367,8 @@ model/updateAttachmentRequestDto.ts
 model/updateAttachmentResponseDto.ts
 model/updateClubRequestDto.ts
 model/updateClubResponseDto.ts
+model/updateFacebookClubLinksRequestDto.ts
+model/updateFacebookClubLinksResponseDto.ts
 model/updateFacebookEventsRequestDto.ts
 model/updateFacebookEventsResponseDto.ts
 model/updateLanguageRequestDto.ts
@@ -403,6 +418,7 @@ model/updateVisualizationResponseDto.ts
 model/updateWarehouseRequestDto.ts
 model/updateWarehouseResponseDto.ts
 model/userBaseDto.ts
+model/userClubRelationBaseDto.ts
 model/userControllerCreateDefaultResponse.ts
 model/userControllerFindAllDefaultResponse.ts
 model/userControllerFindOneDefaultResponse.ts

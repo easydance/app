@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { UserClubRelationBaseDto } from './userClubRelationBaseDto';
 import { ClubBaseDtoSocialsValueValue } from './clubBaseDtoSocialsValueValue';
 import { RoleBaseDto } from './roleBaseDto';
 import { ClubBaseDto } from './clubBaseDto';
@@ -38,7 +39,7 @@ export interface UserDto {
     profileImage: ProfileImageDto;
     previousProfileImages: Array<ProfileImageDto>;
     club: ClubBaseDto;
-    clubs: Array<ClubBaseDto>;
+    clubs: Array<UserClubRelationBaseDto>;
     savedParties: number;
     followers: number;
     following: number;

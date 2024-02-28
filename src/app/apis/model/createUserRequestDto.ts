@@ -13,6 +13,7 @@
 
 export interface CreateUserRequestDto { 
     email: string;
+    username?: string | null;
     password: string;
     role: string;
     firstName: string;

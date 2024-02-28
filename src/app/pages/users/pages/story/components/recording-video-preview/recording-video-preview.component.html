@@ -1,14 +1,123 @@
 <div id="story"
 	class="p-5">
-	<div id="story-preview">
-		<canvas id="canvas"></canvas>
+	<div [ngStyle]="{ background: source ? 'url(data:image/jpeg;base64,' + source.src + ') center center no-repeat' : '' }"
+		id="story-preview">
+		<ion-fab-button *ngIf="source"
+			(click)="searchUsersModal.present()"
+			class="button m-3 w-9 h-9">
+			<ion-icon name="person-add"
+				style="font-size: 1rem;"></ion-icon>
+		</ion-fab-button>
+		<video *ngIf=" source && source.type == 'video'">
+			<source [src]="source.src">
+		</video>
+
+		<div *ngIf="source && source.party"
+			class="footer p-4 flex space-between">
+			<div>
+				<ion-chip class="dark xl">
+					<ion-icon color="light"
+						name="location"></ion-icon>
+					<ion-label>
+						{{source.party.club.name}}
+					</ion-label>
+				</ion-chip>
+				<div class="title mt-2">
+					{{source.party.title}}
+				</div>
+			</div>
+			<div class>
+				<users-widget [users]="source.usersTags"></users-widget>
+				<div class="stories-buttons">
+					<ion-fab-button size="small">
+						<ion-icon name="heart-outline"></ion-icon>
+					</ion-fab-button>
+					<!-- <ion-fab-button size="small">
+						<ion-icon name="share-outline"></ion-icon>
+					</ion-fab-button> -->
+					<ion-fab-button size="small">
+						<ion-icon name="ellipsis-vertical"></ion-icon>
+					</ion-fab-button>
+				</div>
+
+			</div>
+		</div>
 	</div>
-	<div>
+	<div *ngIf="!source">
+		<div></div>
 		<div [ngClass]="{'recording': recording}"
-			(click)="recording ? stopVideo() : recordVideo()"
+			(touchstart)="startEvent()"
+			(touchend)="endEvent()"
 			id="play-button"
 			class="w-14 h-14">
 			<div></div>
 		</div>
 	</div>
+	<div *ngIf="source"
+		class="buttons">
+		<ion-button (click)="reset()"
+			class="flex-1"
+			shape="round"
+			expand="block"
+			color="neutral-500">
+			Indietro
+		</ion-button>
+		<ion-button (click)="goNext()"
+			class="flex-1"
+			shape="round"
+			expand="block"
+			color="primary">
+			Avanti
+		</ion-button>
+	</div>
 </div>
+
+<ion-modal #searchClubModal
+	class="auto-height bottom blur">
+	<ng-template>
+		<ion-searchbar [showClearButton]="'always'"
+			[debounce]="500"
+			[placeholder]="'Cerca party...'"
+			(ionInput)="searchClubs($event)"
+			class="my-2"
+			clearIcon="close-outline"></ion-searchbar>
+		<ion-list *ngIf="source">
+			<ion-item *ngFor="let party of parties"
+				(click)="source.party = party; searchClubModal.dismiss()">
+				<ion-label>
+					<div>
+						{{party.club?.name}}
+					</div>
+					<small>{{party.title}}</small>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</ng-template>
+</ion-modal>
+
+<ion-modal #searchUsersModal
+	class="auto-height bottom blur">
+	<ng-template>
+		<ion-searchbar [showClearButton]="'always'"
+			[debounce]="500"
+			[placeholder]="'Cerca amici...'"
+			(ionInput)="searchUsers($event)"
+			class="my-2"
+			clearIcon="close-outline"></ion-searchbar>
+		<div id="users-grid">
+			<div *ngFor="let user of users"
+				class="user-item">
+				<ion-avatar style="margin: 0 auto;">
+					<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
+						style="object-fit: cover;">
+				</ion-avatar>
+				<div class="mt-1"
+					style="text-align: center;">
+					<small>
+						{{user.firstName}} {{user.lastName}}
+					</small>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

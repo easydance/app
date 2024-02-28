@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Barcode, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { lastValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, lastValueFrom, throwError } from 'rxjs';
 import { ClubService } from 'src/app/apis';
 import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/services/full-immersion.service';
 import { environment } from 'src/environments/environment';
@@ -11,8 +11,10 @@ import { environment } from 'src/environments/environment';
   selector: 'app-scan',
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
+
 })
 export class ScanPage implements OnInit {
+  canLeave: boolean = false;
   isSupported = false;
   barcodes: Barcode[] = [];
   process: boolean = false;
@@ -37,7 +39,7 @@ export class ScanPage implements OnInit {
   ionViewDidEnter() {
     setTimeout(() => {
       this.scan();
-    }, 500);
+    }, 200);
   }
 
   ionViewWillLeave() {
@@ -45,7 +47,13 @@ export class ScanPage implements OnInit {
 
     BarcodeScanner.stopScan()
       .then(() => {
+      }).catch(err => {
+        debugger
       });
+  }
+
+  ionViewDidLeave() {
+    this.canLeave = false;
   }
 
   async scan(): Promise<void> {
@@ -66,9 +74,15 @@ export class ScanPage implements OnInit {
           try {
             const { clubId } = JSON.parse(result.barcode.displayValue);
             if (clubId) {
-              this.fullImmersionService.setSelectedClub((await lastValueFrom(this.clubsService.findOne(clubId, undefined, 'address'))).data);
+              this.clubsService.findOne(clubId, undefined, 'address')
+                .pipe(catchError(
+                  er => throwError(() => er)
+                )).subscribe(clubResponse => {
+                  this.fullImmersionService.setSelectedClub(clubResponse.data);
+                });
               try {
-                this.fullImmersionService.setCurrentParty((await lastValueFrom(this.clubsService.getCurrentParty(clubId))));
+                const currentPartyResponse = await this.clubsService.getCurrentParty(clubId).toPromise();
+                this.fullImmersionService.setCurrentParty(currentPartyResponse!);
 
                 this.navCtrl.navigateForward('full-immersion/select-table');
                 this.process = false;
@@ -99,6 +113,7 @@ export class ScanPage implements OnInit {
         console.error(error);
         document.querySelector('body')?.classList.remove('barcode-scanner-active');
       });
+      this.canLeave = true;
   }
 
   async requestPermissions(): Promise<boolean> {

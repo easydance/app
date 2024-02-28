@@ -10,6 +10,7 @@ import { HomePage } from './home.page';
 import { UiModule } from 'src/app/components/ui.module';
 import { StoryPageModule } from 'src/app/pages/users/pages/story/story.module';
 import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
+import { SwipeDirective } from 'src/app/directives/swipe.directive';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/
     HomePageRoutingModule,
     UiModule,
     StoryPageModule,
-    RecordingVideoPreviewComponent
+    RecordingVideoPreviewComponent,
+    SwipeDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [HomePage]

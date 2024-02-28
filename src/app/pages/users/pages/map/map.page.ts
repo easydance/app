@@ -58,13 +58,13 @@ export class MapPage implements OnInit, AfterViewChecked {
   date: string = DateTime.now().toFormat('dd LLL', { locale: 'it-IT' });
 
   markerIcon: google.maps.Icon = {
-    url: this.basePath + '/api/marker.png',
+    url: this.basePath + '/marker.png',
   };
   clusterOptions: MarkerClustererOptions = {
     styles: [{
       height: 36,
       width: 36,
-      url: this.basePath + '/api/marker.png',
+      url: this.basePath + '/marker.png',
       anchorIcon: [18, 18],
       anchorText: [4, -5],
       textColor: 'white',

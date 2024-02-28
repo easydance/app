@@ -1,0 +1,37 @@
+<swiper-container *ngIf="stories.length"
+	pagination="false"
+	slides-per-view="auto"
+	free-mode="true">
+	<swiper-slide (click)="onMe()"
+		style="width: fit-content;">
+		<div style="width: fit-content; margin-right: 1rem;">
+			<ion-avatar style="margin: 0 auto;">
+				<img [src]="authManager.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
+					style="object-fit: cover;">
+			</ion-avatar>
+			<div class="mt-1"
+				style="text-align: center;">
+				<small>
+					{{authManager.user?.firstName}} {{authManager.user?.lastName}}
+				</small>
+			</div>
+		</div>
+	</swiper-slide>
+	<ng-container *ngFor="let kv of (users | keyvalue)">
+		<swiper-slide *ngIf="authManager.user?.id != kv.value.user?.id"
+			(click)="storyClick.emit(kv.value.stories)">
+			<div style="width: fit-content;">
+				<ion-avatar style="margin: 0 auto;">
+					<img [src]="kv.value.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
+						style="object-fit: cover;">
+				</ion-avatar>
+				<div class="mt-1"
+					style="text-align: center;">
+					<small>
+						{{kv.value.user?.firstName}} {{kv.value.user?.lastName}}
+					</small>
+				</div>
+			</div>
+		</swiper-slide>
+	</ng-container>
+</swiper-container>
