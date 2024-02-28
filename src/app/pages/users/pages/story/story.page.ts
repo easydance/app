@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonModal, NavController } from '@ionic/angular';
+import { IonModal, LoadingController, NavController } from '@ionic/angular';
 import { AttachmentService, StoryService } from 'src/app/apis';
 import { RecordingVideoPreviewComponent, StorySource } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
 import { AttachmentHelperService } from 'src/app/services/upload.service';
@@ -19,7 +19,8 @@ export class StoryPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private storiesService: StoryService,
-    private attachmentService: AttachmentHelperService
+    private attachmentService: AttachmentHelperService,
+    private loadingCtrl: LoadingController
   ) { }
 
   async ngOnInit() {
@@ -27,7 +28,6 @@ export class StoryPage implements OnInit {
 
   ionViewWillEnter() {
     setTimeout(() => {
-      this.recordingVideoPreview?.reset();
       this.recordingVideoPreview?.initializeCameraPreview();
     }, 500);
   }
@@ -45,8 +45,15 @@ export class StoryPage implements OnInit {
     this.navCtrl.back();
   }
 
-  saveStory() {
+  async saveStory() {
+
+    const loading = await this.loadingCtrl.create({
+      message: "Salvataggio...",
+    });
+    loading.present();
+
     if (!this.storySource) {
+      loading.dismiss();
       return;
     }
 
@@ -63,6 +70,7 @@ export class StoryPage implements OnInit {
       this.attachmentService.upload(res.data.id!, 'STORY' as any, file)
         .subscribe(storyAtt => {
           this.storyModal?.present();
+          loading.dismiss();
         });
     });
 

@@ -45,6 +45,7 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
 
   async initializeCameraPreview() {
     try {
+      this.source = undefined;
       await CameraPreview.stop();
     } catch (error) {
       console.error(error);
@@ -138,11 +139,6 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
     }
     if (this.recording) this.stopVideo();
     clearTimeout(this.storyLimitId);
-  }
-
-  reset() {
-    this.source = undefined;
-    CameraPreview.start(this.cameraPreviewOptions!);
   }
 
   goNext() {

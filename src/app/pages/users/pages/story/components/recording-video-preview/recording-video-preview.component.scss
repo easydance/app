@@ -84,7 +84,7 @@ ion-modal::part(content) {
 .footer {
   zoom: 0.75;
   position: absolute;
-  bottom: calc(var(--ion-safe-area-bottom));
+  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 1003;
