@@ -23,7 +23,7 @@ export interface CreateTableCategoryRequestDto {
     updatedBy?: string | null;
     deletedBy?: string | null;
     name: string;
-    minimumBill: number | null;
+    minimumBill: number;
     club: ClubBaseDto;
     tables: Array<TableBaseDto>;
 }

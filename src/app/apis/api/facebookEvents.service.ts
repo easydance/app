@@ -23,6 +23,8 @@ import { AddressControllerCountDefaultResponse } from '../model/addressControlle
 // @ts-ignore
 import { CreateFacebookEventsRequestDto } from '../model/createFacebookEventsRequestDto';
 // @ts-ignore
+import { CreateFacebookEventsResponseDto } from '../model/createFacebookEventsResponseDto';
+// @ts-ignore
 import { FacebookEventsControllerCreateDefaultResponse } from '../model/facebookEventsControllerCreateDefaultResponse';
 // @ts-ignore
 import { FacebookEventsControllerFindAllDefaultResponse } from '../model/facebookEventsControllerFindAllDefaultResponse';
@@ -834,6 +836,77 @@ export class FacebookEventsService implements FacebookEventsServiceInterface {
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param url 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public scrapeEvent(url: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<CreateFacebookEventsResponseDto>;
+    public scrapeEvent(url: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<CreateFacebookEventsResponseDto>>;
+    public scrapeEvent(url: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<CreateFacebookEventsResponseDto>>;
+    public scrapeEvent(url: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (url === null || url === undefined) {
+            throw new Error('Required parameter url was null or undefined when calling scrapeEvent.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (url !== undefined && url !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>url, 'url');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (access-token) required
+        localVarCredential = this.configuration.lookupCredential('access-token');
+        if (localVarCredential) {
+            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/facebook-events/scrape`;
+        return this.httpClient.request<CreateFacebookEventsResponseDto>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

@@ -11,8 +11,10 @@ import { environment } from 'src/environments/environment';
   selector: 'app-scan',
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
+
 })
 export class ScanPage implements OnInit {
+  canLeave: boolean = false;
   isSupported = false;
   barcodes: Barcode[] = [];
   process: boolean = false;
@@ -37,7 +39,7 @@ export class ScanPage implements OnInit {
   ionViewDidEnter() {
     setTimeout(() => {
       this.scan();
-    }, 500);
+    }, 200);
   }
 
   ionViewWillLeave() {
@@ -45,7 +47,13 @@ export class ScanPage implements OnInit {
 
     BarcodeScanner.stopScan()
       .then(() => {
+      }).catch(err => {
+        debugger
       });
+  }
+
+  ionViewDidLeave() {
+    this.canLeave = false;
   }
 
   async scan(): Promise<void> {
@@ -105,6 +113,7 @@ export class ScanPage implements OnInit {
         console.error(error);
         document.querySelector('body')?.classList.remove('barcode-scanner-active');
       });
+      this.canLeave = true;
   }
 
   async requestPermissions(): Promise<boolean> {

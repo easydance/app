@@ -28,8 +28,13 @@
 					</ion-chip>
 				</div>
 			</div>
-			<video #video poster="assets/icons/loading.svg"
+			<div *ngIf="isImage(story)"
+				[ngStyle]="{ 'background': 'url('+ story.attachment.url +') center center no-repeat' }"
+				id="img-story"></div>
+			<video #video
+				*ngIf="!isImage(story)"
 				(click)="video.paused? video.play() : video.pause()"
+				poster="assets/icons/loading.svg"
 				autoplay>
 				<source [src]="story.attachment.url"
 					[type]="story.attachment.mimeType">
@@ -42,7 +47,7 @@
 						<ion-icon color="light"
 							name="location"></ion-icon>
 						<ion-label>
-							{{story.party.club.name}}
+							{{getClubName(story)}}
 						</ion-label>
 					</ion-chip>
 					<div class="title mt-2">
@@ -56,11 +61,16 @@
 						<ion-fab-button size="small">
 							<ion-icon name="heart-outline"></ion-icon>
 						</ion-fab-button>
-						<ion-fab-button size="small">
+						<!-- <ion-fab-button size="small">
 							<ion-icon name="share-outline"></ion-icon>
-						</ion-fab-button>
+						</ion-fab-button> 
 						<ion-fab-button size="small">
 							<ion-icon name="ellipsis-vertical"></ion-icon>
+						</ion-fab-button> -->
+						<ion-fab-button *ngIf="story.createdBy && authManager.user?.uuid && story.createdBy == authManager.user?.uuid"
+							(click)="modal.present()"
+							size="small">
+							<ion-icon name="trash-outline"></ion-icon>
 						</ion-fab-button>
 					</div>
 
@@ -68,5 +78,36 @@
 			</div>
 		</swiper-slide>
 	</swiper-container>
-
+	<div *ngIf="!stories?.length"
+		id="no-stories">
+		<easy-thats-all [message]="'Non ci sono storie per ora...'"></easy-thats-all>
+	</div>
 </ion-content>
+
+<ion-modal #modal
+	id="full-immersion-modal"
+	trigger="open-custom-dialog">
+	<ng-template>
+		<div class="wrapper p-8">
+			<div class="title">Elimina storia</div>
+			<div class="my-10 subtitle">
+				Sei sicuro di voler eliminare la storia?
+			</div>
+			<div style="display: flex; align-items: center; gap: 1rem">
+				<ion-button (click)="modal.dismiss()"
+					shape="round"
+					color="dark"
+					expand="block">
+					Annulla
+				</ion-button>
+				<ion-button (click)="deleteStory(swiperRef?.nativeElement?.swiper.slides[this.currentIndex].id);modal.dismiss();"
+					class="mt-2"
+					shape="round"
+					color="primary"
+					expand="block">
+					Conferma
+				</ion-button>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

@@ -22,6 +22,7 @@ export interface UpdateFacebookEventsResponseDto {
     updatedBy?: string | null;
     deletedBy?: string | null;
     title: string;
+    description: string;
     location: string;
     club: string;
     cover: string;
