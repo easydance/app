@@ -32,6 +32,7 @@ export interface GetStoryResponseDto {
     user: UserBaseDto | null;
     attachment: AttachmentBaseDto;
     party: PartyBaseDto;
+    userTags: Array<string>;
     friends: Array<UserDto>;
 }
 

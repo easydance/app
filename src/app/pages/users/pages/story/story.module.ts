@@ -8,6 +8,7 @@ import { StoryPageRoutingModule } from './story-routing.module';
 
 import { StoryPage } from './story.page';
 import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
+import { SwipeDirective } from 'src/app/directives/swipe.directive';
 
 @NgModule({
   imports: [
@@ -15,9 +16,10 @@ import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/
     FormsModule,
     IonicModule,
     StoryPageRoutingModule,
-    RecordingVideoPreviewComponent
+    RecordingVideoPreviewComponent,
+    SwipeDirective
   ],
   providers: [],
   declarations: [StoryPage]
 })
-export class StoryPageModule {}
+export class StoryPageModule { }

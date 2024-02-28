@@ -31,5 +31,6 @@ export interface UpdateStoryResponseDto {
     user: UserBaseDto | null;
     attachment: AttachmentBaseDto;
     party: PartyBaseDto;
+    userTags: Array<string>;
 }
 

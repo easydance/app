@@ -15,6 +15,7 @@ import { Observable }                                        from 'rxjs';
 
 import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreateFacebookEventsRequestDto } from '../model/models';
+import { CreateFacebookEventsResponseDto } from '../model/models';
 import { FacebookEventsControllerCreateDefaultResponse } from '../model/models';
 import { FacebookEventsControllerFindAllDefaultResponse } from '../model/models';
 import { FacebookEventsControllerFindOneDefaultResponse } from '../model/models';
@@ -116,6 +117,13 @@ export interface FacebookEventsServiceInterface {
      * @param id 
      */
     restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param url 
+     */
+    scrapeEvent(url: string, extraHttpRequestParams?: any): Observable<CreateFacebookEventsResponseDto>;
 
     /**
      * 

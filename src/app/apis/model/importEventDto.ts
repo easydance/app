@@ -16,5 +16,6 @@ export interface ImportEventDto {
     to: string;
     title: string;
     description: string;
+    club: string;
 }
 

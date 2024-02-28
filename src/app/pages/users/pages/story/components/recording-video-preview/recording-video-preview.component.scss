@@ -1,48 +1,130 @@
 ion-content {
-    --background: radial-gradient(
-        41.86% 34.55% at 50% 50%,
-        #7f32cd 0%,
-        rgba(127, 50, 205, 0) 100%
-      ),
-      #050209;
-    --padding-bottom: calc(65px + var(--ion-safe-area-bottom));
+  --background: radial-gradient(
+      41.86% 34.55% at 50% 50%,
+      #7f32cd 0%,
+      rgba(127, 50, 205, 0) 100%
+    ),
+    #050209;
+  --padding-bottom: calc(65px + var(--ion-safe-area-bottom));
+}
+
+#story {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+
+  #story-preview {
+    flex: 1;
+    width: 100%;
+    // background: red;
+    border-radius: 2rem;
+    overflow: hidden;
+    background-size: contain !important;
+    position: relative;
   }
 
-  #story {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 12px;
-  
-    #story-preview {
-      flex: 1;
+  #play-button,
+  #cancel-button {
+    border: var(--color-neutral-50, #fafafa) solid 1px;
+    padding: 4px;
+    margin: 0 auto;
+    border-radius: 50%;
+    > div {
+      height: 100%;
       width: 100%;
-      background: red;
-      border-radius: 2rem;
-      overflow: hidden;
-    }
-  
-    #play-button {
-      border: var(--color-neutral-50, #fafafa) solid 1px;
-      padding: 4px;
-      margin: 0 auto;
       border-radius: 50%;
-      > div {
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        background: var(--color-neutral-50, #fafafa);
-      }
-    }
-  
-    #play-button.recording {
-      > div {
-        background: var(--ion-color-danger) !important;
-      }
+      background: var(--color-neutral-50, #fafafa);
     }
   }
-  
-  :host {
-    height: 100%;
+
+  #play-button.recording {
+    > div {
+      background: var(--ion-color-danger) !important;
+    }
   }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+:host {
+  height: 100%;
+}
+
+ion-modal.blur {
+  --background: rgba(18, 18, 18, 0.6);
+  --border-radius: 20px 20px 0 0;
+  --background: transparent;
+
+  ion-list,
+  ion-item {
+    --background: transparent;
+    background: transparent;
+  }
+
+  ion-item {
+    margin-right: 1rem;
+  }
+
+  ion-list {
+    margin-bottom: 2rem;
+  }
+}
+
+ion-modal::part(content) {
+  background: var(--neutral-20016, rgba(190, 190, 190, 0.16));
+  backdrop-filter: blur(50px);
+}
+
+.footer {
+  zoom: 0.75;
+  position: absolute;
+  bottom: calc(var(--ion-safe-area-bottom));
+  left: 0;
+  width: 100%;
+  z-index: 1003;
+  background: linear-gradient(0deg, black, transparent);
+
+  .title {
+    overflow: hidden;
+    color: var(--color-neutral-50, #fafafa);
+    text-overflow: ellipsis;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.625rem; /* 108.333% */
+    letter-spacing: -0.5px;
+  }
+}
+
+.stories-buttons {
+  ion-fab-button {
+    margin: 0;
+    margin-bottom: 0.5rem;
+    --background: rgba(190, 190, 190, 0.16);
+    /* Blur Button */
+    backdrop-filter: blur(20px);
+    --border-radius: 50%;
+    border-radius: 50%;
+
+    ion-icon {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+#users-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+
+  .user-item {
+    flex: 1 0 calc(25% - 0.25rem);
+    margin: 0.25rem;
+  }
+}

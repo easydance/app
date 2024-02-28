@@ -42,7 +42,7 @@ export class StoriesPage implements OnInit {
       await video.pause();
     }
   }
-  
+
 
   findStories(filter: any) {
     this.storiesService.findAll(
@@ -60,7 +60,7 @@ export class StoriesPage implements OnInit {
       this.stories = res.data;
       setTimeout(() => {
         this.initSwiper();
-        this.startVideo(this.stories?.[0].id);
+        this.startVideo(this.stories?.[0]);
       }, 500);
     });
   }
@@ -88,7 +88,7 @@ export class StoriesPage implements OnInit {
     });
   }
 
-  startVideo(storyId?: number) {
+  startVideo(story?: GetStoryResponseDto) {
     const swiper: { slides: HTMLDivElement[]; } = this.swiperRef?.nativeElement?.swiper;
     const video = swiper.slides[this.currentIndex].querySelector<HTMLVideoElement>('video');
     if (video) {
@@ -102,7 +102,31 @@ export class StoriesPage implements OnInit {
         }
       }, 200);
       video.play();
-      this.storiesService.findOne(storyId || swiper.slides[this.currentIndex].id).subscribe(res => { });
+      this.storiesService.findOne(story?.id || swiper.slides[this.currentIndex].id).subscribe(res => { });
+    } else if (story && this.isImage(story)) {
+      this.currentProgress = 0;
+      const intervalID = setInterval(() => {
+        this.currentProgress = this.currentProgress + 200 / 15000;
+        if (this.currentProgress >= 1) {
+          this.swiperRef?.nativeElement.swiper.slideNext();
+          clearInterval(intervalID);
+        }
+      }, 200);
+      this.storiesService.findOne(story.id || swiper.slides[this.currentIndex].id).subscribe(res => { });
     }
+  }
+
+  getClubName(story: GetStoryResponseDto) {
+    return story.party.club.name || (<any>story.party).customData?.club;
+  }
+
+  deleteStory(id: number) {
+    this.storiesService._delete(id).subscribe(() => {
+      this.findStories({});
+    });
+  }
+
+  isImage(story: GetStoryResponseDto) {
+    return story.attachment.mimeType.startsWith('image');
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
-import { ClubBaseDto, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
+import { ClubBaseDto, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, StoryBaseDto, UserToClubFollowerService } from 'src/app/apis';
 import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
 import { UsersPage } from 'src/app/pages/users/users.page';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
@@ -137,5 +137,20 @@ export class HomePage implements OnInit {
     this.searchEvents().then(res => {
       $event.target.complete();
     });
+  }
+
+  makeStory() {
+    if (this.authManager.isAuthenticated()) {
+      this.navCtrl.navigateBack('/story');
+      return;
+    }
+  }
+
+  handleStories(stories?: StoryBaseDto[]) {
+    if (!stories) {
+      this.navCtrl.navigateBack('/story');
+      return;
+    }
+    this.navCtrl.navigateForward('/stories');
   }
 }

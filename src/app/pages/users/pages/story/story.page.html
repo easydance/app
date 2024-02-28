@@ -1,3 +1,32 @@
-<ion-content [fullscreen]="true">
-	<recording-video-preview #recordingVideoPreview></recording-video-preview>
+<ion-content [fullscreen]="true"
+	(next)="goBack()"
+	swipe>
+	<recording-video-preview #recordingVideoPreview
+		(mediaCreated)="mediaCreated($event)"></recording-video-preview>
 </ion-content>
+
+<ion-modal #storyModal>
+	<ng-template>
+		<div id="hurra"
+			class="flex align-center">
+			<div class="m-0-auto">
+				<div class="ion-text-center">
+					<ion-icon [ngStyle]="{ '--fill': 'var(--color-neutral-50)', 'font-size': '120px' }"
+						src="../../../assets/icons/guy-walk.svg"></ion-icon>
+				</div>
+				<div class="title mt-8">SUUUPER!</div>
+				<div class="subtitle mt-4">
+					La tua story è stata pubblicata.
+				</div>
+				<div class="mt-12 ion-text-center mb-8">
+					<ion-button [routerLink]="'/home'"
+						(click)="storyModal.dismiss();recordingVideoPreview.reset()"
+						color="light"
+						shape="round">
+						CHIUDI
+					</ion-button>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>
