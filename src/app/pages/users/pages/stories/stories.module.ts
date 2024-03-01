@@ -8,6 +8,7 @@ import { StoriesPageRoutingModule } from './stories-routing.module';
 
 import { StoriesPage } from './stories.page';
 import { UiModule } from 'src/app/components/ui.module';
+import { SwipeDirective } from 'src/app/directives/swipe.directive';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { UiModule } from 'src/app/components/ui.module';
     FormsModule,
     IonicModule,
     StoriesPageRoutingModule,
-    UiModule
+    UiModule,
+    SwipeDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [StoriesPage]

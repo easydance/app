@@ -2,8 +2,20 @@
 	pagination="false"
 	slides-per-view="auto"
 	free-mode="true">
-	<swiper-slide (click)="onMe()"
-		style="width: fit-content;">
+
+	<swiper-slide (click)="newStory.emit()">
+		<div style="width: fit-content; margin-right: 1rem;">
+			<div id="new-story"
+				class="w-12 h-12 mx-auto my-0">
+				<ion-icon name="add"></ion-icon>
+			</div>
+			<div class="mt-1"
+				style="text-align: center;">
+				<small>Nuova</small>
+			</div>
+		</div>
+	</swiper-slide>
+	<!-- <swiper-slide (click)="onMe(); userClick.emit(users[authManager?.user?.id || ''])">
 		<div style="width: fit-content; margin-right: 1rem;">
 			<ion-avatar style="margin: 0 auto;">
 				<img [src]="authManager.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
@@ -16,10 +28,9 @@
 				</small>
 			</div>
 		</div>
-	</swiper-slide>
+	</swiper-slide> -->
 	<ng-container *ngFor="let kv of (users | keyvalue)">
-		<swiper-slide *ngIf="authManager.user?.id != kv.value.user?.id"
-			(click)="storyClick.emit(kv.value.stories)">
+		<swiper-slide (click)="storyClick.emit(kv.value.stories); userClick.emit(kv.value)">
 			<div style="width: fit-content;">
 				<ion-avatar style="margin: 0 auto;">
 					<img [src]="kv.value.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"

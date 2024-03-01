@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { AbstractControl, NgForm, ValidationErrors } from '@angular/forms';
 import { Capacitor } from '@capacitor/core';
-import { IonModal, NavController, ToastController } from '@ionic/angular';
+import { IonModal, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { AuthService, GetTagResponseDto, SignUpDto, TagService } from 'src/app/apis';
@@ -106,6 +106,7 @@ export class RegisterPage implements OnInit {
     private authService: AuthManagerService,
     private navCtrl: NavController,
     private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
     private ngZone: NgZone
   ) { }
 
@@ -122,16 +123,20 @@ export class RegisterPage implements OnInit {
     this.navCtrl.back();
   }
 
-  goNext(wizard: HTMLElement) {
+  async goNext(wizard: HTMLElement) {
     if (this.currentStep.index + 1 == this.formSteps.length) {
+      const loading = await this.loadingCtrl.create({ message: 'Salvataggio...' });
+      loading.present();
       this.authService.signUp(this.user)
         .pipe(
           catchError(err => {
+            loading.dismiss();
             this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione', duration: 3000 }).then(f => f.present());
             return throwError(() => err);
           })
         )
         .subscribe(res => {
+          loading.dismiss();
           this.hurraModal?.present();
         });
     }

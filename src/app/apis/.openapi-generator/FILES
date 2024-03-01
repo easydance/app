@@ -32,6 +32,8 @@ api/savedParty.service.ts
 api/savedParty.serviceInterface.ts
 api/story.service.ts
 api/story.serviceInterface.ts
+api/storyLike.service.ts
+api/storyLike.serviceInterface.ts
 api/subscription.service.ts
 api/subscription.serviceInterface.ts
 api/table.service.ts
@@ -111,6 +113,8 @@ model/createRoleRequestDto.ts
 model/createRoleResponseDto.ts
 model/createSavedPartyRequestDto.ts
 model/createSavedPartyResponseDto.ts
+model/createStoryLikeRequestDto.ts
+model/createStoryLikeResponseDto.ts
 model/createStoryRequestDto.ts
 model/createStoryResponseDto.ts
 model/createSubscriptionRequestDto.ts
@@ -173,6 +177,7 @@ model/getPriceListItemResponseDto.ts
 model/getProductResponseDto.ts
 model/getRoleResponseDto.ts
 model/getSavedPartyResponseDto.ts
+model/getStoryLikeResponseDto.ts
 model/getStoryResponseDto.ts
 model/getSubscriptionResponseDto.ts
 model/getTableCategoryResponseDto.ts
@@ -243,6 +248,8 @@ model/patchRoleResponseDto.ts
 model/patchSavedPartyRequestDto.ts
 model/patchSavedPartyRequestDtoUser.ts
 model/patchSavedPartyResponseDto.ts
+model/patchStoryLikeRequestDto.ts
+model/patchStoryLikeResponseDto.ts
 model/patchStoryRequestDto.ts
 model/patchStoryResponseDto.ts
 model/patchSubscriptionRequestDto.ts
@@ -309,6 +316,11 @@ model/storyControllerFindAllDefaultResponse.ts
 model/storyControllerFindOneDefaultResponse.ts
 model/storyControllerReplaceDefaultResponse.ts
 model/storyControllerUpdateDefaultResponse.ts
+model/storyLikeControllerCreateDefaultResponse.ts
+model/storyLikeControllerFindAllDefaultResponse.ts
+model/storyLikeControllerFindOneDefaultResponse.ts
+model/storyLikeControllerReplaceDefaultResponse.ts
+model/storyLikeControllerUpdateDefaultResponse.ts
 model/subscription.ts
 model/subscriptionControllerCreateDefaultResponse.ts
 model/subscriptionControllerFindAllDefaultResponse.ts
@@ -387,6 +399,8 @@ model/updateRoleResponseDto.ts
 model/updateSavedPartyRequestDto.ts
 model/updateSavedPartyRequestDtoUser.ts
 model/updateSavedPartyResponseDto.ts
+model/updateStoryLikeRequestDto.ts
+model/updateStoryLikeResponseDto.ts
 model/updateStoryRequestDto.ts
 model/updateStoryResponseDto.ts
 model/updateSubscriptionRequestDto.ts

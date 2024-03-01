@@ -11,7 +11,7 @@
 	<ion-refresher [pullFactor]="0.5"
 		[pullMin]="150"
 		[pullMax]="200"
-		(ionRefresh)="refresh($event); storyWidget?.findStories()"
+		(ionRefresh)="refresh($event)"
 		slot="fixed">
 		<ion-refresher-content pullingIcon="chevron-down-circle-outline"
 			pullingText
@@ -20,13 +20,13 @@
 		</ion-refresher-content>
 	</ion-refresher>
 	<div class="bg"></div>
-	<div class="mt-4 mb-4">
+	<!-- <div class="mt-4 mb-4">
 		<stories-widget #storyWidget
-			(meClick)="handleStories()"
-			(storyClick)="handleStories($event)"></stories-widget>
-	</div>
-	<div (previous)="makeStory()"
-		swipe>
+			*ngIf="isAuthenticated"
+			(newStory)="makeStory()"
+			(userClick)="handleStories($event?.user, $event?.stories)"></stories-widget>
+	</div> -->
+	<div>
 		<div class="title-big my-4 mb-8">
 			Gli eventi di oggi
 			<br>

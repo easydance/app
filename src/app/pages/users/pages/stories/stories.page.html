@@ -13,9 +13,13 @@
 		</div>
 	</div>
 	<swiper-container #swiper
-		*ngIf="stories">
+		*ngIf="stories"
+		id="stories-slider"
+		allow-touch-move="false">
 		<swiper-slide *ngFor="let story of stories"
-			[id]="story.id">
+			[id]="story.id"
+			(touchstart)="pause()"
+			(touchend)="resume()">
 			<div class="header px-4">
 				<div class="flex space-between mt-3">
 					<ion-chip [outline]="true"
@@ -30,24 +34,37 @@
 			</div>
 			<div *ngIf="isImage(story)"
 				[ngStyle]="{ 'background': 'url('+ story.attachment.url +') center center no-repeat' }"
+				class="z-500"
 				id="img-story"></div>
 			<video #video
 				*ngIf="!isImage(story)"
+				[attr.webkit-playsinline]="'webkit-playsinline'"
+				[controls]="false"
 				(click)="video.paused? video.play() : video.pause()"
+				autoplay
+				class="z-500"
 				poster="assets/icons/loading.svg"
-				autoplay>
+				playsinline>
 				<source [src]="story.attachment.url"
 					[type]="story.attachment.mimeType">
 				Your browser does not support the video tag.
 			</video>
+			<div class="absolute w-full h-full top-0 left-0 flex items-center z-510">
+				<div (click)="prev()"
+					id="prev-story"
+					class="flex-1"></div>
+				<div (click)="next()"
+					id="next-story"
+					class="flex-1"></div>
+			</div>
 
-			<div class="footer p-4 flex space-between">
+			<div class="footer p-4 flex space-between z-600">
 				<div>
 					<ion-chip class="dark xl">
 						<ion-icon color="light"
 							name="location"></ion-icon>
 						<ion-label>
-							{{getClubName(story)}}
+							{{getClubName(story) || '-'}}
 						</ion-label>
 					</ion-chip>
 					<div class="title mt-2">
@@ -68,7 +85,7 @@
 							<ion-icon name="ellipsis-vertical"></ion-icon>
 						</ion-fab-button> -->
 						<ion-fab-button *ngIf="story.createdBy && authManager.user?.uuid && story.createdBy == authManager.user?.uuid"
-							(click)="modal.present()"
+							(click)="pause();modal.present();"
 							size="small">
 							<ion-icon name="trash-outline"></ion-icon>
 						</ion-fab-button>
@@ -85,6 +102,7 @@
 </ion-content>
 
 <ion-modal #modal
+	(didDismiss)="resume();"
 	id="full-immersion-modal"
 	trigger="open-custom-dialog">
 	<ng-template>

@@ -8,6 +8,11 @@ ion-content {
   --padding-bottom: calc(65px + var(--ion-safe-area-bottom));
 }
 
+video {
+  height: 100%;
+  width: 100%;
+}
+
 #story {
   height: 100%;
   display: flex;

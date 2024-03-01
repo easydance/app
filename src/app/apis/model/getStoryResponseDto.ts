@@ -34,5 +34,7 @@ export interface GetStoryResponseDto {
     party: PartyBaseDto;
     userTags: Array<string>;
     friends: Array<UserDto>;
+    profileImage: AttachmentBaseDto;
+    liked: boolean;
 }
 

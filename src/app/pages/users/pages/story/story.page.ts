@@ -49,6 +49,7 @@ export class StoryPage implements OnInit {
 
     const loading = await this.loadingCtrl.create({
       message: "Salvataggio...",
+      translucent: true
     });
     loading.present();
 
