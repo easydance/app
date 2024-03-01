@@ -21,6 +21,7 @@ const config: CapacitorConfig = {
       '@capacitor-community/camera-preview',
       '@capacitor/app',
       '@capacitor/geolocation',
+      '@capacitor/filesystem',
       '@capacitor/haptics',
       '@capacitor/keyboard',
       '@capacitor/status-bar',
