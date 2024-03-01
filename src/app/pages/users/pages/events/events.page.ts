@@ -97,7 +97,17 @@ export class EventsPage implements OnInit {
 
   ionViewWillEnter() {
     // Top parties
-    this.partiesService.findAll(0, 20, JSON.stringify({ to: { $gte: new Date() } }), undefined, undefined, 'club').subscribe(res => {
+    this.partiesService.findAll(
+      0,
+      20,
+      JSON.stringify({ 
+        to: { $gte: new Date() },
+        ...this.partiesUtils.Filters().InCurrentPosition()
+      }),
+      undefined,
+      undefined,
+      'club, address'
+    ).subscribe(res => {
       this.parties = res.data;
     });
     // Tonight parties
@@ -111,7 +121,7 @@ export class EventsPage implements OnInit {
     }), undefined, undefined, 'club').subscribe(res => {
       this.partiesTonight = res.data;
     });
-    
+
     if (this.authManager.user) {
       this.clubFollowerService.findAll(0, 4, JSON.stringify({
         user: { id: this.authManager.user?.id }

@@ -27,6 +27,7 @@ export class HomePage implements OnInit {
   public city?: string;
   public filter: any = {};
 
+
   constructor(
     private readonly partiesService: PartyService,
     private readonly authManager: AuthManagerService,
@@ -35,7 +36,8 @@ export class HomePage implements OnInit {
     public readonly partiesUtils: CommonPartiesUtils,
     private modalCtrl: ModalController,
     private animationCtrl: AnimationController,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private commonPartiesUtils: CommonPartiesUtils
   ) { }
 
   ngOnInit() {
@@ -83,7 +85,7 @@ export class HomePage implements OnInit {
         ...this.partiesUtils.Filters().InCurrentPosition()
       };
 
-      this.partiesService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'club').subscribe(res => {
+      this.partiesService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'club,address').subscribe(res => {
         this.parties = res.data;
         resolve(res.data);
       });
@@ -116,7 +118,11 @@ export class HomePage implements OnInit {
         header: {
           title: 'Oggi',
           subtitle: 'Eventi',
-        }
+        },
+        filters: JSON.stringify({
+          ...this.commonPartiesUtils.Filters().Tonight,
+          ...this.commonPartiesUtils.Filters().InCurrentPosition()
+        })
       }
     });
   }
