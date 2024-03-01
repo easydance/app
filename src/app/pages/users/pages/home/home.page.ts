@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AnimationController, ModalController, NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
-import { ClubBaseDto, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, StoryBaseDto, UserToClubFollowerService } from 'src/app/apis';
+import { ClubBaseDto, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, StoryBaseDto, UserBaseDto, UserToClubFollowerService } from 'src/app/apis';
 import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
+import { StoriesWidgetComponent } from 'src/app/components/stories-widget/stories-widget.component';
+import { StoriesPage } from 'src/app/pages/users/pages/stories/stories.page';
 import { UsersPage } from 'src/app/pages/users/users.page';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
@@ -14,6 +16,11 @@ import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.servic
 })
 export class HomePage implements OnInit {
   @ViewChild('searchHeader') searchHeader?: SearchHeaderComponent;
+  @ViewChild('storyWidget') storyWidget?: StoriesWidgetComponent;
+
+  public get isAuthenticated() {
+    return this.authManager.isAuthenticated();
+  }
 
   public parties?: GetPartyResponseDto[];
   public clubs?: GetClubResponseDto[];
@@ -25,7 +32,10 @@ export class HomePage implements OnInit {
     private readonly authManager: AuthManagerService,
     private readonly navCtrl: NavController,
     private readonly clubFollowerService: UserToClubFollowerService,
-    public readonly partiesUtils: CommonPartiesUtils
+    public readonly partiesUtils: CommonPartiesUtils,
+    private modalCtrl: ModalController,
+    private animationCtrl: AnimationController,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -36,7 +46,9 @@ export class HomePage implements OnInit {
 
     this.authManager.geocoding$.subscribe(res => {
       this.city = this.authManager.currentCity;
-      this.searchEvents();
+      this.searchEvents().then(() => {
+        this.changeDetector.detectChanges();
+      });
     });
     this.authManager.user$.subscribe(res => {
       if (res) {
@@ -137,6 +149,7 @@ export class HomePage implements OnInit {
     this.searchEvents().then(res => {
       $event.target.complete();
     });
+    this.storyWidget?.findStories();
   }
 
   makeStory() {
@@ -146,11 +159,56 @@ export class HomePage implements OnInit {
     }
   }
 
-  handleStories(stories?: StoryBaseDto[]) {
-    if (!stories) {
+  async handleStories(user?: UserBaseDto, stories?: StoryBaseDto[]) {
+    if (!stories || !user) {
       this.navCtrl.navigateBack('/story');
       return;
     }
-    this.navCtrl.navigateForward('/stories');
+    const enterAnimation = (baseEl: HTMLElement) => {
+      const root = baseEl.shadowRoot!;
+
+      const backdropAnimation = this.animationCtrl
+        .create()
+        .addElement(root.querySelector('ion-backdrop')!)
+        .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
+
+      const wrapperAnimation = this.animationCtrl
+        .create()
+        .addElement(root.querySelector('.modal-wrapper')!)
+        .keyframes([
+          { offset: 0, opacity: '0', transform: 'scale(0)' },
+          { offset: 1, opacity: '0.99', transform: 'scale(1)' },
+        ]);
+
+      return this.animationCtrl
+        .create()
+        .addElement(baseEl)
+        .easing('ease-out')
+        .duration(300)
+        .addAnimation([backdropAnimation, wrapperAnimation]);
+    };
+    const storiesModal = await this.modalCtrl.create({
+      component: StoriesPage,
+      componentProps: {
+        filter: { user: { id: user.id } }
+      },
+      backdropDismiss: true,
+      breakpoints: [0, 1],
+      enterAnimation,
+      leaveAnimation: (baseEl: HTMLElement) => {
+        return enterAnimation(baseEl).direction('reverse');
+      }
+    });
+    storiesModal.present();
+
+    storiesModal.onDidDismiss().then(res => {
+      console.log(res);
+      if (res.role == 'NEXT_USER') {
+
+      }
+      if (res.role == 'PREVIOUS_USER') {
+
+      }
+    });
   }
 }

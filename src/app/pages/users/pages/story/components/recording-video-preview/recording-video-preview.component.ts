@@ -45,6 +45,7 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
 
   async initializeCameraPreview() {
     try {
+      this.source = undefined;
       await CameraPreview.stop();
     } catch (error) {
       console.error(error);
@@ -104,7 +105,7 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
     const src = await this.getVideoUrl((<any>result).videoFilePath);
     this.source = {
       type: 'video',
-      src,
+      src: `data:video/mp4;base64,${src}`,
       usersTags: [],
     };
     CameraPreview.stop();
@@ -112,11 +113,15 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
 
   private async getVideoUrl(fullPath: string) {
     const path = fullPath.substr(fullPath.lastIndexOf('/') + 1);
-    const file = await Filesystem.getUri({
+    // const fileUriResult = await Filesystem.getUri({
+    //   path: path,
+    //   directory: Directory.Data
+    // });
+    const file = await Filesystem.readFile({
       path: path,
-      directory: Directory.Data
+      directory: Directory.Cache
     });
-    return file.uri;
+    return file.data as string;
   }
 
   startEvent() {
@@ -138,11 +143,6 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
     }
     if (this.recording) this.stopVideo();
     clearTimeout(this.storyLimitId);
-  }
-
-  reset() {
-    this.source = undefined;
-    CameraPreview.start(this.cameraPreviewOptions!);
   }
 
   goNext() {

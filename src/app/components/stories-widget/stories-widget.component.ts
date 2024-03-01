@@ -12,8 +12,10 @@ export class StoriesWidgetComponent implements OnInit {
   stories: GetStoryResponseDto[] = [];
   users: { [id: string]: { user: UserBaseDto, stories: GetStoryResponseDto[]; }; } = {};
 
+  @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: GetStoryResponseDto[]; }> = new EventEmitter();
   @Output() storyClick: EventEmitter<GetStoryResponseDto[]> = new EventEmitter();
   @Output() meClick: EventEmitter<void> = new EventEmitter();
+  @Output() newStory: EventEmitter<void> = new EventEmitter();
 
   constructor(private storiesService: StoryService, public authManager: AuthManagerService) { }
 

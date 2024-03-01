@@ -1,15 +1,17 @@
 <div id="story"
 	class="p-5">
-	<div [ngStyle]="{ background: source ? 'url(data:image/jpeg;base64,' + source.src + ') center center no-repeat' : '' }"
+	<div [ngStyle]="{ background: source && source.type == 'picture' ? 'url(data:image/jpeg;base64,' + source.src + ') center center no-repeat' : '' }"
 		id="story-preview">
 		<ion-fab-button *ngIf="source"
 			(click)="searchUsersModal.present()"
-			class="button m-3 w-9 h-9">
+			class="button m-3 w-9 h-9 absolute top-0 left-0 z-1010">
 			<ion-icon name="person-add"
 				style="font-size: 1rem;"></ion-icon>
 		</ion-fab-button>
-		<video *ngIf=" source && source.type == 'video'">
-			<source [src]="source.src">
+		<video class=" absolute top-0 left-0 z-1000" *ngIf=" source && source.type == 'video'"
+			autoplay loop>
+			<source [src]="source.src"
+				type="video/mp4">
 		</video>
 
 		<div *ngIf="source && source.party"
@@ -55,7 +57,7 @@
 	</div>
 	<div *ngIf="source"
 		class="buttons">
-		<ion-button (click)="reset()"
+		<ion-button (click)="initializeCameraPreview()"
 			class="flex-1"
 			shape="round"
 			expand="block"

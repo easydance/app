@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, filter, map, switchMap, tap } from 'rxjs';
 import { AuthService, LoginUserDataDto, SignUpDto, UpdateMeDto } from 'src/app/apis';
 import { Geolocation } from '@capacitor/geolocation';
 import { Platform } from '@ionic/angular';
@@ -21,7 +21,7 @@ export class AuthManagerService {
   }
 
   private geocodingStore = new BehaviorSubject<google.maps.GeocoderResult | undefined>(undefined);
-  public geocoding$ = this.geocodingStore.asObservable();
+  public geocoding$ = this.geocodingStore.asObservable().pipe(filter((a) => a !== undefined));
   public get geocoding() {
     return this.geocodingStore.getValue();
   }

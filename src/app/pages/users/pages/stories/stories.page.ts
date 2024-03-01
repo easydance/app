@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { GetStoryResponseDto, StoryService } from 'src/app/apis';
-import { IonicSlides } from '@ionic/angular';
+import { GetStoryResponseDto, StoryBaseDto, StoryService } from 'src/app/apis';
+import { IonicSlides, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
@@ -15,10 +15,19 @@ export class StoriesPage implements OnInit {
 
   public currentIndex: number = 0;
   public stories?: GetStoryResponseDto[];
+  public currentTime: number = 0;
   public currentProgress: number = 0;
+  public isCurrentStoryPaused: boolean = false;
   public swiperModules = [IonicSlides];
+  public filter: any = {};
+  public intervalIds: any[] = [];
 
-  constructor(private storiesService: StoryService, private route: ActivatedRoute, public authManager: AuthManagerService) { }
+  constructor(
+    private storiesService: StoryService,
+    private route: ActivatedRoute,
+    public authManager: AuthManagerService,
+    private modalCtrl: ModalController
+  ) { }
 
   ngOnInit() {
   }
@@ -32,7 +41,7 @@ export class StoriesPage implements OnInit {
       }
     });
     if (!this.route.snapshot.queryParams['filter']) {
-      this.findStories({});
+      this.findStories(this.filter);
     }
   }
 
@@ -60,15 +69,15 @@ export class StoriesPage implements OnInit {
       this.stories = res.data;
       setTimeout(() => {
         this.initSwiper();
-        this.startVideo(this.stories?.[0]);
+        this.initStory();
       }, 500);
     });
   }
 
   initSwiper() {
-    this.swiperRef?.nativeElement?.swiper.update();
+    document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper.update();
 
-    const swiperEl = document.querySelector<HTMLDivElement>('swiper-container');
+    const swiperEl = document.querySelector<HTMLDivElement>('#stories-slider');
     swiperEl?.addEventListener('durationchange', (event: any) => {
       console.log("Duration:", event);
     });
@@ -83,37 +92,86 @@ export class StoriesPage implements OnInit {
       }
 
       Promise.all(promises).then(res => {
-        this.startVideo();
+        this.initStory();
       });
     });
+    return swiperEl;
   }
 
-  startVideo(story?: GetStoryResponseDto) {
-    const swiper: { slides: HTMLDivElement[]; } = this.swiperRef?.nativeElement?.swiper;
+  prev() {
+    const swiper = document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper;
+    if (swiper.activeIndex > 0) {
+      for (let intervalID of this.intervalIds) {
+        clearInterval(intervalID);
+      }
+      swiper.slidePrev();
+    }
+  }
+
+  next() {
+    const swiper = document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper;
+    if (swiper.activeIndex < this.stories!.length - 1) {
+      for (let intervalID of this.intervalIds) {
+        clearInterval(intervalID);
+      }
+      swiper.slideNext();
+    }
+  }
+
+  pause() {
+    this.isCurrentStoryPaused = true;
+    for (let video of Array.from(document.querySelectorAll<HTMLVideoElement>('swiper-slide video'))) {
+      video.pause();
+    }
+  }
+
+  resume() {
+    this.isCurrentStoryPaused = false;
+    for (let video of Array.from(document.querySelectorAll<HTMLVideoElement>('swiper-slide video'))) {
+      video.play();
+    }
+  }
+
+  initStory() {
+    const swiper: { slides: HTMLDivElement[]; slideNext: () => {}; } = document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper;
     const video = swiper.slides[this.currentIndex].querySelector<HTMLVideoElement>('video');
+
+    this.currentTime = 0;
+
     if (video) {
       const intervalID = setInterval(() => {
-        if (video.currentTime > 0) {
-          this.currentProgress = video.currentTime / video.duration;
+        this.currentTime = video.currentTime;
+        if (this.currentTime > 0) {
+          this.currentProgress = this.currentTime / video.duration;
           if (this.currentProgress >= 1) {
-            this.swiperRef?.nativeElement.swiper.slideNext();
+            if (this.currentIndex + 1 == this.stories?.length) {
+              this.modalCtrl.dismiss();
+            }
+            document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper.slideNext();
             clearInterval(intervalID);
           }
         }
       }, 200);
+      this.intervalIds.push(intervalID);
       video.play();
-      this.storiesService.findOne(story?.id || swiper.slides[this.currentIndex].id).subscribe(res => { });
-    } else if (story && this.isImage(story)) {
-      this.currentProgress = 0;
-      const intervalID = setInterval(() => {
-        this.currentProgress = this.currentProgress + 200 / 15000;
+      return;
+    }
+
+    const intervalID = setInterval(() => {
+      if (this.currentTime > 0) {
+        this.currentProgress = this.currentTime / 15000;
         if (this.currentProgress >= 1) {
-          this.swiperRef?.nativeElement.swiper.slideNext();
+          if (this.currentIndex + 1 == this.stories?.length) {
+            this.modalCtrl.dismiss();
+          }
+          document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper.slideNext();
           clearInterval(intervalID);
         }
-      }, 200);
-      this.storiesService.findOne(story.id || swiper.slides[this.currentIndex].id).subscribe(res => { });
-    }
+      }
+      this.intervalIds.push(intervalID);
+      if (!this.isCurrentStoryPaused) this.currentTime += 200;
+    }, 200);
+
   }
 
   getClubName(story: GetStoryResponseDto) {
@@ -122,11 +180,19 @@ export class StoriesPage implements OnInit {
 
   deleteStory(id: number) {
     this.storiesService._delete(id).subscribe(() => {
-      this.findStories({});
+      this.findStories(this.filter);
     });
   }
 
   isImage(story: GetStoryResponseDto) {
     return story.attachment.mimeType.startsWith('image');
+  }
+
+  previousUser() {
+    this.modalCtrl.dismiss({}, 'PREVIOUS_USER');
+  }
+
+  nextUser() {
+    this.modalCtrl.dismiss({}, 'NEXT_USER');
   }
 }

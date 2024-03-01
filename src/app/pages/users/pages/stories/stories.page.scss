@@ -52,7 +52,7 @@ ion-slide {
 
 .footer {
   position: absolute;
-  bottom: calc(var(--ion-safe-area-bottom));
+  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 1003;
@@ -107,6 +107,7 @@ ion-modal#full-immersion-modal::part(content) {
 ion-modal#full-immersion-modal {
   --width: fit-content;
   --min-width: 250px;
+  --max-width: 90%;
   --height: fit-content;
   --border-radius: 6px;
   --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
