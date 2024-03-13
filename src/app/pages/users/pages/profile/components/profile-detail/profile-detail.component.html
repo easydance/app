@@ -9,8 +9,7 @@
 			<ion-icon name="people"
 				slot="end"></ion-icon>
 		</ion-button>
-		<ion-button
-			(click)="openUsersList('followed', followedModal)"
+		<ion-button (click)="openUsersList('followed', followedModal)"
 			color="dark"
 			class="w-full">
 			{{user.following ?? '-'}}
@@ -101,21 +100,25 @@
 			<div *ngIf="user"
 				class="w-full">
 				<div *ngIf="user.email"
+					(click)="openOnBrowser('mailto:'+user?.email)"
 					class="mt-1 text-none">
 					<ion-icon name="mail"></ion-icon>
 					{{user.email}}
 				</div>
 				<div *ngIf="user.socials?.['instagram']"
+					(click)="openOnBrowser(user?.socials?.['instagram']?.['link'] + '')"
 					class="mt-1 text-none">
 					<ion-icon name="logo-instagram"></ion-icon>
 					{{user.socials?.['instagram']?.username}}
 				</div>
 				<div *ngIf="user?.socials?.['facebook']"
+					(click)="openOnBrowser(user?.socials?.['facebook']?.['link'] + '')"
 					class="mt-1 text-none">
 					<ion-icon name="logo-facebook"></ion-icon>
 					{{user.socials?.['facebook']?.username}}
 				</div>
 				<div *ngIf="user?.socials?.['twitter']"
+					(click)="openOnBrowser(user?.socials?.['twitter']?.['link'] + '')"
 					class="mt-1 text-none">
 					<ion-icon name="logo-twitter"></ion-icon>
 					{{user.socials?.['twitter']?.username}}

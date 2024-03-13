@@ -54,12 +54,16 @@
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 			</ion-button>
-			<ion-button class="flex-1" *ngIf="!isFollowing"
-				color="primary" (click)="followClub()">
+			<ion-button *ngIf="!isFollowing"
+				(click)="followClub()"
+				class="flex-1"
+				color="primary">
 				Segui
 			</ion-button>
-			<ion-button class="flex-1" *ngIf="isFollowing"
-				color="dark" (click)="unfollowClub()">
+			<ion-button *ngIf="isFollowing"
+				(click)="unfollowClub()"
+				class="flex-1"
+				color="dark">
 				Seguito
 			</ion-button>
 		</div>
@@ -78,26 +82,31 @@
 			<div class="description flex w-full mt-1">
 				<div class="flex-1">
 					<div *ngIf="club?.email"
+						(click)="openOnBrowser('mailto:'+club?.email)"
 						class="mt-1">
 						<ion-icon name="mail"></ion-icon>
 						{{club?.email}}
 					</div>
 					<div *ngIf="club?.phone"
+						(click)="openOnBrowser('tel:'+club?.phone)"
 						class="mt-1">
 						<ion-icon name="phone-portrait"></ion-icon>
 						{{club?.phone}}
 					</div>
 					<div *ngIf="club?.socials?.['instagram']"
+						(click)="openOnBrowser(club?.socials?.['instagram']?.['link'] + '')"
 						class="mt-1">
 						<ion-icon name="logo-instagram"></ion-icon>
 						{{club?.socials?.['instagram']?.['username']}}
 					</div>
 					<div *ngIf="club?.socials?.['facebook']"
+						(click)="openOnBrowser(club?.socials?.['facebook']?.['link'] + '')"
 						class="mt-1">
 						<ion-icon name="logo-facebook"></ion-icon>
 						{{club?.socials?.['facebook']?.['username']}}
 					</div>
 					<div *ngIf="club?.socials?.['twitter']"
+						(click)="openOnBrowser(club?.socials?.['twitter']?.['link'] + '')"
 						class="mt-1">
 						<ion-icon name="logo-twitter"></ion-icon>
 						{{club?.socials?.['twitter']?.['username']}}
@@ -109,7 +118,8 @@
 		<!-- TAGS -->
 		<div class="mt-12">
 			<easy-card-slider [parties]="parties || []"
-				[title]="'PROSSIMI EVENTI'" (partyClick)="goto($event)"></easy-card-slider>
+				[title]="'PROSSIMI EVENTI'"
+				(partyClick)="goto($event)"></easy-card-slider>
 		</div>
 	</div>
 </ion-content>

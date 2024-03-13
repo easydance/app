@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonModal, IonicModule } from '@ionic/angular';
+import { IonModal, IonicModule, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { ClubBaseDto, ClubService, GetUserResponseDto, GetUserToUserFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService, UserToUserFollowerService } from 'src/app/apis';
 import { UiModule } from 'src/app/components/ui.module';
@@ -34,6 +34,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
     private authManager: AuthManagerService,
     private readonly clubFollowerService: UserToClubFollowerService,
     private readonly clubsService: ClubService,
+    private readonly toastCtrl: ToastController
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -109,9 +110,18 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
   }
 
   openUsersList(type: 'follower' | 'followed', modal: IonModal) {
-    if ((type == 'follower' && this.followers.length) || (type == 'followed' && this.followed.length) ) {
-      modal.present()
+    if ((type == 'follower' && this.followers.length) || (type == 'followed' && this.followed.length)) {
+      modal.present();
     }
+  }
+
+  async openOnBrowser(url: string) {
+    if (!url.startsWith('http') && !url.startsWith('tel:') && !url.startsWith('mailto:')) {
+      const toast = await this.toastCtrl.create({ message: 'Link non valido!', duration: 3000 });
+      toast.present();
+      return;
+    }
+    window.open(url, '_blank');
   }
 
 }
