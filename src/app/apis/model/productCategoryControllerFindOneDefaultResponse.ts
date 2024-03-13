@@ -9,13 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { GetProductCategoryResponseDto } from './getProductCategoryResponseDto';
 
 
-export interface CreateProductRequestDto { 
-    name: string;
-    description?: string;
-    price: number;
-    qty: number;
-    category: object;
+export interface ProductCategoryControllerFindOneDefaultResponse { 
+    data: GetProductCategoryResponseDto;
 }
 

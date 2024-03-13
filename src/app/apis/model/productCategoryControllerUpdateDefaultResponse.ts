@@ -9,13 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { PatchProductCategoryResponseDto } from './patchProductCategoryResponseDto';
 
 
-export interface CreateProductRequestDto { 
-    name: string;
-    description?: string;
-    price: number;
-    qty: number;
-    category: object;
+export interface ProductCategoryControllerUpdateDefaultResponse { 
+    data: PatchProductCategoryResponseDto;
 }
 

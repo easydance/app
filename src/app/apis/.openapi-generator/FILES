@@ -6,6 +6,8 @@ api/address.serviceInterface.ts
 api/api.ts
 api/attachment.service.ts
 api/attachment.serviceInterface.ts
+api/attributes.service.ts
+api/attributes.serviceInterface.ts
 api/auth.service.ts
 api/auth.serviceInterface.ts
 api/club.service.ts
@@ -26,6 +28,8 @@ api/priceListItem.service.ts
 api/priceListItem.serviceInterface.ts
 api/product.service.ts
 api/product.serviceInterface.ts
+api/productCategory.service.ts
+api/productCategory.serviceInterface.ts
 api/role.service.ts
 api/role.serviceInterface.ts
 api/savedParty.service.ts
@@ -80,6 +84,12 @@ model/attachmentControllerFindOneDefaultResponse.ts
 model/attachmentControllerReplaceDefaultResponse.ts
 model/attachmentControllerUpdateDefaultResponse.ts
 model/attachmentControllerUploadFileDefaultResponse.ts
+model/attributesControllerCreateDefaultResponse.ts
+model/attributesControllerFindAllDefaultResponse.ts
+model/attributesControllerFindOneDefaultResponse.ts
+model/attributesControllerGetVersionDefaultResponse.ts
+model/attributesControllerReplaceDefaultResponse.ts
+model/attributesControllerUpdateDefaultResponse.ts
 model/bounds.ts
 model/clubBaseDto.ts
 model/clubBaseDtoSocialsValueValue.ts
@@ -92,6 +102,8 @@ model/createAddressRequestDtoClub.ts
 model/createAddressResponseDto.ts
 model/createAttachmentRequestDto.ts
 model/createAttachmentResponseDto.ts
+model/createAttributesRequestDto.ts
+model/createAttributesResponseDto.ts
 model/createClubRequestDto.ts
 model/createClubResponseDto.ts
 model/createFacebookClubLinksRequestDto.ts
@@ -107,6 +119,8 @@ model/createPartyRequestDto.ts
 model/createPartyResponseDto.ts
 model/createPriceListItemRequestDto.ts
 model/createPriceListItemResponseDto.ts
+model/createProductCategoryRequestDto.ts
+model/createProductCategoryResponseDto.ts
 model/createProductRequestDto.ts
 model/createProductResponseDto.ts
 model/createRoleRequestDto.ts
@@ -166,6 +180,7 @@ model/geometry.ts
 model/getAddressResponseDto.ts
 model/getAddressResponseDtoExt.ts
 model/getAttachmentResponseDto.ts
+model/getAttributesResponseDto.ts
 model/getClubResponseDto.ts
 model/getFacebookClubLinksResponseDto.ts
 model/getFacebookEventsResponseDto.ts
@@ -174,6 +189,7 @@ model/getPartyParticipationResponseDto.ts
 model/getPartyParticipationResponseDtoParty.ts
 model/getPartyResponseDto.ts
 model/getPriceListItemResponseDto.ts
+model/getProductCategoryResponseDto.ts
 model/getProductResponseDto.ts
 model/getRoleResponseDto.ts
 model/getSavedPartyResponseDto.ts
@@ -209,6 +225,8 @@ model/loginResponseDto.ts
 model/loginUserDataDto.ts
 model/meResponseDto.ts
 model/models.ts
+model/mostSoldDto.ts
+model/mostSoldItemDto.ts
 model/partyBaseDto.ts
 model/partyControllerCreateDefaultResponse.ts
 model/partyControllerFindAllDefaultResponse.ts
@@ -226,6 +244,8 @@ model/patchAddressRequestDtoClub.ts
 model/patchAddressResponseDto.ts
 model/patchAttachmentRequestDto.ts
 model/patchAttachmentResponseDto.ts
+model/patchAttributesRequestDto.ts
+model/patchAttributesResponseDto.ts
 model/patchClubRequestDto.ts
 model/patchClubResponseDto.ts
 model/patchFacebookClubLinksRequestDto.ts
@@ -241,6 +261,8 @@ model/patchPartyRequestDto.ts
 model/patchPartyResponseDto.ts
 model/patchPriceListItemRequestDto.ts
 model/patchPriceListItemResponseDto.ts
+model/patchProductCategoryRequestDto.ts
+model/patchProductCategoryResponseDto.ts
 model/patchProductRequestDto.ts
 model/patchProductResponseDto.ts
 model/patchRoleRequestDto.ts
@@ -288,6 +310,12 @@ model/priceListItemControllerFindOneDefaultResponse.ts
 model/priceListItemControllerReplaceDefaultResponse.ts
 model/priceListItemControllerUpdateDefaultResponse.ts
 model/productBaseDto.ts
+model/productCategoryBaseDto.ts
+model/productCategoryControllerCreateDefaultResponse.ts
+model/productCategoryControllerFindAllDefaultResponse.ts
+model/productCategoryControllerFindOneDefaultResponse.ts
+model/productCategoryControllerReplaceDefaultResponse.ts
+model/productCategoryControllerUpdateDefaultResponse.ts
 model/productControllerCreateDefaultResponse.ts
 model/productControllerFindAllDefaultResponse.ts
 model/productControllerFindOneDefaultResponse.ts
@@ -377,6 +405,8 @@ model/updateAddressRequestDto.ts
 model/updateAddressResponseDto.ts
 model/updateAttachmentRequestDto.ts
 model/updateAttachmentResponseDto.ts
+model/updateAttributesRequestDto.ts
+model/updateAttributesResponseDto.ts
 model/updateClubRequestDto.ts
 model/updateClubResponseDto.ts
 model/updateFacebookClubLinksRequestDto.ts
@@ -392,6 +422,8 @@ model/updatePartyRequestDto.ts
 model/updatePartyResponseDto.ts
 model/updatePriceListItemRequestDto.ts
 model/updatePriceListItemResponseDto.ts
+model/updateProductCategoryRequestDto.ts
+model/updateProductCategoryResponseDto.ts
 model/updateProductRequestDto.ts
 model/updateProductResponseDto.ts
 model/updateRoleRequestDto.ts

@@ -21,37 +21,37 @@ import { Observable }                                        from 'rxjs';
 // @ts-ignore
 import { AddressControllerCountDefaultResponse } from '../model/addressControllerCountDefaultResponse';
 // @ts-ignore
-import { CreateProductRequestDto } from '../model/createProductRequestDto';
+import { CreateProductCategoryRequestDto } from '../model/createProductCategoryRequestDto';
 // @ts-ignore
 import { MostSoldDto } from '../model/mostSoldDto';
 // @ts-ignore
-import { PatchProductRequestDto } from '../model/patchProductRequestDto';
+import { PatchProductCategoryRequestDto } from '../model/patchProductCategoryRequestDto';
 // @ts-ignore
-import { ProductControllerCreateDefaultResponse } from '../model/productControllerCreateDefaultResponse';
+import { ProductCategoryControllerCreateDefaultResponse } from '../model/productCategoryControllerCreateDefaultResponse';
 // @ts-ignore
-import { ProductControllerFindAllDefaultResponse } from '../model/productControllerFindAllDefaultResponse';
+import { ProductCategoryControllerFindAllDefaultResponse } from '../model/productCategoryControllerFindAllDefaultResponse';
 // @ts-ignore
-import { ProductControllerFindOneDefaultResponse } from '../model/productControllerFindOneDefaultResponse';
+import { ProductCategoryControllerFindOneDefaultResponse } from '../model/productCategoryControllerFindOneDefaultResponse';
 // @ts-ignore
-import { ProductControllerReplaceDefaultResponse } from '../model/productControllerReplaceDefaultResponse';
+import { ProductCategoryControllerReplaceDefaultResponse } from '../model/productCategoryControllerReplaceDefaultResponse';
 // @ts-ignore
-import { ProductControllerUpdateDefaultResponse } from '../model/productControllerUpdateDefaultResponse';
+import { ProductCategoryControllerUpdateDefaultResponse } from '../model/productCategoryControllerUpdateDefaultResponse';
 // @ts-ignore
-import { UpdateProductRequestDto } from '../model/updateProductRequestDto';
+import { UpdateProductCategoryRequestDto } from '../model/updateProductCategoryRequestDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import {
-    ProductServiceInterface
-} from './product.serviceInterface';
+    ProductCategoryServiceInterface
+} from './productCategory.serviceInterface';
 
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService implements ProductServiceInterface {
+export class ProductCategoryService implements ProductCategoryServiceInterface {
 
     protected basePath = 'http://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -162,7 +162,7 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        let localVarPath = `/product-categories/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
         return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -259,7 +259,7 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products/count`;
+        let localVarPath = `/product-categories/count`;
         return this.httpClient.request<AddressControllerCountDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -274,19 +274,19 @@ export class ProductService implements ProductServiceInterface {
     }
 
     /**
-     * @param createProductRequestDto 
+     * @param createProductCategoryRequestDto 
      * @param fields 
      * @param includes 
      * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public create(createProductRequestDto: CreateProductRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductControllerCreateDefaultResponse>;
-    public create(createProductRequestDto: CreateProductRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductControllerCreateDefaultResponse>>;
-    public create(createProductRequestDto: CreateProductRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductControllerCreateDefaultResponse>>;
-    public create(createProductRequestDto: CreateProductRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (createProductRequestDto === null || createProductRequestDto === undefined) {
-            throw new Error('Required parameter createProductRequestDto was null or undefined when calling create.');
+    public create(createProductCategoryRequestDto: CreateProductCategoryRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductCategoryControllerCreateDefaultResponse>;
+    public create(createProductCategoryRequestDto: CreateProductCategoryRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductCategoryControllerCreateDefaultResponse>>;
+    public create(createProductCategoryRequestDto: CreateProductCategoryRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductCategoryControllerCreateDefaultResponse>>;
+    public create(createProductCategoryRequestDto: CreateProductCategoryRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (createProductCategoryRequestDto === null || createProductCategoryRequestDto === undefined) {
+            throw new Error('Required parameter createProductCategoryRequestDto was null or undefined when calling create.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -350,11 +350,11 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products`;
-        return this.httpClient.request<ProductControllerCreateDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/product-categories`;
+        return this.httpClient.request<ProductCategoryControllerCreateDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: createProductRequestDto,
+                body: createProductCategoryRequestDto,
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -376,9 +376,9 @@ export class ProductService implements ProductServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductControllerFindAllDefaultResponse>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductControllerFindAllDefaultResponse>>;
-    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductCategoryControllerFindAllDefaultResponse>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductCategoryControllerFindAllDefaultResponse>>;
+    public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductCategoryControllerFindAllDefaultResponse>>;
     public findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -449,8 +449,8 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products`;
-        return this.httpClient.request<ProductControllerFindAllDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/product-categories`;
+        return this.httpClient.request<ProductCategoryControllerFindAllDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -471,9 +471,9 @@ export class ProductService implements ProductServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductControllerFindOneDefaultResponse>;
-    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductControllerFindOneDefaultResponse>>;
-    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductCategoryControllerFindOneDefaultResponse>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductCategoryControllerFindOneDefaultResponse>>;
+    public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductCategoryControllerFindOneDefaultResponse>>;
     public findOne(id: any, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findOne.');
@@ -531,8 +531,8 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "any", dataFormat: undefined})}`;
-        return this.httpClient.request<ProductControllerFindOneDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/product-categories/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "any", dataFormat: undefined})}`;
+        return this.httpClient.request<ProductCategoryControllerFindOneDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
@@ -647,7 +647,7 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products/most-sold`;
+        let localVarPath = `/product-categories/most-sold`;
         return this.httpClient.request<MostSoldDto>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -663,19 +663,19 @@ export class ProductService implements ProductServiceInterface {
 
     /**
      * @param id 
-     * @param updateProductRequestDto 
+     * @param updateProductCategoryRequestDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public replace(id: number, updateProductRequestDto: UpdateProductRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductControllerReplaceDefaultResponse>;
-    public replace(id: number, updateProductRequestDto: UpdateProductRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductControllerReplaceDefaultResponse>>;
-    public replace(id: number, updateProductRequestDto: UpdateProductRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductControllerReplaceDefaultResponse>>;
-    public replace(id: number, updateProductRequestDto: UpdateProductRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public replace(id: number, updateProductCategoryRequestDto: UpdateProductCategoryRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductCategoryControllerReplaceDefaultResponse>;
+    public replace(id: number, updateProductCategoryRequestDto: UpdateProductCategoryRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductCategoryControllerReplaceDefaultResponse>>;
+    public replace(id: number, updateProductCategoryRequestDto: UpdateProductCategoryRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductCategoryControllerReplaceDefaultResponse>>;
+    public replace(id: number, updateProductCategoryRequestDto: UpdateProductCategoryRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling replace.');
         }
-        if (updateProductRequestDto === null || updateProductRequestDto === undefined) {
-            throw new Error('Required parameter updateProductRequestDto was null or undefined when calling replace.');
+        if (updateProductCategoryRequestDto === null || updateProductCategoryRequestDto === undefined) {
+            throw new Error('Required parameter updateProductCategoryRequestDto was null or undefined when calling replace.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -725,11 +725,11 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<ProductControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/product-categories/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        return this.httpClient.request<ProductCategoryControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateProductRequestDto,
+                body: updateProductCategoryRequestDto,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -789,7 +789,7 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products/restore/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        let localVarPath = `/product-categories/restore/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -804,19 +804,19 @@ export class ProductService implements ProductServiceInterface {
 
     /**
      * @param id 
-     * @param patchProductRequestDto 
+     * @param patchProductCategoryRequestDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public update(id: number, patchProductRequestDto: PatchProductRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductControllerUpdateDefaultResponse>;
-    public update(id: number, patchProductRequestDto: PatchProductRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductControllerUpdateDefaultResponse>>;
-    public update(id: number, patchProductRequestDto: PatchProductRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductControllerUpdateDefaultResponse>>;
-    public update(id: number, patchProductRequestDto: PatchProductRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public update(id: number, patchProductCategoryRequestDto: PatchProductCategoryRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ProductCategoryControllerUpdateDefaultResponse>;
+    public update(id: number, patchProductCategoryRequestDto: PatchProductCategoryRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ProductCategoryControllerUpdateDefaultResponse>>;
+    public update(id: number, patchProductCategoryRequestDto: PatchProductCategoryRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ProductCategoryControllerUpdateDefaultResponse>>;
+    public update(id: number, patchProductCategoryRequestDto: PatchProductCategoryRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling update.');
         }
-        if (patchProductRequestDto === null || patchProductRequestDto === undefined) {
-            throw new Error('Required parameter patchProductRequestDto was null or undefined when calling update.');
+        if (patchProductCategoryRequestDto === null || patchProductCategoryRequestDto === undefined) {
+            throw new Error('Required parameter patchProductCategoryRequestDto was null or undefined when calling update.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -866,11 +866,11 @@ export class ProductService implements ProductServiceInterface {
             }
         }
 
-        let localVarPath = `/products/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<ProductControllerUpdateDefaultResponse>('patch', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/product-categories/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        return this.httpClient.request<ProductCategoryControllerUpdateDefaultResponse>('patch', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: patchProductRequestDto,
+                body: patchProductCategoryRequestDto,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

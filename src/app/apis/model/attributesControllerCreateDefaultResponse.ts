@@ -9,13 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CreateAttributesResponseDto } from './createAttributesResponseDto';
 
 
-export interface CreateProductRequestDto { 
-    name: string;
-    description?: string;
-    price: number;
-    qty: number;
-    category: object;
+export interface AttributesControllerCreateDefaultResponse { 
+    data: CreateAttributesResponseDto;
 }
 

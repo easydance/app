@@ -11,11 +11,11 @@
  */
 
 
-export interface CreateProductRequestDto { 
-    name: string;
-    description?: string;
-    price: number;
-    qty: number;
-    category: object;
+export interface UpdateAttributesRequestDto { 
+    createdBy?: string | null;
+    updatedBy?: string | null;
+    deletedBy?: string | null;
+    key: string;
+    value: object;
 }
 

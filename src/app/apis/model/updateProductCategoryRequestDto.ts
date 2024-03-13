@@ -11,11 +11,12 @@
  */
 
 
-export interface CreateProductRequestDto { 
+export interface UpdateProductCategoryRequestDto { 
+    createdBy?: string | null;
+    updatedBy?: string | null;
+    deletedBy?: string | null;
     name: string;
-    description?: string;
-    price: number;
-    qty: number;
-    category: object;
+    viewOrder: number;
+    products: Array<string>;
 }
 

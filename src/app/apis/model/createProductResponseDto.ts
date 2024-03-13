@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { WarehouseBaseDto } from './warehouseBaseDto';
+import { ProductCategoryBaseDto } from './productCategoryBaseDto';
 
 
 export interface CreateProductResponseDto { 
@@ -25,5 +26,6 @@ export interface CreateProductResponseDto {
     price: number;
     qty: number;
     warehouse: WarehouseBaseDto;
+    category: ProductCategoryBaseDto;
 }
 

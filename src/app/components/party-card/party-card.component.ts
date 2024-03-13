@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { catchError, tap, throwError } from 'rxjs';
 import { PartyBaseDto, SavedPartyService } from 'src/app/apis';
@@ -38,7 +38,12 @@ export class PartyCardComponent implements OnInit {
 
   @Output() bookmarkClick: EventEmitter<PartyBaseDto> = new EventEmitter();
 
-  constructor(private savedPartiesService: SavedPartyService, private toastCtrl: ToastController, public authManager: AuthManagerService) { }
+  constructor(
+    private savedPartiesService: SavedPartyService, 
+    private toastCtrl: ToastController, 
+    public authManager: AuthManagerService,
+    private changeDetector: ChangeDetectorRef
+    ) { }
 
   ngOnInit() { }
 
@@ -48,6 +53,9 @@ export class PartyCardComponent implements OnInit {
     this.bookmarkClick.emit(this.party);
     if (this.party?.id) {
       if (!this.party.saved) {
+        this.party.saved = -1;
+        this.changeDetector.detectChanges();
+
         this.savedPartiesService.create({ party: this.party.id })
           .pipe(
             tap(x => {
@@ -62,7 +70,10 @@ export class PartyCardComponent implements OnInit {
             })
           )
           .subscribe(res => {
-            if (this.party) this.party.saved = res.data.id || null;
+            if (this.party){ 
+              this.party.saved = res.data.id || null;
+              this.changeDetector.detectChanges();
+            }
           });
       } else {
         this.savedPartiesService._delete(this.party.saved)
@@ -77,8 +88,13 @@ export class PartyCardComponent implements OnInit {
             })
           )
           .subscribe(res => {
-            if (this.party) this.party.saved = null;
+            if (this.party) {
+              this.party.saved = null;
+              this.changeDetector.detectChanges();
+            }
           });
+        this.party.saved = null;
+        this.changeDetector.detectChanges();
       }
     }
 

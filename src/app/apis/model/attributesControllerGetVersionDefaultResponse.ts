@@ -11,11 +11,7 @@
  */
 
 
-export interface CreateProductRequestDto { 
-    name: string;
-    description?: string;
-    price: number;
-    qty: number;
-    category: object;
+export interface AttributesControllerGetVersionDefaultResponse { 
+    version?: string;
 }
 

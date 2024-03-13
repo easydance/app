@@ -47,6 +47,28 @@ export class OrdersPage implements OnInit {
         console.log(this.pendingOrders);
       }
     });
+   
+    if (this.authManager.isAuthenticated()) {
+      this.ordersService.findAll(0, 50, JSON.stringify({ user: { id: this.authManager.user?.id || 'NO-ID' } }),
+        '{ "createdAt": "desc" }', undefined, 'table.club,rows.priceListItem.product').subscribe(res => {
+          this.orders = res.data;
+          this.groupedOrders = this.orders.reduce((groups, item) => {
+            const date = item.createdAt ? DateTime.fromJSDate(new Date(item.createdAt)).toFormat('yyyy-LL-dd') : '-';
+            const key = `${date}:|:${item.table.club.name}`;
+            const group = (groups[key] || []);
+            group.push(item);
+            groups[key] = group;
+            return groups;
+          }, {} as { [key: string]: GetTableOrderResponseDto[]; });
+          this.pendingOrders = this.orders.filter(o => {
+            if (!o.createdAt) return false;
+            const isTodayOrTomorrow = DateTime.fromJSDate(new Date(o.createdAt)).toFormat('yyyy-LL-dd') == DateTime.now().toFormat('yyyy-LL-dd')
+              || DateTime.fromJSDate(new Date(o.createdAt)).toFormat('yyyy-LL-dd') == DateTime.now().plus({ days: 1 }).toFormat('yyyy-LL-dd');
+            return isTodayOrTomorrow && ['CREATED', 'IN_PROGRESS'].includes(o.status);
+          });
+        });
+      console.log(this.pendingOrders);
+    }
   }
 
 
