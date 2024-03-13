@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { IonModal, IonicModule } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
-import { ClubBaseDto, ClubService, GetUserToUserFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService, UserToUserFollowerService } from 'src/app/apis';
+import { ClubBaseDto, ClubService, GetUserResponseDto, GetUserToUserFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService, UserToUserFollowerService } from 'src/app/apis';
 import { UiModule } from 'src/app/components/ui.module';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
@@ -11,7 +12,7 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
   templateUrl: './profile-detail.component.html',
   styleUrls: ['./profile-detail.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, UiModule]
+  imports: [IonicModule, CommonModule, UiModule, RouterModule]
 })
 export class ProfileDetailComponent implements OnInit, OnChanges {
 
@@ -20,6 +21,9 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
   public clubs: ClubBaseDto[] = [];
 
   public isFollowing?: GetUserToUserFollowerResponseDto;
+
+  public followers: GetUserResponseDto[] = [];
+  public followed: GetUserResponseDto[] = [];
 
   @Output() edit: EventEmitter<void> = new EventEmitter();
 
@@ -49,6 +53,31 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
             this.clubs = clubsData.data;
           });
         });
+
+      this.userFollowerService.findAll(0, 1000, JSON.stringify({
+        follower: {
+          id: changes['user'].currentValue?.id || this.authManager.user!.id || 0
+        }
+      }), undefined, undefined, 'followed').subscribe(res => {
+
+        this.usersService.findAll(0, 1000, JSON.stringify({
+          id: { $in: res.data.map(d => d.followed.id) }
+        })).subscribe(res => {
+          this.followed = res.data;
+        });
+      });
+
+      this.userFollowerService.findAll(0, 1000, JSON.stringify({
+        followed: {
+          id: changes['user'].currentValue?.id || this.authManager.user!.id || 0
+        }
+      }), undefined, undefined, 'follower').subscribe(res => {
+        this.usersService.findAll(0, 1000, JSON.stringify({
+          id: { $in: res.data.map(d => d.follower.id) }
+        })).subscribe(res => {
+          this.followers = res.data;
+        });
+      });
     }
   }
 
@@ -78,4 +107,11 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
       this.isFollowing = res.data;
     });
   }
+
+  openUsersList(type: 'follower' | 'followed', modal: IonModal) {
+    if ((type == 'follower' && this.followers.length) || (type == 'followed' && this.followed.length) ) {
+      modal.present()
+    }
+  }
+
 }

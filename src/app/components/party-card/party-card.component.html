@@ -8,12 +8,16 @@
 				class="header">
 				<div>
 					<ion-chip class="blured">
-						<ion-icon color="light"
+						<ion-icon *ngIf="distance"
+							color="light"
 							name="location"></ion-icon>
-						<ion-label>2 km</ion-label>
+						<ion-label>
+							{{distance.toFixed(1)}} km
+						</ion-label>
 					</ion-chip>
 				</div>
-				<div class="ion-text-right">
+				<div *ngIf="authManager.isAuthenticated()"
+					class="ion-text-right">
 					<div (click)="onBookmarkClick($event)"
 						class="fab">
 						<ion-icon [name]="!!party?.saved ? 'bookmark' : 'bookmark-outline'"

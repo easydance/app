@@ -135,6 +135,20 @@ export class CommonPartiesUtils {
         }
       });
     },
-    ForYou: () => { }
+    ForYou: () => {
+      this.navCtrl.navigateForward('/events-list', {
+        queryParams: {
+          title: 'Eventi per te di oggi a ' + this.authManager.currentCity,
+          header: {
+            title: 'Oggi per te',
+            subtitle: 'Eventi'
+          },
+          filters: JSON.stringify({
+            ...this.Filters().Tonight,
+            ...this.Filters().InCurrentPosition()
+          })
+        }
+      });
+    }
   };
 }

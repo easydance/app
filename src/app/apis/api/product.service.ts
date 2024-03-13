@@ -23,6 +23,8 @@ import { AddressControllerCountDefaultResponse } from '../model/addressControlle
 // @ts-ignore
 import { CreateProductRequestDto } from '../model/createProductRequestDto';
 // @ts-ignore
+import { MostSoldDto } from '../model/mostSoldDto';
+// @ts-ignore
 import { PatchProductRequestDto } from '../model/patchProductRequestDto';
 // @ts-ignore
 import { ProductControllerCreateDefaultResponse } from '../model/productControllerCreateDefaultResponse';
@@ -531,6 +533,122 @@ export class ProductService implements ProductServiceInterface {
 
         let localVarPath = `/products/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "any", dataFormat: undefined})}`;
         return this.httpClient.request<ProductControllerFindOneDefaultResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param from 
+     * @param to 
+     * @param sortBy 
+     * @param sortType 
+     * @param skip 
+     * @param take 
+     * @param club 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public mostSold(from: string, to: string, sortBy: 'amount' | 'count', sortType: 'ASC' | 'DESC', skip: number, take: number, club?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<MostSoldDto>;
+    public mostSold(from: string, to: string, sortBy: 'amount' | 'count', sortType: 'ASC' | 'DESC', skip: number, take: number, club?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<MostSoldDto>>;
+    public mostSold(from: string, to: string, sortBy: 'amount' | 'count', sortType: 'ASC' | 'DESC', skip: number, take: number, club?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<MostSoldDto>>;
+    public mostSold(from: string, to: string, sortBy: 'amount' | 'count', sortType: 'ASC' | 'DESC', skip: number, take: number, club?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (from === null || from === undefined) {
+            throw new Error('Required parameter from was null or undefined when calling mostSold.');
+        }
+        if (to === null || to === undefined) {
+            throw new Error('Required parameter to was null or undefined when calling mostSold.');
+        }
+        if (sortBy === null || sortBy === undefined) {
+            throw new Error('Required parameter sortBy was null or undefined when calling mostSold.');
+        }
+        if (sortType === null || sortType === undefined) {
+            throw new Error('Required parameter sortType was null or undefined when calling mostSold.');
+        }
+        if (skip === null || skip === undefined) {
+            throw new Error('Required parameter skip was null or undefined when calling mostSold.');
+        }
+        if (take === null || take === undefined) {
+            throw new Error('Required parameter take was null or undefined when calling mostSold.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (club !== undefined && club !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>club, 'club');
+        }
+        if (from !== undefined && from !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>from, 'from');
+        }
+        if (to !== undefined && to !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>to, 'to');
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>sortBy, 'sortBy');
+        }
+        if (sortType !== undefined && sortType !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>sortType, 'sortType');
+        }
+        if (skip !== undefined && skip !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>skip, 'skip');
+        }
+        if (take !== undefined && take !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>take, 'take');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (access-token) required
+        localVarCredential = this.configuration.lookupCredential('access-token');
+        if (localVarCredential) {
+            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/products/most-sold`;
+        return this.httpClient.request<MostSoldDto>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,

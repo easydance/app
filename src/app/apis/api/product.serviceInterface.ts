@@ -15,6 +15,7 @@ import { Observable }                                        from 'rxjs';
 
 import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreateProductRequestDto } from '../model/models';
+import { MostSoldDto } from '../model/models';
 import { PatchProductRequestDto } from '../model/models';
 import { ProductControllerCreateDefaultResponse } from '../model/models';
 import { ProductControllerFindAllDefaultResponse } from '../model/models';
@@ -84,6 +85,19 @@ export interface ProductServiceInterface {
      * @param deleted 
      */
     findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ProductControllerFindOneDefaultResponse>;
+
+    /**
+     * 
+     * 
+     * @param from 
+     * @param to 
+     * @param sortBy 
+     * @param sortType 
+     * @param skip 
+     * @param take 
+     * @param club 
+     */
+    mostSold(from: string, to: string, sortBy: 'amount' | 'count', sortType: 'ASC' | 'DESC', skip: number, take: number, club?: number, extraHttpRequestParams?: any): Observable<MostSoldDto>;
 
     /**
      * 

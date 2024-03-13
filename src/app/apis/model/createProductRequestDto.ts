@@ -16,5 +16,6 @@ export interface CreateProductRequestDto {
     description?: string;
     price: number;
     qty: number;
+    category: object;
 }
 

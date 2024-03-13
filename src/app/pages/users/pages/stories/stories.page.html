@@ -38,10 +38,13 @@
 				id="img-story"></div>
 			<video #video
 				*ngIf="!isImage(story)"
+				[attr.webkit-playsinline]="'webkit-playsinline'"
+				[controls]="false"
 				(click)="video.paused? video.play() : video.pause()"
+				autoplay
 				class="z-500"
 				poster="assets/icons/loading.svg"
-				autoplay>
+				playsinline>
 				<source [src]="story.attachment.url"
 					[type]="story.attachment.mimeType">
 				Your browser does not support the video tag.

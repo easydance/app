@@ -2,13 +2,16 @@
 	class="px-4">
 
 	<div class="flex gap-2 ">
-		<ion-button color="dark"
+		<ion-button (click)="openUsersList('follower', followersModal)"
+			color="dark"
 			class="w-full">
 			{{user.followers ?? '-'}}
 			<ion-icon name="people"
 				slot="end"></ion-icon>
 		</ion-button>
-		<ion-button color="dark"
+		<ion-button
+			(click)="openUsersList('followed', followedModal)"
+			color="dark"
 			class="w-full">
 			{{user.following ?? '-'}}
 			<ion-icon name="people"
@@ -126,3 +129,49 @@
 	</div>
 
 </div>
+
+<ion-modal #followersModal
+	class="auto-height bottom blur">
+	<ng-template>
+		<div id="users-grid">
+			<div *ngFor="let user of followers"
+				[routerLink]="'/profile/'+user.id"
+				(click)="followersModal.dismiss()"
+				class="user-item">
+				<ion-avatar style="margin: 0 auto;">
+					<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
+						style="object-fit: cover;">
+				</ion-avatar>
+				<div class="mt-1"
+					style="text-align: center;">
+					<small>
+						{{user.firstName}} {{user.lastName}}
+					</small>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>
+
+<ion-modal #followedModal
+	class="auto-height bottom blur">
+	<ng-template>
+		<div id="users-grid">
+			<div *ngFor="let user of followed"
+				[routerLink]="'/profile/'+user.id"
+				(click)="followedModal.dismiss()"
+				class="user-item">
+				<ion-avatar style="margin: 0 auto;">
+					<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
+						style="object-fit: cover;">
+				</ion-avatar>
+				<div class="mt-1"
+					style="text-align: center;">
+					<small>
+						{{user.firstName}} {{user.lastName}}
+					</small>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

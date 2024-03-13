@@ -59,7 +59,8 @@
 		[user]="user"
 		(saved)="isEditingMode = false"></profile-edit>
 
-	<div class="mt-12 px-4">
+	<div
+		class="mt-12 px-4" *ngIf="isMe">
 		<ion-button (click)="logout()"
 			color="dark"
 			shape="round"

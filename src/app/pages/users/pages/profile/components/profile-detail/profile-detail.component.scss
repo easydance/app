@@ -1,0 +1,37 @@
+ion-modal.blur {
+  --background: rgba(18, 18, 18, 0.6);
+  --border-radius: 20px 20px 0 0;
+  --background: transparent;
+
+  ion-list,
+  ion-item {
+    --background: transparent;
+    background: transparent;
+  }
+
+  ion-item {
+    margin-right: 1rem;
+  }
+
+  ion-list {
+    margin-bottom: 2rem;
+  }
+}
+
+ion-modal::part(content) {
+  background: var(--neutral-20016, rgba(190, 190, 190, 0.16));
+  backdrop-filter: blur(50px);
+}
+
+#users-grid {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 75vh;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+
+  .user-item {
+    flex: 1 0 calc(25% - 0.25rem);
+    margin: 0.25rem;
+  }
+}
