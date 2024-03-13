@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
 import { AttachmentBaseDto, ClubBaseDto, ClubService, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
@@ -25,7 +25,8 @@ export class ClubDetailPage implements OnInit {
     private readonly navCtrl: NavController,
     private readonly partiesService: PartyService,
     private readonly clubsService: ClubService,
-    private readonly clubFollowerService: UserToClubFollowerService
+    private readonly clubFollowerService: UserToClubFollowerService,
+    private readonly toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -84,4 +85,14 @@ export class ClubDetailPage implements OnInit {
       this.isFollowing = res.data;
     });
   }
+
+  async openOnBrowser(url: string) {
+    if (!url.startsWith('http') && !url.startsWith('tel:') && !url.startsWith('mailto:')) {
+      const toast = await this.toastCtrl.create({ message: 'Link non valido!', duration: 3000 });
+      toast.present();
+      return;
+    }
+    window.open(url, '_blank');
+  }
+
 }
