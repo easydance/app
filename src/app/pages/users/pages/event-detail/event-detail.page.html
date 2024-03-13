@@ -14,15 +14,32 @@
 				<ion-icon name="arrow-back-sharp"></ion-icon>
 			</ion-button> -->
 		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-fab-button *ngIf="authManager.isAuthenticated()"
+				(click)="onBookmarkClick($event)"
+				class="button m-3 ml-0-i w-9 h-9"
+				routerDirection="back">
+				<ion-icon [name]="!!party?.saved ? 'bookmark' : 'bookmark-outline'"
+					color="light"
+					style="font-size: 1rem;"></ion-icon>
+			</ion-fab-button>
+			<!-- <ion-button (click)="goBack()"
+				color="light"
+				size="icon-only"
+				fill="clear">
+				<ion-icon name="arrow-back-sharp"></ion-icon>
+			</ion-button> -->
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 	<div>
-		<event-detail [party]="party" [hi]
+		<event-detail [party]="party"
+			[hi]
 			[cardOptions]="config"></event-detail>
 	</div>
-	<div *ngIf="party?.isWaitingList"
+	<div *ngIf="party?.isWaitingList && authManager.isAuthenticated()"
 		id="list-button-wrapper">
 		<ion-button (click)="listModal.present()"
 			color="primary"

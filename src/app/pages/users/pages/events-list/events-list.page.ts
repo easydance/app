@@ -36,7 +36,7 @@ export class EventsListPage implements OnInit {
         subtitle: res['header'].subtitle 
       };
       this.filters = res['filters'] || undefined;
-      this.partiesService.findAll(0, 20, this.filters, undefined, undefined, 'club')
+      this.partiesService.findAll(0, 20, this.filters, undefined, undefined, 'club,address')
         .subscribe(res => {
           this.parties = res.data;
         });

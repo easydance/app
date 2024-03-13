@@ -28,12 +28,14 @@ export class SearchHeaderComponent implements OnInit {
     private readonly partiesService: PartyService,
     private readonly usersService: UserService,
     public readonly authManager: AuthManagerService,
+    public readonly changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() { }
 
   filter(type: 'all' | 'clubs' | 'parties' | 'users') {
     this.filterType = type;
+    this.changeDetector.detectChanges();
     this.search();
   }
 
@@ -62,12 +64,14 @@ export class SearchHeaderComponent implements OnInit {
       this.clubsService.findAll(0, 10, JSON.stringify({ name: { $containsIgnore: this.searchTerm } }), undefined, undefined, 'address')
         .subscribe(clubs => {
           this.clubs = clubs.data;
+          this.changeDetector.detectChanges();
         });
     }
     if (['all', 'parties'].includes(this.filterType)) {
       this.partiesService.findAll(0, 10, JSON.stringify({ title: { $containsIgnore: this.searchTerm }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
         .subscribe(parties => {
           this.parties = parties.data;
+          this.changeDetector.detectChanges();
         });
     }
     if (['all', 'users'].includes(this.filterType) && this.authManager.isAuthenticated()) {
@@ -79,6 +83,7 @@ export class SearchHeaderComponent implements OnInit {
       ]), undefined, undefined, 'club')
         .subscribe(users => {
           this.users = users.data;
+          this.changeDetector.detectChanges();
         });
     }
   }
@@ -86,9 +91,11 @@ export class SearchHeaderComponent implements OnInit {
   async clearSearch() {
     this.searchTerm = '';
     await Keyboard.hide();
+    this.changeDetector.detectChanges();
   }
 
   async onClear() {
     await Keyboard.hide();
+    this.changeDetector.detectChanges();
   }
 }

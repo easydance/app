@@ -11,7 +11,9 @@
 						<ion-icon *ngIf="distance"
 							color="light"
 							name="location"></ion-icon>
-						<ion-label>{{distance.toFixed(1)}} km</ion-label>
+						<ion-label>
+							{{distance.toFixed(1)}} km
+						</ion-label>
 					</ion-chip>
 				</div>
 				<div *ngIf="authManager.isAuthenticated()"

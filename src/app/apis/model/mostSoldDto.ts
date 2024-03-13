@@ -9,13 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { MostSoldItemDto } from './mostSoldItemDto';
 
 
-export interface CreateProductRequestDto { 
-    name: string;
-    description?: string;
-    price: number;
-    qty: number;
-    category: object;
+export interface MostSoldDto { 
+    data: Array<MostSoldItemDto>;
 }
 

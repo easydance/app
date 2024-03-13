@@ -43,7 +43,9 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter() {
-
+    if (!this.route.snapshot.params['id']) {
+      this.authManager.me().subscribe(res => { });
+    }
   }
 
   goBack() {

@@ -35,8 +35,8 @@ export class ClubDetailPage implements OnInit {
         this.club = res.data;
         // const [profile, ...covers] = this.club.covers;
         this.profile = this.club.profile;
-        this.covers = this.club.covers;
-        this.partiesService.findAll(0, 20, JSON.stringify({ club: { id }, to: {$gte: DateTime.now().toISO() } })).subscribe(res => {
+        this.covers = this.club.covers.sort((a, b) => a.id == this.club?.currentCover ? -1 : 1);
+        this.partiesService.findAll(0, 20, JSON.stringify({ club: { id }, to: { $gte: DateTime.now().toISO() } })).subscribe(res => {
           this.parties = res.data.map(d => ({
             ...d,
             club: this.club!
@@ -66,7 +66,7 @@ export class ClubDetailPage implements OnInit {
     if (this.isFollowing?.id) {
       this.clubFollowerService._delete(this.isFollowing.id).subscribe(res => {
         this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
-          if(this.club) this.club.followerCount = res.data.followerCount;
+          if (this.club) this.club.followerCount = res.data.followerCount;
         });
         this.isFollowing = undefined;
       });
@@ -79,7 +79,7 @@ export class ClubDetailPage implements OnInit {
       user: { id: this.authManager.user?.id } as any,
     }).subscribe(res => {
       this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
-        if(this.club) this.club.followerCount = res.data.followerCount;
+        if (this.club) this.club.followerCount = res.data.followerCount;
       });
       this.isFollowing = res.data;
     });

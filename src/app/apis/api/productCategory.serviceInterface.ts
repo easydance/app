@@ -14,22 +14,22 @@ import { HttpHeaders }                                       from '@angular/comm
 import { Observable }                                        from 'rxjs';
 
 import { AddressControllerCountDefaultResponse } from '../model/models';
-import { CreateProductRequestDto } from '../model/models';
+import { CreateProductCategoryRequestDto } from '../model/models';
 import { MostSoldDto } from '../model/models';
-import { PatchProductRequestDto } from '../model/models';
-import { ProductControllerCreateDefaultResponse } from '../model/models';
-import { ProductControllerFindAllDefaultResponse } from '../model/models';
-import { ProductControllerFindOneDefaultResponse } from '../model/models';
-import { ProductControllerReplaceDefaultResponse } from '../model/models';
-import { ProductControllerUpdateDefaultResponse } from '../model/models';
-import { UpdateProductRequestDto } from '../model/models';
+import { PatchProductCategoryRequestDto } from '../model/models';
+import { ProductCategoryControllerCreateDefaultResponse } from '../model/models';
+import { ProductCategoryControllerFindAllDefaultResponse } from '../model/models';
+import { ProductCategoryControllerFindOneDefaultResponse } from '../model/models';
+import { ProductCategoryControllerReplaceDefaultResponse } from '../model/models';
+import { ProductCategoryControllerUpdateDefaultResponse } from '../model/models';
+import { UpdateProductCategoryRequestDto } from '../model/models';
 
 
 import { Configuration }                                     from '../configuration';
 
 
 
-export interface ProductServiceInterface {
+export interface ProductCategoryServiceInterface {
     defaultHeaders: HttpHeaders;
     configuration: Configuration;
 
@@ -56,12 +56,12 @@ export interface ProductServiceInterface {
     /**
      * 
      * 
-     * @param createProductRequestDto 
+     * @param createProductCategoryRequestDto 
      * @param fields 
      * @param includes 
      * @param deleted 
      */
-    create(createProductRequestDto: CreateProductRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ProductControllerCreateDefaultResponse>;
+    create(createProductCategoryRequestDto: CreateProductCategoryRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ProductCategoryControllerCreateDefaultResponse>;
 
     /**
      * 
@@ -74,7 +74,7 @@ export interface ProductServiceInterface {
      * @param includes 
      * @param deleted 
      */
-    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ProductControllerFindAllDefaultResponse>;
+    findAll(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ProductCategoryControllerFindAllDefaultResponse>;
 
     /**
      * 
@@ -84,7 +84,7 @@ export interface ProductServiceInterface {
      * @param includes 
      * @param deleted 
      */
-    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ProductControllerFindOneDefaultResponse>;
+    findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<ProductCategoryControllerFindOneDefaultResponse>;
 
     /**
      * 
@@ -103,9 +103,9 @@ export interface ProductServiceInterface {
      * 
      * 
      * @param id 
-     * @param updateProductRequestDto 
+     * @param updateProductCategoryRequestDto 
      */
-    replace(id: number, updateProductRequestDto: UpdateProductRequestDto, extraHttpRequestParams?: any): Observable<ProductControllerReplaceDefaultResponse>;
+    replace(id: number, updateProductCategoryRequestDto: UpdateProductCategoryRequestDto, extraHttpRequestParams?: any): Observable<ProductCategoryControllerReplaceDefaultResponse>;
 
     /**
      * 
@@ -118,8 +118,8 @@ export interface ProductServiceInterface {
      * 
      * 
      * @param id 
-     * @param patchProductRequestDto 
+     * @param patchProductCategoryRequestDto 
      */
-    update(id: number, patchProductRequestDto: PatchProductRequestDto, extraHttpRequestParams?: any): Observable<ProductControllerUpdateDefaultResponse>;
+    update(id: number, patchProductCategoryRequestDto: PatchProductCategoryRequestDto, extraHttpRequestParams?: any): Observable<ProductCategoryControllerUpdateDefaultResponse>;
 
 }

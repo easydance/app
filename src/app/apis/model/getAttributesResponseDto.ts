@@ -9,11 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { WarehouseBaseDto } from './warehouseBaseDto';
-import { ProductCategoryBaseDto } from './productCategoryBaseDto';
 
 
-export interface GetProductResponseDto { 
+export interface GetAttributesResponseDto { 
     id?: number;
     uuid?: string;
     createdAt?: string;
@@ -22,10 +20,7 @@ export interface GetProductResponseDto {
     createdBy?: string | null;
     updatedBy?: string | null;
     deletedBy?: string | null;
-    name: string;
-    price: number;
-    qty: number;
-    warehouse: WarehouseBaseDto;
-    category: ProductCategoryBaseDto;
+    key: string;
+    value: object;
 }
 
