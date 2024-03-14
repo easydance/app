@@ -70,7 +70,8 @@
 				<div>{{v.club}}</div>
 			</div>
 			<div *ngFor="let order of v.value"
-				class="item" [routerLink]="'/full-immersion/order-detail/' + order.id">
+				[routerLink]="'/full-immersion/order-detail/' + order.id"
+				class="item">
 				<div>
 					<div class="n-item ion-text-right"></div>
 					N° {{order.id}}
@@ -91,5 +92,6 @@
 			</div>
 		</div>
 	</div>
-	<easy-thats-all [message]="'Nessun ordine effettuato'"></easy-thats-all>
+	<easy-thats-all *ngIf="!getOrdersGrouped()?.length && !pendingOrders?.length"
+		[message]="'Nessun ordine effettuato'"></easy-thats-all>
 </ion-content>

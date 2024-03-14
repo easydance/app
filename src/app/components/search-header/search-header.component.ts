@@ -77,6 +77,8 @@ export class SearchHeaderComponent implements OnInit {
     if (['all', 'users'].includes(this.filterType) && this.authManager.isAuthenticated()) {
       this.usersService.findAll(0, 10, JSON.stringify([
         { email: { $containsIgnore: this.searchTerm } },
+        { firstName: { $containsIgnore: this.searchTerm } },
+        { lastName: { $containsIgnore: this.searchTerm } },
         { socials: { instagram: { username: { $containsIgnore: this.searchTerm } } } },
         { socials: { twitter: { username: { $containsIgnore: this.searchTerm } } } },
         { socials: { facebook: { username: { $containsIgnore: this.searchTerm } } } },

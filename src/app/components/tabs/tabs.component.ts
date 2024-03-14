@@ -23,6 +23,10 @@ export class TabsComponent implements OnInit {
 
   ngOnInit() { }
 
+  isInSection(section: string) {
+    return location.pathname == section;
+  }
+
   goInFullImmersion() {
     if (!this.authManager.isAuthenticated()) {
       this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })

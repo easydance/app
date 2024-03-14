@@ -8,7 +8,7 @@
 </div>
 <div class="clubs-grid">
 	<div *ngFor="let club of clubs"
-		[ngStyle]="{ backgroundImage: 'url('+ club.covers[0].url +')' }"
+		[ngStyle]="{ backgroundImage: 'url('+ club.profile.url +')' }"
 		[routerLink]="'/club-detail/' + club.id"
 		class="mt-1 square">
 		<div class="footer">

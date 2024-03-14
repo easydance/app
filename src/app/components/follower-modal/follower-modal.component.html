@@ -1,0 +1,25 @@
+
+<ion-modal #modal
+	class="auto-height bottom blur">
+	<ng-template>
+    <div class="title" *ngIf="title">{{title}}</div>
+		<div id="users-grid">
+			<div *ngFor="let user of followers"
+				[routerLink]="'/profile/'+user.id"
+				(click)="modal.dismiss()"
+				class="user-item">
+				<ion-avatar style="margin: 0 auto;">
+            <img [src]="user.profileImage?.url"
+             onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'"
+              style="object-fit: cover;">
+				</ion-avatar>
+				<div class="mt-1"
+					style="text-align: center;">
+					<small>
+						{{user.firstName}} {{user.lastName}}
+					</small>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

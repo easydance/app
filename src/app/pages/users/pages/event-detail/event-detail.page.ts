@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonModal, NavController, ToastController } from '@ionic/angular';
 import { catchError, tap, throwError } from 'rxjs';
 import { PartyBaseDto, PartyParticipationService, PartyService, SavedPartyService } from 'src/app/apis';
+import { CardOptions } from 'src/app/components/party-card/party-card.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { customMapStyle } from 'src/app/utils/google-maps.utils';
 
@@ -14,11 +15,13 @@ import { customMapStyle } from 'src/app/utils/google-maps.utils';
 export class EventDetailPage implements OnInit {
 
   @Input('party') public party?: PartyBaseDto;
-  @Input('config') config: { hideMap?: boolean, hideHeader?: boolean; showHours: boolean; } = {
+  @Input('config') config: CardOptions & { hideMap?: boolean; } = {
     hideMap: false,
     hideHeader: true,
-    showHours: true
+    showHours: true,
+    fullPeriod: true
   };
+  private forcedDate?: Date;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +39,9 @@ export class EventDetailPage implements OnInit {
       if (res['id']) {
         this.partiesService.findOne(res['id'], undefined, 'club.address,address').subscribe(res => {
           this.party = res.data;
+          if (this.forcedDate) {
+            this.party.from = new Date(this.forcedDate).toISOString() || this.party.from;
+          }
           const { participation, ...party } = this.party;
           this.party.participation = this.party.participation ?? {
             party: { ...party, participation: null },
@@ -44,6 +50,12 @@ export class EventDetailPage implements OnInit {
             checked: false
           };
         });
+      }
+    });
+    this.route.queryParams.subscribe(res => {
+      this.forcedDate = res['forcedDate'];
+      if (this.party && this.forcedDate) {
+        this.party.from = new Date(this.forcedDate).toISOString() || this.party.from;
       }
     });
   }
@@ -77,14 +89,21 @@ export class EventDetailPage implements OnInit {
           })
         )
         .subscribe(res => {
+
           modal?.dismiss();
-          this.toastCtrl.create({ message: 'Lista aggiornata!', duration: 3000 })
-            .then(toast => {
-              toast.present();
-            });
+          this.toastCtrl.create({
+            message: this.party?.participation?.id ? 'Lista aggiornata!' : 'Sei stato aggiunto alla lista!',
+            duration: 3000
+          }).then(toast => {
+            toast.present();
+            if (this.party?.participation) {
+              this.party.participation.id = res.data.id;
+            }
+          });
         });
     }
   }
+
   onBookmarkClick($event: Event) {
     $event.stopPropagation();
     $event.preventDefault();

@@ -53,7 +53,7 @@
 		</div>
 	</div>
 	<div *ngIf="center && (party?.address?.lat || party?.club?.address?.lat) && (party?.address?.lng || party?.club?.address?.lng) && !config?.hideMap"
-		style="border-radius: 1rem; overflow: hidden;">
+		style="border-radius: 1rem; overflow: hidden;" (click)="navigateToParty()">
 		<google-map [options]="options"
 			[center]="center"
 			[zoom]="16"

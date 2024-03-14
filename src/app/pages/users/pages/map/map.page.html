@@ -20,7 +20,8 @@
 			<ion-button size="small"
 				class="mr-2"
 				color="medium"
-				fill="outline">
+				fill="outline"
+				(click)="gotoMyposition()">
 				<ion-icon name="location-sharp"
 					slot="start"
 					color="medium"
@@ -102,7 +103,7 @@
 			presentation="date">
 			<ion-buttons class="py-3 flex space-around"
 				slot="buttons">
-				<ion-button (click)="datetime.cancel()"
+				<ion-button (click)="datetime.cancel(true)"
 					color="medium">
 					Chiudi
 				</ion-button>
@@ -118,10 +119,11 @@
 </ion-modal>
 
 <!-- EVENTS MODAL -->
-<ion-modal id="events-modal" #eventsModal
+<ion-modal #eventsModal
 	[backdropDismiss]="true"
 	[initialBreakpoint]="0.35"
 	[breakpoints]="[0, 0.8]"
+	id="events-modal"
 	class="blur">
 	<ng-template>
 		<ion-fab-button (click)="eventsModal.dismiss(); selectedParties = undefined;"
@@ -133,6 +135,7 @@
 		<div *ngIf="selectedParties && selectedParties.length > 1"
 			class="py-8 px-4">
 			<items-list [parties]="selectedParties"
+				[itemOptions]="itemOptions"
 				[footerOpts]="{hidden: true}"
 				[headerOpts]="{ title: 'Eventi' }"></items-list>
 		</div>
@@ -187,7 +190,8 @@
 					</div>
 					<div>
 						<ion-avatar>
-							<img [src]="selectedClub?.covers?.[0]?.url">
+							<img [src]="selectedClub?.covers?.[0]?.url"
+							onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 						</ion-avatar>
 					</div>
 				</div>

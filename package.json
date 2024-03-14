@@ -17,9 +17,11 @@
     "android:run": "npm run generate-api && ionic capacitor run android",
     "android:run-live": "npm run generate-api && ionic capacitor run android -l --external",
     "android:run-live-no-gen": "ionic capacitor run android -l --external",
+    "android:release": "ionic cap build android --prod",
     "ios:run": "npm run generate-api && ionic capacitor run ios",
     "ios:run-live": "npm run generate-api && ionic capacitor run ios -l --external",
     "ios:run-live-no-gen": "ionic capacitor run ios -l --external",
+    "android:ios": "ionic cap build ios --prod",
     "sha1": "cd ./android && ./gradlew signingReport"
   },
   "private": true,

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { DateTime, Interval } from 'luxon';
 import { catchError, tap, throwError } from 'rxjs';
 import { PartyBaseDto, SavedPartyService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
@@ -10,6 +11,7 @@ export type CardOptions = {
   hideHeader?: boolean;
   showHours?: boolean;
   mergeWithBg?: boolean;
+  fullPeriod?: boolean;
 };
 
 @Component({
@@ -21,7 +23,22 @@ export class PartyCardComponent implements OnInit {
 
   @Input() party?: PartyBaseDto;
   @Input() button?: boolean;
-  @Input() options: CardOptions = {};
+  @Input() options: CardOptions = {
+    fullPeriod: true
+  };
+
+  get from() {
+    if (this.party) {
+      const date = new Date(this.party.from).getTime() < Date.now() ? DateTime.now() : DateTime.fromJSDate(new Date(this.party.from));
+      if (this.options.fullPeriod === true) {
+        const interval = (new Date(this.party.to).getTime() - date.toMillis()) / 1000 / 60 / 60 / 24;
+        return interval > 1 ? date.toFormat('dd LLL') + ' - ' + DateTime.fromJSDate(new Date(this.party.to)).toFormat('dd LLL') : date.toFormat('dd LLL');
+      }
+
+      return date.toFormat('dd LLL');
+    }
+    return '-';
+  }
 
   public get distance(): number {
     const currentLat = this.authManager.geolocation?.coords.latitude;
@@ -39,11 +56,11 @@ export class PartyCardComponent implements OnInit {
   @Output() bookmarkClick: EventEmitter<PartyBaseDto> = new EventEmitter();
 
   constructor(
-    private savedPartiesService: SavedPartyService, 
-    private toastCtrl: ToastController, 
+    private savedPartiesService: SavedPartyService,
+    private toastCtrl: ToastController,
     public authManager: AuthManagerService,
     private changeDetector: ChangeDetectorRef
-    ) { }
+  ) { }
 
   ngOnInit() { }
 
@@ -70,7 +87,7 @@ export class PartyCardComponent implements OnInit {
             })
           )
           .subscribe(res => {
-            if (this.party){ 
+            if (this.party) {
               this.party.saved = res.data.id || null;
               this.changeDetector.detectChanges();
             }

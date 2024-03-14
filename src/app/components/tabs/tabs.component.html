@@ -2,10 +2,18 @@
 	class="footer px-4">
 	<div [routerLink]="'/home'"
 		(click)="tabClicked.emit('home')">
+		<ion-icon *ngIf="isInSection('') || isInSection('/home') || isInSection('home')"
+			name="ellipse"
+			class
+			style="font-size: 3px;"></ion-icon>
 		Home
 	</div>
 	<div [routerLink]="'/map'"
 		(click)="tabClicked.emit('map')">
+		<ion-icon *ngIf="isInSection('map') || isInSection('/map')"
+			name="ellipse"
+			class
+			style="font-size: 3px;"></ion-icon>
 		Mappa
 	</div>
 	<div (click)="goInFullImmersion()"
@@ -17,10 +25,18 @@
 	</div>
 	<div [routerLink]="'/events'"
 		(click)="tabClicked.emit('events')">
+		<ion-icon *ngIf="isInSection('events') || isInSection('/events')"
+			name="ellipse"
+			class
+			style="font-size: 3px;"></ion-icon>
 		Eventi
 	</div>
 	<div [routerLink]="'/profile'"
 		(click)="tabClicked.emit('profile')">
+		<ion-icon *ngIf="isInSection('profile') || isInSection('/profile')"
+			name="ellipse"
+			class
+			style="font-size: 3px;"></ion-icon>
 		Profilo
 	</div>
 </div>

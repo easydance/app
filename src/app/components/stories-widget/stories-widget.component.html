@@ -34,7 +34,8 @@
 			<div style="width: fit-content;">
 				<ion-avatar style="margin: 0 auto;">
 					<img [src]="kv.value.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
-						style="object-fit: cover;">
+						style="object-fit: cover;"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 				<div class="mt-1"
 					style="text-align: center;">
