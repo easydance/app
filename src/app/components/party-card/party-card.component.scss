@@ -11,11 +11,20 @@ ion-card {
     padding-right: 10px;
     font-size: 0.75rem;
     height: auto;
+    margin-right: 4px !important;
+    margin-top: 4px !important;
 
     ion-icon {
       font-size: 0.75rem;
       margin-left: 2px;
       margin-right: 4px;
+      min-width: 12px;
+    }
+
+    ion-label {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
   }
 

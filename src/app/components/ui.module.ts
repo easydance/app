@@ -15,12 +15,14 @@ import { UsersWidgetComponent } from 'src/app/components/users-widget/users-widg
 import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
 import { EventsFiltersComponent } from 'src/app/components/events-filters/events-filters.component';
 import { StoriesWidgetComponent } from 'src/app/components/stories-widget/stories-widget.component';
+import { FollowerModalComponent } from 'src/app/components/follower-modal/follower-modal.component';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
   ClubsGridComponent, TabsComponent, SuggestButtonsComponent,
   ThatsAllComponent, ItemsListComponent, UsersWidgetComponent,
-  SearchHeaderComponent, EventsFiltersComponent, StoriesWidgetComponent
+  SearchHeaderComponent, EventsFiltersComponent, StoriesWidgetComponent,
+  FollowerModalComponent
 ];
 
 @NgModule({
@@ -30,7 +32,7 @@ const components = [
   imports: [
     IonicModule,
     CommonModule,
-    RouterModule
+    RouterModule,
   ]
 })
 export class UiModule { }

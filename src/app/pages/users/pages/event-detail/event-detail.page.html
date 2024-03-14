@@ -57,7 +57,7 @@
 		<div class="p-5">
 			<div class="flex space-between items-center header">
 				<div class="title flex align-center flex-1">
-					<div>Mettiti in lista</div>
+					<div>{{party?.participation!.pr ? 'MODIFICA LISTA' : 'METTITI IN LISTA'}}</div>
 				</div>
 				<div class="close">
 					<ion-button (click)="listModal.dismiss()"

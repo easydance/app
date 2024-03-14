@@ -19,6 +19,7 @@ export class EventsPage implements OnInit {
   public parties?: GetPartyResponseDto[];
   public partiesTonight?: GetPartyResponseDto[];
   public clubs?: (GetClubResponseDto & { parties?: GetPartyResponseDto[]; })[];
+  public orderedClubs?: (GetClubResponseDto & { parties?: GetPartyResponseDto[]; })[];
   public city?: string;
 
   public filters: any = [];
@@ -49,6 +50,7 @@ export class EventsPage implements OnInit {
                 club.parties = res.data;
               });
           }
+          this.orderedClubs = this.clubs;
         });
       }
     });
@@ -100,7 +102,7 @@ export class EventsPage implements OnInit {
     this.partiesService.findAll(
       0,
       20,
-      JSON.stringify({ 
+      JSON.stringify({
         to: { $gte: new Date() },
         ...this.partiesUtils.Filters().InCurrentPosition()
       }),
@@ -135,6 +137,13 @@ export class EventsPage implements OnInit {
             });
         }
       });
+    }
+  }
+
+  shiftClub(clubId: number) {
+    const club = this.clubs?.find(c => c.id == clubId);
+    if (club) {
+      this.orderedClubs = [club, ...(this.clubs?.filter(c => c.id != clubId) || [])];
     }
   }
 

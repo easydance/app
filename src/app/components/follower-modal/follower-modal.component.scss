@@ -1,3 +1,16 @@
+#users-grid {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 75vh;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  overflow-y: auto;
+
+  .user-item {
+    flex: 1 0 calc(25% - 0.25rem);
+    margin: 0.25rem;
+  }
+}
 ion-modal.blur {
   --background: rgba(18, 18, 18, 0.6);
   --border-radius: 20px 20px 0 0;
@@ -23,26 +36,13 @@ ion-modal::part(content) {
   backdrop-filter: blur(50px);
 }
 
-#users-grid {
-  display: flex;
-  flex-wrap: wrap;
-  max-height: 75vh;
-  margin-bottom: 2rem;
+.title {
   margin-top: 2rem;
-
-  .user-item {
-    flex: 1 0 calc(25% - 0.25rem);
-    margin: 0.25rem;
-  }
-}
-
-#clubs-grid {
-  .title {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 14px; /* 100% */
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-  }
+  margin-left: 1rem;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 100% */
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
 }

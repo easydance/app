@@ -8,6 +8,20 @@ $height: 65px;
   position: absolute;
   bottom: 0;
   width: 100%;
+
+  > div {
+    > div {
+      position: relative;
+
+      ion-icon[name="ellipse"] {
+        font-size: 3px;
+        color: white;
+        position: absolute;
+        left: 50%;
+        bottom: -5px;
+      }
+    }
+  }
 }
 
 .footer.ios-footer {

@@ -47,8 +47,9 @@ export class EventDetailComponent implements OnInit, OnChanges {
     return [this.party?.cover, ...(this.party?.images || [])];
   }
 
-  navigate() {
-    window.open(`geo:${this.center?.lat},${this.center?.lng}`, '_blank');
+  navigateToParty() {
+    window.open(`https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${this.party!.address.lat},${this.party!.address.lng}`);
   }
+
 
 }

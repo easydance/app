@@ -54,15 +54,15 @@
 		class="mt-16 clubs-tags py-8 px-4 mx--4">
 		<div class="w-full my-2 title">I SOLITI POSTI</div>
 		<ion-button *ngFor="let club of clubs"
-			color="light"
-			fill="outline"
-			class>
+			[fill]="club.id == orderedClubs?.[0]?.id ? 'solid' : 'outline'"
+			(click)="shiftClub(club.id!)"
+			color="light">
 			{{club.name}}
 		</ion-button>
 	</div>
 
 	<div id="events-club">
-		<div *ngFor="let club of clubs"
+		<div *ngFor="let club of orderedClubs"
 			class="mt-16">
 			<!-- <div class="title-wrapper mb-6">
 				<div class="title">
@@ -76,10 +76,10 @@
 				(partyClick)="goToEvent($event)"></easy-card-slider> -->
 			<div *ngIf="club.parties?.length"
 				class="mb-6">
-				<items-list [headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.profile.url}"
+				<items-list [headerOpts]="{ title: club.name, subtitle: club.address?.city, avatar: club.profile?.url}"
 					[parties]="club.parties"
 					(more)="goToClubsEventsList(club)"></items-list>
-			</div> 
+			</div>
 		</div>
 	</div>
 </ion-content>

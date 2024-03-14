@@ -30,16 +30,15 @@
 				class="footer">
 				<div>
 					<div class="chips-info">
-						<ion-chip class="dark">
+						<ion-chip class="dark mr-1">
 							<!-- <ion-icon color="light"
-								name="calendar-sharp"></ion-icon> -->
-							<ion-label>
-								{{party?.from | date:'dd LLL'}}
-							</ion-label>
+									name="calendar-sharp"></ion-icon> -->
+							<ion-label>{{from}}</ion-label>
 						</ion-chip>
-						<ion-chip [routerLink]="party?.club?.id ? '/club-detail/' + party?.club?.id : undefined"
+						<ion-chip *ngIf="party?.club?.name"
+							[routerLink]="party?.club?.id ? '/club-detail/' + party?.club?.id : undefined"
 							(click)="$event.stopPropagation()"
-							class="ml-2-i dark">
+							class="mt-1 dark">
 							<ion-icon color="light"
 								name="location"></ion-icon>
 							<ion-label>
