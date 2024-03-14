@@ -22,7 +22,7 @@ export class ProfileEditComponent implements OnInit, OnChanges {
 
   public editedUser?: LoginUserDataDto & { photo?: string; };
   public tagsSearch: string = '';
-  public descriptionWordLimit: number = 60;
+  public descriptionWordLimit: number = 500;
   private allTags: GetTagResponseDto[] = [];
   public searchedTags: GetTagResponseDto[] = [];
   public get socialsKeys() {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ToastController } from '@ionic/angular';
+import { IonModal, NavController, ToastController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
-import { AttachmentBaseDto, ClubBaseDto, ClubService, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserToClubFollowerService } from 'src/app/apis';
+import { AttachmentBaseDto, ClubBaseDto, ClubService, GetUserResponseDto, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Component({
@@ -18,6 +18,8 @@ export class ClubDetailPage implements OnInit {
   public profile?: AttachmentBaseDto;
   public covers?: AttachmentBaseDto[];
   public isFollowing?: GetUserToClubFollowerResponseDto;
+  public followers: GetUserResponseDto[] = [];
+
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +28,8 @@ export class ClubDetailPage implements OnInit {
     private readonly partiesService: PartyService,
     private readonly clubsService: ClubService,
     private readonly clubFollowerService: UserToClubFollowerService,
-    private readonly toastCtrl: ToastController
+    private readonly toastCtrl: ToastController,
+    private readonly usersService: UserService
   ) { }
 
   ngOnInit() {
@@ -37,13 +40,23 @@ export class ClubDetailPage implements OnInit {
         // const [profile, ...covers] = this.club.covers;
         this.profile = this.club.profile;
         this.covers = this.club.covers.sort((a, b) => a.id == this.club?.currentCover ? -1 : 1);
-        this.partiesService.findAll(0, 20, JSON.stringify({ club: { id }, to: { $gte: DateTime.now().toISO() } })).subscribe(res => {
+        this.partiesService.findAll(0, 20, JSON.stringify({ club: { id }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'address').subscribe(res => {
           this.parties = res.data.map(d => ({
             ...d,
             club: this.club!
           }));
         });
       });
+
+      this.clubFollowerService.findAll(0, 1000, JSON.stringify({ club: { id: id || 0 } }), undefined, undefined, 'user').subscribe(res => {
+        this.usersService.findAll(0, 1000, JSON.stringify({
+          id: { $in: res.data.map(d => d.user.id) }
+        })).subscribe(res2 => {
+          this.followers = res2.data;
+        });
+
+      });
+
       this.authManager.user$.subscribe(async res => {
         if (res) {
           const result = await lastValueFrom(this.clubFollowerService.findAll(0, 5, JSON.stringify({ user: { id: res?.id || 0 }, club: { id: id || 0 } })));
@@ -95,4 +108,7 @@ export class ClubDetailPage implements OnInit {
     window.open(url, '_blank');
   }
 
+  openModal(modal: IonModal | undefined) {
+    modal?.present();
+  }
 }

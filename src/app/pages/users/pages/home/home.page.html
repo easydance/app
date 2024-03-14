@@ -68,7 +68,7 @@
 			class="mt-16">
 			<ng-container *ngFor="let club of clubs">
 				<items-list *ngIf="club.parties?.length"
-					[headerOpts]="{ title: club.name, subtitle: club.address.city, avatar: club.profile.url}"
+					[headerOpts]="{ title: club.name, subtitle: club.address?.city, avatar: club.profile?.url}"
 					[parties]="club.parties"
 					(more)="goToClubsEventsList(club)"></items-list>
 			</ng-container>

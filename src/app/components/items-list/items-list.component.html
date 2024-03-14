@@ -31,7 +31,7 @@
 								{{party?.from | date:'dd LLL'}}
 							</ion-label>
 						</ion-chip>
-						<ion-chip class="ml-2-i dark">
+						<ion-chip class="ml-2-i dark" *ngIf="party?.club?.name">
 							<ion-icon color="light"
 								name="location"></ion-icon>
 							<ion-label>

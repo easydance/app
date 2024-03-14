@@ -42,7 +42,8 @@
 			color="dark">
 			Evento
 		</ion-button>
-		<ion-button *ngIf="authManager.isAuthenticated()" [fill]="filterType != 'users' ? undefined : 'outline'"
+		<ion-button *ngIf="authManager.isAuthenticated()"
+			[fill]="filterType != 'users' ? undefined : 'outline'"
 			[color]="filterType != 'users' ? 'dark' : 'light'"
 			(click)="filter('users')"
 			xs
@@ -59,7 +60,8 @@
 				lines="full">
 				<ion-avatar slot="start">
 					<img [alt]="party.title"
-						[src]="party.cover.url">
+						[src]="party.cover.url"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 				<ion-label>
 					<div class="date">
@@ -77,7 +79,8 @@
 				lines="full">
 				<ion-avatar slot="start">
 					<img [alt]="club.name"
-						[src]="club.profile?.url">
+						[src]="club.profile?.url"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 				<ion-label>
 					<div class="title">{{club.name}}</div>
@@ -92,7 +95,8 @@
 				lines="full">
 				<ion-avatar slot="start">
 					<img [alt]="user.profileImage?.id"
-						[src]="user.profileImage?.url">
+						[src]="user.profileImage?.url"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 				<ion-label>
 					<div class="title">{{user.email}}</div>

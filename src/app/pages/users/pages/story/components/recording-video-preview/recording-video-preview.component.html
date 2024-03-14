@@ -119,7 +119,8 @@
 				class="user-item">
 				<ion-avatar style="margin: 0 auto;">
 					<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
-						style="object-fit: cover;">
+						style="object-fit: cover;"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 				<div class="mt-1"
 					style="text-align: center;">

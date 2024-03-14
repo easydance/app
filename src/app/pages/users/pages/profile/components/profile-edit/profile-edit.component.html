@@ -4,15 +4,25 @@
 	<div class="flex gap-2 ">
 		<ion-button color="dark"
 			class="w-full">
-			{{user.followers ?? '-'}}
-			<ion-icon name="people"
-				slot="end"></ion-icon>
+			<ion-label>
+				{{user.followers ?? '-'}}
+				<ion-icon name="people"
+					slot="end"></ion-icon>
+				<div>
+					<small>SEGUACI</small>
+				</div>
+			</ion-label>
 		</ion-button>
 		<ion-button color="dark"
 			class="w-full">
-			{{user.following ?? '-'}}
-			<ion-icon name="people"
-				slot="end"></ion-icon>
+			<ion-label>
+				{{user.following ?? '-'}}
+				<ion-icon name="people"
+					slot="end"></ion-icon>
+				<div>
+					<small>SEGUITI</small>
+				</div>
+			</ion-label>
 		</ion-button>
 		<ion-button color="light"
 			class="w-full" (click)="save()">
@@ -152,7 +162,7 @@
 				</ion-textarea>
 			</ion-item>
 			<div class="textarea-info mt-1">
-				Max {{descriptionWordLimit}} parole
+				Max {{descriptionWordLimit}} caratteri
 			</div>
 		</div>
 	</div>
@@ -192,4 +202,18 @@
 		</div>
 	</div>
 
+	<ion-button color="light"
+		shape="round"
+		expand="block" 
+		class="mt-12"
+		(click)="save()">
+		Salva
+	</ion-button>
+	<ion-button color="dark"
+		shape="round"
+		expand="block" 
+		class="mt-4"
+		(click)="saved.emit()">
+		Annulla
+	</ion-button>
 </div>

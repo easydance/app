@@ -40,15 +40,17 @@
 				</div>
 			</div>
 			<div>
-				<ion-avatar>
-					<img [src]="profile?.url">
+				<ion-avatar *ngIf="profile">
+					<img [src]="profile?.url" style="object-fit: cover;"
+					onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 			</div>
 		</div>
 	</div>
 	<div class="px-4 mt-2">
 		<div class="flex gap-2">
-			<ion-button color="dark"
+			<ion-button (click)="openModal(followersModal.modal)"
+				color="dark"
 				class="flex-2">
 				{{club?.followerCount}}
 				<ion-icon name="people"
@@ -123,3 +125,4 @@
 		</div>
 	</div>
 </ion-content>
+<follower-modal #followersModal [followers]="followers" [title]="'Seguaci'"></follower-modal>

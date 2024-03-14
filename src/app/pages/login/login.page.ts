@@ -117,4 +117,8 @@ export class LoginPage implements OnInit {
     }
   }
 
+  goBack() {
+    this.navCtrl.navigateBack('/');
+  }
+
 }

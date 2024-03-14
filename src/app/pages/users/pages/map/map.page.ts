@@ -18,12 +18,15 @@ export type SearchType = 'parties' | 'clubs';
 })
 export class MapPage implements OnInit, AfterViewChecked {
 
+  @ViewChild('map') map?: GoogleMap;
+
   @ViewChild('eventsModal') eventsModal?: IonModal;
   @ViewChild('clubModal') clubModal?: IonModal;
   @ViewChild('detailModal') detailModal?: IonModal;
 
   private debounceMarkers = new Subject<google.maps.LatLngBounds>();
   private debounceMarkers$ = this.debounceMarkers.asObservable().pipe(debounceTime(500));
+  private currentDate: Date = new Date();
   private mapReady: boolean = false;
   // private map?: GoogleMap;
   public parties: PartyBaseDto[] = [];
@@ -33,6 +36,8 @@ export class MapPage implements OnInit, AfterViewChecked {
   public city?: string = this.authManager.currentCity;
   public searchType: SearchType = 'parties';
   public partyDetail?: PartyBaseDto;
+
+  public itemOptions = { onItemClick: this.goto.bind(this) };
 
   options: google.maps.MapOptions = {
     panControl: false,
@@ -164,7 +169,12 @@ export class MapPage implements OnInit, AfterViewChecked {
         this.partiesService.findAll(0, 1000, JSON.stringify(this.filter), undefined, undefined, 'club.address,address')
       );
       if (parties.data.length > 0) {
-        this.parties = Array.from(new Set([...this.parties, ...parties.data.filter(p => !this.parties.map(p1 => p1.id).includes(p.id))]));
+        this.parties = Array.from(new Set([...this.parties, ...parties.data.filter(p => !this.parties.map(p1 => p1.id).includes(p.id))])).map(p => ({
+          ...p,
+          from: new Date(p.from).getTime() < this.currentDate.getTime()
+            ? DateTime.fromJSDate(this.currentDate).set({ hour: new Date(p.from).getHours(), minute: new Date(p.from).getMinutes() }).toISO()!
+            : p.from
+        }));
       }
     }
     if (this.searchType == 'clubs') {
@@ -186,6 +196,7 @@ export class MapPage implements OnInit, AfterViewChecked {
   onChangeDate($event: any, modal: IonModal) {
     console.log($event);
     if (this.currentBounds) {
+      this.currentDate = new Date($event.detail.value);
       const date = DateTime.fromJSDate(new Date($event.detail.value));
       // if (date.toFormat('dd/LL/yyyy') == DateTime.now().toFormat('dd/LL/yyyy')) {
       //   this.date = 'OGGI';
@@ -231,7 +242,22 @@ export class MapPage implements OnInit, AfterViewChecked {
 
 
   goto(party: PartyBaseDto) {
-    this.navCtrl.navigateForward('/event-detail/' + party.id);
+    this.navCtrl.navigateForward('/event-detail/' + party.id, {
+      queryParams: {
+        forcedDate: DateTime.fromJSDate(this.currentDate).set({ hour: new Date(party.from).getHours(), minute: new Date(party.from).getMinutes() }).toISO()!
+      }
+    });
+  }
+
+  gotoMyposition() {
+    if (this.map && this.authManager.geolocation) {
+      const { coords } = this.authManager.geolocation;
+      this.map.panTo({
+        lat: coords.latitude,
+        lng: coords.longitude
+      });
+      this.city = this.authManager.currentCity;
+    }
   }
 
 }

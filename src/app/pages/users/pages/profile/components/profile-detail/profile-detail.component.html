@@ -2,19 +2,29 @@
 	class="px-4">
 
 	<div class="flex gap-2 ">
-		<ion-button (click)="openUsersList('follower', followersModal)"
+		<ion-button (click)="openUsersList('follower', followersModal.modal!)"
 			color="dark"
 			class="w-full">
-			{{user.followers ?? '-'}}
-			<ion-icon name="people"
-				slot="end"></ion-icon>
+			<ion-label>
+				{{followers.length ?? '-'}}
+				<ion-icon name="people"
+					slot="end"></ion-icon>
+				<div>
+					<small>SEGUACI</small>
+				</div>
+			</ion-label>
 		</ion-button>
-		<ion-button (click)="openUsersList('followed', followedModal)"
+		<ion-button (click)="openUsersList('followed', followedModal.modal!)"
 			color="dark"
 			class="w-full">
-			{{user.following ?? '-'}}
-			<ion-icon name="people"
-				slot="end"></ion-icon>
+			<ion-label>
+				{{followed.length ?? '-'}}
+				<ion-icon name="people"
+					slot="end"></ion-icon>
+				<div>
+					<small>SEGUITI</small>
+				</div>
+			</ion-label>
 		</ion-button>
 		<ion-button *ngIf="isMe"
 			(click)="edit.emit()"
@@ -127,13 +137,16 @@
 		</div>
 	</div>
 
-	<div class="mt-12 w-full">
+	<div id="clubs-grid" class="mt-12 w-full mb-24">
+		<div class="title mb-4">Locali seguiti</div>
 		<easy-clubs-grid [clubs]="clubs"></easy-clubs-grid>
 	</div>
 
 </div>
 
-<ion-modal #followersModal
+<follower-modal  #followersModal [followers]="followers" [title]="'Seguaci'"></follower-modal>
+<follower-modal  #followedModal [followers]="followed" [title]="'Seguiti'"></follower-modal>
+<!-- <ion-modal #followersModal
 	class="auto-height bottom blur">
 	<ng-template>
 		<div id="users-grid">
@@ -154,7 +167,7 @@
 			</div>
 		</div>
 	</ng-template>
-</ion-modal>
+</ion-modal> 
 
 <ion-modal #followedModal
 	class="auto-height bottom blur">
@@ -178,3 +191,4 @@
 		</div>
 	</ng-template>
 </ion-modal>
+-->
