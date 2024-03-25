@@ -64,7 +64,8 @@ ion-modal {
   --background: transparent;
 }
 
-ion-modal::part(content), ion-modal#clubModal::part(content) {
+ion-modal::part(content),
+ion-modal#clubModal::part(content) {
   background: var(--neutral-20016, rgba(190, 190, 190, 0.16));
   backdrop-filter: blur(50px);
 }

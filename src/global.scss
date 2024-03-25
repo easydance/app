@@ -28,4 +28,27 @@
 @import "./theme/theme.scss";
 @import "./theme/utils.scss";
 
+/* GOOGLE MAPS RESULTS LIST */
+.pac-container {
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: #171717 !important;
+  color: #fafafa !important;
+  border-top: none !important;
+  padding-top: 2rem;
 
+  .pac-item {
+    background: #171717 !important;
+    padding-bottom: 1rem;
+    border-top: none !important;
+  }
+
+  .pac-item-query {
+    color: #fafafa !important;
+  }
+}
+
+.hdpi.pac-logo:after {
+  display: none !important;
+}

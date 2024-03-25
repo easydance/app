@@ -17,6 +17,7 @@ import { LoginDto } from '../model/models';
 import { LoginResponseDto } from '../model/models';
 import { MeResponseDto } from '../model/models';
 import { RequestRecoveryDto } from '../model/models';
+import { RequestSetPassword } from '../model/models';
 import { RequestUpdatePassword } from '../model/models';
 import { SignUpDto } from '../model/models';
 import { SignupResponseDataDto } from '../model/models';
@@ -67,6 +68,13 @@ export interface AuthServiceInterface {
      * @param requestRecoveryDto 
      */
     requestRecovery(requestRecoveryDto: RequestRecoveryDto, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param requestSetPassword 
+     */
+    setNewPassword(requestSetPassword: RequestSetPassword, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * 

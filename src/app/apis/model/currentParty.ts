@@ -23,5 +23,6 @@ export interface CurrentParty {
     cover: AttachmentBaseDto;
     from: string;
     to: string;
+    orderEnabled: boolean;
 }
 

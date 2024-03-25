@@ -323,6 +323,7 @@ model/productControllerReplaceDefaultResponse.ts
 model/productControllerUpdateDefaultResponse.ts
 model/profileImageDto.ts
 model/requestRecoveryDto.ts
+model/requestSetPassword.ts
 model/requestUpdatePassword.ts
 model/roleBaseDto.ts
 model/roleControllerCreateDefaultResponse.ts
