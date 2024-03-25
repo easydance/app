@@ -250,6 +250,7 @@ export * from './productControllerReplaceDefaultResponse';
 export * from './productControllerUpdateDefaultResponse';
 export * from './profileImageDto';
 export * from './requestRecoveryDto';
+export * from './requestSetPassword';
 export * from './requestUpdatePassword';
 export * from './roleBaseDto';
 export * from './roleControllerCreateDefaultResponse';

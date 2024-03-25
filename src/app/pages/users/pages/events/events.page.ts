@@ -108,7 +108,7 @@ export class EventsPage implements OnInit {
       }),
       undefined,
       undefined,
-      'club, address'
+      'club.address,address'
     ).subscribe(res => {
       this.parties = res.data;
     });
@@ -120,7 +120,7 @@ export class EventsPage implements OnInit {
       to: {
         $gte: DateTime.now().startOf('day').toISO()
       }
-    }), undefined, undefined, 'club').subscribe(res => {
+    }), undefined, undefined, 'club.address').subscribe(res => {
       this.partiesTonight = res.data;
     });
 

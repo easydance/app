@@ -35,7 +35,8 @@
 <party-card [party]="party"
 	[options]="cardOptions"></party-card>
 
-<div id="wrapper" class="px-4">
+<div id="wrapper"
+	class="px-4">
 
 	<!-- INFO EVENT -->
 	<div class="paragraph mt-12">
@@ -48,18 +49,20 @@
 	<!-- EVENT MAP -->
 	<div class="mt-12 mb-4 flex space-between map-title">
 		<div class="title">DOVE</div>
-		<div class="address">
+		<div class="address"(click)="navigateToParty()">
 			{{party?.address?.street || party?.club?.address?.street}}, {{party?.address?.streetNumber || party?.club?.address?.streetNumber}}
 		</div>
 	</div>
 	<div *ngIf="center && (party?.address?.lat || party?.club?.address?.lat) && (party?.address?.lng || party?.club?.address?.lng) && !config?.hideMap"
-		style="border-radius: 1rem; overflow: hidden;" (click)="navigateToParty()">
+		style="border-radius: 1rem; overflow: hidden;">
 		<google-map [options]="options"
 			[center]="center"
 			[zoom]="16"
 			[height]="250"
-			[width]="'100%'">
-			<map-marker [position]="center"></map-marker>
+			[width]="'100%'"
+			(mapClick)="navigateToParty()">
+			<map-marker [position]="center"
+				(mapClick)="navigateToParty()"></map-marker>
 		</google-map>
 	</div>
 

@@ -128,6 +128,10 @@ export class MapPage implements OnInit, AfterViewChecked {
     if (lat != undefined && lng !== undefined) {
       this.center = { lat, lng };
     }
+
+    setTimeout(() => {
+      this.getPlaceAutocomplete();
+    }, 2000);
   }
 
   changeSearchType(searchType: SearchType) {
@@ -258,6 +262,26 @@ export class MapPage implements OnInit, AfterViewChecked {
       });
       this.city = this.authManager.currentCity;
     }
+  }
+
+  private getPlaceAutocomplete() {
+    const autocomplete = new google.maps.places.Autocomplete(document.querySelector('#map-searchbar input')!, {
+      types: ['(cities)'],
+    });
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      const place = autocomplete.getPlace();
+      const newLocation = {
+        lat: place.geometry?.location?.lat(),
+        lng: place.geometry?.location?.lng()
+      };
+      if (newLocation.lat != undefined && newLocation.lng != undefined) {
+        this.map?.panTo({
+          lat: newLocation.lat,
+          lng: newLocation.lng
+        });
+        this.city = 'IN ZONA'
+      }
+    });
   }
 
 }

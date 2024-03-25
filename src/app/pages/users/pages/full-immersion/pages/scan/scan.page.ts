@@ -48,7 +48,7 @@ export class ScanPage implements OnInit {
     BarcodeScanner.stopScan()
       .then(() => {
       }).catch(err => {
-        debugger
+        debugger;
       });
   }
 
@@ -82,10 +82,21 @@ export class ScanPage implements OnInit {
                 });
               try {
                 const currentPartyResponse = await this.clubsService.getCurrentParty(clubId).toPromise();
-                this.fullImmersionService.setCurrentParty(currentPartyResponse!);
 
-                this.navCtrl.navigateForward('full-immersion/select-table');
-                this.process = false;
+                if (!currentPartyResponse?.orderEnabled) {
+                  const toast = await this.toastCtrl.create({
+                    message: this.translateService.instant(`ERRORS.CURRENT_PARTY_NOT_ENABLED_TO_ORDER`),
+                    duration: 3000
+                  });
+                  toast.present();
+                  this.fullImmersionService.reset();
+                } else {
+                  this.fullImmersionService.setCurrentParty(currentPartyResponse!);
+                  this.navCtrl.navigateForward('full-immersion/select-table');
+                }
+                setTimeout(() => {
+                  this.process = false;
+                }, 3000);
               } catch (error: any) {
                 const toast = await this.toastCtrl.create({
                   message: this.translateService.instant(`API_RESPONSE.ERRORS.${error.error.errors.i18n}`),
@@ -113,7 +124,7 @@ export class ScanPage implements OnInit {
         console.error(error);
         document.querySelector('body')?.classList.remove('barcode-scanner-active');
       });
-      this.canLeave = true;
+    this.canLeave = true;
   }
 
   async requestPermissions(): Promise<boolean> {

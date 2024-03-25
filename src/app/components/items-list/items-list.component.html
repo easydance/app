@@ -28,10 +28,11 @@
 							<ion-icon color="light"
 								name="calendar-sharp"></ion-icon>
 							<ion-label>
-								{{party?.from | date:'dd LLL'}}
+								{{getFrom(party) | date:'dd LLL'}}
 							</ion-label>
 						</ion-chip>
-						<ion-chip class="ml-2-i dark" *ngIf="party?.club?.name">
+						<ion-chip *ngIf="party?.club?.name"
+							class="ml-2-i dark">
 							<ion-icon color="light"
 								name="location"></ion-icon>
 							<ion-label>
@@ -46,9 +47,10 @@
 	</div>
 	<div *ngIf="!footerOpts?.hidden"
 		id="footer">
-		<ion-button color="light"
+		<ion-button (click)="more.emit()"
+			color="light"
 			expand="block"
-			shape="round" (click)="more.emit()">
+			shape="round">
 			ALTRI EVENTI
 		</ion-button>
 	</div>

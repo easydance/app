@@ -14,7 +14,7 @@ export class ItemsListComponent implements OnInit {
     title: ''
   };
   @Input() parties?: PartyBaseDto[];
-  @Input() itemOptions?: { onItemClick?: (party: PartyBaseDto) => void; transparent?: boolean } = {};
+  @Input() itemOptions?: { onItemClick?: (party: PartyBaseDto) => void; transparent?: boolean; } = {};
   @Input() footerOpts?: { buttonLabel?: string; hidden?: boolean; } = {};
 
   @Output() itemClick: EventEmitter<PartyBaseDto> = new EventEmitter();
@@ -30,5 +30,9 @@ export class ItemsListComponent implements OnInit {
       return this.itemOptions.onItemClick(party);
     }
     this.navCtrl.navigateForward('/event-detail/' + party.id);
+  }
+
+  getFrom(party: PartyBaseDto) {
+    return new Date(party.from) < new Date() ? new Date() : party.from;
   }
 }
