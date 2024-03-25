@@ -155,5 +155,4 @@ export class EventDetailPage implements OnInit {
     }
 
   }
-
 }

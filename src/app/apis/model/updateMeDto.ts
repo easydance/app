@@ -13,6 +13,7 @@ import { ClubBaseDtoSocialsValueValue } from './clubBaseDtoSocialsValueValue';
 
 
 export interface UpdateMeDto { 
+    email?: string;
     firstName: string;
     lastName: string;
     birthDate?: string | null;

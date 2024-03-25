@@ -59,23 +59,29 @@ export class FullImmersionService {
     localStorage.setItem('full-immersion', JSON.stringify(data));
   }
 
-  setCurrentParty(party: CurrentParty) {
+  setCurrentParty(party: CurrentParty | undefined) {
     this._selectedTable = undefined;
     this._currentParty = party;
-    this.expireIn = new Date(party.to).getTime();
+    this.expireIn = new Date(party?.to || new Date()).getTime();
     this.persist();
   }
 
-  setSelectedClub(club: ClubBaseDto) {
+  setSelectedClub(club: ClubBaseDto | undefined) {
     this._selectedClub = club;
     this._selectedTable = undefined;
     this._currentParty = undefined;
     this.persist();
   }
 
-  setSelectedTable(table: CurrentPartyTable) {
+  setSelectedTable(table: CurrentPartyTable | undefined) {
     this._selectedTable = table;
     this.persist();
+  }
+
+  reset() {
+    this.setCurrentParty(undefined);
+    this.setSelectedClub(undefined);
+    this.setSelectedTable(undefined);
   }
 }
 
