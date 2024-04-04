@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryBaseDto, StoryService } from 'src/app/apis';
-import { IonModal, IonicSlides, ModalController } from '@ionic/angular';
+import { GestureController, IonModal, IonicSlides, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
@@ -26,8 +26,32 @@ export class StoriesPage implements OnInit {
     private storiesService: StoryService,
     private route: ActivatedRoute,
     public authManager: AuthManagerService,
-    private modalCtrl: ModalController
-  ) { }
+    private modalCtrl: ModalController,
+    private gestureCtrl: GestureController
+  ) {
+    setTimeout(() => {
+      let start = 0;
+      const gesture = this.gestureCtrl.create({
+        el: document.querySelector('ion-content#stories-content')!,
+        onStart: (detail) => {
+          start = detail.currentY;
+          console.log("Swipe down start:", start);
+        },
+        onMove: (detail) => {
+
+        },
+        onEnd: (detail) => {
+          if (detail.currentY - start > 150) {
+            console.log("Swipe down end:", detail.currentY);
+            this.modalCtrl.dismiss();
+          }
+        },
+        gestureName: 'example',
+      });
+
+      gesture.enable();
+    }, 1000);
+  }
 
   ngOnInit() {
   }
@@ -207,7 +231,13 @@ export class StoriesPage implements OnInit {
     modal.present();
     modal.onDidDismiss().then(res => {
       this.resume();
-    })
+    });
 
+  }
+
+
+  swipeDownToClose($event: any) {
+    $event.target.complete();
+    this.modalCtrl.dismiss();
   }
 }

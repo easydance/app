@@ -57,4 +57,10 @@ export interface DefaultServiceInterface {
      */
     googleGeocodingReverse(lat: string, lng: string, extraHttpRequestParams?: any): Observable<GeocodeResponse>;
 
+    /**
+     * 
+     * 
+     */
+    settings(extraHttpRequestParams?: any): Observable<{}>;
+
 }
