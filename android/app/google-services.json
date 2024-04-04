@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "862020674291",
+    "project_id": "easydance-399409",
+    "storage_bucket": "easydance-399409.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862020674291:android:5190bd77e4a491600a0d86",
+        "android_client_info": {
+          "package_name": "com.easydance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjNCRsozqKIQnjCQ7kIIfizrrHQv8yMg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862020674291-2n8ds73o8u8m6fjtmvab4ks04pvo8jhk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "862020674291-4k0nbecj45ce3b3jeaif1tctsoajgjdj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.easydance"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

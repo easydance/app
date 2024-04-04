@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 4290,
-      "versionName": "1.3.2",
-      "outputFile": "easydance-release.apk"
+      "versionCode": 4480,
+      "versionName": "1.6.0",
+      "outputFile": "app-release.apk"
     }
   ],
   "elementType": "File"
