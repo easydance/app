@@ -5,6 +5,7 @@ import { catchError, tap, throwError } from 'rxjs';
 import { PartyBaseDto, SavedPartyService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { calcDistance } from 'src/app/utils/google-maps.utils';
+import { Share } from '@capacitor/share';
 
 export type CardOptions = {
   height?: string,
@@ -24,7 +25,8 @@ export class PartyCardComponent implements OnInit {
   @Input() party?: PartyBaseDto;
   @Input() button?: boolean;
   @Input() options: CardOptions = {
-    fullPeriod: true
+    fullPeriod: true,
+    showHours: true
   };
 
   get from() {
@@ -50,7 +52,7 @@ export class PartyCardComponent implements OnInit {
         currentLat,
         currentLng
       )
-      : 0;
+      : this.party?.distance || 0;
   };
 
   @Output() bookmarkClick: EventEmitter<PartyBaseDto> = new EventEmitter();
@@ -115,6 +117,15 @@ export class PartyCardComponent implements OnInit {
       }
     }
 
+  }
+
+  share() {
+    Share.share({
+      title: this.party?.title,
+      text: this.party?.title,
+      url: 'https://easydance.app/event-detail/' + this.party?.id,
+      dialogTitle: 'Condividi questo evento con i tuoi amici',
+    });
   }
 
 }

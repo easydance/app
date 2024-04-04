@@ -34,5 +34,7 @@ export interface CreatePartyRequestDto {
     club: ClubBaseDto;
     address: AddressBaseDto;
     images: Array<number>;
+    joined: number | null;
+    joiners: number | null;
 }
 

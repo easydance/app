@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, SlicePipe } from '@angular/common';
 import { CardListComponent } from 'src/app/components/card-list/card-list.component';
 import { CardSliderComponent } from 'src/app/components/card-slider/card-slider.component';
 import { IonicModule } from '@ionic/angular';
@@ -16,6 +16,7 @@ import { SearchHeaderComponent } from 'src/app/components/search-header/search-h
 import { EventsFiltersComponent } from 'src/app/components/events-filters/events-filters.component';
 import { StoriesWidgetComponent } from 'src/app/components/stories-widget/stories-widget.component';
 import { FollowerModalComponent } from 'src/app/components/follower-modal/follower-modal.component';
+import { ImageFallbackPipe } from 'src/app/pipes/image-fallback.pipe';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
@@ -33,6 +34,8 @@ const components = [
     IonicModule,
     CommonModule,
     RouterModule,
+    ImageFallbackPipe,
+    SlicePipe
   ]
 })
 export class UiModule { }

@@ -1,4 +1,19 @@
 <div>
-	<div *ngFor="let user of users"
-		[ngStyle]="{ 'background-image': 'url('+ user.profileImage + ')' }"></div>
+	<div id="icon"
+		class="margin-0">
+		<ion-icon name="people"></ion-icon>
+	</div>
+	<div *ngFor="let user of users | slice:0:avatarShown"
+		[ngStyle]="{
+		backgroundImage: 'url(' + (user.profileImage?.url || 'assets/icons/guy-walk.svg') + ')',
+		backgroundPosition: 'center center',
+		backgroundRepeat: 'no-repeat',
+		backgroundSize: user.profileImage?.url ? 'cover' : 'contain'
+	}">
+		<!-- <ion-avatar style="margin: 0 auto;">
+			<img [src]=""
+				style="object-fit: cover;"
+				onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
+		</ion-avatar> -->
+	</div>
 </div>

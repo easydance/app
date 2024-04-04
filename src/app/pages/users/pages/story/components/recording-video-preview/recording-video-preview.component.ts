@@ -28,6 +28,8 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
   storyLimitId: any;
   parties: PartyBaseDto[] = [];
   users: UserBaseDto[] = [];
+  selectedUsers: UserBaseDto[] = [];
+
 
   source?: StorySource;
   @Output() mediaCreated: EventEmitter<StorySource> = new EventEmitter();
@@ -68,6 +70,7 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
   }
 
   async stop() {
+    this.source = undefined;
     await CameraPreview.stop();
   }
 
@@ -164,15 +167,38 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
   }
 
   searchUsers($event: any) {
+    const searchTerm = $event.target.value;
     this.usersService.findAll(0, 10, JSON.stringify([
-      { email: { $containsIgnore: $event.target.value } },
-      { socials: { instagram: { username: { $containsIgnore: $event.target.value } } } },
-      { socials: { twitter: { username: { $containsIgnore: $event.target.value } } } },
-      { socials: { facebook: { username: { $containsIgnore: $event.target.value } } } },
+      { email: { $containsIgnore: searchTerm } },
+      { firstName: { $containsIgnore: searchTerm } },
+      { lastName: { $containsIgnore: searchTerm } },
+      { socials: { instagram: { username: { $containsIgnore: searchTerm } } } },
+      { socials: { twitter: { username: { $containsIgnore: searchTerm } } } },
+      { socials: { facebook: { username: { $containsIgnore: searchTerm } } } },
     ]), undefined, undefined, 'club')
       .subscribe(users => {
         this.users = users.data;
       });
+  }
+
+  toggleUser(user: UserBaseDto) {
+    if (this.selectedUsers) {
+      if (this.selectedUsers.find(u => u.id == user.id)) {
+        this.selectedUsers = this.selectedUsers.filter(u => u.id != user.id);
+        return;
+      }
+      this.selectedUsers = [user, ...this.selectedUsers];
+    }
+  }
+
+  insertUsers() {
+    if (this.source?.usersTags) {
+      this.source.usersTags = this.selectedUsers;
+    }
+  }
+
+  isUserSelected(user: UserBaseDto) {
+    return !!this.selectedUsers.find(u => u.id == user.id);
   }
 
 }

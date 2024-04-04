@@ -42,8 +42,8 @@ export class EventsPage implements OnInit {
         this.clubFollowerService.findAll(0, 4, JSON.stringify({
           user: { id: this.authManager.user?.id || 0 }
         }), undefined, undefined, 'club.address,user').subscribe(res => {
-          this.clubs = res.data.map(cf => cf.club);
-          for (let club of this.clubs) {
+          this.clubs = res.data.map(cf => ({ ...cf.club, parties: [] }));
+          for (let club of (this.clubs || [])) {
             // Club parties
             this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
               .subscribe(res => {
@@ -128,8 +128,8 @@ export class EventsPage implements OnInit {
       this.clubFollowerService.findAll(0, 4, JSON.stringify({
         user: { id: this.authManager.user?.id }
       }), undefined, undefined, 'club.address,user').subscribe(res => {
-        this.clubs = res.data.map(cf => cf.club);
-        for (let club of this.clubs) {
+        this.clubs = res.data.map(cf => ({ ...cf.club, parties: [] }));
+        for (let club of (this.clubs || [])) {
           // Club parties
           this.partiesService.findAll(0, 5, JSON.stringify({ club: { id: club.id }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
             .subscribe(res => {

@@ -73,6 +73,13 @@ export interface PartyServiceInterface {
     /**
      * 
      * 
+     * @param ids 
+     */
+    deleteMany(ids: Array<number>, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
      * @param page 
      * @param pageSize 
      * @param filters 

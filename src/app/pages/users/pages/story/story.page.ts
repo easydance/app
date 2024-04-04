@@ -15,6 +15,7 @@ export class StoryPage implements OnInit {
   @ViewChild('recordingVideoPreview') recordingVideoPreview?: RecordingVideoPreviewComponent;
 
   storySource?: StorySource;
+  isReady: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -27,6 +28,7 @@ export class StoryPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.isReady = true;
     setTimeout(() => {
       this.recordingVideoPreview?.initializeCameraPreview();
     }, 500);
@@ -34,6 +36,7 @@ export class StoryPage implements OnInit {
 
   ionViewWillLeave() {
     this.recordingVideoPreview?.stop();
+    this.isReady = false;
   }
 
   mediaCreated(source: StorySource) {
@@ -70,6 +73,7 @@ export class StoryPage implements OnInit {
       )!;
       this.attachmentService.upload(res.data.id!, 'STORY' as any, file)
         .subscribe(storyAtt => {
+          this.isReady = false;
           this.storyModal?.present();
           loading.dismiss();
         });

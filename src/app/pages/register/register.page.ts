@@ -2,9 +2,10 @@ import { Component, NgZone, OnInit, QueryList, ViewChild, ViewChildren } from '@
 import { AbstractControl, NgForm, ValidationErrors } from '@angular/forms';
 import { Capacitor } from '@capacitor/core';
 import { IonModal, LoadingController, NavController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DateTime } from 'luxon';
-import { catchError, throwError } from 'rxjs';
-import { AuthService, GetTagResponseDto, SignUpDto, TagService } from 'src/app/apis';
+import { catchError, lastValueFrom, throwError } from 'rxjs';
+import { AuthService, GetTagResponseDto, SignUpDto, TagService, UserService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { getFileReader } from 'src/app/utils/filereader.utils';
 import { IComparator, IValidatorConfig, getFormValidationErrors } from 'src/app/validators/form-conditions.validator';
@@ -107,7 +108,9 @@ export class RegisterPage implements OnInit {
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private translateService: TranslateService,
+    private usersService: UserService
   ) { }
 
   ngOnInit() {
@@ -131,7 +134,10 @@ export class RegisterPage implements OnInit {
         .pipe(
           catchError(err => {
             loading.dismiss();
-            this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione', duration: 3000 }).then(f => f.present());
+            this.toastCtrl.create({
+              message: this.translateService.instant(`API_RESPONSE.ERRORS.${err.error.errors.i18n}`) || 'Non è stato possibile completare la registrazione',
+              duration: 3000
+            }).then(f => f.present());
             return throwError(() => err);
           })
         )
@@ -142,6 +148,19 @@ export class RegisterPage implements OnInit {
     }
     if (this.currentStep.index + 1 > this.formSteps.length - 1 || !this.currentForm || this.currentForm.invalid) {
       return;
+    }
+    if (this.formSteps[this.currentStep.index + 1]?.index == 1) {
+      const count = await lastValueFrom(this.usersService.count(undefined, undefined, JSON.stringify([
+        { email: { $containsIgnore: this.user.email } },
+        { username: { $containsIgnore: this.user.email } },
+      ])));
+      if (count.data > 0) {
+        this.toastCtrl.create({
+          message: this.translateService.instant(`API_RESPONSE.ERRORS.USER_ALREADY_EXISTS`) || 'Non è stato possibile completare la registrazione',
+          duration: 3000
+        }).then(f => f.present());
+        return;
+      }
     }
     const swiper = (wizard as any).swiper;
     swiper.slideNext();

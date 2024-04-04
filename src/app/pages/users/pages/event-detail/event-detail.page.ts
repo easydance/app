@@ -2,10 +2,10 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonModal, NavController, ToastController } from '@ionic/angular';
 import { catchError, tap, throwError } from 'rxjs';
-import { PartyBaseDto, PartyParticipationService, PartyService, SavedPartyService } from 'src/app/apis';
+import { GetPartyResponseDto, PartyBaseDto, PartyJoinerService, PartyParticipationService, PartyService, SavedPartyService } from 'src/app/apis';
 import { CardOptions } from 'src/app/components/party-card/party-card.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
-import { customMapStyle } from 'src/app/utils/google-maps.utils';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'event-detail-page',
@@ -14,7 +14,7 @@ import { customMapStyle } from 'src/app/utils/google-maps.utils';
 })
 export class EventDetailPage implements OnInit {
 
-  @Input('party') public party?: PartyBaseDto;
+  @Input('party') public party?: GetPartyResponseDto;
   @Input('config') config: CardOptions & { hideMap?: boolean; } = {
     hideMap: false,
     hideHeader: true,
@@ -31,7 +31,8 @@ export class EventDetailPage implements OnInit {
     private readonly toastCtrl: ToastController,
     private readonly changeDetector: ChangeDetectorRef,
     private readonly savedPartiesService: SavedPartyService,
-    public readonly authManager: AuthManagerService
+    public readonly authManager: AuthManagerService,
+    private readonly joinerService: PartyJoinerService
   ) { }
 
   ngOnInit() {
@@ -154,5 +155,46 @@ export class EventDetailPage implements OnInit {
       }
     }
 
+  }
+
+  joinToPaty() {
+    if (this.party) {
+      this.joinerService.set({
+        party: this.party.id!
+      }).pipe(
+        catchError(err => {
+          this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 })
+            .then(toast => {
+              toast.present();
+            });
+          return throwError(() => err);
+        })).subscribe(res => {
+          if (this.party) {
+            this.party.joined = (this.party.joined ?? 0) > 0 ? 0 : -1;
+            this.partiesService.findOne(this.party.id, undefined, 'club.address,address').subscribe(res => {
+              this.party = res.data;
+              if (this.forcedDate) {
+                this.party.from = new Date(this.forcedDate).toISOString() || this.party.from;
+              }
+              const { participation, ...party } = this.party;
+              this.party.participation = this.party.participation ?? {
+                party: { ...party, participation: null },
+                pr: '',
+                participants: 1,
+                checked: false
+              };
+            });
+          }
+        });
+    }
+  }
+
+  share() {
+    Share.share({
+      title: this.party?.title,
+      text: this.party?.title,
+      url: 'https://easydance.app/event-detail/' + this.party?.id,
+      dialogTitle: 'Condividi questo evento con i tuoi amici',
+    });
   }
 }

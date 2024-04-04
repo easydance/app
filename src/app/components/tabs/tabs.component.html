@@ -1,4 +1,5 @@
-<div [ngClass]="{ 'ios-footer pt-2': platform.is('ios')}"
+<div [ngClass]="{ hide: isInFullImmersion()}"
+	[ngClass]="{ 'ios-footer pt-2': platform.is('ios')}"
 	class="footer px-4">
 	<div [routerLink]="'/home'"
 		(click)="tabClicked.emit('home')">
@@ -10,7 +11,7 @@
 	</div>
 	<div [routerLink]="'/map'"
 		(click)="tabClicked.emit('map')">
-		<ion-icon *ngIf="isInSection('map') || isInSection('/map')"
+		<ion-icon *ngIf="(isInSection('map') || isInSection('/map'))"
 			name="ellipse"
 			class
 			style="font-size: 3px;"></ion-icon>
@@ -19,7 +20,7 @@
 	<div (click)="goInFullImmersion()"
 		(click)="tabClicked.emit('full-immersion')">
 		<ion-icon [size]="36"
-			color="#9c9c9c"
+			[color]="'#9c9c9c'"
 			name="qr-code-outline"
 			style="font-size: 36px;"></ion-icon>
 	</div>
@@ -40,6 +41,30 @@
 		Profilo
 	</div>
 </div>
+
+<div [ngClass]="{ 'ios-footer pt-2': platform.is('ios'), hide: !isInFullImmersion()}"
+	class="footer full-immersion px-4">
+	<div [routerLink]="'/full-immersion/orders'"
+		(click)="tabClicked.emit('full-immersion/orders')"
+		class="flex-1">
+		<ion-icon *ngIf="isInSection('full-immersion/orders') || isInSection('/full-immersion/orders')"
+			name="ellipse"
+			class
+			style="font-size: 3px;"></ion-icon>
+		ORDINI
+	</div>
+	<div (click)="goInFullImmersion()"
+		(click)="tabClicked.emit('full-immersion')">
+		<ion-icon [color]="'light'"
+			name="qr-code-outline"
+			style="font-size: 36px;"></ion-icon>
+	</div>
+	<div [routerLink]="'/'"
+		class="flex-1">
+		ESCI
+	</div>
+</div>
+
 <ion-modal #modal
 	id="full-immersion-modal"
 	trigger="open-custom-dialog">
@@ -57,8 +82,7 @@
 					expand="block">
 					Cambia club
 				</ion-button>
-				<ion-button
-					(click)="modal.dismiss()"
+				<ion-button (click)="modal.dismiss()"
 					class="mt-2"
 					shape="round"
 					color="primary"

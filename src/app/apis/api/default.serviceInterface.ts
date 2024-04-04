@@ -28,6 +28,12 @@ export interface DefaultServiceInterface {
      * 
      * 
      */
+    appController(extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     */
     get(extraHttpRequestParams?: any): Observable<{}>;
 
     /**
@@ -55,13 +61,6 @@ export interface DefaultServiceInterface {
      * 
      * 
      */
-    notify(extraHttpRequestParams?: any): Observable<{}>;
-
-    /**
-     * 
-     * 
-     * @param pwd 
-     */
-    vapId(pwd: string, extraHttpRequestParams?: any): Observable<{}>;
+    settings(extraHttpRequestParams?: any): Observable<{}>;
 
 }

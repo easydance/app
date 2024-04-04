@@ -28,6 +28,13 @@
 			color="dark">
 			Luogo
 		</ion-button> -->
+		<ion-button [fill]="filterType != 'tags' ? undefined : 'outline'"
+			[color]="filterType != 'tags' ? 'dark' : 'light'"
+			(click)="filter('tags')"
+			xs
+			color="dark">
+			Tag
+		</ion-button>
 		<ion-button [fill]="filterType != 'clubs' ? undefined : 'outline'"
 			[color]="filterType != 'clubs' ? 'dark' : 'light'"
 			(click)="filter('clubs')"
@@ -40,7 +47,7 @@
 			(click)="filter('parties')"
 			xs
 			color="dark">
-			Evento
+			Party
 		</ion-button>
 		<ion-button *ngIf="authManager.isAuthenticated()"
 			[fill]="filterType != 'users' ? undefined : 'outline'"
@@ -48,7 +55,7 @@
 			(click)="filter('users')"
 			xs
 			color="dark">
-			Persone
+			User
 		</ion-button>
 	</div>
 	<div>

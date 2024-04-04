@@ -46,3 +46,8 @@ ion-modal::part(content) {
   line-height: 11px; /* 91.667% */
   letter-spacing: 1px;
 }
+
+
+ion-toolbar {
+  align-items: baseline;
+}

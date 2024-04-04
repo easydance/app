@@ -30,9 +30,9 @@ const init = (http: HttpClient) => () => {
   }
 
   return new Promise(async (resolve, reject) => {
-    http.get('https://api.easydance.app/settings.json').subscribe((res: { [key: string]: any; }) => {
-      (<any>window).EASY_KEYS = {};
-      Object.assign((<any>window).EASY_KEYS, res);
+    http.get('https://api.easydance.app/settings.json?v=' + Date.now()).subscribe((res: { [key: string]: any; }) => {
+      window.EASY_KEYS = {};
+      Object.assign(window.EASY_KEYS, res);
       loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
       resolve(true);
     });

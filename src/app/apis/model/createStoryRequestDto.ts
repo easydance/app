@@ -19,5 +19,6 @@ export interface CreateStoryRequestDto {
     hidden: boolean;
     title: string | null;
     party: CreatePartyParticipationRequestDtoParty;
+    userTags: Array<string>;
 }
 

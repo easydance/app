@@ -9,6 +9,7 @@ import { UserBaseDto } from 'src/app/apis';
 export class UsersWidgetComponent  implements OnInit {
 
   @Input() users: Pick<UserBaseDto, 'profileImage' | 'id' | 'firstName' | 'lastName'>[] = [];
+  @Input() avatarShown?: number;
 
   constructor() { }
 

@@ -19,7 +19,7 @@ import { PatchStoryLikeRequestDto } from '../model/models';
 import { StoryLikeControllerCreateDefaultResponse } from '../model/models';
 import { StoryLikeControllerFindAllDefaultResponse } from '../model/models';
 import { StoryLikeControllerFindOneDefaultResponse } from '../model/models';
-import { StoryLikeControllerReplaceDefaultResponse } from '../model/models';
+import { StoryLikeControllerSetDefaultResponse } from '../model/models';
 import { StoryLikeControllerUpdateDefaultResponse } from '../model/models';
 import { UpdateStoryLikeRequestDto } from '../model/models';
 
@@ -65,6 +65,13 @@ export interface StoryLikeServiceInterface {
     /**
      * 
      * 
+     * @param ids 
+     */
+    deleteMany(ids: Array<number>, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
      * @param page 
      * @param pageSize 
      * @param filters 
@@ -91,7 +98,7 @@ export interface StoryLikeServiceInterface {
      * @param id 
      * @param updateStoryLikeRequestDto 
      */
-    replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, extraHttpRequestParams?: any): Observable<StoryLikeControllerReplaceDefaultResponse>;
+    replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, extraHttpRequestParams?: any): Observable<StoryLikeControllerSetDefaultResponse>;
 
     /**
      * 
@@ -99,6 +106,16 @@ export interface StoryLikeServiceInterface {
      * @param id 
      */
     restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param updateStoryLikeRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    set(updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<StoryLikeControllerSetDefaultResponse>;
 
     /**
      * 

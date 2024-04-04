@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true"
 	(next)="goBack()"
 	swipe>
-	<recording-video-preview #recordingVideoPreview
+	<recording-video-preview *ngIf="isReady" #recordingVideoPreview
 		(mediaCreated)="mediaCreated($event)"></recording-video-preview>
 </ion-content>
 

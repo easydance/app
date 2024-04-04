@@ -4,7 +4,7 @@ import { IonModal, NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 // import { GoogleMap, LatLngBounds } from '@capacitor/google-maps';
 import { Subject, debounceTime, lastValueFrom } from 'rxjs';
-import { BASE_PATH, ClubBaseDto, ClubService, PartyBaseDto, PartyService } from 'src/app/apis';
+import { BASE_PATH, ClubBaseDto, ClubService, GetPartyResponseDto, PartyBaseDto, PartyService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 import { customMapStyle } from 'src/app/utils/google-maps.utils';
@@ -29,13 +29,13 @@ export class MapPage implements OnInit, AfterViewChecked {
   private currentDate: Date = new Date();
   private mapReady: boolean = false;
   // private map?: GoogleMap;
-  public parties: PartyBaseDto[] = [];
+  public parties: GetPartyResponseDto[] = [];
   public clubs: ClubBaseDto[] = [];
-  public selectedParties?: PartyBaseDto[];
+  public selectedParties?: GetPartyResponseDto[];
   public selectedClub?: ClubBaseDto;
   public city?: string = this.authManager.currentCity;
   public searchType: SearchType = 'parties';
-  public partyDetail?: PartyBaseDto;
+  public partyDetail?: GetPartyResponseDto;
 
   public itemOptions = { onItemClick: this.goto.bind(this) };
 
@@ -219,7 +219,7 @@ export class MapPage implements OnInit, AfterViewChecked {
     }
   }
 
-  showEvent(party: PartyBaseDto) {
+  showEvent(party: GetPartyResponseDto) {
     this.partyDetail = party;
     this.detailModal?.present();
   }
@@ -245,7 +245,7 @@ export class MapPage implements OnInit, AfterViewChecked {
   }
 
 
-  goto(party: PartyBaseDto) {
+  goto(party: GetPartyResponseDto | PartyBaseDto) {
     this.navCtrl.navigateForward('/event-detail/' + party.id, {
       queryParams: {
         forcedDate: DateTime.fromJSDate(this.currentDate).set({ hour: new Date(party.from).getHours(), minute: new Date(party.from).getMinutes() }).toISO()!

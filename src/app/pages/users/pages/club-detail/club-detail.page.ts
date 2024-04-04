@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonModal, NavController, ToastController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
-import { AttachmentBaseDto, ClubBaseDto, ClubService, GetUserResponseDto, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserService, UserToClubFollowerService } from 'src/app/apis';
+import { AttachmentBaseDto, ClubBaseDto, ClubReviewService, ClubService, GetClubResponseDto, GetUserResponseDto, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Component({
@@ -13,12 +13,23 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
 })
 export class ClubDetailPage implements OnInit {
 
+  @ViewChild('modal') modal?: IonModal;
+
   public parties?: PartyBaseDto[];
-  public club?: ClubBaseDto;
+  public club?: GetClubResponseDto;
   public profile?: AttachmentBaseDto;
   public covers?: AttachmentBaseDto[];
   public isFollowing?: GetUserToClubFollowerResponseDto;
   public followers: GetUserResponseDto[] = [];
+
+  public score: number = 0;
+
+  public get rating() {
+    if (this.club?.rating) {
+      return (Math.round(this.club.rating * 10) / 10).toFixed(1).replace('.0', '');
+    }
+    return '-';
+  }
 
 
   constructor(
@@ -29,7 +40,9 @@ export class ClubDetailPage implements OnInit {
     private readonly clubsService: ClubService,
     private readonly clubFollowerService: UserToClubFollowerService,
     private readonly toastCtrl: ToastController,
-    private readonly usersService: UserService
+    private readonly usersService: UserService,
+    private readonly reviewsService: ClubReviewService,
+    private readonly changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -37,6 +50,7 @@ export class ClubDetailPage implements OnInit {
       const id = res['id'];
       this.clubsService.findOne(id, undefined, 'address').subscribe(res => {
         this.club = res.data;
+        this.score = res.data.userReview?.rate || 0;
         // const [profile, ...covers] = this.club.covers;
         this.profile = this.club.profile;
         this.covers = this.club.covers.sort((a, b) => a.id == this.club?.currentCover ? -1 : 1);
@@ -49,11 +63,13 @@ export class ClubDetailPage implements OnInit {
       });
 
       this.clubFollowerService.findAll(0, 1000, JSON.stringify({ club: { id: id || 0 } }), undefined, undefined, 'user').subscribe(res => {
-        this.usersService.findAll(0, 1000, JSON.stringify({
-          id: { $in: res.data.map(d => d.user.id) }
-        })).subscribe(res2 => {
-          this.followers = res2.data;
-        });
+        if (this.authManager.isAuthenticated()) {
+          this.usersService.findAll(0, 1000, JSON.stringify({
+            id: { $in: res.data.map(d => d.user?.id).filter(x => x) }
+          })).subscribe(res2 => {
+            this.followers = res2.data;
+          });
+        }
 
       });
 
@@ -88,15 +104,24 @@ export class ClubDetailPage implements OnInit {
   }
 
   followClub() {
-    this.clubFollowerService.create({
-      club: { id: this.club?.id } as any,
-      user: { id: this.authManager.user?.id } as any,
-    }).subscribe(res => {
-      this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
-        if (this.club) this.club.followerCount = res.data.followerCount;
+    if (this.authManager.isAuthenticated()) {
+      this.clubFollowerService.create({
+        club: { id: this.club?.id } as any,
+        user: { id: this.authManager.user?.id } as any,
+      }).subscribe(res => {
+        this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
+          if (this.club) this.club.followerCount = res.data.followerCount;
+        });
+        this.isFollowing = res.data;
+        this.modal?.present();
       });
-      this.isFollowing = res.data;
-    });
+
+      return;
+    }
+    this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })
+      .then(toast => {
+        toast.present();
+      });
   }
 
   async openOnBrowser(url: string) {
@@ -109,6 +134,30 @@ export class ClubDetailPage implements OnInit {
   }
 
   openModal(modal: IonModal | undefined) {
-    modal?.present();
+    if (this.authManager.isAuthenticated()) {
+      modal?.present();
+      return;
+    }
+    this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })
+      .then(toast => {
+        toast.present();
+      });
+  }
+
+  setScore(score: number) {
+    if (this.isFollowing && this.club) {
+      this.score = score;
+      this.changeDetector.detectChanges();
+      this.reviewsService.set({
+        club: this.club.id!,
+        rate: this.score
+      }).subscribe(res => {
+        this.clubsService.findOne(this.club!.id, undefined)
+          .subscribe(res => {
+            this.club!.rating = res.data.rating;
+            this.changeDetector.detectChanges();
+          });
+      });
+    }
   }
 }

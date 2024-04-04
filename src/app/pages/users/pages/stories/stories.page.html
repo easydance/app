@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content id="stories-content" [fullscreen]="true">
 	<div class="header px-4">
 		<div class="pager flex item-center gap-1 px-1">
 			<div *ngFor="let story of stories; let i = index"
@@ -58,41 +58,52 @@
 					class="flex-1"></div>
 			</div>
 
-			<div class="footer p-4 flex space-between z-600">
-				<div>
-					<ion-chip class="dark xl">
-						<ion-icon color="light"
-							name="location"></ion-icon>
-						<ion-label>
-							{{getClubName(story) || '-'}}
-						</ion-label>
-					</ion-chip>
-					<div class="title mt-2">
-						{{story.party.title}}
-					</div>
+			<div class="footer p-4 z-600">
+				<div (click)="openUserTagged(friendsModal.modal!)"
+					class="mb-4" *ngIf="story.userTags?.length">
+					<users-widget [users]="(story.userTags || []) | bypassTyping"
+						[avatarShown]="5"
+						style="zoom: 0.5" ()></users-widget>
 				</div>
-				<div class>
-					<users-widget *ngIf="authManager.user"
-						[users]="[authManager.user]"></users-widget>
-					<div class="stories-buttons">
-						<ion-fab-button size="small">
-							<ion-icon name="heart-outline"></ion-icon>
-						</ion-fab-button>
-						<!-- <ion-fab-button size="small">
+
+				<div class="flex space-between gap-2">
+					<div>
+						<ion-chip class="dark xl"
+							style="zoom: 0.8">
+							<ion-icon color="light"
+								name="location"></ion-icon>
+							<ion-label>
+								{{getClubName(story) || '-'}}
+							</ion-label>
+						</ion-chip>
+						<div class="title mt-2">
+							{{story.party.title}}
+						</div>
+					</div>
+					<div class>
+						<div class="stories-buttons">
+							<ion-fab-button size="small">
+								<ion-icon name="heart-outline"></ion-icon>
+							</ion-fab-button>
+							<!-- <ion-fab-button size="small">
 							<ion-icon name="share-outline"></ion-icon>
 						</ion-fab-button> 
 						<ion-fab-button size="small">
 							<ion-icon name="ellipsis-vertical"></ion-icon>
 						</ion-fab-button> -->
-						<ion-fab-button *ngIf="story.createdBy && authManager.user?.uuid && story.createdBy == authManager.user?.uuid"
-							(click)="pause();modal.present();"
-							size="small">
-							<ion-icon name="trash-outline"></ion-icon>
-						</ion-fab-button>
-					</div>
+							<ion-fab-button *ngIf="story.createdBy && authManager.user?.uuid && story.createdBy == authManager.user?.uuid"
+								(click)="pause();modal.present();"
+								size="small">
+								<ion-icon name="trash-outline"></ion-icon>
+							</ion-fab-button>
+						</div>
 
+					</div>
 				</div>
 			</div>
+			<follower-modal #friendsModal
+				[followers]="story.userTags | bypassTyping" [title]="'Amici taggati'"></follower-modal>
+
 		</swiper-slide>
 	</swiper-container>
 	<div *ngIf="!stories?.length"

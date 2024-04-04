@@ -17,51 +17,59 @@
 		</video>
 
 		<div *ngIf="source && source.party"
-			class="footer p-4 flex space-between">
-			<div>
-				<ion-chip class="dark xl">
-					<ion-icon color="light"
-						name="location"></ion-icon>
-					<ion-label>
-						{{source.party.club.name}}
-					</ion-label>
-				</ion-chip>
-				<div class="title mt-2">
-					{{source.party.title}}
-				</div>
+			class="footer p-4">
+			<div (click)="searchUsersModal.present()"
+				class="mb-4">
+				<users-widget [users]="source?.usersTags || []"
+					[avatarShown]="5"
+					style="zoom: 0.7"></users-widget>
 			</div>
-			<div class>
-				<users-widget [users]="source.usersTags"></users-widget>
-				<div class="stories-buttons">
-					<ion-fab-button size="small">
-						<ion-icon name="heart-outline"></ion-icon>
-					</ion-fab-button>
-					<!-- <ion-fab-button size="small">
-						<ion-icon name="share-outline"></ion-icon>
-					</ion-fab-button> -->
-					<ion-fab-button size="small">
-						<ion-icon name="ellipsis-vertical"></ion-icon>
-					</ion-fab-button>
-				</div>
 
+			<div class="flex space-between">
+				<div>
+					<ion-chip class="dark xl">
+						<ion-icon color="light"
+							name="location"></ion-icon>
+						<ion-label>
+							{{source.party.club.name}}
+						</ion-label>
+					</ion-chip>
+					<div class="title mt-2">
+						{{source.party.title}}
+					</div>
+				</div>
+				<div class>
+					<div class="stories-buttons">
+						<ion-fab-button size="small">
+							<ion-icon name="heart-outline"></ion-icon>
+						</ion-fab-button>
+						<!-- <ion-fab-button size="small">
+							<ion-icon name="share-outline"></ion-icon>
+						</ion-fab-button> -->
+						<ion-fab-button size="small">
+							<ion-icon name="ellipsis-vertical"></ion-icon>
+						</ion-fab-button>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>
 	<div *ngIf="!source">
 		<div></div>
-		<!-- <div [ngClass]="{'recording': recording}"
+		<div [ngClass]="{'recording': recording}"
 			(touchstart)="startEvent()"
 			(touchend)="endEvent()"
 			id="play-button"
 			class="w-14 h-14">
 			<div></div>
-		</div> -->
-		<div [ngClass]="{'recording': recording}"
+		</div>
+		<!-- <div [ngClass]="{'recording': recording}"
 			(click)="recording ? stopVideo() : recordVideo()"
 			id="play-button"
 			class="w-14 h-14">
 			<div></div>
-		</div>
+		</div> -->
 	</div>
 	<div *ngIf="source"
 		class="buttons">
@@ -116,19 +124,38 @@
 			clearIcon="close-outline"></ion-searchbar>
 		<div id="users-grid">
 			<div *ngFor="let user of users"
+				[ngClass]="{ selected: isUserSelected(user)  }"
+				(click)="toggleUser(user)"
 				class="user-item">
-				<ion-avatar style="margin: 0 auto;">
-					<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
-						style="object-fit: cover;"
-						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
-				</ion-avatar>
-				<div class="mt-1"
-					style="text-align: center;">
-					<small>
-						{{user.firstName}} {{user.lastName}}
-					</small>
+				<div>
+					<ion-avatar style="margin: 0 auto;">
+						<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
+							style="object-fit: cover;"
+							onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
+					</ion-avatar>
+					<div class="mt-1"
+						style="text-align: center;">
+						<small>
+							{{user.firstName}} {{user.lastName}}
+						</small>
+					</div>
+
 				</div>
 			</div>
+		</div>
+		<div class="flex space-between my-8">
+			<ion-button (click)="searchUsersModal.dismiss()"
+				class="flex-1"
+				shape="round"
+				color="dark">
+				CHIUDI
+			</ion-button>
+			<ion-button (click)="insertUsers();searchUsersModal.dismiss();"
+				class="flex-1"
+				shape="round"
+				color="primary">
+				Inserisci
+			</ion-button>
 		</div>
 	</ng-template>
 </ion-modal>

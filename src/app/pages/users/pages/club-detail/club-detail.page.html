@@ -25,7 +25,11 @@
 		<swiper-container *ngIf="covers"
 			pagination="false"
 			slides-per-view="1"
-			space-between="0">
+			space-between="0"
+			autoplay-delay="2000"
+			speed="1000"
+			autoplay-disable-on-interaction="false"
+			loop="true">
 			<swiper-slide *ngFor="let img of covers"
 				[ngStyle]="{ backgroundImage: 'linear-gradient(179deg, rgba(24, 24, 24, 0) 0%, rgba(24, 24, 24, 1) 100%), url(' + img?.url + ')'}">
 
@@ -34,6 +38,17 @@
 		<div class="flex align-center space-between absolute w-full px-4"
 			style="bottom: 12px; z-index: 1;">
 			<div class="info-club">
+				<ion-chip (click)="isFollowing ? modal.present() : undefined"
+					class="dark"
+					style="margin-bottom: 1rem;">
+					<!-- <ion-icon color="light"
+							name="calendar-sharp"></ion-icon> -->
+					<ion-label>
+						<ion-icon name="ellipse"
+							style="font-size: 0.5rem;"></ion-icon>
+						{{rating}}/5
+					</ion-label>
+				</ion-chip>
 				<div class="title">{{club?.name}}</div>
 				<div class="location mt-3">
 					{{club?.address?.city}}
@@ -41,8 +56,9 @@
 			</div>
 			<div>
 				<ion-avatar *ngIf="profile">
-					<img [src]="profile?.url" style="object-fit: cover;"
-					onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
+					<img [src]="profile?.url"
+						style="object-fit: cover;"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 			</div>
 		</div>
@@ -125,4 +141,61 @@
 		</div>
 	</div>
 </ion-content>
-<follower-modal #followersModal [followers]="followers" [title]="'Seguaci'"></follower-modal>
+<follower-modal #followersModal
+	[followers]="followers"
+	[title]="'Seguaci'"></follower-modal>
+
+<ion-modal #modal
+	id="full-immersion-modal"
+	trigger="open-custom-dialog">
+	<ng-template>
+		<ion-fab-button (click)="modal.dismiss();"
+			class="button m-3 mr-0-i w-9 h-9 absolute z-2000 right-4">
+			<ion-icon name="close"
+				style="font-size: 1rem;"></ion-icon>
+		</ion-fab-button>
+
+		<div class="wrapper p-8">
+			<div class="title">
+				Lascia una valutazione
+			</div>
+			<div class="my-10 subtitle">
+				Quanto ti piace questo locale?
+			</div>
+			<div id="score">
+				<div>
+					<div [ngStyle]="{ background: score > 0 ? 'white' : 'transparent' }"
+						(click)="setScore(1)"
+						class="flex items-center">
+						<ion-icon src="assets/icons/equalizer.svg"
+							color="light"></ion-icon>
+					</div>
+					<div [ngStyle]="{ background: score > 1 ? 'white' : 'transparent' }"
+						(click)="setScore(2)"
+						class="flex items-center">
+						<ion-icon src="assets/icons/equalizer.svg"
+							color="light"></ion-icon>
+					</div>
+					<div [ngStyle]="{ background: score > 2 ? 'white' : 'transparent' }"
+						(click)="setScore(3)"
+						class="flex items-center">
+						<ion-icon src="assets/icons/equalizer.svg"
+							color="light"></ion-icon>
+					</div>
+					<div [ngStyle]="{ background: score > 3 ? 'white' : 'transparent' }"
+						(click)="setScore(4)"
+						class="flex items-center">
+						<ion-icon src="assets/icons/equalizer.svg"
+							color="light"></ion-icon>
+					</div>
+					<div [ngStyle]="{ background: score > 4 ? 'white' : 'transparent' }"
+						(click)="setScore(5)"
+						class="flex items-center">
+						<ion-icon src="assets/icons/equalizer.svg"
+							color="light"></ion-icon>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

@@ -31,7 +31,7 @@ import { StoryLikeControllerFindAllDefaultResponse } from '../model/storyLikeCon
 // @ts-ignore
 import { StoryLikeControllerFindOneDefaultResponse } from '../model/storyLikeControllerFindOneDefaultResponse';
 // @ts-ignore
-import { StoryLikeControllerReplaceDefaultResponse } from '../model/storyLikeControllerReplaceDefaultResponse';
+import { StoryLikeControllerSetDefaultResponse } from '../model/storyLikeControllerSetDefaultResponse';
 // @ts-ignore
 import { StoryLikeControllerUpdateDefaultResponse } from '../model/storyLikeControllerUpdateDefaultResponse';
 // @ts-ignore
@@ -364,6 +364,78 @@ export class StoryLikeService implements StoryLikeServiceInterface {
     }
 
     /**
+     * @param ids 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteMany(ids: Array<number>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public deleteMany(ids: Array<number>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public deleteMany(ids: Array<number>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public deleteMany(ids: Array<number>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
+        if (ids === null || ids === undefined) {
+            throw new Error('Required parameter ids was null or undefined when calling deleteMany.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (ids) {
+            ids.forEach((element) => {
+                localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+                  <any>element, 'ids');
+            })
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (access-token) required
+        localVarCredential = this.configuration.lookupCredential('access-token');
+        if (localVarCredential) {
+            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/story-likes/delete/many`;
+        return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * @param page 
      * @param pageSize 
      * @param filters 
@@ -549,9 +621,9 @@ export class StoryLikeService implements StoryLikeServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<StoryLikeControllerReplaceDefaultResponse>;
-    public replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<StoryLikeControllerReplaceDefaultResponse>>;
-    public replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<StoryLikeControllerReplaceDefaultResponse>>;
+    public replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<StoryLikeControllerSetDefaultResponse>;
+    public replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<StoryLikeControllerSetDefaultResponse>>;
+    public replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<StoryLikeControllerSetDefaultResponse>>;
     public replace(id: number, updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling replace.');
@@ -608,7 +680,7 @@ export class StoryLikeService implements StoryLikeServiceInterface {
         }
 
         let localVarPath = `/story-likes/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<StoryLikeControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<StoryLikeControllerSetDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: updateStoryLikeRequestDto,
@@ -675,6 +747,98 @@ export class StoryLikeService implements StoryLikeServiceInterface {
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param updateStoryLikeRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public set(updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<StoryLikeControllerSetDefaultResponse>;
+    public set(updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<StoryLikeControllerSetDefaultResponse>>;
+    public set(updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<StoryLikeControllerSetDefaultResponse>>;
+    public set(updateStoryLikeRequestDto: UpdateStoryLikeRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (updateStoryLikeRequestDto === null || updateStoryLikeRequestDto === undefined) {
+            throw new Error('Required parameter updateStoryLikeRequestDto was null or undefined when calling set.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (fields !== undefined && fields !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>fields, 'fields');
+        }
+        if (includes !== undefined && includes !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>includes, 'includes');
+        }
+        if (deleted !== undefined && deleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>deleted, 'deleted');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (access-token) required
+        localVarCredential = this.configuration.lookupCredential('access-token');
+        if (localVarCredential) {
+            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/story-likes/set`;
+        return this.httpClient.request<StoryLikeControllerSetDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: updateStoryLikeRequestDto,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

@@ -29,6 +29,10 @@ export class TabsComponent implements OnInit {
     return location.pathname == section;
   }
 
+  isInFullImmersion() {
+    return location.pathname.includes('/full-immersion');
+  }
+
   async goInFullImmersion() {
     if (!this.authManager.isAuthenticated()) {
       this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })

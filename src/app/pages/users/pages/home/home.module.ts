@@ -10,7 +10,7 @@ import { HomePage } from './home.page';
 import { UiModule } from 'src/app/components/ui.module';
 import { StoryPageModule } from 'src/app/pages/users/pages/story/story.module';
 import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
-import { SwipeDirective } from 'src/app/directives/swipe.directive';
+import { GlobalEnvPipe } from 'src/app/pipes/global-env.pipe';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { SwipeDirective } from 'src/app/directives/swipe.directive';
     UiModule,
     StoryPageModule,
     RecordingVideoPreviewComponent,
-    SwipeDirective
+    GlobalEnvPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [HomePage]

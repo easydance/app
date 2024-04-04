@@ -18,11 +18,15 @@ export class TokenInterceptor implements HttpInterceptor {
 
         // Clone the request and replace the original headers with
         // cloned headers, updated with the authorization.
-        const authReq = req.clone(authToken ? {
-            headers: req.headers
-                .set('Authorization', `Bearer ${authToken}`)
-                .set('X-Origin', MD5(`${((Date.now() / (1000 * 60 * 60)).toFixed(0))}-Adc@@|!"`))
+        let authReq = req.clone(authToken ? {
+            headers: req.headers.set('Authorization', `Bearer ${authToken}`)
         } : {});
+        authReq = authReq.clone({
+            headers: authReq.headers.set('X-Origin', MD5(`${((Date.now() / (1000 * 60 * 60)).toFixed(0))}-Adc@@|!"`))
+        });
+        authReq = authReq.clone({
+            headers: authReq.headers.set('X-Coords', btoa(`${this.auth.geolocation?.coords.latitude},${this.auth.geolocation?.coords.longitude}`))
+        });
 
         // send cloned request with header to the next handler.
         // return next.handle(authReq);
@@ -30,7 +34,7 @@ export class TokenInterceptor implements HttpInterceptor {
             catchError(err => {
                 if (err.status === 401 && this.auth.isAuthenticated()) {
                     this.auth.logout();
-                    this.navCtrl.navigateRoot('/login');
+                    this.navCtrl.navigateRoot('/');
                     return throwError(() => err);
                 }
                 if (err.status === 401 && !this.auth.isAuthenticated()) {
