@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>862020674291-4k0nbecj45ce3b3jeaif1tctsoajgjdj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.862020674291-4k0nbecj45ce3b3jeaif1tctsoajgjdj</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>862020674291-3e0veole0ll0o20u6q5p1ic5edbgekub.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBsY8DuseaJU5CMLWpkl_vnKmJo3CooMYw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>862020674291</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>app.easydance</string>
+	<key>PROJECT_ID</key>
+	<string>easydance-399409</string>
+	<key>STORAGE_BUCKET</key>
+	<string>easydance-399409.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:862020674291:ios:e9022337af7cf28b0a0d86</string>
+</dict>
+</plist>
