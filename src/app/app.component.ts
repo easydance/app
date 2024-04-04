@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Keyboard } from "@capacitor/keyboard";
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { PushNotificationService } from 'src/app/services/push-notification.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 import * as swiper from 'swiper/element/bundle';
 swiper.register();
 
@@ -13,7 +17,37 @@ swiper.register();
 export class AppComponent {
 
 
-  constructor(private translationService: TranslateService) {
+  constructor(
+    private translationService: TranslateService,
+    private pushNotification: PushNotificationService,
+    private platform: Platform,
+    private ngZone: NgZone,
+    private navCtrl: NavController,
+    private webSocket: WebSocketService
+  ) {
+    
+    try {
+      this.webSocket.connect();      
+    } catch (error) {
+      console.warn('[WEB SOCKET] Web socket not connected!');
+      console.error(error);
+    }
+
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      this.ngZone.run(() => {
+        // Example url: https://my-ionic.app/tabs/tab2
+        // slug = /tabs/tab2
+        const slug = event.url.split(".app").pop();
+        console.log("slug = ", slug);
+        if (slug) {
+          this.navCtrl.navigateForward(slug);
+          return;
+        }
+        // If no match, do nothing - let regular routing
+        // logic take over
+      });
+    });
+
     Keyboard.addListener('keyboardWillShow', () => {
       document.body.classList.add('keyboard-open');
     });
@@ -29,6 +63,13 @@ export class AppComponent {
       });
 
     }, 5 * 60 * 1000);
+
+    this.platform.ready().then(res => {
+      this.pushNotification.initialize();
+    }).catch(err => {
+      console.error(err);
+    });
+
   }
 
 }

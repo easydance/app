@@ -12,6 +12,7 @@
 import { WarehouseBaseDto } from './warehouseBaseDto';
 import { AddressBaseDto } from './addressBaseDto';
 import { UserBaseDto } from './userBaseDto';
+import { GetClubReviewResponseDto } from './getClubReviewResponseDto';
 import { ClubBaseDtoSocialsValueValue } from './clubBaseDtoSocialsValueValue';
 import { PartyBaseDto } from './partyBaseDto';
 
@@ -41,5 +42,7 @@ export interface PatchClubRequestDto {
     description: string;
     socials?: { [key: string]: { [key: string]: ClubBaseDtoSocialsValueValue; }; } | null;
     followerCount: number;
+    rating: number;
+    userReview: GetClubReviewResponseDto;
 }
 

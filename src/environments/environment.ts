@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BASE_API: 'https://api.easydance.app'
+  BASE_API: 'https://api.easydance.app',
 };
 
 /*

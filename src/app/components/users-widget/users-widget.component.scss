@@ -1,11 +1,34 @@
 div {
   display: flex;
+  border-radius: 3rem;
+  background: rgba($color: #191919, $alpha: 0.6);
+  padding: 0.5rem;
+  width: fit-content;
 
+  > div#icon {
+    display: flex;
+    align-items: center;
+    background: transparent !important;
+    border: 0 !important;
+
+    > ion-icon {
+      margin: 0 auto;
+      font-size: 3rem;
+    }
+  }
+
+  #icon + div {
+    margin-left: 0.5rem !important;
+  }
+
+  > div.margin-0 {
+    margin-left: 0 !important;
+  }
   > div {
     width: 55px;
     height: 55px;
     border-radius: 50%;
-
-    background: center center no-repeat / cover;
+    margin-left: -1.5rem;
+    border: 2px solid var(--color-neutral-500);
   }
 }

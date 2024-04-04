@@ -43,6 +43,13 @@ export interface AttributesServiceInterface {
     /**
      * 
      * 
+     * @param aPIKEY 
+     */
+    attributesController(aPIKEY: string, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
      * @param page 
      * @param pageSize 
      * @param filters 
@@ -62,6 +69,13 @@ export interface AttributesServiceInterface {
      * @param deleted 
      */
     create(createAttributesRequestDto: CreateAttributesRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AttributesControllerCreateDefaultResponse>;
+
+    /**
+     * 
+     * 
+     * @param ids 
+     */
+    deleteMany(ids: Array<number>, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * 
@@ -106,13 +120,6 @@ export interface AttributesServiceInterface {
      * @param id 
      */
     restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
-
-    /**
-     * 
-     * 
-     * @param aPIKEY 
-     */
-    setVersion(aPIKEY: string, extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * 

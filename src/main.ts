@@ -10,3 +10,10 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
+
+
+declare global {
+  interface Window {
+    EASY_KEYS: Record<string, any>;
+  }
+}

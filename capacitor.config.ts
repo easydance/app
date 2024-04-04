@@ -1,4 +1,5 @@
 /// <reference types="@codetrix-studio/capacitor-google-auth" />
+/// <reference types="@capacitor/push-notifications" />
 
 import { CapacitorConfig } from '@capacitor/cli';
 
@@ -17,6 +18,7 @@ const config: CapacitorConfig = {
       keystoreAlias: 'easydance',
     },
     includePlugins: [
+      '@capacitor/push-notifications',
       '@capacitor-mlkit/barcode-scanning',
       '@capacitor-community/camera-preview',
       '@capacitor/app',
@@ -27,6 +29,7 @@ const config: CapacitorConfig = {
       '@capacitor/status-bar',
       '@codetrix-studio/capacitor-google-auth',
       'com.virtuoworks.cordova-plugin-canvascamera',
+      '@capacitor/share'
     ],
   },
   plugins: {
@@ -36,7 +39,10 @@ const config: CapacitorConfig = {
       iosClientId: "862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com",
       serverClientId: "862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com",
       forceCodeForRefreshToken: true,
-    }
+    },
+    PushNotifications: {
+      presentationOptions: ["badge", "sound", "alert"],
+    },
   }
 };
 

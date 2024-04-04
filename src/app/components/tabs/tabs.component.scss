@@ -5,11 +5,16 @@ $height: 65px;
 }
 
 :host {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  > div.hide {
+    bottom: -10rem;
+  }
 
   > div {
+    position: absolute;
+    bottom: 0;
+    transition: bottom 0.3s;
+    width: 100%;
+
     > div {
       position: relative;
 
@@ -26,6 +31,15 @@ $height: 65px;
 
 .footer.ios-footer {
   height: auto !important;
+}
+
+.footer.full-immersion {
+  justify-content: space-between;
+  background: rgb(92, 36, 148, 0.6);
+  backdrop-filter: blur(50px);
+  > div {
+    color: var(--color-neutral-50, white);
+  }
 }
 
 .footer {

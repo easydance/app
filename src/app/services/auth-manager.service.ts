@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, map, switchMap, tap } from 'rxjs';
 import { AuthService, LoginUserDataDto, SignUpDto, UpdateMeDto } from 'src/app/apis';
 import { Geolocation } from '@capacitor/geolocation';
-import { Platform } from '@ionic/angular';
+import { NavController, Platform, ToastController } from '@ionic/angular';
 import { App } from '@capacitor/app';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,13 @@ export class AuthManagerService {
     return this.geocodingStore.getValue();
   }
 
-  constructor(private authService: AuthService, private platform: Platform) { }
+  constructor(
+    private authService: AuthService,
+    private platform: Platform,
+    private webSocket: WebSocketService,
+    private navCtrl: NavController,
+    private toastCtrl: ToastController
+  ) { }
 
   isAuthenticated() {
     return !!this.getToken();
@@ -41,6 +48,19 @@ export class AuthManagerService {
             const { user, accessToken } = data;
             this.setToken(accessToken);
             this.setUser(user);
+            this.webSocket.wbReady$.subscribe(res => {
+              if (res) {
+                this.webSocket.subscribe('delete-user/' + user.id)
+                  .subscribe(res => {
+                    this.logout();
+                    this.navCtrl.navigateRoot('/');
+                    this.toastCtrl.create({ message: 'Il tuo account è stato eliminato!', duration: 3000 })
+                      .then(toast => {
+                        toast.present();
+                      });
+                  });
+              }
+            });
           }
         )
       );
@@ -49,6 +69,8 @@ export class AuthManagerService {
   logout() {
     this.setToken(undefined);
     this.setUser(undefined);
+    this.webSocket.unsubscribe('delete-user/' + this.user?.id);
+
   }
 
   signUp(signUpDto: SignUpDto, accessToken?: string, provider?: 'google' | 'apple') {

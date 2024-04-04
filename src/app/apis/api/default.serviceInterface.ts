@@ -28,6 +28,12 @@ export interface DefaultServiceInterface {
      * 
      * 
      */
+    appController(extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     */
     get(extraHttpRequestParams?: any): Observable<{}>;
 
     /**
@@ -50,18 +56,5 @@ export interface DefaultServiceInterface {
      * @param lng 
      */
     googleGeocodingReverse(lat: string, lng: string, extraHttpRequestParams?: any): Observable<GeocodeResponse>;
-
-    /**
-     * 
-     * 
-     */
-    notify(extraHttpRequestParams?: any): Observable<{}>;
-
-    /**
-     * 
-     * 
-     * @param pwd 
-     */
-    vapId(pwd: string, extraHttpRequestParams?: any): Observable<{}>;
 
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
-import { PartyBaseDto } from 'src/app/apis';
+import { GetPartyResponseDto, PartyBaseDto } from 'src/app/apis';
 
 @Component({
   selector: 'items-list',
@@ -13,8 +13,8 @@ export class ItemsListComponent implements OnInit {
   @Input() headerOpts?: { title: string, subtitle?: string, avatar?: string; hidden?: boolean; } = {
     title: ''
   };
-  @Input() parties?: PartyBaseDto[];
-  @Input() itemOptions?: { onItemClick?: (party: PartyBaseDto) => void; transparent?: boolean; } = {};
+  @Input() parties?: GetPartyResponseDto[];
+  @Input() itemOptions?: { onItemClick?: (party: GetPartyResponseDto) => void; transparent?: boolean; } = {};
   @Input() footerOpts?: { buttonLabel?: string; hidden?: boolean; } = {};
 
   @Output() itemClick: EventEmitter<PartyBaseDto> = new EventEmitter();
@@ -24,7 +24,7 @@ export class ItemsListComponent implements OnInit {
 
   ngOnInit() { }
 
-  goto(party: PartyBaseDto) {
+  goto(party: GetPartyResponseDto) {
     this.itemClick.emit(party);
     if (this.itemOptions?.onItemClick) {
       return this.itemOptions.onItemClick(party);
