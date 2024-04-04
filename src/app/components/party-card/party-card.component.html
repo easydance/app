@@ -22,8 +22,13 @@
 						class="fab">
 						<ion-icon [name]="!!party?.saved ? 'bookmark' : 'bookmark-outline'"
 							color="light"></ion-icon>
-						<!-- <span>SALVATO!</span> -->
 					</div>
+					<!-- <div (click)="share()"
+						class="fab">
+						<ion-icon [name]="'share-outline'"
+							color="light"
+							style="font-size: 1rem;"></ion-icon>
+					</div> -->
 				</div>
 			</div>
 			<div [ngClass]="{ mergeWithBg: !!options.mergeWithBg }"

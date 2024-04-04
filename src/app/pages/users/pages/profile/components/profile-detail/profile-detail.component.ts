@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { ClubBaseDto, ClubService, GetUserResponseDto, GetUserToUserFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService, UserToUserFollowerService } from 'src/app/apis';
 import { UiModule } from 'src/app/components/ui.module';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: 'profile-detail',
@@ -34,8 +35,10 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
     private authManager: AuthManagerService,
     private readonly clubFollowerService: UserToClubFollowerService,
     private readonly clubsService: ClubService,
-    private readonly toastCtrl: ToastController
-  ) { }
+    private readonly toastCtrl: ToastController,
+  ) {
+    
+  }
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes['user'].currentValue?.id != changes['user'].previousValue?.id) {

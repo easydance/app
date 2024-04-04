@@ -36,9 +36,15 @@ export interface AuthServiceInterface {
     /**
      * 
      * 
-     * @param code 
      */
-    deleteUser(code: string, extraHttpRequestParams?: any): Observable<{}>;
+    authController(extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param id 
+     */
+    impersonation(id: number, extraHttpRequestParams?: any): Observable<LoginResponseDto>;
 
     /**
      * 
@@ -98,5 +104,12 @@ export interface AuthServiceInterface {
      * @param requestUpdatePassword 
      */
     updatePassword(requestUpdatePassword: RequestUpdatePassword, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param code 
+     */
+    validateUser(code: string, extraHttpRequestParams?: any): Observable<{}>;
 
 }

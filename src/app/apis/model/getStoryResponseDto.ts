@@ -32,9 +32,10 @@ export interface GetStoryResponseDto {
     user: UserBaseDto | null;
     attachment: AttachmentBaseDto;
     party: PartyBaseDto;
-    userTags: Array<string>;
+    userTags: Array<UserBaseDto>;
     friends: Array<UserDto>;
     profileImage: AttachmentBaseDto;
     liked: boolean;
+    likes: number;
 }
 

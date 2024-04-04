@@ -30,7 +30,7 @@ export class StoriesWidgetComponent implements OnInit {
       JSON.stringify(filter),
       undefined,
       undefined,
-      'party.club,user'
+      'party.club,user,userTags'
     ).pipe(
       catchError(err => {
         return throwError(() => err);

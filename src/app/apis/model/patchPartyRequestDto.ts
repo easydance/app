@@ -40,5 +40,7 @@ export interface PatchPartyRequestDto {
     saved: number | null;
     participation: GetPartyParticipationResponseDto | null;
     users: Array<PartyParticipationBaseDto>;
+    score: number | null;
+    distance: number | null;
 }
 

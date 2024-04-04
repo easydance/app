@@ -12,6 +12,7 @@
 import { WarehouseBaseDto } from './warehouseBaseDto';
 import { AddressBaseDto } from './addressBaseDto';
 import { UserBaseDto } from './userBaseDto';
+import { GetClubReviewResponseDto } from './getClubReviewResponseDto';
 import { ClubBaseDtoSocialsValueValue } from './clubBaseDtoSocialsValueValue';
 import { ClubBaseDto } from './clubBaseDto';
 import { PartyBaseDto } from './partyBaseDto';

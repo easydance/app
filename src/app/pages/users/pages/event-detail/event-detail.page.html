@@ -14,12 +14,20 @@
 				<ion-icon name="arrow-back-sharp"></ion-icon>
 			</ion-button> -->
 		</ion-buttons>
-		<ion-buttons slot="end">
+		<ion-buttons slot="end" style="flex-direction: column">
 			<ion-fab-button *ngIf="authManager.isAuthenticated()"
 				(click)="onBookmarkClick($event)"
 				class="button m-3 ml-0-i w-9 h-9"
 				routerDirection="back">
 				<ion-icon [name]="!!party?.saved ? 'bookmark' : 'bookmark-outline'"
+					color="light"
+					style="font-size: 1rem;"></ion-icon>
+			</ion-fab-button>
+			<ion-fab-button *ngIf="authManager.isAuthenticated()"
+				(click)="share()"
+				class="button m-3 ml-0-i w-9 h-9"
+				routerDirection="back">
+				<ion-icon [name]="'share-outline'"
 					color="light"
 					style="font-size: 1rem;"></ion-icon>
 			</ion-fab-button>
@@ -49,6 +57,19 @@
 			{{party?.participation!.pr ? 'MODIFICA LISTA' : 'METTITI IN LISTA'}}
 		</ion-button>
 	</div>
+	<div *ngIf="!party?.isWaitingList && authManager.isAuthenticated()"
+		id="list-button-wrapper">
+		<ion-button (click)="joinToPaty()"
+			[color]="party?.joined ? 'dark' : 'primary'"
+			shape="round">
+			<ion-icon [ngStyle]="{
+				'transform': party?.joined ? 'scaleX(-1)' : 'scaleX(1)',
+				transition: 'all 0.3s'
+			}" src="assets/icons/guy-walk.svg"
+				class="mr-2"></ion-icon>
+			{{party?.joined ? 'NON Parteciperò': 'PARTECIPA' }}
+		</ion-button>
+	</div>
 </ion-content>
 
 <ion-modal #listModal
@@ -57,7 +78,9 @@
 		<div class="p-5">
 			<div class="flex space-between items-center header">
 				<div class="title flex align-center flex-1">
-					<div>{{party?.participation!.pr ? 'MODIFICA LISTA' : 'METTITI IN LISTA'}}</div>
+					<div>
+						{{party?.participation!.pr ? 'MODIFICA LISTA' : 'METTITI IN LISTA'}}
+					</div>
 				</div>
 				<div class="close">
 					<ion-button (click)="listModal.dismiss()"

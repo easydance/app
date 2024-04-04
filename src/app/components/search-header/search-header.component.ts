@@ -21,7 +21,7 @@ export class SearchHeaderComponent implements OnInit {
   public parties: PartyBaseDto[] = [];
   public users: UserBaseDto[] = [];
 
-  public filterType: 'all' | 'clubs' | 'parties' | 'users' = 'all';
+  public filterType: 'all' | 'clubs' | 'parties' | 'users' | 'tags' = 'all';
 
   constructor(
     private readonly clubsService: ClubService,
@@ -33,7 +33,7 @@ export class SearchHeaderComponent implements OnInit {
 
   ngOnInit() { }
 
-  filter(type: 'all' | 'clubs' | 'parties' | 'users') {
+  filter(type: 'all' | 'clubs' | 'parties' | 'users' | 'tags') {
     this.filterType = type;
     this.changeDetector.detectChanges();
     this.search();
@@ -69,6 +69,13 @@ export class SearchHeaderComponent implements OnInit {
     }
     if (['all', 'parties'].includes(this.filterType)) {
       this.partiesService.findAll(0, 10, JSON.stringify({ title: { $containsIgnore: this.searchTerm }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
+        .subscribe(parties => {
+          this.parties = parties.data;
+          this.changeDetector.detectChanges();
+        });
+    }
+    if (['all', 'tags'].includes(this.filterType)) {
+      this.partiesService.findAll(0, 10, JSON.stringify({ tags: { $containsIgnore: this.searchTerm }, to: { $gte: DateTime.now().toISO() } }), undefined, undefined, 'club')
         .subscribe(parties => {
           this.parties = parties.data;
           this.changeDetector.detectChanges();

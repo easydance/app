@@ -115,7 +115,7 @@ export class ForgotPasswordPage implements OnInit {
       this.authService.updatePassword({ token: this.otp, password: this.user.password, confirmPassword: this.user.confirmPassword })
         .pipe(
           catchError(err => {
-            this.toastCtrl.create({ message: 'Non è stato possibile completare cambiare la password', duration: 3000 }).then(f => f.present());
+            this.toastCtrl.create({ message: 'Non è stato possibile cambiare la password', duration: 3000 }).then(f => f.present());
             return throwError(() => err);
           })
         )

@@ -31,6 +31,6 @@ export interface CreateStoryResponseDto {
     user: UserBaseDto | null;
     attachment: AttachmentBaseDto;
     party: PartyBaseDto;
-    userTags: Array<string>;
+    userTags: Array<UserBaseDto>;
 }
 

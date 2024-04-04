@@ -7,6 +7,7 @@ import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
 import { ValidatorsDirective } from 'src/app/validators/form-conditions.validator';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { ValidatorsDirective } from 'src/app/validators/form-conditions.validato
     FormsModule,
     IonicModule,
     RegisterPageRoutingModule,
-    ValidatorsDirective
+    ValidatorsDirective,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [RegisterPage]

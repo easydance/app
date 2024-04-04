@@ -23,7 +23,7 @@ export class HomePage implements OnInit {
   }
 
   public parties?: GetPartyResponseDto[];
-  public clubs?: GetClubResponseDto[];
+  public clubs?: (GetClubResponseDto & { parties: GetPartyResponseDto[]; })[];
   public city?: string;
   public filter: any = {};
 
@@ -57,13 +57,13 @@ export class HomePage implements OnInit {
         this.clubFollowerService.findAll(0, 4, JSON.stringify({
           user: { id: this.authManager.user?.id || 0 }
         }), undefined, undefined, 'club.address').subscribe(res => {
-          this.clubs = res.data.map(cf => cf.club);
-          for (let club of this.clubs) {
+          this.clubs = res.data.map(cf => ({ ...cf.club, parties: [] }));
+          for (let club of (this.clubs || [])) {
             // Club parties
             this.partiesService.findAll(0, 5, JSON.stringify({
               to: { $gte: DateTime.now().toISO() },
               club: { id: club.id }
-            }), '{"from":0}', undefined, 'club')
+            }), '{"from":"ASC"}', undefined, 'club')
               .subscribe(res => {
                 club.parties = res.data;
               });
@@ -74,6 +74,9 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    setInterval(() => {
+      this.storyWidget?.findStories();
+    }, 5 * 60 * 1000);
   }
 
   searchEvents() {
@@ -85,7 +88,7 @@ export class HomePage implements OnInit {
         ...this.partiesUtils.Filters().InCurrentPosition()
       };
 
-      this.partiesService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'club,address').subscribe(res => {
+      this.partiesService.findAll(0, 5, JSON.stringify(this.filter), '{"distance":"ASC"}', undefined, 'club,address').subscribe(res => {
         this.parties = res.data;
         resolve(res.data);
       });
@@ -93,15 +96,15 @@ export class HomePage implements OnInit {
         this.clubFollowerService.findAll(0, 4, JSON.stringify({
           user: { id: this.authManager.user?.id || 0 }
         }), undefined, undefined, 'club.address').subscribe(res => {
-          this.clubs = res.data.map(cf => cf.club);
-          for (let club of this.clubs) {
+          this.clubs = res.data.map(cf => ({ ...cf.club, parties: [] }));
+          for (let club of (this.clubs || [])) {
             // Club parties
             this.partiesService.findAll(0, 5, JSON.stringify({
               to: {
                 $gte: DateTime.now().toISO()
               },
               club: { id: club.id }
-            }), '{"from":0}', undefined, 'club')
+            }), '{"from":"ASC"}', undefined, 'club')
               .subscribe(res => {
                 club.parties = res.data;
               });

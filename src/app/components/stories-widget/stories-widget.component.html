@@ -1,5 +1,4 @@
-<swiper-container *ngIf="stories.length"
-	pagination="false"
+<swiper-container pagination="false"
 	slides-per-view="auto"
 	free-mode="true">
 
@@ -15,35 +14,20 @@
 			</div>
 		</div>
 	</swiper-slide>
-	<!-- <swiper-slide (click)="onMe(); userClick.emit(users[authManager?.user?.id || ''])">
-		<div style="width: fit-content; margin-right: 1rem;">
+	<swiper-slide *ngFor="let kv of (users | keyvalue)"
+		(click)="storyClick.emit(kv.value.stories); userClick.emit(kv.value)">
+		<div style="width: fit-content;">
 			<ion-avatar style="margin: 0 auto;">
-				<img [src]="authManager.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
-					style="object-fit: cover;">
+				<img [src]="kv.value.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
+					style="object-fit: cover;"
+					onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 			</ion-avatar>
 			<div class="mt-1"
 				style="text-align: center;">
 				<small>
-					{{authManager.user?.firstName}} {{authManager.user?.lastName}}
+					{{kv.value.user?.firstName}} {{kv.value.user?.lastName}}
 				</small>
 			</div>
 		</div>
-	</swiper-slide> -->
-	<ng-container *ngFor="let kv of (users | keyvalue)">
-		<swiper-slide (click)="storyClick.emit(kv.value.stories); userClick.emit(kv.value)">
-			<div style="width: fit-content;">
-				<ion-avatar style="margin: 0 auto;">
-					<img [src]="kv.value.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
-						style="object-fit: cover;"
-						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
-				</ion-avatar>
-				<div class="mt-1"
-					style="text-align: center;">
-					<small>
-						{{kv.value.user?.firstName}} {{kv.value.user?.lastName}}
-					</small>
-				</div>
-			</div>
-		</swiper-slide>
-	</ng-container>
+	</swiper-slide>
 </swiper-container>
