@@ -14,8 +14,8 @@
 			</div>
 		</div>
 	</swiper-slide>
-	<swiper-slide *ngFor="let kv of (users | keyvalue)"
-		(click)="storyClick.emit(kv.value.stories); userClick.emit(kv.value)">
+	<swiper-slide *ngFor="let kv of userKeyValue; let i = index"
+		(click)="onAvatarClick(kv.value)">
 		<div style="width: fit-content;">
 			<ion-avatar style="margin: 0 auto;">
 				<img [src]="kv.value.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"

@@ -1,0 +1,7 @@
+{
+  "BASE_API": "https://api.easydance.app",
+  "WEBSOCKET_URL": "wss://api.easydance.app",
+  "GOOGLE_MAPS_KEY": "AIzaSyBpYjC6xhAPb7aSwbKDz4SCm1CJBejUTgc",
+  "STORIES_FEATURE": true,
+  "GOOGLE_AUTH_CLIENT_ID": "862020674291-4ec9dn33lbsefsmq3ld4pssnmcdibcrl.apps.googleusercontent.com"
+}

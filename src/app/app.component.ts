@@ -1,7 +1,9 @@
 import { Component, NgZone } from '@angular/core';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Keyboard } from "@capacitor/keyboard";
+import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PushNotificationService } from 'src/app/services/push-notification.service';
@@ -25,9 +27,12 @@ export class AppComponent {
     private navCtrl: NavController,
     private webSocket: WebSocketService
   ) {
-    
+
+    ScreenOrientation.lock({ orientation: 'portrait-primary' });
+    StatusBar.setStyle({ style: Style.Dark });
+
     try {
-      this.webSocket.connect();      
+      this.webSocket.connect();
     } catch (error) {
       console.warn('[WEB SOCKET] Web socket not connected!');
       console.error(error);
@@ -66,6 +71,13 @@ export class AppComponent {
 
     this.platform.ready().then(res => {
       this.pushNotification.initialize();
+      const googleAuthClientId = window.EASY_KEYS['GOOGLE_AUTH_CLIENT_ID'] || '862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com';
+      console.log("Google auth client id:", googleAuthClientId);
+      GoogleAuth.initialize({
+        clientId: googleAuthClientId,
+        grantOfflineAccess: true,
+        scopes: ['profile', 'email'],
+      });
     }).catch(err => {
       console.error(err);
     });

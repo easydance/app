@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
 import { AttachmentBaseDto, ClubBaseDto, ClubReviewService, ClubService, GetClubResponseDto, GetUserResponseDto, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: 'app-club-detail',
@@ -42,12 +43,14 @@ export class ClubDetailPage implements OnInit {
     private readonly toastCtrl: ToastController,
     private readonly usersService: UserService,
     private readonly reviewsService: ClubReviewService,
-    private readonly changeDetector: ChangeDetectorRef
+    private readonly changeDetector: ChangeDetectorRef,
+    private readonly webSocket: WebSocketService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(res => {
       const id = res['id'];
+      // if (this.club) this.webSocket.unsubscribe(`clubs/${this.club.id}/follow`);
       this.clubsService.findOne(id, undefined, 'address').subscribe(res => {
         this.club = res.data;
         this.score = res.data.userReview?.rate || 0;
@@ -79,6 +82,16 @@ export class ClubDetailPage implements OnInit {
           this.isFollowing = result.data[0];
         }
       });
+
+      // this.webSocket.wbReady$.subscribe(res => {
+      //   if (res && this.club) {
+      //     this.webSocket.subscribe(`clubs/${this.club.id}/follow`).subscribe(r => {
+      //       if (this.club) {
+      //         this.club.followerCount = r.data.followers;
+      //       }
+      //     });
+      //   }
+      // });
     });
 
   }

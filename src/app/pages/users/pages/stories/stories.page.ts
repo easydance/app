@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryBaseDto, StoryService } from 'src/app/apis';
-import { IonModal, IonicSlides, ModalController } from '@ionic/angular';
+import { GestureController, IonContent, IonModal, IonicSlides, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
@@ -12,6 +12,7 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
 })
 export class StoriesPage implements OnInit {
   @ViewChild('swiper') swiperRef: ElementRef<HTMLDivElement & { swiper: any; }> | undefined;
+  @ViewChild(IonContent, { read: ElementRef }) content?: ElementRef<HTMLIonContentElement>;
 
   public currentIndex: number = 0;
   public stories?: GetStoryResponseDto[];
@@ -26,11 +27,13 @@ export class StoriesPage implements OnInit {
     private storiesService: StoryService,
     private route: ActivatedRoute,
     public authManager: AuthManagerService,
-    private modalCtrl: ModalController
-  ) { }
+    private modalCtrl: ModalController,
+  ) {
+  }
 
   ngOnInit() {
   }
+
 
   ionViewWillEnter() {
 
@@ -68,7 +71,7 @@ export class StoriesPage implements OnInit {
     ).subscribe(res => {
       this.stories = res.data;
       if (this.stories.length === 0) {
-        this.modalCtrl.dismiss();
+        this.close();
         return;
       }
       setTimeout(() => {
@@ -89,15 +92,11 @@ export class StoriesPage implements OnInit {
       this.currentProgress = 0;
       this.currentIndex = event.detail[0].realIndex;
 
-      const promises = [];
       for (let video of Array.from(document.querySelectorAll<HTMLVideoElement>('swiper-slide video'))) {
         video.currentTime = 0;
-        promises.push(video.pause());
+        video.pause();
       }
-
-      Promise.all(promises).then(res => {
-        this.initStory();
-      });
+      this.initStory();
     });
     return swiperEl;
   }
@@ -131,9 +130,10 @@ export class StoriesPage implements OnInit {
 
   resume() {
     this.isCurrentStoryPaused = false;
-    for (let video of Array.from(document.querySelectorAll<HTMLVideoElement>('swiper-slide video'))) {
-      video.play();
-    }
+    const swiper = this.swiperRef?.nativeElement.swiper;
+    let index_currentSlide = swiper.realIndex;
+    let currentSlide = swiper.slides[index_currentSlide];
+    currentSlide.querySelector('video')?.play();
   }
 
   initStory() {
@@ -149,7 +149,7 @@ export class StoriesPage implements OnInit {
           this.currentProgress = this.currentTime / video.duration;
           if (this.currentProgress >= 1) {
             if (this.currentIndex + 1 == this.stories?.length) {
-              this.modalCtrl.dismiss();
+              this.close();
             }
             document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper.slideNext();
             clearInterval(intervalID);
@@ -166,7 +166,7 @@ export class StoriesPage implements OnInit {
         this.currentProgress = this.currentTime / 15000;
         if (this.currentProgress >= 1) {
           if (this.currentIndex + 1 == this.stories?.length) {
-            this.modalCtrl.dismiss();
+            this.close();
           }
           document.querySelector<HTMLDivElement & { swiper: any; }>('#stories-slider')?.swiper.slideNext();
           clearInterval(intervalID);
@@ -193,21 +193,27 @@ export class StoriesPage implements OnInit {
   }
 
   previousUser() {
-    this.modalCtrl.dismiss({}, 'PREVIOUS_USER');
+    this.close({}, 'PREVIOUS_USER');
   }
 
   nextUser() {
-    this.modalCtrl.dismiss({}, 'NEXT_USER');
+    this.close({}, 'NEXT_USER');
   }
-  close() {
-    this.modalCtrl.dismiss();
+
+  close(data?: any, role?: string) {
+    for (let interval of this.intervalIds) {
+      clearInterval(interval);
+    }
+    this.modalCtrl.dismiss(data, role);
   }
+
   openUserTagged(modal: IonModal) {
     this.pause();
     modal.present();
     modal.onDidDismiss().then(res => {
       this.resume();
-    })
+    });
 
   }
+
 }

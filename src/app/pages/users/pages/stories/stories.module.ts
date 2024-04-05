@@ -9,6 +9,7 @@ import { StoriesPageRoutingModule } from './stories-routing.module';
 import { StoriesPage } from './stories.page';
 import { UiModule } from 'src/app/components/ui.module';
 import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
+import { SwipeDirective } from 'src/app/directives/swipe.directive';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
     IonicModule,
     StoriesPageRoutingModule,
     UiModule,
-    BypassTypingPipe
+    BypassTypingPipe,
+    SwipeDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [StoriesPage]
