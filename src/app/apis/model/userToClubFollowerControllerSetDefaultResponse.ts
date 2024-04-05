@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserBaseDto } from './userBaseDto';
+import { UpdateUserToClubFollowerResponseDto } from './updateUserToClubFollowerResponseDto';
 
 
-export interface UpdateUserToUserFollowerRequestDto { 
-    followed: UserBaseDto;
+export interface UserToClubFollowerControllerSetDefaultResponse { 
+    data: UpdateUserToClubFollowerResponseDto;
 }
 

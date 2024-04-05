@@ -16,7 +16,7 @@
 		<stories-widget #storyWidget
 			*ngIf="isAuthenticated"
 			(newStory)="makeStory()"
-			(userClick)="handleStories($event?.user, $event?.stories)"></stories-widget>
+			(userClick)="handleStories($event)"></stories-widget>
 	</div>
 	<div>
 		<div class="title-big my-4 mb-8">

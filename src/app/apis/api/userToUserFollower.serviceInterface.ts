@@ -20,7 +20,7 @@ import { UpdateUserToUserFollowerRequestDto } from '../model/models';
 import { UserToUserFollowerControllerCreateDefaultResponse } from '../model/models';
 import { UserToUserFollowerControllerFindAllDefaultResponse } from '../model/models';
 import { UserToUserFollowerControllerFindOneDefaultResponse } from '../model/models';
-import { UserToUserFollowerControllerReplaceDefaultResponse } from '../model/models';
+import { UserToUserFollowerControllerSetDefaultResponse } from '../model/models';
 import { UserToUserFollowerControllerUpdateDefaultResponse } from '../model/models';
 
 
@@ -98,7 +98,7 @@ export interface UserToUserFollowerServiceInterface {
      * @param id 
      * @param updateUserToUserFollowerRequestDto 
      */
-    replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerReplaceDefaultResponse>;
+    replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerSetDefaultResponse>;
 
     /**
      * 
@@ -106,6 +106,16 @@ export interface UserToUserFollowerServiceInterface {
      * @param id 
      */
     restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param updateUserToUserFollowerRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerSetDefaultResponse>;
 
     /**
      * 

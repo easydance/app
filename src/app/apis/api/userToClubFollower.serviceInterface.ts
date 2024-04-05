@@ -20,7 +20,7 @@ import { UpdateUserToClubFollowerRequestDto } from '../model/models';
 import { UserToClubFollowerControllerCreateDefaultResponse } from '../model/models';
 import { UserToClubFollowerControllerFindAllDefaultResponse } from '../model/models';
 import { UserToClubFollowerControllerFindOneDefaultResponse } from '../model/models';
-import { UserToClubFollowerControllerReplaceDefaultResponse } from '../model/models';
+import { UserToClubFollowerControllerSetDefaultResponse } from '../model/models';
 import { UserToClubFollowerControllerUpdateDefaultResponse } from '../model/models';
 
 
@@ -98,7 +98,7 @@ export interface UserToClubFollowerServiceInterface {
      * @param id 
      * @param updateUserToClubFollowerRequestDto 
      */
-    replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerReplaceDefaultResponse>;
+    replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerSetDefaultResponse>;
 
     /**
      * 
@@ -106,6 +106,16 @@ export interface UserToClubFollowerServiceInterface {
      * @param id 
      */
     restore(id: number, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
+     * @param updateUserToClubFollowerRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerSetDefaultResponse>;
 
     /**
      * 

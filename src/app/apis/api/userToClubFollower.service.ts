@@ -33,7 +33,7 @@ import { UserToClubFollowerControllerFindAllDefaultResponse } from '../model/use
 // @ts-ignore
 import { UserToClubFollowerControllerFindOneDefaultResponse } from '../model/userToClubFollowerControllerFindOneDefaultResponse';
 // @ts-ignore
-import { UserToClubFollowerControllerReplaceDefaultResponse } from '../model/userToClubFollowerControllerReplaceDefaultResponse';
+import { UserToClubFollowerControllerSetDefaultResponse } from '../model/userToClubFollowerControllerSetDefaultResponse';
 // @ts-ignore
 import { UserToClubFollowerControllerUpdateDefaultResponse } from '../model/userToClubFollowerControllerUpdateDefaultResponse';
 
@@ -621,9 +621,9 @@ export class UserToClubFollowerService implements UserToClubFollowerServiceInter
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToClubFollowerControllerReplaceDefaultResponse>;
-    public replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToClubFollowerControllerReplaceDefaultResponse>>;
-    public replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToClubFollowerControllerReplaceDefaultResponse>>;
+    public replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToClubFollowerControllerSetDefaultResponse>;
+    public replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToClubFollowerControllerSetDefaultResponse>>;
+    public replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToClubFollowerControllerSetDefaultResponse>>;
     public replace(id: number, updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling replace.');
@@ -680,7 +680,7 @@ export class UserToClubFollowerService implements UserToClubFollowerServiceInter
         }
 
         let localVarPath = `/user-to-club-followers/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<UserToClubFollowerControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<UserToClubFollowerControllerSetDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: updateUserToClubFollowerRequestDto,
@@ -747,6 +747,98 @@ export class UserToClubFollowerService implements UserToClubFollowerServiceInter
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param updateUserToClubFollowerRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToClubFollowerControllerSetDefaultResponse>;
+    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToClubFollowerControllerSetDefaultResponse>>;
+    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToClubFollowerControllerSetDefaultResponse>>;
+    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (updateUserToClubFollowerRequestDto === null || updateUserToClubFollowerRequestDto === undefined) {
+            throw new Error('Required parameter updateUserToClubFollowerRequestDto was null or undefined when calling set.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (fields !== undefined && fields !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>fields, 'fields');
+        }
+        if (includes !== undefined && includes !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>includes, 'includes');
+        }
+        if (deleted !== undefined && deleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>deleted, 'deleted');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (access-token) required
+        localVarCredential = this.configuration.lookupCredential('access-token');
+        if (localVarCredential) {
+            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/user-to-club-followers/set`;
+        return this.httpClient.request<UserToClubFollowerControllerSetDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: updateUserToClubFollowerRequestDto,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
