@@ -34,3 +34,6 @@ project(':codetrix-studio-capacitor-google-auth').projectDir = new File('../node
 
 include ':capacitor-share'
 project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/share/android')
+
+include ':capacitor-screen-orientation'
+project(':capacitor-screen-orientation').projectDir = new File('../node_modules/@capacitor/screen-orientation/android')
