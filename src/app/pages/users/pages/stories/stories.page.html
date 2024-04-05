@@ -1,4 +1,5 @@
-<ion-content id="stories-content" [fullscreen]="true">
+<ion-content [fullscreen]="true"
+	id="stories-content">
 	<div class="header px-4">
 		<div class="pager flex item-center gap-1 px-1">
 			<div *ngFor="let story of stories; let i = index"
@@ -18,6 +19,10 @@
 		allow-touch-move="false">
 		<swiper-slide *ngFor="let story of stories"
 			[id]="story.id"
+			[swipe]
+			(swipeDown)="close()"
+			(swipeRight)="nextUser()"
+			(swipeLeft)="previousUser()"
 			(touchstart)="pause()"
 			(touchend)="resume()">
 			<div class="header px-4">
@@ -59,11 +64,13 @@
 			</div>
 
 			<div class="footer p-4 z-600">
-				<div (click)="openUserTagged(friendsModal.modal!)"
-					class="mb-4" *ngIf="story.userTags?.length">
+				<div *ngIf="story.userTags?.length"
+					(click)="openUserTagged(friendsModal.modal!)"
+					class="mb-4">
 					<users-widget [users]="(story.userTags || []) | bypassTyping"
 						[avatarShown]="5"
-						style="zoom: 0.5" ()></users-widget>
+						()
+						style="zoom: 0.5"></users-widget>
 				</div>
 
 				<div class="flex space-between gap-2">
@@ -102,7 +109,8 @@
 				</div>
 			</div>
 			<follower-modal #friendsModal
-				[followers]="story.userTags | bypassTyping" [title]="'Amici taggati'"></follower-modal>
+				[followers]="story.userTags | bypassTyping"
+				[title]="'Amici taggati'"></follower-modal>
 
 		</swiper-slide>
 	</swiper-container>

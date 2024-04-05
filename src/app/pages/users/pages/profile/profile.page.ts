@@ -3,7 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { AuthService, ClubBaseDto, GetUserToClubFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
+import { ProfileDetailComponent } from 'src/app/pages/users/pages/profile/components/profile-detail/profile-detail.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +14,7 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
 })
 export class ProfilePage implements OnInit {
   @ViewChild('swiper') swiperRef: ElementRef<HTMLDivElement & { swiper: any; }> | undefined;
+  @ViewChild('profileDetail') profileDetail?: ProfileDetailComponent;
 
   public user?: LoginUserDataDto = this.authManager.user;
   public isMe: boolean = true;
@@ -25,27 +28,40 @@ export class ProfilePage implements OnInit {
     public readonly authManager: AuthManagerService,
     private readonly route: ActivatedRoute,
     private readonly navCtrl: NavController,
-    private readonly toastCtrl: ToastController
+    private readonly toastCtrl: ToastController,
+    private readonly webSocket: WebSocketService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(async res => {
-      this.user = (await lastValueFrom(this.usersService.findOne(res['id'], undefined))).data as any;
-      this.isMe = res['id'] === (this.authManager.user?.id || 0);
-    });
-    this.authManager.user$.subscribe(res => {
-      if (res && !this.route.snapshot.params['id']) {
+      if (this.user) this.webSocket.unsubscribe(`users/${this.user.id}/follow`);
+      if (!res['id']) {
         this.user = this.authManager.user;
+        this.isMe = true;
+      } else {
+        this.user = (await lastValueFrom(this.usersService.findOne(res['id'], undefined))).data as any;
         this.isMe = res['id'] === (this.authManager.user?.id || 0);
       }
+      this.webSocket.wbReady$.subscribe(res => {
+        if (res && this.user) {
+          this.webSocket.subscribe(`users/${this.user.id}/follow`).subscribe(r => {
+            if (this.user) {
+              this.user.followers = r.data.followers;
+              this.user.following = r.data.following;
+            }
+          });
+        }
+      });
     });
-
   }
 
   ionViewWillEnter() {
     if (!this.route.snapshot.params['id']) {
       this.authManager.me().subscribe(res => { });
     }
+  }
+
+  ionViewDidLeave() {
   }
 
   goBack() {

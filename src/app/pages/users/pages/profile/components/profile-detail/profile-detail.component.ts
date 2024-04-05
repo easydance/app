@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonModal, IonicModule, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
-import { ClubBaseDto, ClubService, GetUserResponseDto, GetUserToUserFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService, UserToUserFollowerService } from 'src/app/apis';
+import { ClubBaseDto, ClubService, GetUserResponseDto, GetUserToUserFollowerResponseDto, LoginUserDataDto, UserBaseDto, UserService, UserToClubFollowerService, UserToUserFollowerService } from 'src/app/apis';
 import { UiModule } from 'src/app/components/ui.module';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
@@ -37,7 +37,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
     private readonly clubsService: ClubService,
     private readonly toastCtrl: ToastController,
   ) {
-    
+
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -58,30 +58,8 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
           });
         });
 
-      this.userFollowerService.findAll(0, 1000, JSON.stringify({
-        follower: {
-          id: changes['user'].currentValue?.id || this.authManager.user!.id || 0
-        }
-      }), undefined, undefined, 'followed').subscribe(res => {
-
-        this.usersService.findAll(0, 1000, JSON.stringify({
-          id: { $in: res.data.map(d => d.followed.id) }
-        })).subscribe(res => {
-          this.followed = res.data;
-        });
-      });
-
-      this.userFollowerService.findAll(0, 1000, JSON.stringify({
-        followed: {
-          id: changes['user'].currentValue?.id || this.authManager.user!.id || 0
-        }
-      }), undefined, undefined, 'follower').subscribe(res => {
-        this.usersService.findAll(0, 1000, JSON.stringify({
-          id: { $in: res.data.map(d => d.follower.id) }
-        })).subscribe(res => {
-          this.followers = res.data;
-        });
-      });
+      const user = changes['user'].currentValue || this.authManager.user;
+      // this.refreshSocials(user);
     }
   }
 
@@ -92,9 +70,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
   unfollow() {
     if (this.isFollowing?.id) {
       this.userFollowerService._delete(this.isFollowing?.id).subscribe(res => {
-        this.usersService.findOne(this.user!.id, undefined).subscribe(res => {
-          this.user!.followers = res.data.followers;
-        });
+        // this.refreshSocials(this.user!);
         this.isFollowing = undefined;
       });
     }
@@ -105,16 +81,70 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
       followed: { id: this.user?.id } as any,
       follower: { id: this.authManager.user?.id } as any,
     }).subscribe(res => {
-      this.usersService.findOne(this.user!.id, undefined).subscribe(res => {
-        this.user!.followers = res.data.followers;
-      });
+      // this.refreshSocials(this.user!);
       this.isFollowing = res.data;
     });
   }
 
+  refreshSocials(user: { id?: number; }) {
+    this.userFollowerService.findAll(0, 1000, JSON.stringify({
+      follower: {
+        id: user.id || 0
+      }
+    }), undefined, undefined, 'followed').subscribe(res => {
+
+      this.usersService.findAll(0, 1000, JSON.stringify({
+        id: { $in: res.data.map(d => d.followed.id) }
+      })).subscribe(res => {
+        this.followed = res.data;
+      });
+    });
+
+    this.userFollowerService.findAll(0, 1000, JSON.stringify({
+      followed: {
+        id: user.id || 0
+      }
+    }), undefined, undefined, 'follower').subscribe(res => {
+      this.usersService.findAll(0, 1000, JSON.stringify({
+        id: { $in: res.data.map(d => d.follower.id) }
+      })).subscribe(res => {
+        this.followers = res.data;
+      });
+    });
+  }
+
   openUsersList(type: 'follower' | 'followed', modal: IonModal) {
-    if ((type == 'follower' && this.followers.length) || (type == 'followed' && this.followed.length)) {
-      modal.present();
+    if (type == 'follower') {
+      this.userFollowerService.findAll(0, 1000, JSON.stringify({
+        followed: {
+          id: this.user!.id || 0
+        }
+      }), undefined, undefined, 'follower').subscribe(res => {
+        this.usersService.findAll(0, 1000, JSON.stringify({
+          id: { $in: res.data.map(d => d.follower.id) }
+        })).subscribe(res => {
+          this.followers = res.data;
+          modal.present();
+        });
+      });
+      return;
+    }
+
+    if (type == 'followed') {
+      this.userFollowerService.findAll(0, 1000, JSON.stringify({
+        follower: {
+          id: this.user!.id || 0
+        }
+      }), undefined, undefined, 'followed').subscribe(res => {
+
+        this.usersService.findAll(0, 1000, JSON.stringify({
+          id: { $in: res.data.map(d => d.followed.id) }
+        })).subscribe(res => {
+          this.followed = res.data;
+          modal.present();
+        });
+      });
+      return;
     }
   }
 

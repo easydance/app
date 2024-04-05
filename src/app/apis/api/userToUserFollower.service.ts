@@ -33,7 +33,7 @@ import { UserToUserFollowerControllerFindAllDefaultResponse } from '../model/use
 // @ts-ignore
 import { UserToUserFollowerControllerFindOneDefaultResponse } from '../model/userToUserFollowerControllerFindOneDefaultResponse';
 // @ts-ignore
-import { UserToUserFollowerControllerReplaceDefaultResponse } from '../model/userToUserFollowerControllerReplaceDefaultResponse';
+import { UserToUserFollowerControllerSetDefaultResponse } from '../model/userToUserFollowerControllerSetDefaultResponse';
 // @ts-ignore
 import { UserToUserFollowerControllerUpdateDefaultResponse } from '../model/userToUserFollowerControllerUpdateDefaultResponse';
 
@@ -621,9 +621,9 @@ export class UserToUserFollowerService implements UserToUserFollowerServiceInter
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToUserFollowerControllerReplaceDefaultResponse>;
-    public replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToUserFollowerControllerReplaceDefaultResponse>>;
-    public replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToUserFollowerControllerReplaceDefaultResponse>>;
+    public replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToUserFollowerControllerSetDefaultResponse>;
+    public replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToUserFollowerControllerSetDefaultResponse>>;
+    public replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToUserFollowerControllerSetDefaultResponse>>;
     public replace(id: number, updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling replace.');
@@ -680,7 +680,7 @@ export class UserToUserFollowerService implements UserToUserFollowerServiceInter
         }
 
         let localVarPath = `/user-to-user-followers/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<UserToUserFollowerControllerReplaceDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<UserToUserFollowerControllerSetDefaultResponse>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: updateUserToUserFollowerRequestDto,
@@ -747,6 +747,98 @@ export class UserToUserFollowerService implements UserToUserFollowerServiceInter
         return this.httpClient.request<any>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param updateUserToUserFollowerRequestDto 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToUserFollowerControllerSetDefaultResponse>;
+    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToUserFollowerControllerSetDefaultResponse>>;
+    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToUserFollowerControllerSetDefaultResponse>>;
+    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (updateUserToUserFollowerRequestDto === null || updateUserToUserFollowerRequestDto === undefined) {
+            throw new Error('Required parameter updateUserToUserFollowerRequestDto was null or undefined when calling set.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (fields !== undefined && fields !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>fields, 'fields');
+        }
+        if (includes !== undefined && includes !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>includes, 'includes');
+        }
+        if (deleted !== undefined && deleted !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>deleted, 'deleted');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarCredential: string | undefined;
+        // authentication (access-token) required
+        localVarCredential = this.configuration.lookupCredential('access-token');
+        if (localVarCredential) {
+            localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
+        }
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/user-to-user-followers/set`;
+        return this.httpClient.request<UserToUserFollowerControllerSetDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: updateUserToUserFollowerRequestDto,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

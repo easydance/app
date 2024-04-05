@@ -54,7 +54,7 @@ export class OrdersPage implements OnInit {
           this.orders = res.data;
           this.groupedOrders = this.orders.reduce((groups, item) => {
             const date = item.createdAt ? DateTime.fromJSDate(new Date(item.createdAt)).toFormat('yyyy-LL-dd') : '-';
-            const key = `${date}:|:${item.table.club.name}`;
+            const key = `${date}:|:${item.table?.club?.name}`;
             const group = (groups[key] || []);
             group.push(item);
             groups[key] = group;

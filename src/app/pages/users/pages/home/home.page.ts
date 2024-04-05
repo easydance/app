@@ -158,7 +158,7 @@ export class HomePage implements OnInit {
     this.searchEvents().then(res => {
       $event.target.complete();
     });
-    this.storyWidget?.findStories();
+    this.storyWidget?.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
   }
 
   makeStory() {
@@ -168,11 +168,32 @@ export class HomePage implements OnInit {
     }
   }
 
-  async handleStories(user?: UserBaseDto, stories?: StoryBaseDto[]) {
+  async handleStories($event: { user: UserBaseDto, stories: StoryBaseDto[]; }) {
+    const { user, stories } = $event;
     if (!stories || !user) {
       this.navCtrl.navigateBack('/story');
       return;
     }
+    const storiesModal = await this.openUserStoriesModal($event);
+    storiesModal.onDidDismiss().then(async res => {
+      console.log(res);
+      if (res.role == 'NEXT_USER') {
+        const next = this.storyWidget?.getNext($event.user);
+        if (next) {
+          await this.handleStories(next.value);
+        }
+      }
+      if (res.role == 'PREVIOUS_USER') {
+        const prev = this.storyWidget?.getPrev($event.user);
+        if (prev) {
+          await this.handleStories(prev.value);
+        }
+      }
+    });
+
+  }
+
+  async openUserStoriesModal(current: { user: UserBaseDto; }) {
     const enterAnimation = (baseEl: HTMLElement) => {
       const root = baseEl.shadowRoot!;
 
@@ -196,10 +217,11 @@ export class HomePage implements OnInit {
         .duration(300)
         .addAnimation([backdropAnimation, wrapperAnimation]);
     };
+
     const storiesModal = await this.modalCtrl.create({
       component: StoriesPage,
       componentProps: {
-        filter: { user: { id: user.id } }
+        filter: { user: { id: current.user.id } }
       },
       backdropDismiss: true,
       breakpoints: [0, 1],
@@ -210,14 +232,6 @@ export class HomePage implements OnInit {
     });
     storiesModal.present();
 
-    storiesModal.onDidDismiss().then(res => {
-      console.log(res);
-      if (res.role == 'NEXT_USER') {
-
-      }
-      if (res.role == 'PREVIOUS_USER') {
-
-      }
-    });
+    return storiesModal;
   }
 }

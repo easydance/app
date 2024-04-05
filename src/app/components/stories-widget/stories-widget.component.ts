@@ -1,7 +1,10 @@
+import { KeyValuePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryBaseDto, StoryService, UserBaseDto } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+
 
 @Component({
   selector: 'stories-widget',
@@ -12,6 +15,8 @@ export class StoriesWidgetComponent implements OnInit {
   stories: GetStoryResponseDto[] = [];
   users: { [id: string]: { user: UserBaseDto, stories: GetStoryResponseDto[]; }; } = {};
 
+  public userKeyValue = Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
+
   @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: GetStoryResponseDto[]; }> = new EventEmitter();
   @Output() storyClick: EventEmitter<GetStoryResponseDto[]> = new EventEmitter();
   @Output() meClick: EventEmitter<void> = new EventEmitter();
@@ -20,7 +25,7 @@ export class StoriesWidgetComponent implements OnInit {
   constructor(private storiesService: StoryService, public authManager: AuthManagerService) { }
 
   ngOnInit() {
-    this.findStories({});
+    this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
   }
 
   findStories(filter: any = {}) {
@@ -46,6 +51,7 @@ export class StoriesWidgetComponent implements OnInit {
         }
         this.users[story.user?.id || ''].stories.push(story);
       }
+      this.userKeyValue = Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
     });
   }
 
@@ -55,6 +61,24 @@ export class StoriesWidgetComponent implements OnInit {
       return;
     }
     this.meClick.emit();
+  }
+
+  onAvatarClick($event: { user: UserBaseDto, stories: GetStoryResponseDto[]; }) {
+    this.storyClick.emit($event.stories);
+    this.userClick.emit($event);
+  }
+
+  getNext(user: UserBaseDto) {
+    const index = this.userKeyValue.findIndex(u => u.value.user.id == user.id);
+    return this.userKeyValue[index + 1];
+  }
+
+  getPrev(user: UserBaseDto) {
+    const index = this.userKeyValue.findIndex(u => u.value.user.id == user.id);
+    if (index == 0) {
+      return undefined;
+    }
+    return this.userKeyValue[index - 1];
   }
 
 }

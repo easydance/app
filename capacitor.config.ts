@@ -29,15 +29,16 @@ const config: CapacitorConfig = {
       '@capacitor/status-bar',
       '@codetrix-studio/capacitor-google-auth',
       'com.virtuoworks.cordova-plugin-canvascamera',
-      '@capacitor/share'
+      '@capacitor/share',
+      '@capacitor/screen-orientation'
     ],
   },
   plugins: {
     GoogleAuth: {
       scopes: ["profile", "email"],
-      androidClientId: "862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com",
-      iosClientId: "862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com",
-      serverClientId: "862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com",
+      // androidClientId: "862020674291-3e0veole0ll0o20u6q5p1ic5edbgekub.apps.googleusercontent.com",
+      // iosClientId: "862020674291-4k0nbecj45ce3b3jeaif1tctsoajgjdj.apps.googleusercontent.com",
+      // serverClientId: "862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com",
       forceCodeForRefreshToken: true,
     },
     PushNotifications: {

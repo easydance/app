@@ -6,7 +6,7 @@
 			color="dark"
 			class="w-full">
 			<ion-label>
-				{{followers.length ?? '-'}}
+				{{user.followers ?? '-'}}
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 				<div>
@@ -18,7 +18,7 @@
 			color="dark"
 			class="w-full">
 			<ion-label>
-				{{followed.length ?? '-'}}
+				{{user.following ?? '-'}}
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 				<div>
@@ -137,15 +137,20 @@
 		</div>
 	</div>
 
-	<div id="clubs-grid" class="mt-12 w-full mb-24">
+	<div id="clubs-grid"
+		class="mt-12 w-full mb-24">
 		<div class="title mb-4">Locali seguiti</div>
 		<easy-clubs-grid [clubs]="clubs"></easy-clubs-grid>
 	</div>
 
 </div>
 
-<follower-modal  #followersModal [followers]="followers" [title]="'Seguaci'"></follower-modal>
-<follower-modal  #followedModal [followers]="followed" [title]="'Seguiti'"></follower-modal>
+<follower-modal #followersModal
+	[followers]="followers"
+	[title]="'Seguaci'"></follower-modal>
+<follower-modal #followedModal
+	[followers]="followed"
+	[title]="'Seguiti'"></follower-modal>
 <!-- <ion-modal #followersModal
 	class="auto-height bottom blur">
 	<ng-template>
@@ -190,5 +195,4 @@
 			</div>
 		</div>
 	</ng-template>
-</ion-modal>
--->
+</ion-modal> -->

@@ -36,11 +36,6 @@ export class LoginPage implements OnInit {
       this.navCtrl.navigateRoot('home');
       return;
     }
-    GoogleAuth.initialize({
-      clientId: '862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com',
-      grantOfflineAccess: true,
-      scopes: ['profile', 'email'],
-    });
   }
 
 

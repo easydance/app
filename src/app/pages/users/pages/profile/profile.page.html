@@ -50,7 +50,7 @@
 		</div>
 	</div>
 
-	<profile-detail *ngIf="!isEditingMode"
+	<profile-detail #profileDetail *ngIf="!isEditingMode"
 		[user]="user"
 		[isMe]="isMe"
 		(edit)="isEditingMode = true"></profile-detail>
