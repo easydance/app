@@ -1,4 +1,4 @@
-name: Push to update-common-parts
+chname: Push to update-common-parts
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
       with:
         token: ${{secrets.TOKEN}}
     - run: |
+        git fetch
         git checkout update-common-parts
         git pull origin update-common-parts
         git checkout android
