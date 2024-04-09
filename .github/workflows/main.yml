@@ -18,8 +18,8 @@ jobs:
         git pull origin update-common-parts
         git checkout android
         git pull origin android
-        git merge update-common-parts
+        git merge update-common-parts --allow-unrelated-histories
         git checkout ios
         git pull origin ios
-        git merge update-common-parts
+        git merge update-common-parts --allow-unrelated-histories
         
