@@ -1,4 +1,4 @@
-chname: Push to update-common-parts
+name: Push to update-common-parts
 
 on:
   push:
