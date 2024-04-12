@@ -43,5 +43,5 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.DESTINATION_SSH_PORT }}
-        source: ${{ steps.request.outputs.body }}build.zip
+        source: ${{ steps.getVersion.outputs.body }}build.zip
         target: /var/lib/docker/volumes/easydance-production_static/_data/releases
