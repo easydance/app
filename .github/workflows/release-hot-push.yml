@@ -3,7 +3,7 @@ name: Copy files with SCP
 on:
   push:
     branches:
-      - main
+      - releases
   workflow_dispatch:
 
 jobs:
