@@ -28,16 +28,11 @@ jobs:
     - uses: montudor/action-zip@v1
       with:
         args: zip -qq -r build.zip www
-    - name: Copy to Remote Server
-      uses: pierrickdelrieu/scp-action@v0.1.0
+    - name: Copy single file to remote
+      uses: garygrossgarten/github-action-scp@release
       with:
+        local: build.zip
+        remote: /var/lib/docker/volumes/easydance-production_static/_data
         host: ${{ secrets.DESTINATION_HOST }}
-        ssh_port: ${{ secrets.DESTINATION_SSH_PORT }}
-        ssh_username: ${{ secrets.SSH_USERNAME }}
-        ssh_key: ${{ secrets.SSH_KEY }}
-        ssh_passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        source_dir: build.zip
-        destination_dir: ${{ secrets.DESTINATION_FOLDER }}
-        rm: true
-      #- name: Pub
-      #run: sshpass -p "!0dd4stud10@2023!" scp -r /build.zip appreleaser@149.62.186.238:/var/lib/docker/volumes/easydance-production_static/_data/releases
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.PASSWORD }}
