@@ -25,7 +25,7 @@ jobs:
       id: getVersion
       uses: tyrrrz/action-http-request@master
       with:
-        url: https://example.com
+        url: https://api.easydance.app/attributes/app-version
         method: GET
     - name: Print outputs
       run: echo "${{ steps.request.outputs.body }}"
