@@ -21,19 +21,21 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: get version
-        id: getVersion
-        uses: tyrrrz/action-http-request@master
-        with:
-          url: https://example.com
-          method: GET
+    - name: get version
+      id: getVersion
+      uses: tyrrrz/action-http-request@master
+      with:
+        url: https://example.com
+        method: GET
+    - name: Print outputs
+      run: echo "${{ steps.request.outputs.body }}"
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build image
       run: npm i && npm run build
     - uses: montudor/action-zip@v1
       with:
-        args: zip -qq -r build.zip www
+        args: zip -qq -r ${{ steps.request.outputs.status }}build.zip www
     - name: copy file via ssh password s
       uses: appleboy/scp-action@v0.1.7
       with:
@@ -41,5 +43,5 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.DESTINATION_SSH_PORT }}
-        source: build.zip
+        source: ${{ steps.request.outputs.body }}build.zip
         target: /var/lib/docker/volumes/easydance-production_static/_data/releases
