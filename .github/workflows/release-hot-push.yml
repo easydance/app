@@ -15,12 +15,20 @@ jobs:
         with:
           url: https://api.easydance.app/attributes/app-version
           headers: '{"Content-Type": "application/json", "API-KEY": "1b4f951d-1fde-44a6-acf6-b22dd85902b8"}'  # Intestazioni della richiesta (JSON)
-  
+
   copy:
     needs: [ update-version ]
     runs-on: ubuntu-latest
     
     steps:
+    - name: get version
+      uses: satak/webrequest-action@master
+      with:
+        url: https://my-json-server.typicode.com/typicode/demo/posts
+        method: GET
+        run: |
+          $output = '${{ steps.webhook.outputs }}'
+          Write-Host "Time from output $($output)"
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build image
@@ -36,4 +44,4 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.DESTINATION_SSH_PORT }}
         source: build.zip
-        target: /var/lib/docker/volumes/easydance-production_static/_data/
+        target: /var/lib/docker/volumes/easydance-production_static/_data/releases
