@@ -31,10 +31,9 @@ jobs:
     - name: Copy to Remote Server
       uses: appleboy/scp-action@master
       with:
-        HOST: ${{ secrets.DESTINATION_HOST }}
-        USERNAME: username
-        PORT: 22
-        KEY: ${{ secrets.forSSH }}
+        host: ${{ secrets.DESTINATION_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.DESTINATION_SSH_PORT }}
         source: "build.zip"
         target: ${{ secrets.SOURCE_FOLDER }}
-        strip_components: 3 # this is important
