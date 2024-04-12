@@ -32,7 +32,7 @@ jobs:
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.DESTINATION_HOST }} # Your server address to access it by SSH.
-        username: 'appreleaser' # Your server username
+        username: 'root' # Your server username
         password: ${{ secrets.PASSWORD }} # Server password from Secrets
         source: ${{ github.workspace }}/build.zip
         target: /var/lib/docker/volumes/easydance-production_static/_data # Specify the path of the target folder on the server (e.g., /var/www/html/front/)
