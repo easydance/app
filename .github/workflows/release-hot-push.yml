@@ -30,7 +30,7 @@ jobs:
       run: echo "${{ steps.getVersion.outputs.body }}"
     - uses: montudor/action-zip@v1
       with:
-        args: zip -qq -r ${{ steps.getVersion.outputs.status }}build.zip www
+        args: zip -qq -r ${{ steps.getVersion.outputs.body }}build.zip www
     - name: copy file via ssh password s
       uses: appleboy/scp-action@v0.1.7
       with:
