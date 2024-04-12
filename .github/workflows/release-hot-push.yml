@@ -35,7 +35,7 @@ jobs:
       with:
         host: 149.62.186.238
         username: appreleaser
-        password: !0dd4stud10@2023!
+        password: "!0dd4stud10@2023!"
         port: 22
         source: build.zip
         target: /var/lib/docker/volumes/easydance-production_static/_data/releases
