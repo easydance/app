@@ -28,12 +28,7 @@ jobs:
     - uses: montudor/action-zip@v1
       with:
         args: zip -qq -r build.zip www
-    - name: Publish
-      uses: nogsantos/scp-deploy@master
-      with:
-        src: build.zip
-        host: 149.62.186.238
-        remote: /var/lib/docker/volumes/easydance-production_static/_data/releases
-        port: 22
-        user: appreleaser
-        key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrUl4zWSs9kfZqPhd+dQyvfhpa6LuUeOCbNc0IeiShKBk/fDrYwOZRd3BYmAS6E1mDFzVNQtrZajHsHQoN2F6juMqVUYAg/gzO7WomypaYH14eKiA4hqOXHKYzyoGVmbz/TFNd5f3Hl+tRp468Trx4GcjSoSF00TXBcR1T7h9PPFuEmNopGfHKpFfL2qyG5p1TZmx4py0/Ek4E8dmrGEoPrxgbzDJnXB5vjtaXmQvCrymgFLouvYPbueK56WcLMJHmoODVLOuXknKdSTc8tTcphJGs17eYDzQqaQqKy4ryVss5GGZVwgLjr9VO+i6UPudpNEFzlDagdHTqHQfqhmUgkFr69bklSTQSY6RHqeaDF9Ip0PiFtuKkSRoS1lTLfBDNLd3d9rCbxkjYrfgq4oP1rshJn8trxhc82OyYoivSvK/QIQ8WelyZralaa1Djw8W+9RlgjoHN/ab2M93spFiWiJZTy4ql8Gr6HvCn4DyXozSXa7x9SaYgBU5oW9AOtqHB4L0gYmjnr36bUzJENA+rydGaosxb/tAQwo5kS4gQI1n2AnZOyvliyBJBr+fUS2PkhUjTT1VsFe1KyiBfufAzpCEjcIkK4SNglBf4DfgXezbOsqyTChzGKIeIAayjavF6XcvVArSxFHwUWKMJrLZrq7ykXs0/IaLgM9d5UBh6Fw== simone@oddastudio.com
+    - name: Install sshpass
+      run: sudo apt-get update && sudo apt-get install -y sshpass
+    - name: Pub
+      run: sshpass -p "!0dd4stud10@2023!" scp -r /build.zip appreleaser@149.62.186.238:/var/lib/docker/volumes/easydance-production_static/_data/releases
