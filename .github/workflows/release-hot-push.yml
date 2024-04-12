@@ -21,15 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: get version
-      uses: satak/webrequest-action@master
-      id: version
-      with:
-        url: https://api.easydance.app/attributes/app-version
-        method: GET
-        run: |
-          $output = '${{ steps.webhook.outputs }}'
-          Write-Host "v $($output)"
+      - name: get version
+        id: getVersion
+        uses: tyrrrz/action-http-request@master
+        with:
+          url: https://example.com
+          method: GET
+    - name: Print version
+      run: echo "Body: ${{ steps.getVersion.outputs.body }}"
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build image
