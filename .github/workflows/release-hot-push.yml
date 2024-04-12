@@ -23,12 +23,13 @@ jobs:
     steps:
     - name: get version
       uses: satak/webrequest-action@master
+      id: version
       with:
-        url: https://my-json-server.typicode.com/typicode/demo/posts
+        url: https://api.easydance.app/attributes/app-version
         method: GET
         run: |
           $output = '${{ steps.webhook.outputs }}'
-          Write-Host "Time from output $($output)"
+          Write-Host "v $($output)"
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build image
