@@ -30,5 +30,14 @@ jobs:
         args: zip -qq -r build.zip www
     - name: Install sshpass
       run: sudo apt-get update && sudo apt-get install -y sshpass
-    - name: Pub
-      run: sshpass -p "!0dd4stud10@2023!" scp -r /build.zip appreleaser@149.62.186.238:/var/lib/docker/volumes/easydance-production_static/_data/releases
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: 149.62.186.238
+        username: appreleaser
+        password: !0dd4stud10@2023!
+        port: 22
+        source: build.zip
+        target: /var/lib/docker/volumes/easydance-production_static/_data/releases
+      #- name: Pub
+      #run: sshpass -p "!0dd4stud10@2023!" scp -r /build.zip appreleaser@149.62.186.238:/var/lib/docker/volumes/easydance-production_static/_data/releases
