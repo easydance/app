@@ -8,6 +8,7 @@ import { StoriesPage } from 'src/app/pages/users/pages/stories/stories.page';
 import { UsersPage } from 'src/app/pages/users/users.page';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
+import { StoryController } from 'src/app/services/story.service';
 
 @Component({
   selector: 'app-home',
@@ -34,10 +35,9 @@ export class HomePage implements OnInit {
     private readonly navCtrl: NavController,
     private readonly clubFollowerService: UserToClubFollowerService,
     public readonly partiesUtils: CommonPartiesUtils,
-    private modalCtrl: ModalController,
-    private animationCtrl: AnimationController,
     private changeDetector: ChangeDetectorRef,
-    private commonPartiesUtils: CommonPartiesUtils
+    private commonPartiesUtils: CommonPartiesUtils,
+    private storyCtrl: StoryController
   ) { }
 
   ngOnInit() {
@@ -163,7 +163,7 @@ export class HomePage implements OnInit {
 
   makeStory() {
     if (this.authManager.isAuthenticated()) {
-      this.navCtrl.navigateBack('/story');
+      this.storyCtrl.makeStory();
       return;
     }
   }
@@ -174,7 +174,7 @@ export class HomePage implements OnInit {
       this.navCtrl.navigateBack('/story');
       return;
     }
-    const storiesModal = await this.openUserStoriesModal($event);
+    const storiesModal = await this.storyCtrl.openUserStoriesModal($event);
     storiesModal.onDidDismiss().then(async res => {
       console.log(res);
       if (res.role == 'NEXT_USER') {
@@ -193,45 +193,4 @@ export class HomePage implements OnInit {
 
   }
 
-  async openUserStoriesModal(current: { user: UserBaseDto; }) {
-    const enterAnimation = (baseEl: HTMLElement) => {
-      const root = baseEl.shadowRoot!;
-
-      const backdropAnimation = this.animationCtrl
-        .create()
-        .addElement(root.querySelector('ion-backdrop')!)
-        .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
-
-      const wrapperAnimation = this.animationCtrl
-        .create()
-        .addElement(root.querySelector('.modal-wrapper')!)
-        .keyframes([
-          { offset: 0, opacity: '0', transform: 'scale(0)' },
-          { offset: 1, opacity: '0.99', transform: 'scale(1)' },
-        ]);
-
-      return this.animationCtrl
-        .create()
-        .addElement(baseEl)
-        .easing('ease-out')
-        .duration(300)
-        .addAnimation([backdropAnimation, wrapperAnimation]);
-    };
-
-    const storiesModal = await this.modalCtrl.create({
-      component: StoriesPage,
-      componentProps: {
-        filter: { user: { id: current.user.id } }
-      },
-      backdropDismiss: true,
-      breakpoints: [0, 1],
-      enterAnimation,
-      leaveAnimation: (baseEl: HTMLElement) => {
-        return enterAnimation(baseEl).direction('reverse');
-      }
-    });
-    storiesModal.present();
-
-    return storiesModal;
-  }
 }

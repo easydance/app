@@ -52,3 +52,54 @@
 .hdpi.pac-logo:after {
   display: none !important;
 }
+
+ion-modal.default {
+  --background: rgba(18, 18, 18, 0.6);
+  --border-radius: 20px 20px 0 0;
+  --background: transparent;
+
+  ion-list,
+  ion-item {
+    --background: transparent;
+    background: transparent;
+  }
+
+  ion-item {
+    margin-right: 1rem;
+  }
+
+  ion-list {
+    margin-bottom: 2rem;
+  }
+}
+
+ion-modal.default::part(content) {
+  background: var(--neutral-20016, rgba(190, 190, 190, 0.16));
+  backdrop-filter: blur(50px);
+  padding-bottom: calc(1rem + var(--ion-safe-area-bottom));
+}
+
+ion-modal.default-transparent {
+  --background: transparent;
+  --border-radius: 20px 20px 0 0;
+  --background: transparent;
+
+  ion-list,
+  ion-item {
+    --background: transparent;
+    background: transparent;
+  }
+
+  ion-item {
+    margin-right: 1rem;
+  }
+
+  ion-list {
+    margin-bottom: 2rem;
+  }
+}
+
+ion-modal.default-transparent::part(content) {
+  background: transparent;
+  padding-bottom: calc(1rem + var(--ion-safe-area-bottom));
+}
