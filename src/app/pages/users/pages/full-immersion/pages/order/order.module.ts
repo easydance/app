@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { OrderPageRoutingModule } from './order-routing.module';
 
 import { OrderPage } from './order.page';
+import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    OrderPageRoutingModule
+    OrderPageRoutingModule,
+    BypassTypingPipe
   ],
   declarations: [OrderPage]
 })

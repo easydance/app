@@ -222,7 +222,6 @@ export class StoriesPage implements OnInit {
 
   }
 
-
   toggleLike(story: GetStoryResponseDto) {
     this.storyLikeService.set({
       story: { id: story.id } as any,
@@ -245,5 +244,7 @@ export class StoriesPage implements OnInit {
       dialogTitle: 'Condividi questa story con i tuoi amici',
     });
   }
+
+  
 
 }
