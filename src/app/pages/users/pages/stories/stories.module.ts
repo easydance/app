@@ -10,6 +10,7 @@ import { StoriesPage } from './stories.page';
 import { UiModule } from 'src/app/components/ui.module';
 import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
 import { SwipeDirective } from 'src/app/directives/swipe.directive';
+import { ShorterNumberPipe } from 'src/app/pipes/shorter-number.pipe';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { SwipeDirective } from 'src/app/directives/swipe.directive';
     StoriesPageRoutingModule,
     UiModule,
     BypassTypingPipe,
-    SwipeDirective
+    SwipeDirective,
+    ShorterNumberPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [StoriesPage]

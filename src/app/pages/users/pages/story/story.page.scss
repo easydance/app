@@ -8,6 +8,10 @@ ion-content {
   --padding-bottom: calc(65px + var(--ion-safe-area-bottom));
 }
 
+ion-content.force-transparent {
+  --background: transparent;
+}
+
 .video {
   height: 100%;
   width: 100%;

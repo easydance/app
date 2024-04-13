@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonModal, LoadingController, NavController } from '@ionic/angular';
+import { IonModal, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AttachmentService, StoryService } from 'src/app/apis';
 import { RecordingVideoPreviewComponent, StorySource } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
 import { AttachmentHelperService } from 'src/app/services/upload.service';
@@ -16,12 +16,14 @@ export class StoryPage implements OnInit {
 
   storySource?: StorySource;
   isReady: boolean = false;
+  cameraReady: boolean = false;
 
   constructor(
     private navCtrl: NavController,
     private storiesService: StoryService,
     private attachmentService: AttachmentHelperService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController
   ) { }
 
   async ngOnInit() {
@@ -30,13 +32,16 @@ export class StoryPage implements OnInit {
   ionViewWillEnter() {
     this.isReady = true;
     setTimeout(() => {
-      this.recordingVideoPreview?.initializeCameraPreview();
+      this.recordingVideoPreview?.initializeCameraPreview().then(res => {
+        this.cameraReady = true;
+      });
     }, 500);
   }
 
   ionViewWillLeave() {
     this.recordingVideoPreview?.stop();
     this.isReady = false;
+    this.cameraReady = false;
   }
 
   mediaCreated(source: StorySource) {
@@ -96,4 +101,7 @@ export class StoryPage implements OnInit {
     return undefined;
   }
 
+  dismiss() {
+    this.modalCtrl.dismiss();
+  }
 }

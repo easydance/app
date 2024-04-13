@@ -1,5 +1,6 @@
 /// <reference types="@codetrix-studio/capacitor-google-auth" />
 /// <reference types="@capacitor/push-notifications" />
+/// <reference types="@capgo/capacitor-updater" />
 
 import { CapacitorConfig } from '@capacitor/cli';
 
@@ -30,7 +31,9 @@ const config: CapacitorConfig = {
       '@codetrix-studio/capacitor-google-auth',
       'com.virtuoworks.cordova-plugin-canvascamera',
       '@capacitor/share',
-      '@capacitor/screen-orientation'
+      '@capacitor/screen-orientation',
+      '@capgo/capacitor-updater',
+      '@capacitor/splash-screen'
     ],
   },
   plugins: {
@@ -44,6 +47,10 @@ const config: CapacitorConfig = {
     PushNotifications: {
       presentationOptions: ["badge", "sound", "alert"],
     },
+    CapacitorUpdater: {
+      autoUpdate: false,
+      resetWhenUpdate: true
+    }
   }
 };
 
