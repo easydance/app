@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 
 if (environment.production) {
   enableProdMode();
@@ -15,5 +16,6 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 declare global {
   interface Window {
     EASY_KEYS: Record<string, any>;
+    VersionUpdaterService: VersionUpdaterService;
   }
 }

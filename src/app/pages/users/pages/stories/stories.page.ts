@@ -1,9 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { GetStoryResponseDto, StoryBaseDto, StoryService } from 'src/app/apis';
-import { GestureController, IonContent, IonModal, IonicSlides, ModalController } from '@ionic/angular';
+import { ClubBaseDto, GetStoryResponseDto, StoryBaseDto, StoryLikeService, StoryService, UserBaseDto } from 'src/app/apis';
+import { GestureController, IonContent, IonModal, IonNav, IonicSlides, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { ProfilePage } from 'src/app/pages/users/pages/profile/profile.page';
+import { ClubDetailPage } from 'src/app/pages/users/pages/club-detail/club-detail.page';
+import { Share } from '@capacitor/share';
+
 
 @Component({
   selector: 'app-stories',
@@ -11,6 +15,7 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
   styleUrls: ['./stories.page.scss'],
 })
 export class StoriesPage implements OnInit {
+  @ViewChild(IonNav) nav: IonNav | undefined;
   @ViewChild('swiper') swiperRef: ElementRef<HTMLDivElement & { swiper: any; }> | undefined;
   @ViewChild(IonContent, { read: ElementRef }) content?: ElementRef<HTMLIonContentElement>;
 
@@ -28,6 +33,7 @@ export class StoriesPage implements OnInit {
     private route: ActivatedRoute,
     public authManager: AuthManagerService,
     private modalCtrl: ModalController,
+    private storyLikeService: StoryLikeService,
   ) {
   }
 
@@ -63,7 +69,7 @@ export class StoriesPage implements OnInit {
       JSON.stringify(filter),
       undefined,
       undefined,
-      'party.club,userTags'
+      'party.club,userTags,user'
     ).pipe(
       catchError(err => {
         return throwError(() => err);
@@ -214,6 +220,30 @@ export class StoriesPage implements OnInit {
       this.resume();
     });
 
+  }
+
+
+  toggleLike(story: GetStoryResponseDto) {
+    this.storyLikeService.set({
+      story: { id: story.id } as any,
+    }).subscribe(res => {
+      story.liked = !story.liked;
+      if (story.liked) {
+        story.likes += 1;
+      } else {
+        story.likes -= 1;
+      }
+    });
+  }
+
+
+  share(story: StoryBaseDto) {
+    Share.share({
+      title: '',
+      text: '',
+      url: 'https://easydance.app/?story=' + story?.id,
+      dialogTitle: 'Condividi questa story con i tuoi amici',
+    });
   }
 
 }

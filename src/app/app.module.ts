@@ -13,6 +13,8 @@ import { TokenInterceptor } from 'src/app/services/interceptors/token.intercepto
 import { environment } from 'src/environments/environment';
 import "@codetrix-studio/capacitor-google-auth";
 import { I18nHandlerModule } from 'src/app/i18n/custom-translator.loader';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -22,6 +24,9 @@ export function apiConfigFactory(): Configuration {
 }
 
 const init = (http: HttpClient) => () => {
+
+  SplashScreen.show();
+
   function loadGoogleMapsScript(key: string) {
     const googleMapsScript = document.createElement('script');
     googleMapsScript.setAttribute('defer', '');
@@ -30,12 +35,19 @@ const init = (http: HttpClient) => () => {
   }
 
   return new Promise(async (resolve, reject) => {
-    http.get('https://api.easydance.app/settings.json?v=' + Date.now()).subscribe((res: { [key: string]: any; }) => {
-      window.EASY_KEYS = {};
-      Object.assign(window.EASY_KEYS, res);
-      loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
-      resolve(true);
-    });
+    http.get('https://api.easydance.app/settings.json?v=' + Date.now())
+      .subscribe(async (res: { [key: string]: any; }) => {
+        window.EASY_KEYS = {};
+        Object.assign(window.EASY_KEYS, res);
+        try {
+          await VersionUpdaterService.init();
+        } catch(err) {
+          console.error(err);
+        }
+        loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
+        SplashScreen.hide();
+        resolve(true);
+      });
   });
 
 };

@@ -1,4 +1,6 @@
 <ion-content [fullscreen]="true"
+	[swipe]
+	(swipeDown)="close()"
 	id="stories-content">
 	<div class="header px-4">
 		<div class="pager flex item-center gap-1 px-1">
@@ -38,7 +40,7 @@
 				</div>
 			</div>
 			<div *ngIf="isImage(story)"
-				[ngStyle]="{ 'background': 'url('+ story.attachment.url +') center center no-repeat' }"
+				[ngStyle]="{ 'background': 'url('+ story.attachment.url +') top center no-repeat', 'background-size': 'cover' }"
 				class="z-500"
 				id="img-story"></div>
 			<video #video
@@ -64,13 +66,20 @@
 			</div>
 
 			<div class="footer p-4 z-600">
-				<div *ngIf="story.userTags?.length"
-					(click)="openUserTagged(friendsModal.modal!)"
-					class="mb-4">
-					<users-widget [users]="(story.userTags || []) | bypassTyping"
-						[avatarShown]="5"
-						()
-						style="zoom: 0.5"></users-widget>
+				<div (click)="openUserTagged(friendsModal.modal!)"
+					class="mb-4 flex align-center space-between">
+					<div>
+						<users-widget *ngIf="story.userTags?.length"
+							[users]="(story.userTags || []) | bypassTyping"
+							[avatarShown]="5"
+							(click)="friendsModal.modal?.present()"
+							style="zoom: 0.5"></users-widget>
+						<follower-modal #friendsModal
+							*ngIf="story.userTags?.length"
+							[options]="{ disableUserRouting: true }"
+							[followers]="story.userTags"
+							[title]="'Amici taggati'"></follower-modal>
+					</div>
 				</div>
 
 				<div class="flex space-between gap-2">
@@ -86,16 +95,37 @@
 						<div class="title mt-2">
 							{{story.party.title}}
 						</div>
+						<div class="flex mt-2">
+							<div class="flex align-center gap-2">
+								<div> <small>da </small></div>
+								<ion-avatar class="w-5 h-5"
+									style="margin: 0 auto;">
+									<img [src]="story.user?.profileImage?.url"
+										onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'"
+										style="object-fit: cover;">
+								</ion-avatar>
+								<div style="text-align: center;">
+									<small>
+										{{story.user?.firstName}} {{story.user?.lastName}}
+									</small>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class>
 						<div class="stories-buttons">
-							<ion-fab-button size="small">
-								<ion-icon name="heart-outline"></ion-icon>
+							<ion-fab-button (click)="toggleLike(story)"
+								size="small">
+								<ion-icon [name]="story.liked ? 'heart' : 'heart-outline'"></ion-icon>
+								<small *ngIf="story.likes">
+									{{story.likes | shorterNumber}}
+								</small>
+							</ion-fab-button>
+							<ion-fab-button (click)="share(story)"
+								size="small">
+								<ion-icon name="share-outline"></ion-icon>
 							</ion-fab-button>
 							<!-- <ion-fab-button size="small">
-							<ion-icon name="share-outline"></ion-icon>
-						</ion-fab-button> 
-						<ion-fab-button size="small">
 							<ion-icon name="ellipsis-vertical"></ion-icon>
 						</ion-fab-button> -->
 							<ion-fab-button *ngIf="story.createdBy && authManager.user?.uuid && story.createdBy == authManager.user?.uuid"
@@ -114,7 +144,13 @@
 
 		</swiper-slide>
 	</swiper-container>
-	<div *ngIf="!stories?.length"
+	<div *ngIf="!stories"
+		id="loading-stories">
+		<easy-thats-all [message]="'Caricamento...'"></easy-thats-all>
+	</div>
+	<div *ngIf="stories && stories.length"
+		(swipeDown)="close()"
+		swipe
 		id="no-stories">
 		<easy-thats-all [message]="'Non ci sono storie per ora...'"></easy-thats-all>
 	</div>

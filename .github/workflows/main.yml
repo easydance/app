@@ -1,0 +1,27 @@
+name: Push to update-common-parts
+
+on:
+  push:
+    branches:
+      - update-common-parts
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{secrets.TOKEN}}
+    - run: |
+        git config --global user.email "developer@easydance.app"
+        git config --global user.name "Github Actions"
+        git fetch
+        git checkout update-common-parts
+        git pull origin update-common-parts
+        git checkout android
+        git pull origin android
+        git merge update-common-parts --allow-unrelated-histories
+        git checkout ios
+        git pull origin ios
+        git merge update-common-parts --allow-unrelated-histories
+        

@@ -42,11 +42,14 @@ export class AppComponent {
       this.ngZone.run(() => {
         // Example url: https://my-ionic.app/tabs/tab2
         // slug = /tabs/tab2
-        const slug = event.url.split(".app").pop();
-        console.log("slug = ", slug);
-        if (slug) {
-          this.navCtrl.navigateForward(slug);
-          return;
+        const relativePath = event.url.split(".app").pop();
+        if (relativePath) {
+          const [slug, qs] = relativePath.split("?");
+          console.log("slug = ", slug, 'qs', qs);
+          if (slug) {
+            this.navCtrl.navigateForward(slug, { queryParams: qs ? Object.fromEntries([...new URLSearchParams(qs)]) : {} });
+            return;
+          }
         }
         // If no match, do nothing - let regular routing
         // logic take over
@@ -71,7 +74,7 @@ export class AppComponent {
 
     this.platform.ready().then(res => {
       this.pushNotification.initialize();
-      const googleAuthClientId = window.EASY_KEYS['GOOGLE_AUTH_CLIENT_ID'] || '862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com';
+      const googleAuthClientId = window.EASY_KEYS?.['GOOGLE_AUTH_CLIENT_ID'] || '862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com';
       console.log("Google auth client id:", googleAuthClientId);
       GoogleAuth.initialize({
         clientId: googleAuthClientId,

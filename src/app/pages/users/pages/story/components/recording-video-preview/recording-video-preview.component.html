@@ -56,13 +56,33 @@
 		</div>
 	</div>
 	<div *ngIf="!source">
-		<div></div>
-		<div [ngClass]="{'recording': recording}"
-			(touchstart)="startEvent()"
-			(touchend)="endEvent()"
-			id="play-button"
-			class="w-14 h-14">
-			<div></div>
+		<div class="flex">
+			<div class="flex-1 flex align-center"
+				style="justify-content: end;">
+				<ion-fab (click)="close.emit()"
+					style="zoom: 0.6;">
+					<ion-fab-button color="light">
+						<ion-icon name="close"></ion-icon>
+					</ion-fab-button>
+				</ion-fab>
+			</div>
+			<div class="flex-1">
+				<div [ngClass]="{'recording': recording}"
+					(touchstart)="startEvent()"
+					(touchend)="endEvent()"
+					id="play-button"
+					class="w-14 h-14">
+					<div></div>
+				</div>
+			</div>
+			<div class="flex-1 flex align-center">
+				<ion-fab (click)="flipCamera()"
+					style="zoom: 0.6">
+					<ion-fab-button color="light">
+						<ion-icon name="camera-reverse"></ion-icon>
+					</ion-fab-button>
+				</ion-fab>
+			</div>
 		</div>
 		<!-- <div [ngClass]="{'recording': recording}"
 			(click)="recording ? stopVideo() : recordVideo()"

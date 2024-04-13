@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UpdateSavedPartyRequestDtoUser } from './updateSavedPartyRequestDtoUser';
 import { CreateVisualizationRequestDtoStory } from './createVisualizationRequestDtoStory';
 
 
@@ -17,7 +16,6 @@ export interface UpdateStoryLikeRequestDto {
     createdBy?: string | null;
     updatedBy?: string | null;
     deletedBy?: string | null;
-    user: UpdateSavedPartyRequestDtoUser;
     story: CreateVisualizationRequestDtoStory;
 }
 

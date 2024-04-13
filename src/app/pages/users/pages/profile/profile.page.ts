@@ -1,5 +1,6 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Share } from '@capacitor/share';
 import { NavController, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { AuthService, ClubBaseDto, GetUserToClubFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
@@ -21,6 +22,10 @@ export class ProfilePage implements OnInit {
   public isEditingMode: boolean = false;
 
   public isOpenDeleteUserModal: boolean = false;
+
+  public options: { enableNotification: boolean; } = {
+    enableNotification: !localStorage.getItem('enableNotification') || localStorage.getItem('enableNotification') == 'true'
+  };
 
   constructor(
     private readonly authService: AuthService,
@@ -86,5 +91,22 @@ export class ProfilePage implements OnInit {
         }
       });
     });
+  }
+
+  share() {
+    Share.share({
+      title: 'Scopri il mio profilo',
+      text: 'Scopri il mio profilo',
+      url: 'https://easydance.app/profile/' + this.user?.id,
+      dialogTitle: 'Condividi il tuo profilo con i tuoi amici',
+    });
+  }
+
+  setEnableNotification() {
+    if (this.options.enableNotification) {
+      localStorage.setItem('enableNotification', 'true');
+    } else {
+      localStorage.setItem('enableNotification', 'false');
+    }
   }
 }

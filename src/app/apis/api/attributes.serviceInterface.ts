@@ -50,6 +50,13 @@ export interface AttributesServiceInterface {
     /**
      * 
      * 
+     * @param aPIKEY 
+     */
+    attributesController_1(aPIKEY: string, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * 
+     * 
      * @param page 
      * @param pageSize 
      * @param filters 
@@ -99,6 +106,12 @@ export interface AttributesServiceInterface {
      * @param deleted 
      */
     findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<AttributesControllerFindOneDefaultResponse>;
+
+    /**
+     * 
+     * 
+     */
+    getAppVersion(extraHttpRequestParams?: any): Observable<string>;
 
     /**
      * 
