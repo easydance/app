@@ -4,7 +4,7 @@ import { IonModal, IonicModule } from '@ionic/angular';
 import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from '@capacitor-community/camera-preview';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { Directory, Filesystem } from '@capacitor/filesystem';
-import { ClubBaseDto, GetUserToUserFollowerResponseDto, PartyBaseDto, PartyService, UserBaseDto, UserService, UserToUserFollowerService } from 'src/app/apis';
+import { PartyBaseDto, PartyService, UserBaseDto, UserService } from 'src/app/apis';
 import { FormsModule } from '@angular/forms';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 import { UiModule } from 'src/app/components/ui.module';
@@ -32,6 +32,7 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
 
 
   source?: StorySource;
+  @Output() close: EventEmitter<void> = new EventEmitter();
   @Output() mediaCreated: EventEmitter<StorySource> = new EventEmitter();
   @Output() videoCreated: EventEmitter<{}> = new EventEmitter();
   @Output() pictureCreated: EventEmitter<{}> = new EventEmitter();
@@ -43,6 +44,23 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
     this.stop();
+    this.unsetupForCamera();
+  }
+
+  setupForCamera() {
+    const ionRouterOutlet = document.querySelector<HTMLDivElement>('ion-router-outlet');
+    if (ionRouterOutlet) {
+      ionRouterOutlet.style.display = 'none';
+      document.body.style.background = 'transparent';
+    }
+  }
+
+  unsetupForCamera() {
+    const ionRouterOutlet = document.querySelector<HTMLDivElement>('ion-router-outlet');
+    if (ionRouterOutlet) {
+      ionRouterOutlet.style.display = '';
+      document.body.style.background = '';
+    }
   }
 
   async initializeCameraPreview() {
@@ -55,15 +73,21 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
     const storyPreview = document.querySelector<HTMLDivElement>('#story-preview');
     this.cameraPreviewOptions = {
       position: 'rear',
+      toBack: true,
+      enableZoom: true,
+      disableExifHeaderStripping: true,
+      height: (document.body.clientWidth / 3) * 4,
+
       // storeToFile: true,
-      width: storyPreview?.clientWidth,
-      height: storyPreview?.clientHeight,
-      x: storyPreview?.offsetLeft,
-      y: storyPreview?.offsetTop,
+      // width: storyPreview?.clientWidth,
+      // height: storyPreview?.clientHeight,
+      // x: storyPreview?.offsetLeft,
+      // y: storyPreview?.offsetTop,
     };
 
     try {
       CameraPreview.start(this.cameraPreviewOptions);
+      this.setupForCamera();
     } catch (error) {
       console.error(error);
     }
@@ -92,6 +116,11 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
       usersTags: []
     };
     CameraPreview.stop();
+    this.unsetupForCamera();
+  }
+
+  flipCamera() {
+    CameraPreview.flip();
   }
 
   async recordVideo() {
@@ -112,6 +141,7 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
       usersTags: [],
     };
     CameraPreview.stop();
+    this.unsetupForCamera();
   }
 
   private async getVideoUrl(fullPath: string) {

@@ -1,7 +1,10 @@
-<ion-content [fullscreen]="true"
+<ion-content [ngClass]="{ 'force-transparent': !storySource && cameraReady }"
+	[fullscreen]="true"
 	(next)="goBack()"
 	swipe>
-	<recording-video-preview *ngIf="isReady" #recordingVideoPreview
+	<recording-video-preview #recordingVideoPreview
+		*ngIf="isReady"
+		(close)="dismiss()"
 		(mediaCreated)="mediaCreated($event)"></recording-video-preview>
 </ion-content>
 

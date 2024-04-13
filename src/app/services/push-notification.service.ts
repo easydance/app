@@ -52,9 +52,6 @@ export class PushNotificationService {
     private pushNotification: ServerPushNotificationService
   ) {
 
-    this.updatePayload();
-    this.updatePayload();
-
     this.authManager.geocoding$.subscribe(geo => {
       if (geo) {
         this.payload.coords = {
@@ -85,12 +82,20 @@ export class PushNotificationService {
 
   async addListeners() {
     await PushNotifications.addListener('registration', token => {
-      console.info('Registration token: ', token.value);
-      this.registrationToken = token.value;
-      this.updatePayload()?.subscribe(res => {
-        console.log("REGISTRATION TOKEN UPDATE: ", res);
+      if (!localStorage.getItem('enableNotification') || localStorage.getItem('enableNotification') == 'true') {
+        console.info('Registration token: ', token.value);
+        this.registrationToken = token.value;
+        this.updatePayload()?.subscribe(res => {
+          console.log("REGISTRATION TOKEN UPDATE: ", res);
+        });
+        this.registration.emit(token);
+        return;
+      }
+      console.info('Delete all registrations with token: ', token.value);
+      this.pushNotification.findAll(0, 100, JSON.stringify({ token: token.value })).subscribe(res => {
+        const ids = res.data.map(r => r.id).filter(r => (r ?? 0) > 0) as number[];
+        this.pushNotification.deleteMany(ids);
       });
-      this.registration.emit(token);
     });
 
     await PushNotifications.addListener('registrationError', err => {
@@ -132,6 +137,7 @@ export class PushNotificationService {
 
   handleNotificationType(notification: ActionPerformed) {
     this.platform.ready().then(res => {
+
       const { data } = notification.notification;
       if (data?.type == 'go_to_event' && data.event_id) {
         console.log(`====================================\n\n GOTO EVENT NOTIFICATION: event id ${data.event_id} \n\n ${JSON.stringify(data, undefined, 2)} \n\n====================================`);

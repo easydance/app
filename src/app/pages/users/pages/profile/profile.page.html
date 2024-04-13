@@ -15,11 +15,23 @@
 			</ion-button> -->
 		</ion-buttons>
 		<ion-buttons [slot]="'end'">
-			<ion-fab-button [routerLink]="'/full-immersion/orders'"
+			<!-- <ion-fab-button [routerLink]="'/full-immersion/orders'"
 				class="button m-3 w-9 h-9">
 				<ion-icon name="cart-outline"
 					style="font-size: 1rem;"></ion-icon>
-			</ion-fab-button>
+			</ion-fab-button> -->
+			<div *ngIf="isMe">
+				<ion-fab-button (click)="share()"
+					class="button m-3 w-9 h-9">
+					<ion-icon name="share-outline"
+						style="font-size: 1rem;"></ion-icon>
+				</ion-fab-button>
+				<ion-fab-button (click)="optionsModal.present()"
+					class="button m-3 w-9 h-9">
+					<ion-icon name="options-outline"
+						style="font-size: 1rem;"></ion-icon>
+				</ion-fab-button>
+			</div>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -50,7 +62,8 @@
 		</div>
 	</div>
 
-	<profile-detail #profileDetail *ngIf="!isEditingMode"
+	<profile-detail #profileDetail
+		*ngIf="!isEditingMode"
 		[user]="user"
 		[isMe]="isMe"
 		(edit)="isEditingMode = true"></profile-detail>
@@ -59,22 +72,16 @@
 		[user]="user"
 		(saved)="isEditingMode = false"></profile-edit>
 
-	<div
-		class="mt-12 px-4" *ngIf="isMe && !isEditingMode">
+	<div *ngIf="isMe && !isEditingMode"
+		class="mt-12 px-4 flex align-center">
 		<ion-button (click)="logout()"
+			class="flex-1"
 			color="dark"
 			shape="round"
 			expand="block">
 			LOGOUT
 			<ion-icon name="log-out-outline"
 				slot="end"></ion-icon>
-		</ion-button>
-		<ion-button (click)="isOpenDeleteUserModal = true"
-			color="danger"
-			fill="clear"
-			shape="round"
-			expand="block">
-			ELIMINA UTENTE
 		</ion-button>
 	</div>
 
@@ -96,6 +103,27 @@
 					</ion-button>
 					<ion-button (click)="confirmDeleteUser()">Conferma</ion-button>
 				</div>
+			</div>
+		</ng-template>
+	</ion-modal>
+
+	<ion-modal #optionsModal
+		class="auto-height bottom default">
+		<ng-template>
+			<div class="p-4">
+				<h3>Opzioni utente</h3>
+				<ion-item lines="none">
+					<ion-label>Abilita notifiche</ion-label>
+					<ion-toggle [(ngModel)]="options.enableNotification"
+						(ngModelChange)="setEnableNotification()"></ion-toggle>
+				</ion-item>
+				<ion-item style="border-top: 1px solid white;" (click)="isOpenDeleteUserModal = true"
+					class="mt-4"
+					lines="none">
+					<ion-label>
+						<ion-text color="danger">Elimina utente</ion-text>
+					</ion-label>
+				</ion-item>
 			</div>
 		</ng-template>
 	</ion-modal>
