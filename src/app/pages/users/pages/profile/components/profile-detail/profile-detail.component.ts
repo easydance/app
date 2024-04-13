@@ -114,7 +114,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
   }
 
   openUsersList(type: 'follower' | 'followed', modal: IonModal) {
-    if (type == 'follower') {
+    if (type == 'follower' && this.user?.followers) {
       this.userFollowerService.findAll(0, 1000, JSON.stringify({
         followed: {
           id: this.user!.id || 0
@@ -130,7 +130,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (type == 'followed') {
+    if (type == 'followed' && this.user?.following) {
       this.userFollowerService.findAll(0, 1000, JSON.stringify({
         follower: {
           id: this.user!.id || 0
