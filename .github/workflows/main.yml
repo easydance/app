@@ -15,13 +15,19 @@ jobs:
     - run: |
         git config --global user.email "developer@easydance.app"
         git config --global user.name "Github Actions"
+        echo " ===  Git fetch ==="
         git fetch
+        echo " === Checkout on UPDATE-COMMON-PARTS ==="
         git checkout update-common-parts
         git pull origin update-common-parts
+        echo " === Checkout on ANDROID ==="
         git checkout android
         git pull origin android
+        echo " === Merge UODATE-COMMON-PARTS into ANDROID ==="
         git merge update-common-parts --allow-unrelated-histories
+        echo " === Checkout on IOS ==="
         git checkout ios
         git pull origin ios
+        echo " === Merge UODATE-COMMON-PARTS into ANDROID ==="
         git merge update-common-parts --allow-unrelated-histories
         

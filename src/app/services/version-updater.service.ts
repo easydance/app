@@ -11,54 +11,62 @@ export class VersionUpdaterService {
   constructor() { }
 
   static async init() {
-    // const result = await CapacitorUpdater.notifyAppReady();
-    // let data: BundleInfo | null = await CapacitorUpdater.download({
-    //   url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
-    //   version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
-    // });
-    // this.printBundleInfo(data);
-    // // Do the switch when user leave app
-    // if (result.bundle.checksum != data.checksum && data.status == 'success') {
-    //   SplashScreen.show({ fadeOutDuration: 500 });
-    //   try {
-    //     await CapacitorUpdater.set({ id: data.id });
-    //   } catch (err) {
-    //     console.log(err);
-    //     SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
-    //   }
-    // }
-
     const result = await CapacitorUpdater.notifyAppReady();
-    let data: BundleInfo | null = null;
-    App.addListener('appStateChange', async (state) => {
-      if (state.isActive) {
-        console.log('App is active');
-        // Do the download during user active app time to prevent failed download
-        data = await CapacitorUpdater.download({
-          url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
-          version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
-        });
-        this.printBundleInfo(data);
-      }
-      if (!state.isActive && data) {
-        console.log('App is background');
-        // Do the switch when user leave app
-        this.printBundleInfo(data, 'LOADED BUNDLE');
-        SplashScreen.show();
-        try {
-          await CapacitorUpdater.set({ id: data.id });
-        } catch (err) {
-          console.log(err);
-          SplashScreen.hide(); // in case the set fail, otherwise the new app will have to hide it
-        }
-      }
+    let data: BundleInfo | null = await CapacitorUpdater.download({
+      url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
+      version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
     });
+    this.printBundleInfo(data);
+    // Do the switch when user leave app
+    if (result.bundle.version != data.version && data) {
+      SplashScreen.show({ fadeOutDuration: 500 });
+      try {
+        await CapacitorUpdater.set({ id: data.id });
+      } catch (err) {
+        console.log(err);
+        SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
+      }
+    }
+
+    // const result = await CapacitorUpdater.notifyAppReady();
+    // let data: BundleInfo | null = null;
+    // App.addListener('appStateChange', async (state) => {
+    //   if (state.isActive) {
+    //     console.log('App is active');
+    //     // Do the download during user active app time to prevent failed download
+    //     data = await CapacitorUpdater.download({
+    //       url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
+    //       version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
+    //     });
+    //     this.printBundleInfo(data);
+    //   }
+    //   if (!state.isActive && data) {
+    //     console.log('App is background');
+    //     // Do the switch when user leave app
+    //     await VersionUpdaterService.setVersion(data);
+    //   }
+    // });
   }
 
   static async removeAllBundle() {
     const result = await CapacitorUpdater.list();
     for (let bundle of result.bundles) {
       await CapacitorUpdater.delete(bundle);
+    }
+  }
+
+  static async setVersion(data: BundleInfo) {
+    this.printBundleInfo(data, 'LOADED BUNDLE');
+    SplashScreen.show();
+    try {
+      await CapacitorUpdater.set({ id: data.id });
+    } catch (err) {
+      console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+      console.log('|| ', err);
+      console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+
+      console.log(err);
+      SplashScreen.hide(); // in case the set fail, otherwise the new app will have to hide it
     }
   }
 

@@ -12,7 +12,8 @@
 			<ion-title>ORDINE</ion-title>
 		</ion-toolbar>
 	</ion-header>
-	<div id="list" class="px-4 mt-18 pb-17">
+	<div id="list"
+		class="px-4 mt-18 pb-17">
 		<div class="flex space-between">
 			<div id="tabel-info">
 				<div class="table-label">TAVOLO</div>
@@ -34,33 +35,57 @@
 		<div id="products"
 			class="mt-5 mb-20">
 			<div *ngFor="let product of party?.products"
-				[ngClass]="{ active: cart?.getQty(product) || 0 > 0 }"
-				class="product">
-				<div style="width: 60%;">
-					<div>{{product.name}}</div>
-					<div class="price mt-1">{{(product.price / 100) | currency:'€'}}</div>
-				</div>
-				<div class="flex align-center">
-					<ion-button *ngIf="cart?.getQty(product) || 0 > 0"
-						(click)="cart?.add(product, -1)"
-						class="flex-1"
-						fill="clear"
-						color="medium"
-						size="icon-only">
-						<ion-icon name="remove">
-							{{product.price | currency:'€'}}
-						</ion-icon>
-					</ion-button>
-					<div *ngIf="cart?.getQty(product) || 0 > 0">
-						{{cart?.getQty(product)}}
+				class="w-full">
+				<div [ngClass]="{ active: cart?.getQty(product) || 0 > 0 }"
+					class="product flex-wrap">
+					<div style="width: 60%;">
+						<div>{{product.name}}</div>
+						<div class="price mt-1">
+							{{(product.price / 100) | currency:'€'}}
+						</div>
 					</div>
-					<ion-button (click)="cart?.add(product, 1)"
-						class="flex-1"
-						color="medium"
-						fill="clear"
-						size="icon-only">
-						<ion-icon name="add"></ion-icon>
-					</ion-button>
+					<div>
+						<div class="flex align-center">
+							<ion-button *ngIf="cart?.getQty(product) || 0 > 0"
+								(click)="cart?.add(product, -1)"
+								class="flex-1"
+								fill="clear"
+								color="medium"
+								size="icon-only">
+								<ion-icon name="remove">
+									{{product.price | currency:'€'}}
+								</ion-icon>
+							</ion-button>
+							<div *ngIf="cart?.getQty(product) || 0 > 0">
+								{{cart?.getQty(product)}}
+							</div>
+							<ion-button (click)="cart?.add(product, 1)"
+								class="flex-1"
+								color="medium"
+								fill="clear"
+								size="icon-only">
+								<ion-icon name="add"></ion-icon>
+							</ion-button>
+						</div>
+					</div>
+
+					<div *ngIf="currentDetail == product.id"
+						class="break my-2">
+						<small>
+							{{(product | bypassTyping).description}}
+						</small>
+					</div>
+					<div class="break flex align-center"
+						style="flex-direction: row-reverse;">
+						<div (click)="selectDetail(product)"
+							class="flex align-center gap-1">
+							<ion-icon name="information-circle-outline"></ion-icon>
+							<small>
+								{{currentDetail == product.id ? 'meno info' : 'più info'}}
+							</small>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
