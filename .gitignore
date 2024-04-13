@@ -73,3 +73,5 @@ android.old/
 generated/
 resources/ios/**/*
 resources/android/**/*
+
+.github/workflows/main.yml
