@@ -17,6 +17,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 import { InstanceLogService } from 'src/app/services/instance-log.service';
 import { GlobalErrorHandler } from 'src/app/services/global-error-handler.service';
+import { HotfixUpdaterService } from 'src/app/services/hotfix-updater.service';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -49,15 +50,14 @@ const init = (http: HttpClient, logger: InstanceLogService) => () => {
         logger.info('Assign settings to EASY_KEYS', 'app-module.ts', { EASY_KEYS: res });
         window.EASY_KEYS = {};
         Object.assign(window.EASY_KEYS, res);
-        try {
-          await VersionUpdaterService.init();
-          logger.info('Version updater initialize', 'app-module.ts', {});
-        } catch (err) {
-          logger.error('Version updater initialize', 'app-module.ts', { err });
-          console.error(err);
-        }
+        // try {
+        //   await VersionUpdaterService.init();
+        //   logger.info('Version updater initialize', 'app-module.ts', {});
+        // } catch (err) {
+        //   logger.error('Version updater initialize', 'app-module.ts', { err });
+        //   console.error(err);
+        // }
         loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
-        SplashScreen.hide();
         resolve(true);
       });
   });
@@ -94,4 +94,8 @@ const init = (http: HttpClient, logger: InstanceLogService) => () => {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+  constructor(hotfixUpdater: HotfixUpdaterService) {
+    hotfixUpdater.silentInstall(true);
+  }
+}
