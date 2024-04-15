@@ -245,6 +245,14 @@ export class StoriesPage implements OnInit {
     });
   }
 
-  
+  async openUserProfile(user: UserBaseDto) {
+    const modal = await this.modalCtrl.create({
+      component: ProfilePage,
+      componentProps: {
+        user
+      }
+    });
+    modal.present();
+  }
 
 }

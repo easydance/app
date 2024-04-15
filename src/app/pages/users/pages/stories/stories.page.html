@@ -140,7 +140,9 @@
 			</div>
 			<follower-modal #friendsModal
 				[followers]="story.userTags | bypassTyping"
-				[title]="'Amici taggati'"></follower-modal>
+				[title]="'Amici taggati'"
+				(userClick)="openUserProfile($event)"
+				></follower-modal>
 
 		</swiper-slide>
 	</swiper-container>
