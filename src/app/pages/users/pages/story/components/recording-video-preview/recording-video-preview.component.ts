@@ -31,6 +31,8 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
   selectedUsers: UserBaseDto[] = [];
   storyHeight: number = (document.body.clientWidth / 9) * 16;
 
+  torchSetting: 'torch' | 'off' = 'off';
+
   source?: StorySource;
   @Output() close: EventEmitter<void> = new EventEmitter();
   @Output() cameraInitialize: EventEmitter<void> = new EventEmitter();
@@ -119,6 +121,11 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
 
   flipCamera() {
     CameraPreview.flip();
+  }
+
+  toogleTorch() {
+    this.torchSetting = this.torchSetting == 'torch' ? 'off' : 'torch';
+    CameraPreview.setFlashMode({ flashMode: this.torchSetting });
   }
 
   async recordVideo() {
