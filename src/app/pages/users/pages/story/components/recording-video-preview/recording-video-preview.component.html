@@ -58,14 +58,15 @@
 			</div>
 		</div>
 	</div>
-	<div id="controls" *ngIf="!source">
+	<div *ngIf="!source"
+		id="controls">
 		<div class="flex">
 			<div class="flex-1 flex align-center"
 				style="justify-content: end;">
 				<ion-fab (click)="close.emit()"
 					style="zoom: 0.6;">
 					<ion-fab-button color="light">
-						<ion-icon name="close"></ion-icon>
+						<ion-icon name="arrow-back-sharp"></ion-icon>
 					</ion-fab-button>
 				</ion-fab>
 			</div>
@@ -79,12 +80,28 @@
 				</div>
 			</div>
 			<div class="flex-1 flex align-center">
-				<ion-fab (click)="flipCamera()"
-					style="zoom: 0.6">
+				<ion-fab style="zoom: 0.6">
 					<ion-fab-button color="light">
-						<ion-icon name="camera-reverse"></ion-icon>
+						<ion-icon name="settings"></ion-icon>
 					</ion-fab-button>
+					<ion-fab-list side="top">
+						<ion-fab (click)="flipCamera()">
+							<ion-fab-button color="light">
+								<ion-icon name="camera-reverse"
+									style="font-size: 1.5rem;"></ion-icon>
+							</ion-fab-button>
+						</ion-fab>
+					</ion-fab-list>
+					<ion-fab-list side="end">
+						<ion-fab (click)="toogleTorch()">
+							<ion-fab-button color="light">
+								<ion-icon [name]="torchSetting == 'off' ? 'flash' : 'flash-off'"
+									style="font-size: 1.5rem;"></ion-icon>
+							</ion-fab-button>
+						</ion-fab>
+					</ion-fab-list>
 				</ion-fab>
+
 			</div>
 		</div>
 		<!-- <div [ngClass]="{'recording': recording}"

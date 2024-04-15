@@ -82,7 +82,8 @@
 					expand="block">
 					Cambia club
 				</ion-button>
-				<ion-button (click)="modal.dismiss()"
+				<ion-button (click)="modal.dismiss();"
+					[routerLink]="'/full-immersion/select-table'"
 					class="mt-2"
 					shape="round"
 					color="primary"

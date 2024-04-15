@@ -75,13 +75,12 @@
 							{{product.description}}
 						</small>
 					</div>
-					<div *ngIf="product.description" class="break flex align-center"
-						style="flex-direction: row-reverse;">
+					<div *ngIf="product.description"
+						class="break flex align-center">
 						<div (click)="selectDetail(product)"
-							class="flex align-center gap-1">
-							<ion-icon name="information-circle-outline"></ion-icon>
+							class="more-button flex align-center gap-1">
 							<small>
-								{{currentDetail == product.id ? 'meno info' : 'più info'}}
+								{{currentDetail == product.id ? 'Mostra meno' : 'Mostra altro'}}
 							</small>
 						</div>
 					</div>
