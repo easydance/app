@@ -11,12 +11,14 @@ export class VersionUpdaterService {
   constructor() { }
 
   static async init() {
+    SplashScreen.show({ fadeInDuration: 500 });
     await CapacitorUpdater.notifyAppReady();
     const { bundle: currentBundle } = await CapacitorUpdater.current();
     this.printBundleInfo(currentBundle, 'CURRENT BUNDLE');
 
     if (currentBundle.version == window.EASY_KEYS?.['LAST_HOTFIX_VERSION']) {
       console.log("HotFixVersion same to now!");
+      SplashScreen.hide({ fadeOutDuration: 500 });
       return;
     }
 
@@ -42,7 +44,7 @@ export class VersionUpdaterService {
 
   static async setVersion(data: BundleInfo) {
     this.printBundleInfo(data, 'LOADED BUNDLE');
-    SplashScreen.show();
+    SplashScreen.show({ fadeInDuration: 500 });
     try {
       await CapacitorUpdater.set({ id: data.id });
       console.log({
@@ -64,9 +66,9 @@ export class VersionUpdaterService {
   }
 
   static async reset() {
-    SplashScreen.show();
+    SplashScreen.show({ fadeInDuration: 500 });
     await CapacitorUpdater.reset();
-    SplashScreen.hide();
+    SplashScreen.hide({ fadeOutDuration: 500 });
   }
 
   static async getVersion() {
