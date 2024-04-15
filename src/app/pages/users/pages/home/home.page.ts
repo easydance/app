@@ -47,11 +47,15 @@ export class HomePage implements OnInit {
     });
 
     this.authManager.geocoding$.subscribe(res => {
-      this.city = this.authManager.currentCity;
       this.searchEvents().then(() => {
         this.changeDetector.detectChanges();
       });
     });
+
+    this.authManager.city$.subscribe(city => {
+      this.city = this.authManager.currentCity;
+    });
+
     this.authManager.user$.subscribe(res => {
       if (res) {
         this.clubFollowerService.findAll(0, 4, JSON.stringify({

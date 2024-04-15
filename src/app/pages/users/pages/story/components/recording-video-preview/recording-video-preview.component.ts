@@ -79,6 +79,7 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
       enableZoom: true,
       disableExifHeaderStripping: false,
       height: this.storyHeight,
+      width: document.body.clientWidth
     };
 
     try {
