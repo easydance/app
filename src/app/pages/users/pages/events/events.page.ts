@@ -58,7 +58,7 @@ export class EventsPage implements OnInit {
 
   ngOnInit() {
     this.authManager.geocoding$.subscribe(res => {
-      this.city = res?.address_components?.find((ac: google.maps.GeocoderAddressComponent) => ac.types.includes('locality'))?.short_name;
+      this.city = this.authManager.city;
     });
   }
 

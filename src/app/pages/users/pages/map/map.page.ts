@@ -89,8 +89,8 @@ export class MapPage implements OnInit, AfterViewChecked {
   ) {
     this.authManager.geocoding$.subscribe(res => {
       this.city = this.authManager.currentCity;
-      const lat = this.authManager.geocoding?.geometry.location.lat();
-      const lng = this.authManager.geocoding?.geometry.location.lng();
+      const lat = this.authManager.geocoding?.coords.latitude;
+      const lng = this.authManager.geocoding?.coords.longitude;
       if (lat != undefined && lng !== undefined) {
         this.center = { lat, lng };
       }
@@ -123,8 +123,8 @@ export class MapPage implements OnInit, AfterViewChecked {
 
   async ionViewWillEnter() {
     // document.body.style.background = 'transparent';
-    const lat = this.authManager.geocoding?.geometry.location.lat();
-    const lng = this.authManager.geocoding?.geometry.location.lng();
+    const lat = this.authManager.geocoding?.coords.latitude;
+    const lng = this.authManager.geocoding?.coords.longitude;
     if (lat != undefined && lng !== undefined) {
       this.center = { lat, lng };
     }

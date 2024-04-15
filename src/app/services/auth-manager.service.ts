@@ -21,7 +21,7 @@ export class AuthManagerService {
     return this.userStore.getValue();
   }
 
-  private geocodingStore = new BehaviorSubject<google.maps.GeocoderResult | undefined>(undefined);
+  private geocodingStore = new BehaviorSubject<GeolocationPosition | undefined>(undefined);
   public geocoding$ = this.geocodingStore.asObservable().pipe(filter((a) => a !== undefined));
   public get geocoding() {
     return this.geocodingStore.getValue();

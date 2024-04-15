@@ -55,8 +55,8 @@ export class PushNotificationService {
     this.authManager.geocoding$.subscribe(geo => {
       if (geo) {
         this.payload.coords = {
-          lat: geo.geometry.location.lat(),
-          lng: geo.geometry.location.lng()
+          lat: geo.coords.latitude,
+          lng: geo.coords.longitude
         };
         this.updatePayload()?.subscribe(res => {
           console.log("UPDATE paylod notification result:", res);
