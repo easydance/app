@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.9.1)
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -31,8 +32,15 @@ PODS:
     - Capacitor
   - CapacitorShare (5.0.7):
     - Capacitor
+  - CapacitorSplashScreen (5.0.7):
+    - Capacitor
   - CapacitorStatusBar (5.0.6):
     - Capacitor
+  - CapgoCapacitorUpdater (5.8.12):
+    - Alamofire
+    - Capacitor
+    - SSZipArchive
+    - Version
   - CodetrixStudioCapacitorGoogleAuth (0.0.1):
     - Capacitor
     - GoogleSignIn (~> 6.2.4)
@@ -135,6 +143,8 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.2.0)
+  - SSZipArchive (2.4.3)
+  - Version (0.8.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -150,13 +160,16 @@ DEPENDENCIES:
   - "CapacitorPushNotifications (from `../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorScreenOrientation (from `../../node_modules/@capacitor/screen-orientation`)"
   - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - "CapgoCapacitorUpdater (from `../../node_modules/@capgo/capacitor-updater`)"
   - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/@codetrix-studio/capacitor-google-auth`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - Firebase/Messaging
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AppAuth
     - Firebase
     - FirebaseCore
@@ -177,6 +190,8 @@ SPEC REPOS:
     - MLKitVision
     - nanopb
     - PromisesObjC
+    - SSZipArchive
+    - Version
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -205,14 +220,19 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/screen-orientation"
   CapacitorShare:
     :path: "../../node_modules/@capacitor/share"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
+  CapgoCapacitorUpdater:
+    :path: "../../node_modules/@capgo/capacitor-updater"
   CodetrixStudioCapacitorGoogleAuth:
     :path: "../../node_modules/@codetrix-studio/capacitor-google-auth"
   CordovaPlugins:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
   CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
@@ -227,7 +247,9 @@ SPEC CHECKSUMS:
   CapacitorPushNotifications: 2327900bc002f5ff49ee6d2231796d0635b4a1b0
   CapacitorScreenOrientation: cc638c369cb2b1dfc55f8265485a8b4e0b3cafd9
   CapacitorShare: c6a1ebbf0114ff9e863b966cd6052678fa25d480
+  CapacitorSplashScreen: dd3de3f3644710fa2a697cfb91ec262eece4d242
   CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
+  CapgoCapacitorUpdater: 790454bb39d0811ff2066fdbcf440e78f2e72bef
   CodetrixStudioCapacitorGoogleAuth: fcce058390347c1ce5d8ac4764bdf1f5c1ee233b
   CordovaPlugins: f9d0d8aaab54ac3200ad415630f35377e9b9e5d8
   Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
@@ -249,7 +271,9 @@ SPEC CHECKSUMS:
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
+  Version: de5907f2c5d0f3cf21708db7801d1d5401139486
 
-PODFILE CHECKSUM: 5ffa4816469050b5899ade88d9ec11a8a581e842
+PODFILE CHECKSUM: 8750f1cd95100b0f22d799b8fdaadcb7fbc7edc9
 
 COCOAPODS: 1.14.2
