@@ -72,10 +72,10 @@
 					<div *ngIf="currentDetail == product.id"
 						class="break my-2">
 						<small>
-							{{(product | bypassTyping).description}}
+							{{product.description}}
 						</small>
 					</div>
-					<div class="break flex align-center"
+					<div *ngIf="product.description" class="break flex align-center"
 						style="flex-direction: row-reverse;">
 						<div (click)="selectDetail(product)"
 							class="flex align-center gap-1">

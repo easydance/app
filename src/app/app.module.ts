@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -15,6 +15,8 @@ import "@codetrix-studio/capacitor-google-auth";
 import { I18nHandlerModule } from 'src/app/i18n/custom-translator.loader';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { VersionUpdaterService } from 'src/app/services/version-updater.service';
+import { InstanceLogService } from 'src/app/services/instance-log.service';
+import { GlobalErrorHandler } from 'src/app/services/global-error-handler.service';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -23,8 +25,12 @@ export function apiConfigFactory(): Configuration {
   return new Configuration(params);
 }
 
-const init = (http: HttpClient) => () => {
+const globalErrorInterceptor = () => {
 
+};
+
+const init = (http: HttpClient, logger: InstanceLogService) => () => {
+  logger.info('Init app', 'app-module.ts', {});
   SplashScreen.show();
 
   function loadGoogleMapsScript(key: string) {
@@ -35,13 +41,19 @@ const init = (http: HttpClient) => () => {
   }
 
   return new Promise(async (resolve, reject) => {
-    http.get('https://api.easydance.app/settings.json?v=' + Date.now())
+    const url = 'https://api.easydance.app/settings.json?v=' + Date.now();
+    logger.info('Get settings from server', 'app-module.ts', { url });
+
+    http.get(url)
       .subscribe(async (res: { [key: string]: any; }) => {
+        logger.info('Assign settings to EASY_KEYS', 'app-module.ts', { EASY_KEYS: res });
         window.EASY_KEYS = {};
         Object.assign(window.EASY_KEYS, res);
         try {
           await VersionUpdaterService.init();
-        } catch(err) {
+          logger.info('Version updater initialize', 'app-module.ts', {});
+        } catch (err) {
+          logger.error('Version updater initialize', 'app-module.ts', { err });
           console.error(err);
         }
         loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
@@ -68,9 +80,15 @@ const init = (http: HttpClient) => () => {
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: BASE_PATH, useValue: environment.BASE_API },
     {
+      // processes all errors
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+      deps: [InstanceLogService],
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: init,
-      deps: [HttpClient],
+      deps: [HttpClient, InstanceLogService],
       multi: true
     }
   ],
