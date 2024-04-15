@@ -22,10 +22,10 @@ export class HotfixUpdaterService {
         url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
         version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
 
-      }).then(data => {
+      }).then(async data => {
         if (data) {
           this.printBundleInfo(data, 'CURRENT HOTFIX');
-          this.toastCtrl.create({
+          const toast = await this.toastCtrl.create({
             message: 'Una nuova versione dell\'app è disponibile!',
             buttons: [
               {
@@ -36,6 +36,7 @@ export class HotfixUpdaterService {
               }
             ]
           });
+          toast.present();
         }
       });
 
