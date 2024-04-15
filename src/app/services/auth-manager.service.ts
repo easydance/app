@@ -21,7 +21,7 @@ export class AuthManagerService {
     return this.userStore.getValue();
   }
 
-  private geocodingStore = new BehaviorSubject<google.maps.GeocoderResult | undefined>(undefined);
+  private geocodingStore = new BehaviorSubject<GeolocationPosition | undefined>(undefined);
   public geocoding$ = this.geocodingStore.asObservable().pipe(filter((a) => a !== undefined));
   public get geocoding() {
     return this.geocodingStore.getValue();
@@ -123,7 +123,7 @@ export class AuthManagerService {
           }
         }
         Geolocation.getCurrentPosition({ enableHighAccuracy: false }).then(res => {
-          this.geolocation = {
+          const geolocation = {
             coords: {
               latitude: res.coords.latitude,
               longitude: res.coords.longitude,
@@ -136,7 +136,8 @@ export class AuthManagerService {
             timestamp: res.timestamp
           };
 
-          this.geocodingStore.next(this.geocoding);
+          this.geolocation = geolocation;
+          this.geocodingStore.next(geolocation);
 
           this.getReverseGeocoding(res.coords.latitude, res.coords.longitude);
           resolve({ lat: res.coords.latitude, lng: res.coords.longitude });
@@ -147,6 +148,7 @@ export class AuthManagerService {
       }
       navigator.geolocation.getCurrentPosition((res) => {
         this.geolocation = res;
+        this.geocodingStore.next(this.geocoding);
         this.getReverseGeocoding(res.coords.latitude, res.coords.longitude);
         resolve({ lat: res.coords.latitude, lng: res.coords.longitude });
       }, err => reject(err));

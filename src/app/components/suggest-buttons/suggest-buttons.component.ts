@@ -16,8 +16,8 @@ export class SuggestButtonsComponent implements OnInit {
   constructor(private readonly authManager: AuthManagerService) { }
 
   ngOnInit() {
-    this.authManager.geocoding$.subscribe(res => {
-      this.city = res?.address_components?.find((ac: google.maps.GeocoderAddressComponent) => ac.types.includes('locality'))?.short_name;
+    this.authManager.city$.subscribe(res => {
+      this.city = res;
     });
   }
 
