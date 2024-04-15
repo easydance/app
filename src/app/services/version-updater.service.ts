@@ -13,7 +13,7 @@ export class VersionUpdaterService {
   static async init() {
     const result = await CapacitorUpdater.notifyAppReady();
 
-    await this.removeAllBundles();
+    // await this.removeAllBundles();
     let data: BundleInfo | null = await CapacitorUpdater.download({
       url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
       version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
