@@ -6,12 +6,15 @@ import { App } from '@capacitor/app';
 
 export class VersionUpdaterService {
 
+  static lastWorkflow: any[] = [];
   static CapacitorUpdater = CapacitorUpdater;
 
   constructor() { }
 
   static async init() {
+    const workflow: any[] = [];
     const result = await CapacitorUpdater.notifyAppReady();
+    workflow.push({ method: 'CapacitorUpdater.notifyAppReady()', value: result });
 
     // await this.removeAllBundles();
     let data: BundleInfo | null = await CapacitorUpdater.download({
@@ -19,19 +22,47 @@ export class VersionUpdaterService {
       version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
 
     });
-    this.printBundleInfo(data);
+    workflow.push({
+      method: 'CapacitorUpdater.download(...)',
+      params: [{
+        url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
+        version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
+
+      }],
+      value: data
+    });
+
+    this.printBundleInfo(data, 'CURRENT HOTFIX');
     const { bundle: currentBundle } = await CapacitorUpdater.current();
     this.printBundleInfo(currentBundle, 'CURRENT BUNDLE');
+    workflow.push({
+      method: 'CapacitorUpdater.current()',
+      value: data
+    });
 
+    workflow.push({
+      method: 'result.bundle.version != currentBundle.version && data',
+      value: result.bundle.version != currentBundle.version && data
+    });
     // Do the switch when user leave app
     if (result.bundle.version != currentBundle.version && data) {
       SplashScreen.show({ fadeOutDuration: 500 });
       try {
         await CapacitorUpdater.set({ id: data.id });
+        workflow.push({
+          method: 'CapacitorUpdater.set(...)',
+          params: { id: data.id },
+          value: undefined
+        });
       } catch (err) {
         console.log(err);
         SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
+        workflow.push({
+          method: 'CapacitorUpdater.set error',
+          value: err
+        });
       }
+      VersionUpdaterService.lastWorkflow = workflow;
     }
 
     // const result = await CapacitorUpdater.notifyAppReady();
