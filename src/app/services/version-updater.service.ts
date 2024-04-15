@@ -21,6 +21,8 @@ export class VersionUpdaterService {
     });
     this.printBundleInfo(data);
     const { bundle: currentBundle } = await CapacitorUpdater.current();
+    this.printBundleInfo(currentBundle, 'CURRENT BUNDLE');
+
     // Do the switch when user leave app
     if (result.bundle.version != currentBundle.version && data) {
       SplashScreen.show({ fadeOutDuration: 500 });
