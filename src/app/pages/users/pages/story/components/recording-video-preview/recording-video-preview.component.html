@@ -1,6 +1,9 @@
-<div id="story"
-	class="p-5">
-	<div [ngStyle]="{ background: source && source.type == 'picture' ? 'url(data:image/jpeg;base64,' + source.src + ') center center no-repeat' : '' }"
+<div id="story">
+	<div [ngStyle]="{ 
+		background: source && source.type == 'picture' ? 'url(data:image/jpeg;base64,' + source.src + ') center center no-repeat' : '',
+		backgroundSize: 'contain',
+		height: storyHeight + 'px'
+		}"
 		id="story-preview">
 		<ion-fab-button *ngIf="source"
 			(click)="searchUsersModal.present()"
@@ -55,7 +58,7 @@
 			</div>
 		</div>
 	</div>
-	<div *ngIf="!source">
+	<div id="controls" *ngIf="!source">
 		<div class="flex">
 			<div class="flex-1 flex align-center"
 				style="justify-content: end;">

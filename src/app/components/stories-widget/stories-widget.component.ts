@@ -1,9 +1,10 @@
 import { KeyValuePipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryBaseDto, StoryService, UserBaseDto } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { SwiperContainer } from 'swiper/element';
 
 
 @Component({
@@ -12,6 +13,9 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
   styleUrls: ['./stories-widget.component.scss'],
 })
 export class StoriesWidgetComponent implements OnInit {
+
+  @ViewChild('swiper') swiper?: SwiperContainer;
+
   stories: GetStoryResponseDto[] = [];
   users: { [id: string]: { user: UserBaseDto, stories: GetStoryResponseDto[]; }; } = {};
 
@@ -22,7 +26,7 @@ export class StoriesWidgetComponent implements OnInit {
   @Output() meClick: EventEmitter<void> = new EventEmitter();
   @Output() newStory: EventEmitter<void> = new EventEmitter();
 
-  constructor(private storiesService: StoryService, public authManager: AuthManagerService) { }
+  constructor(private storiesService: StoryService, public authManager: AuthManagerService, private detector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
@@ -52,6 +56,7 @@ export class StoriesWidgetComponent implements OnInit {
         this.users[story.user?.id || ''].stories.push(story);
       }
       this.userKeyValue = Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
+      this.detector.detectChanges();
     });
   }
 

@@ -3,6 +3,14 @@
 	(swipeDown)="close()"
 	id="stories-content">
 	<div class="header px-4">
+		<div class="flex align-center"
+			style="flex-direction: row-reverse;">
+			<div (click)="close()"
+				class="flex align-center gap-1 mb-1">
+				<ion-icon name="close"></ion-icon>
+				chiudi
+			</div>
+		</div>
 		<div class="pager flex item-center gap-1 px-1">
 			<div *ngFor="let story of stories; let i = index"
 				[ngClass]="{ 'active': i < currentIndex }">
@@ -28,7 +36,7 @@
 			(touchstart)="pause()"
 			(touchend)="resume()">
 			<div class="header px-4">
-				<div class="flex space-between mt-3">
+				<div class="flex space-between mt-9">
 					<ion-chip [outline]="true"
 						color="light">
 						Start {{story.party.from | date:'HH:mm'}}
@@ -40,7 +48,7 @@
 				</div>
 			</div>
 			<div *ngIf="isImage(story)"
-				[ngStyle]="{ 'background': 'url('+ story.attachment.url +') top center no-repeat', 'background-size': 'cover' }"
+				[ngStyle]="{ 'background': 'url('+ story.attachment.url +') top center no-repeat', 'background-size': 'contain' }"
 				class="z-500"
 				id="img-story"></div>
 			<video #video
@@ -97,7 +105,9 @@
 						</div>
 						<div class="flex mt-2">
 							<div class="flex align-center gap-2">
-								<div> <small>da </small></div>
+								<div>
+									<small>da</small>
+								</div>
 								<ion-avatar class="w-5 h-5"
 									style="margin: 0 auto;">
 									<img [src]="story.user?.profileImage?.url"
@@ -141,8 +151,7 @@
 			<follower-modal #friendsModal
 				[followers]="story.userTags | bypassTyping"
 				[title]="'Amici taggati'"
-				(userClick)="openUserProfile($event)"
-				></follower-modal>
+				(userClick)="openUserProfile($event)"></follower-modal>
 
 		</swiper-slide>
 	</swiper-container>

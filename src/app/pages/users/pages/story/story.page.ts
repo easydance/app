@@ -17,6 +17,7 @@ export class StoryPage implements OnInit {
   storySource?: StorySource;
   isReady: boolean = false;
   cameraReady: boolean = false;
+  completed: boolean = false
 
   constructor(
     private navCtrl: NavController,
@@ -32,9 +33,7 @@ export class StoryPage implements OnInit {
   ionViewWillEnter() {
     this.isReady = true;
     setTimeout(() => {
-      this.recordingVideoPreview?.initializeCameraPreview().then(res => {
-        this.cameraReady = true;
-      });
+      this.recordingVideoPreview?.initializeCameraPreview()
     }, 500);
   }
 
@@ -79,7 +78,8 @@ export class StoryPage implements OnInit {
       this.attachmentService.upload(res.data.id!, 'STORY' as any, file)
         .subscribe(storyAtt => {
           this.isReady = false;
-          this.storyModal?.present();
+          // this.storyModal?.present();
+          this.completed = true;
           loading.dismiss();
         });
     });
