@@ -12,13 +12,17 @@ export class VersionUpdaterService {
 
   static async init() {
     const result = await CapacitorUpdater.notifyAppReady();
+
+    await this.removeAllBundles();
     let data: BundleInfo | null = await CapacitorUpdater.download({
       url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
       version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
+
     });
     this.printBundleInfo(data);
+    const { bundle: currentBundle } = await CapacitorUpdater.current();
     // Do the switch when user leave app
-    if (result.bundle.version != data.version && data) {
+    if (result.bundle.version != currentBundle.version && data) {
       SplashScreen.show({ fadeOutDuration: 500 });
       try {
         await CapacitorUpdater.set({ id: data.id });
@@ -43,14 +47,21 @@ export class VersionUpdaterService {
     //   if (!state.isActive && data) {
     //     console.log('App is background');
     //     // Do the switch when user leave app
-    //     await VersionUpdaterService.setVersion(data);
+    //     this.printBundleInfo(data, 'LOADED BUNDLE');
+    //     SplashScreen.show();
+    //     try {
+    //       await CapacitorUpdater.set({ id: data.id });
+    //     } catch (err) {
+    //       console.log(err);
+    //       SplashScreen.hide(); // in case the set fail, otherwise the new app will have to hide it
+    //     }
     //   }
     // });
   }
 
-  static async removeAllBundle() {
+  static async removeAllBundles(excludeVersions: string[] = []) {
     const result = await CapacitorUpdater.list();
-    for (let bundle of result.bundles) {
+    for (let bundle of result.bundles.filter(b => !excludeVersions.includes(b.version))) {
       await CapacitorUpdater.delete(bundle);
     }
   }
@@ -74,6 +85,12 @@ export class VersionUpdaterService {
     SplashScreen.show();
     await CapacitorUpdater.reset();
     SplashScreen.hide();
+  }
+
+  static async getVersion() {
+    const buildIn = await CapacitorUpdater.getBuiltinVersion();
+    const hotFix = await CapacitorUpdater.getLatest();
+    return hotFix.version || buildIn?.version;
   }
 
   private static printBundleInfo(data: BundleInfo, title?: string) {
