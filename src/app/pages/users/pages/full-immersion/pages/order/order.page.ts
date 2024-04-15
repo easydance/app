@@ -13,6 +13,7 @@ export class OrderPage implements OnInit {
   public table?: CurrentPartyTable;
   public party?: CurrentParty;
   public cart?: Cart<CurrentPartyProduct>;
+  public currentDetail: number | undefined = undefined;
 
   constructor(
     private navCtrl: NavController,
@@ -34,5 +35,13 @@ export class OrderPage implements OnInit {
 
   goBack() {
     this.navCtrl.back();
+  }
+
+  selectDetail(product: CurrentPartyProduct) {
+    if (this.currentDetail == product.id) {
+      this.currentDetail = undefined;
+      return;
+    }
+    this.currentDetail = product.id;
   }
 }

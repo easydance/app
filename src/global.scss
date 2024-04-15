@@ -103,3 +103,11 @@ ion-modal.default-transparent::part(content) {
   background: transparent;
   padding-bottom: calc(1rem + var(--ion-safe-area-bottom));
 }
+
+.break {
+  flex-basis: 100%;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
