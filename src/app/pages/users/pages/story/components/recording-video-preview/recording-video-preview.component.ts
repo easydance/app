@@ -29,10 +29,11 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
   parties: PartyBaseDto[] = [];
   users: UserBaseDto[] = [];
   selectedUsers: UserBaseDto[] = [];
-
+  storyHeight: number = (document.body.clientWidth / 9) * 16;
 
   source?: StorySource;
   @Output() close: EventEmitter<void> = new EventEmitter();
+  @Output() cameraInitialize: EventEmitter<void> = new EventEmitter();
   @Output() mediaCreated: EventEmitter<StorySource> = new EventEmitter();
   @Output() videoCreated: EventEmitter<{}> = new EventEmitter();
   @Output() pictureCreated: EventEmitter<{}> = new EventEmitter();
@@ -71,23 +72,19 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
       console.error(error);
     }
     const storyPreview = document.querySelector<HTMLDivElement>('#story-preview');
+    this.storyHeight = (document.body.clientWidth / 9) * 16;
     this.cameraPreviewOptions = {
       position: 'rear',
       toBack: true,
       enableZoom: true,
-      disableExifHeaderStripping: true,
-      height: (document.body.clientWidth / 3) * 4,
-
-      // storeToFile: true,
-      // width: storyPreview?.clientWidth,
-      // height: storyPreview?.clientHeight,
-      // x: storyPreview?.offsetLeft,
-      // y: storyPreview?.offsetTop,
+      disableExifHeaderStripping: false,
+      height: this.storyHeight,
     };
 
     try {
       CameraPreview.start(this.cameraPreviewOptions);
       this.setupForCamera();
+      this.cameraInitialize.emit();
     } catch (error) {
       console.error(error);
     }
@@ -102,8 +99,8 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
     const storyPreview = document.querySelector<HTMLDivElement>('#story-preview');
     const cameraPreviewPictureOptions: CameraPreviewPictureOptions = {
       quality: 100,
-      // width: storyPreview?.clientWidth,
-      // height: storyPreview?.clientHeight,
+      width: document.body.clientWidth,
+      height: this.storyHeight,
 
     };
 

@@ -222,7 +222,6 @@ export class StoriesPage implements OnInit {
 
   }
 
-
   toggleLike(story: GetStoryResponseDto) {
     this.storyLikeService.set({
       story: { id: story.id } as any,
@@ -244,6 +243,16 @@ export class StoriesPage implements OnInit {
       url: 'https://easydance.app/?story=' + story?.id,
       dialogTitle: 'Condividi questa story con i tuoi amici',
     });
+  }
+
+  async openUserProfile(user: UserBaseDto) {
+    const modal = await this.modalCtrl.create({
+      component: ProfilePage,
+      componentProps: {
+        user
+      }
+    });
+    modal.present();
   }
 
 }
