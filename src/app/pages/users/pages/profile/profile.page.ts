@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { AuthService, ClubBaseDto, GetUserToClubFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { ProfileDetailComponent } from 'src/app/pages/users/pages/profile/components/profile-detail/profile-detail.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
@@ -23,6 +24,8 @@ export class ProfilePage implements OnInit {
 
   public isOpenDeleteUserModal: boolean = false;
 
+  public version: string = '';
+
   public options: { enableNotification: boolean; } = {
     enableNotification: !localStorage.getItem('enableNotification') || localStorage.getItem('enableNotification') == 'true'
   };
@@ -35,7 +38,11 @@ export class ProfilePage implements OnInit {
     private readonly navCtrl: NavController,
     private readonly toastCtrl: ToastController,
     private readonly webSocket: WebSocketService
-  ) { }
+  ) {
+    VersionUpdaterService.getVersion().then(res => {
+      this.version = res;
+    });
+  }
 
   ngOnInit() {
     this.route.params.subscribe(async res => {
