@@ -21,10 +21,16 @@ export class AuthManagerService {
     return this.userStore.getValue();
   }
 
-  private geocodingStore = new BehaviorSubject<google.maps.GeocoderResult | undefined>(undefined);
+  private geocodingStore = new BehaviorSubject<GeolocationPosition | undefined>(undefined);
   public geocoding$ = this.geocodingStore.asObservable().pipe(filter((a) => a !== undefined));
   public get geocoding() {
     return this.geocodingStore.getValue();
+  }
+
+  private cityStore = new BehaviorSubject<string | undefined>(undefined);
+  public city$ = this.cityStore.asObservable().pipe(filter((a) => a !== undefined));
+  public get city() {
+    return this.cityStore.getValue();
   }
 
   constructor(
@@ -129,6 +135,9 @@ export class AuthManagerService {
             },
             timestamp: res.timestamp
           };
+
+          this.geocodingStore.next(this.geocoding);
+
           this.getReverseGeocoding(res.coords.latitude, res.coords.longitude);
           resolve({ lat: res.coords.latitude, lng: res.coords.longitude });
         }).catch(err => {
@@ -150,7 +159,7 @@ export class AuthManagerService {
       geocoder.geocode({ location: { lat, lng } }, (res, status) => {
         if (status == google.maps.GeocoderStatus.OK && res) {
           this.currentCity = res[0]?.address_components?.find((ac: google.maps.GeocoderAddressComponent) => ac.types.includes('administrative_area_level_3'))?.short_name;;
-          this.geocodingStore.next(res[0]);
+          this.cityStore.next(this.currentCity);
           return resolve(res[0]);
         }
         reject({ status: !res ? 'NO_RESULTS' : status, result: res });

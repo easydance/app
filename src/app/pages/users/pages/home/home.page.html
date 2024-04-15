@@ -12,7 +12,8 @@
 		</ion-refresher-content>
 	</ion-refresher>
 	<div class="bg"></div>
-	<div class="mt-4 mb-4" *ngIf="'STORIES_FEATURE' | globalEnv:false">
+	<div *ngIf="'STORIES_FEATURE' | globalEnv:false"
+		class="mt-4 mb-4">
 		<stories-widget #storyWidget
 			*ngIf="isAuthenticated"
 			(newStory)="makeStory()"
@@ -22,7 +23,7 @@
 		<div class="title-big my-4 mb-8">
 			Gli eventi di oggi
 			<br>
-			a {{city}}
+			{{city ? 'a ' + city : 'intorno a te'}}
 		</div>
 		<div *ngIf="parties && parties.length === 0">
 			<easy-thats-all></easy-thats-all>
