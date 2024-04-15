@@ -123,9 +123,9 @@ export class VersionUpdaterService {
   }
 
   static async getVersion() {
-    const buildIn = await CapacitorUpdater.getBuiltinVersion();
-    const hotFix = await CapacitorUpdater.getLatest();
-    return hotFix.version || buildIn?.version;
+    const { bundle, native } = await CapacitorUpdater.current();
+
+    return bundle.version || native;
   }
 
   private static printBundleInfo(data: BundleInfo, title?: string) {
