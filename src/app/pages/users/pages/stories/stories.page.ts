@@ -1,12 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { ClubBaseDto, GetStoryResponseDto, StoryBaseDto, StoryLikeService, StoryService, UserBaseDto } from 'src/app/apis';
-import { GestureController, IonContent, IonModal, IonNav, IonicSlides, ModalController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ClubBaseDto, GetStoryResponseDto, PartyBaseDto, StoryBaseDto, StoryLikeService, StoryService, UserBaseDto } from 'src/app/apis';
+import { GestureController, IonContent, IonModal, IonNav, IonicSlides, ModalController, NavController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { ProfilePage } from 'src/app/pages/users/pages/profile/profile.page';
 import { ClubDetailPage } from 'src/app/pages/users/pages/club-detail/club-detail.page';
 import { Share } from '@capacitor/share';
+import { StoryController } from 'src/app/services/story.service';
 
 
 @Component({
@@ -15,9 +16,11 @@ import { Share } from '@capacitor/share';
   styleUrls: ['./stories.page.scss'],
 })
 export class StoriesPage implements OnInit {
-  @ViewChild(IonNav) nav: IonNav | undefined;
+
   @ViewChild('swiper') swiperRef: ElementRef<HTMLDivElement & { swiper: any; }> | undefined;
   @ViewChild(IonContent, { read: ElementRef }) content?: ElementRef<HTMLIonContentElement>;
+
+  @Input() options: { type: 'modal' | 'page'; } = { type: 'modal' };
 
   public currentIndex: number = 0;
   public stories?: GetStoryResponseDto[];
@@ -34,24 +37,25 @@ export class StoriesPage implements OnInit {
     public authManager: AuthManagerService,
     private modalCtrl: ModalController,
     private storyLikeService: StoryLikeService,
+    private navCtrl: NavController,
+    private storyCtrl: StoryController
   ) {
   }
 
   ngOnInit() {
-  }
-
-
-  ionViewWillEnter() {
-
     this.route.queryParams.subscribe(res => {
       if (res['filter']) {
         const filter = JSON.parse(res['filter']);
         this.findStories(filter);
       }
+      if (res['type']) {
+        this.options.type = res['type'];
+      }
     });
-    if (!this.route.snapshot.queryParams['filter']) {
-      this.findStories(this.filter);
-    }
+  }
+
+  ionViewWillEnter() {
+    this.resume();
   }
 
   async ionViewWillLeave() {
@@ -184,10 +188,6 @@ export class StoriesPage implements OnInit {
 
   }
 
-  getClubName(story: GetStoryResponseDto) {
-    return story.party.club.name || (<any>story.party).customData?.club;
-  }
-
   deleteStory(id: number) {
     this.storiesService._delete(id).subscribe(() => {
       this.findStories(this.filter);
@@ -198,28 +198,19 @@ export class StoriesPage implements OnInit {
     return story.attachment.mimeType.startsWith('image');
   }
 
-  previousUser() {
-    this.close({}, 'PREVIOUS_USER');
+  getClubName(story: GetStoryResponseDto) {
+    return story.party.club.name || (<any>story.party).customData?.club;
   }
 
-  nextUser() {
-    this.close({}, 'NEXT_USER');
-  }
-
-  close(data?: any, role?: string) {
+  async close(data?: any, role?: string) {
     for (let interval of this.intervalIds) {
       clearInterval(interval);
     }
     this.modalCtrl.dismiss(data, role);
-  }
-
-  openUserTagged(modal: IonModal) {
-    this.pause();
-    modal.present();
-    modal.onDidDismiss().then(res => {
-      this.resume();
-    });
-
+    if (this.options.type == 'page') {
+      await this.navCtrl.back();
+      // this.storyCtrl.onStoryClose.emit(role);
+    }
   }
 
   toggleLike(story: GetStoryResponseDto) {
@@ -235,7 +226,6 @@ export class StoriesPage implements OnInit {
     });
   }
 
-
   share(story: StoryBaseDto) {
     Share.share({
       title: '',
@@ -245,14 +235,43 @@ export class StoriesPage implements OnInit {
     });
   }
 
-  async openUserProfile(user: UserBaseDto) {
-    const modal = await this.modalCtrl.create({
-      component: ProfilePage,
-      componentProps: {
-        user
-      }
-    });
+  openUserTagged(modal: IonModal) {
+    this.pause();
     modal.present();
+    modal.onDidDismiss().then(res => {
+      this.resume();
+    });
+
   }
+
+  async openUserProfile(user: UserBaseDto) {
+    this.pause();
+    this.navCtrl.navigateForward('/profile/' + user.id);
+  }
+
+  async openClubDetails(club: ClubBaseDto) {
+    this.pause();
+    this.navCtrl.navigateForward('/club-detail/' + club.id);
+  }
+
+  async openPartyDetails(party: PartyBaseDto) {
+    this.pause();
+    this.navCtrl.navigateForward('/event-detail/' + party.id);
+  }
+
+  // private startProgress(story: GetStoryResponseDto) {
+  //   const duration = this.calcDuration(story);
+  // }
+
+  // private calcDuration(story: GetStoryResponseDto) {
+  //   if (this.isImage(story)) {
+  //     return 15;
+  //   }
+  //   const video = document.querySelector('#story-' + story.id)?.querySelector('video');
+  //   if (video) {
+  //     return video.duration;
+  //   }
+  //   return 0;
+  // }
 
 }
