@@ -178,22 +178,43 @@ export class HomePage implements OnInit {
       this.navCtrl.navigateBack('/story');
       return;
     }
-    const storiesModal = await this.storyCtrl.openUserStoriesModal($event);
-    storiesModal.onDidDismiss().then(async res => {
-      console.log(res);
-      if (res.role == 'NEXT_USER') {
-        const next = this.storyWidget?.getNext($event.user);
-        if (next) {
-          await this.handleStories(next.value);
-        }
-      }
-      if (res.role == 'PREVIOUS_USER') {
-        const prev = this.storyWidget?.getPrev($event.user);
-        if (prev) {
-          await this.handleStories(prev.value);
-        }
-      }
+    this.navCtrl.navigateForward('/stories', {
+      queryParams: {
+        filter: JSON.stringify({ user: { id: $event.user.id } }),
+        type: 'page',
+      },
     });
+    // this.storyCtrl.onStoryClose.subscribe(async role => {
+    //   if (role == 'NEXT_USER') {
+    //     const next = this.storyWidget?.getNext($event.user);
+    //     if (next) {
+    //       await this.handleStories(next.value);
+    //     }
+    //   }
+    //   if (role == 'PREVIOUS_USER') {
+    //     const prev = this.storyWidget?.getPrev($event.user);
+    //     if (prev) {
+    //       await this.handleStories(prev.value);
+    //     }
+    //   }
+    // });
+
+    //   const storiesModal = await this.storyCtrl.openUserStoriesModal($event);
+    //   storiesModal.onDidDismiss().then(async res => {
+    //     console.log(res);
+    //     if (res.role == 'NEXT_USER') {
+    //       const next = this.storyWidget?.getNext($event.user);
+    //       if (next) {
+    //         await this.handleStories(next.value);
+    //       }
+    //     }
+    //     if (res.role == 'PREVIOUS_USER') {
+    //       const prev = this.storyWidget?.getPrev($event.user);
+    //       if (prev) {
+    //         await this.handleStories(prev.value);
+    //       }
+    //     }
+    //   });
 
   }
 

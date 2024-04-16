@@ -7,8 +7,7 @@
 		</div>
 		<div id="users-grid">
 			<div *ngFor="let user of followers"
-				[routerLink]="options.disableUserRouting ? undefined : '/profile/'+user.id"
-				(click)="userClick.emit(); modal.dismiss()"
+				(click)="onUserClick(user, modal)"
 				class="user-item">
 				<ion-avatar style="margin: 0 auto;">
 					<img [src]="user.profileImage?.url"
