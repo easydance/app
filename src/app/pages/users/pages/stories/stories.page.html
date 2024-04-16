@@ -28,11 +28,11 @@
 		id="stories-slider"
 		allow-touch-move="false">
 		<swiper-slide *ngFor="let story of stories"
-			[id]="story.id"
+			[id]="'story-' + story.id"
 			[swipe]
 			(swipeDown)="close()"
-			(swipeRight)="nextUser()"
-			(swipeLeft)="previousUser()"
+			(swipeRight)="close({}, 'NEXT_USER');"
+			(swipeLeft)="close({}, 'PREVIOUS_USER')"
 			(touchstart)="pause()"
 			(touchend)="resume()">
 			<div class="header px-4">
@@ -84,7 +84,7 @@
 							style="zoom: 0.5"></users-widget>
 						<follower-modal #friendsModal
 							*ngIf="story.userTags?.length"
-							[options]="{ disableUserRouting: true }"
+							[options]="{ disableUserRouting: false, autoClose: false }"
 							[followers]="story.userTags"
 							[title]="'Amici taggati'"></follower-modal>
 					</div>
@@ -92,7 +92,8 @@
 
 				<div class="flex space-between gap-2">
 					<div>
-						<ion-chip class="dark xl"
+						<ion-chip (click)="openClubDetails(story.party.club)"
+							class="dark xl"
 							style="zoom: 0.8">
 							<ion-icon color="light"
 								name="location"></ion-icon>
@@ -100,11 +101,13 @@
 								{{getClubName(story) || '-'}}
 							</ion-label>
 						</ion-chip>
-						<div class="title mt-2">
+						<div (click)="openPartyDetails(story.party)"
+							class="title mt-2">
 							{{story.party.title}}
 						</div>
 						<div class="flex mt-2">
-							<div class="flex align-center gap-2">
+							<div (click)="openUserProfile(story.user!)"
+								class="flex align-center gap-2">
 								<div>
 									<small>da</small>
 								</div>
