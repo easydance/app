@@ -79,7 +79,7 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     setInterval(() => {
-      this.storyWidget?.findStories();
+      this.storyWidget?.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
     }, 5 * 60 * 1000);
   }
 
