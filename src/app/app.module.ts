@@ -30,9 +30,8 @@ const globalErrorInterceptor = () => {
 
 };
 
-const init = (http: HttpClient, logger: InstanceLogService) => () => {
+const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: HotfixUpdaterService) => () => {
   logger.info('Init app', 'app-module.ts', {});
-  SplashScreen.show();
 
   function loadGoogleMapsScript(key: string) {
     const googleMapsScript = document.createElement('script');
@@ -50,6 +49,8 @@ const init = (http: HttpClient, logger: InstanceLogService) => () => {
         logger.info('Assign settings to EASY_KEYS', 'app-module.ts', { EASY_KEYS: res });
         window.EASY_KEYS = {};
         Object.assign(window.EASY_KEYS, res);
+        hotfixUpdater.silentInstall(true);
+
         // try {
         //   await VersionUpdaterService.init();
         //   logger.info('Version updater initialize', 'app-module.ts', {});
@@ -58,6 +59,8 @@ const init = (http: HttpClient, logger: InstanceLogService) => () => {
         //   console.error(err);
         // }
         loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
+        SplashScreen.hide({ fadeOutDuration: 500 });
+
         resolve(true);
       });
   });
@@ -88,14 +91,11 @@ const init = (http: HttpClient, logger: InstanceLogService) => () => {
     {
       provide: APP_INITIALIZER,
       useFactory: init,
-      deps: [HttpClient, InstanceLogService],
+      deps: [HttpClient, InstanceLogService, HotfixUpdaterService],
       multi: true
     }
   ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(hotfixUpdater: HotfixUpdaterService) {
-    hotfixUpdater.silentInstall(true);
-  }
 }
