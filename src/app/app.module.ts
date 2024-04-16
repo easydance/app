@@ -49,7 +49,7 @@ const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: Hotfi
         logger.info('Assign settings to EASY_KEYS', 'app-module.ts', { EASY_KEYS: res });
         window.EASY_KEYS = {};
         Object.assign(window.EASY_KEYS, res);
-        hotfixUpdater.silentInstall(true);
+        hotfixUpdater.askInstall(true);
 
         // try {
         //   await VersionUpdaterService.init();
