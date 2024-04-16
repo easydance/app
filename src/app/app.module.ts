@@ -49,15 +49,10 @@ const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: Hotfi
         logger.info('Assign settings to EASY_KEYS', 'app-module.ts', { EASY_KEYS: res });
         window.EASY_KEYS = {};
         Object.assign(window.EASY_KEYS, res);
+        
+        // HOT-FIX UPDATER
         hotfixUpdater.askInstall(true);
 
-        // try {
-        //   await VersionUpdaterService.init();
-        //   logger.info('Version updater initialize', 'app-module.ts', {});
-        // } catch (err) {
-        //   logger.error('Version updater initialize', 'app-module.ts', { err });
-        //   console.error(err);
-        // }
         loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
         SplashScreen.hide({ fadeOutDuration: 500 });
 
