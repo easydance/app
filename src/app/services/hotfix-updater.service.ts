@@ -29,11 +29,11 @@ export class HotfixUpdaterService {
             message: 'Una nuova versione dell\'app è disponibile!',
             buttons: [
               {
-                text: 'aggiorna',
+                text: 'Aggiorna',
                 handler: async () => {
                   await this.setVersion(data);
                 }
-              }
+              },
             ]
           });
           toast.present();
