@@ -182,7 +182,10 @@ export class HomePage implements OnInit {
     }
     this.navCtrl.navigateForward('/stories', {
       queryParams: {
-        filter: JSON.stringify({ user: { id: $event.user.id } }),
+        filter: JSON.stringify({
+          user: { id: $event.user.id },
+          createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+        }),
         type: 'page',
       },
     });
