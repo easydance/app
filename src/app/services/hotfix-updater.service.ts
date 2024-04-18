@@ -3,6 +3,7 @@ import { App } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { BundleInfo, CapacitorUpdater } from '@capgo/capacitor-updater';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { InstanceLogService } from 'src/app/services/instance-log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +13,24 @@ export class HotfixUpdaterService {
   currentVersion?: BundleInfo;
 
   constructor(
-    private readonly loadingCtrl: LoadingController,
+    private readonly logger: InstanceLogService,
     private readonly toastCtrl: ToastController
   ) {
-    App.addListener('appStateChange', async (state) => {
-      if (state.isActive) {
-        // Ensure download occurs while the app is active, or download may fail
-        CapacitorUpdater.download({
-          url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
-          version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
-        }).then(version => {
-          this.currentVersion = version;
-        });
-      }
+    // App.addListener('appStateChange', async (state) => {
+    //   if (state.isActive) {
+    //     // Ensure download occurs while the app is active, or download may fail
+    //     CapacitorUpdater.download({
+    //       url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
+    //       version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
+    //     }).then(version => {
+    //       this.currentVersion = version;
+    //     });
+    //   }
 
-      if (!state.isActive && this.currentVersion) {
-        this.setVersion(this.currentVersion);
-      }
-    });
+    //   if (!state.isActive && this.currentVersion) {
+    //     this.setVersion(this.currentVersion);
+    //   }
+    // });
   }
 
   async askInstall(confirm: boolean) {
@@ -37,10 +38,13 @@ export class HotfixUpdaterService {
     const { bundle: currentBundle } = await CapacitorUpdater.current();
     this.printBundleInfo(currentBundle, 'CURRENT BUNDLE');
     if (currentBundle.version != window.EASY_KEYS?.['LAST_HOTFIX_VERSION']) {
+      this.logger.info(`Downloading new hotfix`, 'hotfix-updater.service.ts', {
+        url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
+        version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
+      });
       CapacitorUpdater.download({
         url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
         version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
-
       }).then(async data => {
         if (data) {
           this.printBundleInfo(data, 'CURRENT HOTFIX');
@@ -50,6 +54,9 @@ export class HotfixUpdaterService {
               {
                 text: 'Aggiorna',
                 handler: async () => {
+                  this.logger.info(`Set new hotfix version`, 'hotfix-updater.service.ts', {
+                    data
+                  });
                   await this.setVersion(data);
                 }
               },
@@ -58,9 +65,6 @@ export class HotfixUpdaterService {
           toast.present();
         }
       });
-
-
-
     }
   }
 
@@ -83,12 +87,22 @@ export class HotfixUpdaterService {
 
   async setVersion(data: BundleInfo) {
     this.printBundleInfo(data, 'LOADED BUNDLE');
+    this.logger.info(`Show splashscreen in setVersion`, 'hotfix-updater.service.ts', { data });
     SplashScreen.show({ fadeInDuration: 500 });
     try {
+      this.logger.info(`Start setVersion`, 'hotfix-updater.service.ts', { data });
       await CapacitorUpdater.set({ id: data.id });
-    } catch (err) {
+      this.logger.info(`End setVersion`, 'hotfix-updater.service.ts', { data });
+      SplashScreen.hide({ fadeOutDuration: 500 });
+      this.logger.info(`Hide splashscreen in setVersion`, 'hotfix-updater.service.ts', { data });
+    } catch (err: any) {
       console.log(err);
       SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
+      this.logger.error(`Hide splashscreen in setVersion`, 'hotfix-updater.service.ts', {
+        err,
+        message: err.message,
+        stack: err.stack
+      });
     }
   }
 
@@ -127,5 +141,6 @@ export class HotfixUpdaterService {
     console.log('||  -   checksum: ' + data.checksum);
     console.log('||  -       data: ' + data.downloaded);
     console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+    this.logger.info(` ${title || 'CURRENT BUNDLE'}`, 'hotfix-updater.service.ts', { bundle: data });
   }
 }

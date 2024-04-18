@@ -26,10 +26,6 @@ export function apiConfigFactory(): Configuration {
   return new Configuration(params);
 }
 
-const globalErrorInterceptor = () => {
-
-};
-
 const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: HotfixUpdaterService) => () => {
   logger.info('Init app', 'app-module.ts', {});
 
@@ -49,12 +45,14 @@ const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: Hotfi
         logger.info('Assign settings to EASY_KEYS', 'app-module.ts', { EASY_KEYS: res });
         window.EASY_KEYS = {};
         Object.assign(window.EASY_KEYS, res);
-        
-        // HOT-FIX UPDATER
-        hotfixUpdater.askInstall(true);
-
+        logger.info('Start to load Google maps script', 'app-module.ts', { EASY_KEYS: res });
         loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
+        logger.info('Google maps script loaded', 'app-module.ts', { EASY_KEYS: res });
         SplashScreen.hide({ fadeOutDuration: 500 });
+
+        // HOT-FIX UPDATER
+        logger.info('Check new hotfix', 'app-module.ts', { EASY_KEYS: res });
+        hotfixUpdater.askInstall(true);
 
         resolve(true);
       });
