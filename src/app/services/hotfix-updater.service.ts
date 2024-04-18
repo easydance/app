@@ -86,6 +86,7 @@ export class HotfixUpdaterService {
     SplashScreen.show({ fadeInDuration: 500 });
     try {
       await CapacitorUpdater.set({ id: data.id });
+      SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
     } catch (err) {
       console.log(err);
       SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
