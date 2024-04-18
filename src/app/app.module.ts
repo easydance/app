@@ -26,10 +26,6 @@ export function apiConfigFactory(): Configuration {
   return new Configuration(params);
 }
 
-const globalErrorInterceptor = () => {
-
-};
-
 const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: HotfixUpdaterService) => () => {
   logger.info('Init app', 'app-module.ts', {});
 
