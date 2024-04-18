@@ -32,6 +32,7 @@ const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: Hotfi
   function loadGoogleMapsScript(key: string) {
     const googleMapsScript = document.createElement('script');
     googleMapsScript.setAttribute('defer', '');
+    googleMapsScript.setAttribute('async', '');
     googleMapsScript.src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=" + key;
     document.head.appendChild(googleMapsScript);
   }
