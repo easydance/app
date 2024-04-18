@@ -93,12 +93,12 @@ export class HotfixUpdaterService {
       this.logger.info(`Start setVersion`, 'hotfix-updater.service.ts', { data });
       await CapacitorUpdater.set({ id: data.id });
       this.logger.info(`End setVersion`, 'hotfix-updater.service.ts', { data });
-      SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
+      SplashScreen.hide({ fadeOutDuration: 500 });
       this.logger.info(`Hide splashscreen in setVersion`, 'hotfix-updater.service.ts', { data });
     } catch (err: any) {
       console.log(err);
       SplashScreen.hide({ fadeOutDuration: 500 }); // in case the set fail, otherwise the new app will have to hide it
-      this.logger.info(`Hide splashscreen in setVersion`, 'hotfix-updater.service.ts', {
+      this.logger.error(`Hide splashscreen in setVersion`, 'hotfix-updater.service.ts', {
         err,
         message: err.message,
         stack: err.stack

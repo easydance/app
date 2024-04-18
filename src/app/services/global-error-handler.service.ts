@@ -11,6 +11,7 @@ export class GlobalErrorHandler implements ErrorHandler {
   handleError(error: any) {
     this.logger.error('Global error', '', {
       message: error.message,
+      stack: error.stack,
       ...error
     });
   }
