@@ -15,21 +15,21 @@ export class HotfixUpdaterService {
     private readonly loadingCtrl: LoadingController,
     private readonly toastCtrl: ToastController
   ) {
-    App.addListener('appStateChange', async (state) => {
-      if (state.isActive) {
-        // Ensure download occurs while the app is active, or download may fail
-        CapacitorUpdater.download({
-          url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
-          version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
-        }).then(version => {
-          this.currentVersion = version;
-        });
-      }
+    // App.addListener('appStateChange', async (state) => {
+    //   if (state.isActive) {
+    //     // Ensure download occurs while the app is active, or download may fail
+    //     CapacitorUpdater.download({
+    //       url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
+    //       version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
+    //     }).then(version => {
+    //       this.currentVersion = version;
+    //     });
+    //   }
 
-      if (!state.isActive && this.currentVersion) {
-        this.setVersion(this.currentVersion);
-      }
-    });
+    //   if (!state.isActive && this.currentVersion) {
+    //     this.setVersion(this.currentVersion);
+    //   }
+    // });
   }
 
   async askInstall(confirm: boolean) {
