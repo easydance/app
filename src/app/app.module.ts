@@ -14,7 +14,6 @@ import { environment } from 'src/environments/environment';
 import "@codetrix-studio/capacitor-google-auth";
 import { I18nHandlerModule } from 'src/app/i18n/custom-translator.loader';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 import { InstanceLogService } from 'src/app/services/instance-log.service';
 import { GlobalErrorHandler } from 'src/app/services/global-error-handler.service';
 import { HotfixUpdaterService } from 'src/app/services/hotfix-updater.service';
@@ -54,6 +53,10 @@ const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: Hotfi
         // HOT-FIX UPDATER
         logger.info('Check new hotfix', 'app-module.ts', { EASY_KEYS: res });
         hotfixUpdater.askInstall(true);
+
+        setTimeout(() => {
+          SplashScreen.hide({ fadeOutDuration: 500 });
+        }, 15 * 1000)
 
         resolve(true);
       });
