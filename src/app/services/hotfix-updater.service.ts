@@ -66,6 +66,7 @@ export class HotfixUpdaterService {
         }
       });
     }
+    SplashScreen.hide({  fadeOutDuration: 500 });
   }
 
   async checkUpdates() {
