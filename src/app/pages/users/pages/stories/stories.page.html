@@ -187,7 +187,7 @@
 					expand="block">
 					Annulla
 				</ion-button>
-				<ion-button (click)="deleteStory(swiperRef?.nativeElement?.swiper.slides[this.currentIndex].id.replace('story-', ''));modal.dismiss();"
+				<ion-button (click)="deleteStory(swiperRef?.nativeElement?.swiper.slides[this.currentIndex].id);modal.dismiss();"
 					class="mt-2"
 					shape="round"
 					color="primary"
