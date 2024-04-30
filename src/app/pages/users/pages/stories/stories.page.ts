@@ -189,7 +189,7 @@ export class StoriesPage implements OnInit {
   }
 
   deleteStory(id: number) {
-    this.storiesService._delete(id).subscribe(() => {
+    this.storiesService._delete(Number(id.toString().replace('story-', ''))).subscribe(() => {
       this.findStories(this.filter);
     });
   }
