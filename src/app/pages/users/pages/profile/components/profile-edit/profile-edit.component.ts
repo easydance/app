@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, EventEmitter, Input, NgZone, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, LoadingController, ToastController } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
 import { catchError, throwError } from 'rxjs';
 import { GetTagResponseDto, LoginUserDataDto, TagService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
@@ -13,7 +14,7 @@ import { getFileReader } from 'src/app/utils/filereader.utils';
   styleUrls: ['./profile-edit.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, TranslateModule]
 })
 export class ProfileEditComponent implements OnInit, OnChanges {
 

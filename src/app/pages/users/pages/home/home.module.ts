@@ -11,6 +11,7 @@ import { UiModule } from 'src/app/components/ui.module';
 import { StoryPageModule } from 'src/app/pages/users/pages/story/story.module';
 import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
 import { GlobalEnvPipe } from 'src/app/pipes/global-env.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { GlobalEnvPipe } from 'src/app/pipes/global-env.pipe';
     UiModule,
     StoryPageModule,
     RecordingVideoPreviewComponent,
-    GlobalEnvPipe
+    GlobalEnvPipe,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [HomePage]

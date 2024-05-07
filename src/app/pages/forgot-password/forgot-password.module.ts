@@ -8,6 +8,7 @@ import { ForgotPasswordPageRoutingModule } from './forgot-password-routing.modul
 
 import { ForgotPasswordPage } from './forgot-password.page';
 import { ValidatorsDirective } from 'src/app/validators/form-conditions.validator';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,8 +16,8 @@ import { ValidatorsDirective } from 'src/app/validators/form-conditions.validato
     FormsModule,
     IonicModule,
     ForgotPasswordPageRoutingModule,
-    ValidatorsDirective
-
+    ValidatorsDirective,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ForgotPasswordPage]

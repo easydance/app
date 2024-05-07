@@ -100,9 +100,9 @@ export class PartyCardComponent implements OnInit {
             tap(x => {
               this.authManager.me().subscribe(res => { });
             }),
-            catchError(async err => {
-              const toast = await this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 });
-              toast.present();
+            catchError(err => {
+              this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 })
+              .then(toast => toast.present());
               return throwError(() => err);
             })
           )

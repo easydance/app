@@ -9,26 +9,30 @@
 					<ion-icon name="arrow-back-sharp"></ion-icon>
 				</ion-button>
 			</ion-buttons>
-			<ion-title>ORDINE</ion-title>
+			<ion-title>
+				{{'APP.ORDER.TITLE' | translate}}
+			</ion-title>
 		</ion-toolbar>
 	</ion-header>
 	<div id="list"
 		class="px-4 mt-18 pb-17">
 		<div class="flex space-between">
 			<div id="tabel-info">
-				<div class="table-label">TAVOLO</div>
+				<div class="table-label">
+					{{'APP.ORDER.TABLE' | translate}}
+				</div>
 				<div class="table-value">{{table?.name}}</div>
 			</div>
 			<div id="order-info">
 				<div class="total-label">
-					TOTALE X{{cart?.totalQty || 0}}
+					{{'APP.ORDER.TOTAL_X' | translate:({ n: cart?.totalQty || 0})}}
 				</div>
 				<div class="total-value">
 					{{(cart?.total || 0) / 100 | currency:'€'}}
 				</div>
 				<div *ngIf="table?.minimumBill"
 					class="info-label">
-					* Ordine minimo {{((table?.minimumBill || 0) / 100) | currency:'€'}}
+					{{'APP.ORDER.MIN_ORDER' | translate:({ min: (((table?.minimumBill || 0) / 100) | currency:'€') })}}
 				</div>
 			</div>
 		</div>
@@ -80,7 +84,7 @@
 						<div (click)="selectDetail(product)"
 							class="more-button flex align-center gap-1">
 							<small>
-								{{currentDetail == product.id ? 'Mostra meno' : 'Mostra altro'}}
+								{{('APP.ORDER.' + (currentDetail == product.id ? 'LESS' : 'MORE') )| translate}}
 							</small>
 						</div>
 					</div>
@@ -98,7 +102,7 @@
 			shape="round"
 			style="width: 70%"
 			color="primary">
-			ORDINE ({{cart?.totalQty}})
+			{{'APP.ORDER.ORDER' | translate:({ qty: cart?.totalQty || 0 })}}
 		</ion-button>
 	</div>
 

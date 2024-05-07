@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { TableOrderBaseDto, TableOrderService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
@@ -17,7 +18,8 @@ export class OrderDetailPage implements OnInit {
     private navCtrl: NavController,
     private ordersService: TableOrderService,
     private authManager: AuthManagerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {

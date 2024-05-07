@@ -10,7 +10,7 @@
 				</ion-fab-button>
 			</ion-buttons>
 			<ion-title>
-				Ordine n°{{order?.id}}
+				{{'APP.ORDER_DETAIL.TITLE' | translate:({ id: order?.id })}}
 			</ion-title>
 		</ion-toolbar>
 	</ion-header>
@@ -23,18 +23,18 @@
 				<div class="body">
 					<div class="header">
 						<div class="item">
-							<div class="label">ORDINE</div>
+							<div class="label">{{'APP.ORDER_DETAIL.ORDER' | translate:({ id: order?.id })}}</div>
 							<div class="value">{{order.id}}</div>
 						</div>
 						<div class="item">
-							<div class="label">TAVOLO</div>
+							<div class="label">{{'APP.ORDER_DETAIL.TABLE' | translate:({ id: order?.id })}}</div>
 							<div class="value">
 								{{order.table.name}}
 							</div>
 						</div>
 					</div>
 					<div class="overview">
-						<div class="title">RIEPILOGO</div>
+						<div class="title">{{'APP.ORDER_DETAIL.OVERVIEW' | translate:({ id: order?.id })}}</div>
 						<div class="list">
 							<div *ngFor="let row of order.rows"
 								class="item">
@@ -52,10 +52,10 @@
 					</div>
 					<div class="footer">
 						<ion-chip [color]="getStatusColor(order.status)">
-							{{getStatusLabel(order.status)}}
+							{{'APP.ORDER_STATUS.' + order.status | translate}}
 						</ion-chip>
 						<div class="item">
-							<div class="label text-right">TOTALE</div>
+							<div class="label text-right">{{'APP.ORDER_DETAIL.TOTAL' | translate:({ id: order?.id })}}</div>
 							<div class="value">
 								{{(order.bill? order.bill / 100 : '-') | currency:'€'}}
 							</div>

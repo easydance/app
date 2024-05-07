@@ -1,6 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NavController, ToastController } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
 import { catchError, map, of, throwError } from "rxjs";
 import { AuthManagerService } from "src/app/services/auth-manager.service";
 
@@ -10,7 +11,12 @@ var MD5 = function (d: string | any[]) { var r = M(V(Y(X(d as string), 8 * d.len
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-    constructor(private auth: AuthManagerService, private navCtrl: NavController, private toastCtrl: ToastController) { }
+    constructor(
+        private auth: AuthManagerService, 
+        private navCtrl: NavController, 
+        private toastCtrl: ToastController,
+        private translate: TranslateService
+    ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         // Get the auth token from the service.
@@ -38,7 +44,7 @@ export class TokenInterceptor implements HttpInterceptor {
                     return throwError(() => err);
                 }
                 if (err.status === 401 && !this.auth.isAuthenticated()) {
-                    this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })
+                    this.toastCtrl.create({ duration: 3000, message: this.translate.instant('APP.ERRORS.UNAUTHORIZE_FEATURE') })
                         .then(toast => {
                             toast.present();
                         });

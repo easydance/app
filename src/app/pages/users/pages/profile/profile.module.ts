@@ -9,6 +9,7 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 import { ProfilePage } from './profile.page';
 import { ProfileDetailComponent } from 'src/app/pages/users/pages/profile/components/profile-detail/profile-detail.component';
 import { ProfileEditComponent } from 'src/app/pages/users/pages/profile/components/profile-edit/profile-edit.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ProfileEditComponent } from 'src/app/pages/users/pages/profile/componen
     IonicModule,
     ProfilePageRoutingModule,
     ProfileDetailComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ProfilePage]

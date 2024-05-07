@@ -10,6 +10,7 @@ import { MapPage } from './map.page';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { EventDetailPageModule } from 'src/app/pages/users/pages/event-detail/event-detail.module';
 import { UiModule } from 'src/app/components/ui.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { UiModule } from 'src/app/components/ui.module';
     MapPageRoutingModule,
     GoogleMapsModule,
     EventDetailPageModule,
-    UiModule
+    UiModule,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [MapPage]

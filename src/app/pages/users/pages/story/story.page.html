@@ -16,43 +16,18 @@
 				<ion-icon [ngStyle]="{ '--fill': 'var(--color-neutral-50)', 'font-size': '120px' }"
 					src="../../../assets/icons/guy-walk.svg"></ion-icon>
 			</div>
-			<div class="title mt-8">SUUUPER!</div>
+			<div class="title mt-8">{{'APP.STORY.SUPER' | translate}}</div>
 			<div class="subtitle mt-4">
-				La tua story è stata pubblicata.
+				{{'APP.STORY.SUPER_sub' | translate}}
 			</div>
 			<div class="mt-12 ion-text-center mb-8">
 				<ion-button [routerLink]="'/home'"
 					(click)="dismiss();"
 					color="light"
 					shape="round">
-					CHIUDI
+					{{'APP.CLOSE' | translate}}
 				</ion-button>
 			</div>
 		</div>
 	</div>
 </ion-content>
-<!-- <ion-modal #storyModal>
-	<ng-template>
-		<div id="hurra"
-			class="flex align-center">
-			<div class="m-0-auto">
-				<div class="ion-text-center">
-					<ion-icon [ngStyle]="{ '--fill': 'var(--color-neutral-50)', 'font-size': '120px' }"
-						src="../../../assets/icons/guy-walk.svg"></ion-icon>
-				</div>
-				<div class="title mt-8">SUUUPER!</div>
-				<div class="subtitle mt-4">
-					La tua story è stata pubblicata.
-				</div>
-				<div class="mt-12 ion-text-center mb-8">
-					<ion-button [routerLink]="'/home'"
-						(click)="modalCtrl.dismiss(); storyModal.dismiss();"
-						color="light"
-						shape="round">
-						CHIUDI
-					</ion-button>
-				</div>
-			</div>
-		</div>
-	</ng-template>
-</ion-modal> -->

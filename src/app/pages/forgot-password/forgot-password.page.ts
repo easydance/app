@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonModal, NavController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, lastValueFrom, throwError } from 'rxjs';
 import { AuthService, SignUpDto } from 'src/app/apis';
 import { IComparator, IValidatorConfig, getFormValidationErrors } from 'src/app/validators/form-conditions.validator';
@@ -27,13 +28,13 @@ export class ForgotPasswordPage implements OnInit {
 
   public formSteps = [
     {
-      title: 'Recupera password',
-      nextLabel: 'Invia',
+      title: this.translate.instant('APP.FORGOT_PASSWORD.RETRIVE_PASSWORD'),
+      nextLabel: this.translate.instant('APP.FORGOT_PASSWORD.NEXT_LABEL1'),
       index: 0
     },
     {
-      title: 'Reimposta password',
-      nextLabel: 'Prosegui',
+      title: this.translate.instant('APP.FORGOT_PASSWORD.FORGOT_PASSWORD'),
+      nextLabel: this.translate.instant('APP.FORGOT_PASSWORD.NEXT_LABEL1'),
       index: 1
     },
   ];
@@ -47,7 +48,7 @@ export class ForgotPasswordPage implements OnInit {
       inputs: ['email'],
       comparator: IComparator.VALID_EMAIL,
       key: 'email',
-      messageError: "Email non valida"
+      messageError: this.translate.instant('APP.ERRORS.INVALID_EMAIL')
     },
   ];
 
@@ -56,19 +57,19 @@ export class ForgotPasswordPage implements OnInit {
       inputs: ['password', 'confirmPassword'],
       comparator: IComparator.EQUALS,
       key: 'confirmPassword',
-      messageError: "Le password non coincidono."
+      messageError: this.translate.instant('APP.ERRORS.PASSWORD_MISMATCH')
     },
     {
       comparator: (form) => PASSWORD_REGEX.test(form.get('password')?.value),
       key: 'password',
       keyError: 'invalid-password-format',
-      messageError: "Password non valida"
+      messageError: this.translate.instant('APP.ERRORS.INVALID_PASSWORD_FORMAT')
     },
     {
       comparator: (form) => PASSWORD_REGEX.test(form.get('confirmPassword')?.value),
       key: 'confirmPassword',
       keyError: 'invalid-password-format',
-      messageError: "Password non valida"
+      messageError: this.translate.instant('APP.ERRORS.INVALID_PASSWORD')
     }
   ];
 
@@ -77,7 +78,8 @@ export class ForgotPasswordPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private toastCtrl: ToastController,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -115,7 +117,7 @@ export class ForgotPasswordPage implements OnInit {
       this.authService.updatePassword({ token: this.otp, password: this.user.password, confirmPassword: this.user.confirmPassword })
         .pipe(
           catchError(err => {
-            this.toastCtrl.create({ message: 'Non è stato possibile cambiare la password', duration: 3000 }).then(f => f.present());
+            this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.UPDATE_PASSWORD_ERROR'), duration: 3000 }).then(f => f.present());
             return throwError(() => err);
           })
         )
