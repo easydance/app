@@ -22,14 +22,16 @@
 	</div>
 	<div class="modal-content">
 		<form #loginForm="ngForm">
-			<div class="label-lg mb-4">ACCEDI</div>
+			<div class="label-lg mb-4">
+				{{'APP.LOGIN.TITLE' | translate}}
+			</div>
 			<div class="mb-8">
 				<ion-item lines="none">
 					<ion-input [(ngModel)]="username"
+						[label]="'APP.LOGIN.EMAIL' | translate"
 						name="username"
 						required
 						labelPlacement="floating"
-						label="Email"
 						placeholder>
 					</ion-input>
 				</ion-item>
@@ -37,20 +39,21 @@
 					lines="none">
 					<ion-input [type]="showPassword ? 'text' : 'password'"
 						[(ngModel)]="password"
+						[label]="'APP.LOGIN.PASSWORD' | translate"
+						[placeholder]="'APP.LOGIN.PASSWORD' | translate"
 						name="password"
 						required
-						labelPlacement="floating"
-						label="Password"
-						placeholder="Password"></ion-input>
+						labelPlacement="floating"></ion-input>
 					<ion-icon [name]="showPassword ? 'eye-off' : 'eye'"
 						(click)="showPassword = !showPassword"
 						slot="end"></ion-icon>
 				</ion-item>
 				<div class="ion-text-right">
-					<ion-button id="forgot-password-button"
+					<ion-button [routerLink]="'/forgot-password'"
+						id="forgot-password-button"
 						fill="clear"
-						color="medium" [routerLink]="'/forgot-password'">
-						Password dimenticata?
+						color="medium">
+						{{'APP.LOGIN.FORGOT_PASSWORD' | translate}}
 					</ion-button>
 				</div>
 			</div>
@@ -60,14 +63,14 @@
 					size="lg"
 					shape="round"
 					class="w-full">
-					ACCEDI
+					{{'APP.LOGIN.LOGIN' | translate}}
 				</ion-button>
 				<ion-button [routerLink]="'/register'"
 					size="lg"
 					shape="round"
 					style="--background: var(--color-primary-600)"
 					class="w-full mt-1">
-					Registarti
+					{{'APP.LOGIN.REGISTER' | translate}}
 				</ion-button>
 				<ion-button *ngIf="!platform.is('ios')"
 					(click)="googleLogin()"
@@ -77,7 +80,7 @@
 					class="w-full mt-1 text-none">
 					<ion-icon [src]="'assets/icons/google.svg'"
 						slot="start"></ion-icon>
-					Login con Google
+					{{'APP.LOGIN.LOGIN_GOOGLE' | translate}}
 				</ion-button>
 				<ion-button *ngIf="platform.is('ios')"
 					(click)="appleSignIn()"
@@ -88,7 +91,7 @@
 					class="w-full mt-1 text-none">
 					<ion-icon [src]="'assets/icons/applelogo.svg'"
 						slot="start"></ion-icon>
-					Sign in con Apple
+					{{'APP.LOGIN.SIGNIN_APPLE' | translate}}
 				</ion-button>
 			</div>
 		</form>

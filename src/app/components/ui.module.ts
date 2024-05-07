@@ -17,6 +17,7 @@ import { EventsFiltersComponent } from 'src/app/components/events-filters/events
 import { StoriesWidgetComponent } from 'src/app/components/stories-widget/stories-widget.component';
 import { FollowerModalComponent } from 'src/app/components/follower-modal/follower-modal.component';
 import { ImageFallbackPipe } from 'src/app/pipes/image-fallback.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
@@ -35,7 +36,8 @@ const components = [
     CommonModule,
     RouterModule,
     ImageFallbackPipe,
-    SlicePipe
+    SlicePipe,
+    TranslateModule
   ]
 })
 export class UiModule { }

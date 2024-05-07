@@ -9,6 +9,7 @@ import { EventDetailPageRoutingModule } from './event-detail-routing.module';
 import { EventDetailPage } from './event-detail.page';
 import { EventDetailComponent } from 'src/app/pages/users/pages/event-detail/components/event-detail/event-detail.component';
 import { UiModule } from 'src/app/components/ui.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { UiModule } from 'src/app/components/ui.module';
     IonicModule,
     EventDetailPageRoutingModule,
     GoogleMapsModule,
-    UiModule
+    UiModule,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [EventDetailPage, EventDetailComponent],

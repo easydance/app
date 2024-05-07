@@ -64,7 +64,7 @@
 
 						<ion-label *ngIf="options.showHours"
 							style="color: var(--color-neutral-50)">
-							da {{party?.from | date:'HH:mm'}} a {{party?.to | date:'HH:mm'}}
+							{{'APP.FROM' | translate}} {{party?.from | date:'HH:mm'}} {{'APP.TO' | translate}} {{party?.to | date:'HH:mm'}}
 						</ion-label>
 					</div>
 				</div>

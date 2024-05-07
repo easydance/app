@@ -22,7 +22,7 @@
 			(click)="filter('all')"
 			xs
 			color="dark">
-			Tutti
+			{{'APP.SERACH_HEADER.ALL' | translate}}
 		</ion-button>
 		<!-- <ion-button xs
 			color="dark">
@@ -33,21 +33,21 @@
 			(click)="filter('tags')"
 			xs
 			color="dark">
-			Tag
+			{{'APP.SERACH_HEADER.TAGS' | translate}}
 		</ion-button>
 		<ion-button [fill]="filterType != 'clubs' ? undefined : 'outline'"
 			[color]="filterType != 'clubs' ? 'dark' : 'light'"
 			(click)="filter('clubs')"
 			xs
 			color="dark">
-			Locali
+			{{'APP.SERACH_HEADER.CLUBS' | translate}}
 		</ion-button>
 		<ion-button [fill]="filterType != 'parties' ? undefined : 'outline'"
 			[color]="filterType != 'parties' ? 'dark' : 'light'"
 			(click)="filter('parties')"
 			xs
 			color="dark">
-			Party
+			{{'APP.SERACH_HEADER.PARTIES' | translate}}
 		</ion-button>
 		<ion-button *ngIf="authManager.isAuthenticated()"
 			[fill]="filterType != 'users' ? undefined : 'outline'"
@@ -55,7 +55,7 @@
 			(click)="filter('users')"
 			xs
 			color="dark">
-			User
+			{{'APP.SERACH_HEADER.USERS' | translate}}
 		</ion-button>
 	</div>
 	<div>

@@ -8,6 +8,7 @@ import { OrderPageRoutingModule } from './order-routing.module';
 
 import { OrderPage } from './order.page';
 import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
     FormsModule,
     IonicModule,
     OrderPageRoutingModule,
-    BypassTypingPipe
+    BypassTypingPipe,
+    TranslateModule
   ],
   declarations: [OrderPage]
 })

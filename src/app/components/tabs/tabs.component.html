@@ -7,7 +7,7 @@
 			name="ellipse"
 			class
 			style="font-size: 3px;"></ion-icon>
-		Home
+		{{'APP.TABS.HOME' | translate}}
 	</div>
 	<div [routerLink]="'/map'"
 		(click)="tabClicked.emit('map')">
@@ -15,7 +15,7 @@
 			name="ellipse"
 			class
 			style="font-size: 3px;"></ion-icon>
-		Mappa
+		{{'APP.TABS.MAP' | translate}}
 	</div>
 	<div (click)="goInFullImmersion()"
 		(click)="tabClicked.emit('full-immersion')">
@@ -30,7 +30,7 @@
 			name="ellipse"
 			class
 			style="font-size: 3px;"></ion-icon>
-		Eventi
+		{{'APP.TABS.PARTIES' | translate}}
 	</div>
 	<div [routerLink]="'/profile'"
 		(click)="tabClicked.emit('profile')">
@@ -38,7 +38,7 @@
 			name="ellipse"
 			class
 			style="font-size: 3px;"></ion-icon>
-		Profilo
+		{{'APP.TABS.PROFILE' | translate}}
 	</div>
 </div>
 
@@ -51,7 +51,7 @@
 			name="ellipse"
 			class
 			style="font-size: 3px;"></ion-icon>
-		ORDINI
+			{{'APP.TABS.ORDERS' | translate}}
 	</div>
 	<div (click)="goInFullImmersion()"
 		(click)="tabClicked.emit('full-immersion')">
@@ -61,7 +61,7 @@
 	</div>
 	<div [routerLink]="'/'"
 		class="flex-1">
-		ESCI
+		{{'APP.TABS.EXIT' | translate}}
 	</div>
 </div>
 
@@ -70,7 +70,7 @@
 	trigger="open-custom-dialog">
 	<ng-template>
 		<div class="wrapper p-8">
-			<div class="title">Sei ancora qui?</div>
+			<div class="title">{{'APP.TABS.FULL_IMMERSION_TITLE' | translate}}</div>
 			<div class="my-10 subtitle">
 				{{fullImmersionService.selectedClub?.name}}
 			</div>
@@ -80,15 +80,15 @@
 					shape="round"
 					color="dark"
 					expand="block">
-					Cambia club
+					{{'APP.TABS.CHANGE_CLUB' | translate}}
 				</ion-button>
-				<ion-button (click)="modal.dismiss();"
-					[routerLink]="'/full-immersion/select-table'"
+				<ion-button [routerLink]="'/full-immersion/select-table'"
+					(click)="modal.dismiss();"
 					class="mt-2"
 					shape="round"
 					color="primary"
 					expand="block">
-					Si, voglio ordinare!
+					{{'APP.TABS.ORDER_NOW' | translate}}
 				</ion-button>
 			</div>
 		</div>

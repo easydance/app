@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonModal, IonicModule, ToastController } from '@ionic/angular';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { ClubBaseDto, ClubService, GetUserResponseDto, GetUserToUserFollowerResponseDto, LoginUserDataDto, UserBaseDto, UserService, UserToClubFollowerService, UserToUserFollowerService } from 'src/app/apis';
 import { UiModule } from 'src/app/components/ui.module';
@@ -13,7 +14,7 @@ import { WebSocketService } from 'src/app/services/web-socket.service';
   templateUrl: './profile-detail.component.html',
   styleUrls: ['./profile-detail.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, UiModule, RouterModule]
+  imports: [IonicModule, CommonModule, UiModule, RouterModule, TranslateModule]
 })
 export class ProfileDetailComponent implements OnInit, OnChanges {
 
@@ -36,6 +37,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
     private readonly clubFollowerService: UserToClubFollowerService,
     private readonly clubsService: ClubService,
     private readonly toastCtrl: ToastController,
+    private readonly translate: TranslateService
   ) {
 
   }
@@ -150,7 +152,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
 
   async openOnBrowser(url: string) {
     if (!url.startsWith('http') && !url.startsWith('tel:') && !url.startsWith('mailto:')) {
-      const toast = await this.toastCtrl.create({ message: 'Link non valido!', duration: 3000 });
+      const toast = await this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.INVALID_LINK'), duration: 3000 });
       toast.present();
       return;
     }

@@ -1,6 +1,7 @@
 import { AfterViewChecked, AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ClusterIconStyle, GoogleMap, MarkerClustererOptions } from '@angular/google-maps';
 import { IonModal, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DateTime } from 'luxon';
 // import { GoogleMap, LatLngBounds } from '@capacitor/google-maps';
 import { Subject, debounceTime, lastValueFrom } from 'rxjs';
@@ -85,7 +86,8 @@ export class MapPage implements OnInit, AfterViewChecked {
     private readonly clubsService: ClubService,
     private navCtrl: NavController,
     public partiesUtils: CommonPartiesUtils,
-    @Inject(BASE_PATH) public basePath: string | string[]
+    @Inject(BASE_PATH) public basePath: string | string[],
+    private readonly translate: TranslateService
   ) {
     this.authManager.geocoding$.subscribe(res => {
       this.city = this.authManager.currentCity;
@@ -282,6 +284,10 @@ export class MapPage implements OnInit, AfterViewChecked {
         this.city = 'IN ZONA'
       }
     });
+  }
+
+  onMapDragEnd() {
+    this.city = this.translate.instant('APP.MAP.NEAR_ZONE')
   }
 
 }

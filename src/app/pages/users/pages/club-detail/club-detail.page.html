@@ -76,13 +76,13 @@
 				(click)="followClub()"
 				class="flex-1"
 				color="primary">
-				Segui
+				{{'APP.CLUB_DETAIL.FOLLOW' | translate}}
 			</ion-button>
 			<ion-button *ngIf="isFollowing"
 				(click)="unfollowClub()"
 				class="flex-1"
 				color="dark">
-				Seguito
+				{{'APP.CLUB_DETAIL.FOLLOWING' | translate}}
 			</ion-button>
 		</div>
 
@@ -96,7 +96,7 @@
 
 		<!-- LOCALI CONTACTS -->
 		<div class="paragraph mt-12 w-full">
-			<div class="title">Contatti</div>
+			<div class="title">{{'APP.CLUB_DETAIL.CONTACTS' | translate}}</div>
 			<div class="description flex w-full mt-1">
 				<div class="flex-1">
 					<div *ngIf="club?.email"
@@ -136,14 +136,14 @@
 		<!-- TAGS -->
 		<div class="mt-12">
 			<easy-card-slider [parties]="parties || []"
-				[title]="'PROSSIMI EVENTI'"
+				[title]="'APP.CLUB_DETAIL.NEXT_EVENTS' | translate"
 				(partyClick)="goto($event)"></easy-card-slider>
 		</div>
 	</div>
 </ion-content>
 <follower-modal #followersModal
 	[followers]="followers"
-	[title]="'Seguaci'"></follower-modal>
+	[title]="'APP.CLUB_DETAIL.FOLLOWERS' | translate"></follower-modal>
 
 <ion-modal #modal
 	id="full-immersion-modal"
@@ -157,10 +157,10 @@
 
 		<div class="wrapper p-8">
 			<div class="title">
-				Lascia una valutazione
+				{{'APP.CLUB_DETAIL.REVIEW_TITLE' | translate}}
 			</div>
 			<div class="my-10 subtitle">
-				Quanto ti piace questo locale?
+				{{'APP.CLUB_DETAIL.REVIEW_SUBTITLE' | translate}}
 			</div>
 			<div id="score">
 				<div>

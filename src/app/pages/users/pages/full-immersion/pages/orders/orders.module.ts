@@ -8,6 +8,7 @@ import { OrdersPageRoutingModule } from './orders-routing.module';
 
 import { OrdersPage } from './orders.page';
 import { UiModule } from 'src/app/components/ui.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { UiModule } from 'src/app/components/ui.module';
     FormsModule,
     IonicModule,
     OrdersPageRoutingModule,
-    UiModule
+    UiModule,
+    TranslateModule
   ],
   declarations: [OrdersPage]
 })
