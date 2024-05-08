@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryService, UserBaseDto } from 'src/app/apis';
@@ -27,11 +27,14 @@ export class StoriesV2Page implements OnInit {
   stories: GetStoryResponseDto[] = [];
   usersStories: { user: UserBaseDto, stories: GetStoryResponseDto[]; }[] = [];
 
+  effect: string = this.platform.is('ios') ? '' : 'cube';
+
   constructor(
     private storiesService: StoryService,
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private authManager: AuthManagerService
+    private authManager: AuthManagerService,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
@@ -114,7 +117,7 @@ export class StoriesV2Page implements OnInit {
 
   initSwiper() {
     const swiperEl = document.querySelector<SwiperContainer>("#stories");
-    swiperEl!.initialize();
+    // swiperEl!.initialize();
     swiperEl?.swiper.on('slideChange', () => {
       console.log('slide changed', swiperEl?.swiper.activeIndex);
       if (swiperEl && this.storyComponents) {

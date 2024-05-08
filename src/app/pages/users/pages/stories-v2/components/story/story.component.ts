@@ -1,10 +1,14 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Share } from '@capacitor/share';
-import { IonContent, IonicSlides, ModalController, NavController, IonModal } from '@ionic/angular';
+import { IonContent, IonicSlides, ModalController, NavController, IonModal, IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
 import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryService, StoryLikeService, StoryBaseDto, UserBaseDto, ClubBaseDto, PartyBaseDto } from 'src/app/apis';
+import { UiModule } from 'src/app/components/ui.module';
+import { ShorterNumberPipe } from 'src/app/pipes/shorter-number.pipe';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { StoryController } from 'src/app/services/story.service';
 import { SwiperContainer } from 'swiper/element';
@@ -13,6 +17,9 @@ import { SwiperContainer } from 'swiper/element';
   selector: 'story',
   templateUrl: './story.component.html',
   styleUrls: ['./story.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  standalone: true,
+  imports: [CommonModule, IonicModule, TranslateModule, UiModule, ShorterNumberPipe]
 })
 export class StoryComponent implements OnChanges {
   @ViewChild('swiper') swiperRef: ElementRef<SwiperContainer> | undefined;
@@ -56,11 +63,11 @@ export class StoryComponent implements OnChanges {
       this.storiesOverview = new StoriesOverview(res.data);
       this.storiesOverview.onStoryEnd.subscribe(overview => {
         if (this.swiperRef && this.storiesOverview) {
-          this.swiperRef.nativeElement.swiper.slideTo(this.storiesOverview.currentIndex);
+          this.swiperRef.nativeElement.swiper?.slideTo(this.storiesOverview.currentIndex);
         }
       });
-      this.ready.emit(this);
       this.swiperRef?.nativeElement.swiper.update();
+      this.ready.emit(this);
     });
   }
 
@@ -82,6 +89,14 @@ export class StoryComponent implements OnChanges {
 
   close() {
     this.onClose.emit();
+  }
+
+  next() {
+    this.storiesOverview?.next();
+  }
+
+  prev() {
+    this.storiesOverview?.prev();
   }
 
   deleteStory(id: number) {
