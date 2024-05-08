@@ -79,7 +79,9 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     setInterval(() => {
-      this.storyWidget?.findStories();
+      if (this.authManager.isAuthenticated()) {
+        this.storyWidget?.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
+      }
     }, 5 * 60 * 1000);
   }
 
@@ -178,22 +180,78 @@ export class HomePage implements OnInit {
       this.navCtrl.navigateBack('/story');
       return;
     }
-    const storiesModal = await this.storyCtrl.openUserStoriesModal($event);
-    storiesModal.onDidDismiss().then(async res => {
-      console.log(res);
-      if (res.role == 'NEXT_USER') {
-        const next = this.storyWidget?.getNext($event.user);
-        if (next) {
-          await this.handleStories(next.value);
-        }
-      }
-      if (res.role == 'PREVIOUS_USER') {
-        const prev = this.storyWidget?.getPrev($event.user);
-        if (prev) {
-          await this.handleStories(prev.value);
-        }
+    this.navCtrl.navigateForward('/stories/' + $event.user.id, {
+      queryParams: {
+        filter: JSON.stringify({
+          user: { id: $event.user.id },
+          createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+        }),
+        type: 'page',
+      },
+    });
+
+    this.storyCtrl.nextUser.subscribe(res => {
+      const next = this.storyWidget?.getNext($event.user);
+      if (next && next.value.user.id) {
+        this.navCtrl.navigateForward('/stories/' + next.value.user.id, {
+          queryParams: {
+            filter: JSON.stringify({
+              user: { id: next.value.user.id || 'NO-ID' },
+              createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+            }),
+            type: 'page',
+          },
+        });
       }
     });
+
+    this.storyCtrl.previousUser.subscribe(res => {
+      const prev = this.storyWidget?.getPrev($event.user);
+      if (prev && prev.value.user.id) {
+        this.navCtrl.navigateBack('/stories/' + prev.value.user.id, {
+          queryParams: {
+            filter: JSON.stringify({
+              user: { id: prev.value.user.id || 'NO-ID' },
+              createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+            }),
+            type: 'page',
+          },
+
+        });
+      }
+    });
+
+    // this.storyCtrl.onStoryClose.subscribe(async role => {
+    //   if (role == 'NEXT_USER') {
+    //     const next = this.storyWidget?.getNext($event.user);
+    //     if (next) {
+    //       await this.handleStories(next.value);
+    //     }
+    //   }
+    //   if (role == 'PREVIOUS_USER') {
+    //     const prev = this.storyWidget?.getPrev($event.user);
+    //     if (prev) {
+    //       await this.handleStories(prev.value);
+    //     }
+    //   }
+    // });
+
+    //   const storiesModal = await this.storyCtrl.openUserStoriesModal($event);
+    //   storiesModal.onDidDismiss().then(async res => {
+    //     console.log(res);
+    //     if (res.role == 'NEXT_USER') {
+    //       const next = this.storyWidget?.getNext($event.user);
+    //       if (next) {
+    //         await this.handleStories(next.value);
+    //       }
+    //     }
+    //     if (res.role == 'PREVIOUS_USER') {
+    //       const prev = this.storyWidget?.getPrev($event.user);
+    //       if (prev) {
+    //         await this.handleStories(prev.value);
+    //       }
+    //     }
+    //   });
 
   }
 

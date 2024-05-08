@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
 import { GetSavedPartyResponseDto, SavedPartyService, UserToClubFollowerService } from 'src/app/apis';
@@ -24,7 +25,8 @@ export class CommonPartiesUtils {
     private authManager: AuthManagerService,
     private navCtrl: NavController,
     private savedPartiesService: SavedPartyService,
-    private clubFollowerService: UserToClubFollowerService
+    private clubFollowerService: UserToClubFollowerService,
+    private translate: TranslateService
   ) { }
 
   public Filters = () => ({
@@ -73,10 +75,10 @@ export class CommonPartiesUtils {
     Today: () => {
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: 'Eventi di oggi a ' + this.authManager.currentCity,
+          title: this.translate.instant('APP.COMMON_FILTERS.TODAY', { city: this.authManager.currentCity }),
           header: {
-            title: 'Oggi',
-            subtitle: 'Eventi'
+            title: this.translate.instant('APP.COMMON_FILTERS.TODAY_TITLE'),
+            subtitle: this.translate.instant('APP.COMMON_FILTERS.TODAY_SUBTITLE')
           },
           filters: JSON.stringify({
             ...this.Filters().Tonight,
@@ -91,10 +93,10 @@ export class CommonPartiesUtils {
       }), undefined, undefined, 'party'));
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: 'Eventi salvati',
+          title: this.translate.instant('APP.COMMON_FILTERS.SAVED'),
           header: {
-            title: 'Salvati',
-            subtitle: 'Eventi'
+            title: this.translate.instant('APP.COMMON_FILTERS.SAVED_TITLE'),
+            subtitle: this.translate.instant('APP.COMMON_FILTERS.SAVED_SUBTITLE')
           },
           filters: JSON.stringify({
             id: { $in: savedParties.data.reduce((a, b) => [...a, ...(b.party?.id ? [b.party.id] : [])], [] as number[]) }
@@ -105,10 +107,10 @@ export class CommonPartiesUtils {
     Weekend: () => {
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: 'Eventi questo weekend a ' + this.authManager.currentCity,
+          title: this.translate.instant('APP.COMMON_FILTERS.WEEKEND', { city: this.authManager.currentCity }),
           header: {
-            title: 'ven - dom',
-            subtitle: 'Eventi'
+            title: this.translate.instant('APP.COMMON_FILTERS.WEEKEND_TITLE'),
+            subtitle: this.translate.instant('APP.COMMON_FILTERS.WEEKEND_SUBTITLE')
           },
           filters: JSON.stringify({
             ...this.Filters().Weekend,
@@ -123,10 +125,10 @@ export class CommonPartiesUtils {
       }), undefined, undefined, 'club'));
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: 'Eventi nei tuoi locali preferiti',
+          title: this.translate.instant('APP.COMMON_FILTERS.PREFERED_CLUBS'),
           header: {
-            title: 'Locali preferiti',
-            subtitle: 'Eventi'
+            title: this.translate.instant('APP.COMMON_FILTERS.PREFERED_CLUBS_TITLE'),
+            subtitle: this.translate.instant('APP.COMMON_FILTERS.PREFERED_CLUBS_SUBTITLE')
           },
           filters: JSON.stringify({
             ...this.Filters().Tonight,
@@ -138,10 +140,10 @@ export class CommonPartiesUtils {
     ForYou: () => {
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: 'Eventi per te di oggi a ' + this.authManager.currentCity,
+          title: this.translate.instant('APP.COMMON_FILTERS.FOR_YOU', { city: this.authManager.currentCity }),
           header: {
-            title: 'Oggi per te',
-            subtitle: 'Eventi'
+            title: this.translate.instant('APP.COMMON_FILTERS.FOR_YOU_TITLE'),
+            subtitle: this.translate.instant('APP.COMMON_FILTERS.FOR_YOU_SUBTITLE')
           },
           filters: JSON.stringify({
             ...this.Filters().Tonight,

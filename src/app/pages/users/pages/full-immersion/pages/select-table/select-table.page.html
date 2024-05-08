@@ -29,18 +29,16 @@
 				<img src="assets/icons/illustr-table.svg"
 					height="60">
 			</div>
-			<div class="mt-6 table-title">TAVOLO</div>
-			<div class="mt-3 table-subtitle">
-				Inserisci il numero del tavolo
-				<br>
-				e comincia ad ordinare!
+			<div class="mt-6 table-title">{{'APP.SELECT_TABLE.TABLE' | translate}}</div>
+			<div [innerHTML]="'APP.SELECT_TABLE.CLAIM' | translate"
+				class="mt-3 table-subtitle">
 			</div>
 			<div class="mt-12 ">
 				<ion-item lines="none"
 					style="width: 70%; margin: 0 auto;">
 					<ion-input [(ngModel)]="tableName"
 						special
-						placeholder="NUMERO"></ion-input>
+						[placeholder]="'APP.SELECT_TABLE.TABLE_NUMBER' | translate"></ion-input>
 				</ion-item>
 			</div>
 			<div class="mt-4">
@@ -49,7 +47,7 @@
 					style="width: 70%;"
 					color="light"
 					shape="round">
-					PROSEGUI
+					{{'APP.SELECT_TABLE.NEXT' | translate}}
 				</ion-button>
 			</div>
 		</div>

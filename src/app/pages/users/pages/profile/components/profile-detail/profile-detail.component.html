@@ -10,7 +10,9 @@
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 				<div>
-					<small>SEGUACI</small>
+					<small>
+						{{'APP.PROFILE_DETAIL.FOLLOWERS' | translate}}
+					</small>
 				</div>
 			</ion-label>
 		</ion-button>
@@ -22,7 +24,9 @@
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 				<div>
-					<small>SEGUITI</small>
+					<small>
+						{{'APP.PROFILE_DETAIL.FOLLOWING' | translate}}
+					</small>
 				</div>
 			</ion-label>
 		</ion-button>
@@ -30,20 +34,20 @@
 			(click)="edit.emit()"
 			color="primary"
 			class="w-full">
-			MODIFICA
+			{{'APP.PROFILE_DETAIL.EDIT' | translate}}
 		</ion-button>
 		<ng-container *ngIf="!isMe">
 			<ion-button *ngIf="!isFollowing"
 				(click)="follow()"
 				color="primary"
 				class="w-full">
-				SEGUI
+				{{'APP.PROFILE_DETAIL.FOLLOW' | translate}}
 			</ion-button>
 			<ion-button *ngIf="isFollowing"
 				(click)="unfollow()"
 				color="dark"
 				class="w-full">
-				Seguito
+				{{'APP.PROFILE_DETAIL.FOLLOWED' | translate}}
 			</ion-button>
 
 		</ng-container>
@@ -51,7 +55,9 @@
 
 	<!-- USER BIO -->
 	<div class="paragraph mt-12">
-		<div class="title">Su di me</div>
+		<div class="title">
+			{{'APP.PROFILE_DETAIL.ABOUT_ME' | translate}}
+		</div>
 		<div *ngIf="!user"
 			class="w-full">
 			<ion-skeleton-text animated="true"></ion-skeleton-text>
@@ -67,7 +73,9 @@
 
 	<!-- USERS INTERESTS -->
 	<div class="paragraph mt-12">
-		<div class="title">Tags</div>
+		<div class="title">
+			{{'APP.PROFILE_DETAIL.TAGS' | translate}}
+		</div>
 		<div *ngIf="!user"
 			class="w-full flex gap-2">
 			<div class="w-30">
@@ -97,7 +105,9 @@
 
 	<!-- USER CONTACTS -->
 	<div class="paragraph mt-12 w-full">
-		<div class="title">Contatti</div>
+		<div class="title">
+			{{'APP.PROFILE_DETAIL.CONTACTS' | translate}}
+		</div>
 		<div class="description w-full mt-1">
 			<div *ngIf="!user"
 				class="w-full">
@@ -139,7 +149,9 @@
 
 	<div id="clubs-grid"
 		class="mt-12 w-full mb-24">
-		<div class="title mb-4">Locali seguiti</div>
+		<div class="title mb-4">
+			{{'APP.PROFILE_DETAIL.FOLLOWING_CLUBS' | translate}}
+		</div>
 		<easy-clubs-grid [clubs]="clubs"></easy-clubs-grid>
 	</div>
 
@@ -147,52 +159,7 @@
 
 <follower-modal #followersModal
 	[followers]="followers"
-	[title]="'Seguaci'"></follower-modal>
+	[title]="'APP.PROFILE_DETAIL.FOLLOWERS' | translate"></follower-modal>
 <follower-modal #followedModal
 	[followers]="followed"
-	[title]="'Seguiti'"></follower-modal>
-<!-- <ion-modal #followersModal
-	class="auto-height bottom blur">
-	<ng-template>
-		<div id="users-grid">
-			<div *ngFor="let user of followers"
-				[routerLink]="'/profile/'+user.id"
-				(click)="followersModal.dismiss()"
-				class="user-item">
-				<ion-avatar style="margin: 0 auto;">
-					<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
-						style="object-fit: cover;">
-				</ion-avatar>
-				<div class="mt-1"
-					style="text-align: center;">
-					<small>
-						{{user.firstName}} {{user.lastName}}
-					</small>
-				</div>
-			</div>
-		</div>
-	</ng-template>
-</ion-modal> 
-
-<ion-modal #followedModal
-	class="auto-height bottom blur">
-	<ng-template>
-		<div id="users-grid">
-			<div *ngFor="let user of followed"
-				[routerLink]="'/profile/'+user.id"
-				(click)="followedModal.dismiss()"
-				class="user-item">
-				<ion-avatar style="margin: 0 auto;">
-					<img [src]="user.profileImage?.url || 'assets/icons/guy-walk.svg'"
-						style="object-fit: cover;">
-				</ion-avatar>
-				<div class="mt-1"
-					style="text-align: center;">
-					<small>
-						{{user.firstName}} {{user.lastName}}
-					</small>
-				</div>
-			</div>
-		</div>
-	</ng-template>
-</ion-modal> -->
+	[title]="'APP.PROFILE_DETAIL.FOLLOWING' | translate"></follower-modal>

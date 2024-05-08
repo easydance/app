@@ -9,7 +9,9 @@
 						style="font-size: 1rem;"></ion-icon>
 				</ion-fab-button>
 			</ion-buttons>
-			<ion-title>STORICO ORDINI</ion-title>
+			<ion-title>
+				{{'APP.ORDERS_FM.TITLE' | translate}}
+			</ion-title>
 		</ion-toolbar>
 	</ion-header>
 
@@ -39,7 +41,9 @@
 						</svg>
 					</div>
 					<div class="info">
-						<div class="title">N° {{o.id}}</div>
+						<div class="title">
+							{{'APP.ORDERS_FM.N' | translate}} {{o.id}}
+						</div>
 						<div class="list">
 							<div *ngFor="let l of o.rows"
 								class="flex gap-2">
@@ -74,7 +78,7 @@
 				class="item">
 				<div>
 					<div class="n-item ion-text-right"></div>
-					N° {{order.id}}
+					{{'APP.ORDERS_FM.N' | translate}} {{order.id}}
 					<div class="table-name mt-2">
 						{{order.table?.name}}
 					</div>
@@ -85,7 +89,7 @@
 					</div>
 					<div class="mt-2">
 						<ion-chip [color]="getStatusColor(order.status)">
-							{{getStatusLabel(order.status)}}
+							{{'APP.ORDER_STATUS.' + order.status | translate}}
 						</ion-chip>
 					</div>
 				</div>
@@ -93,5 +97,5 @@
 		</div>
 	</div>
 	<easy-thats-all *ngIf="!getOrdersGrouped()?.length && !pendingOrders?.length"
-		[message]="'Nessun ordine effettuato'"></easy-thats-all>
+		[message]="'APP.ORDERS_FM.NO_ORDERS' | translate"></easy-thats-all>
 </ion-content>

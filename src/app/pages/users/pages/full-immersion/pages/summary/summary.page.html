@@ -9,13 +9,18 @@
 					<ion-icon name="arrow-back-sharp"></ion-icon>
 				</ion-button>
 			</ion-buttons>
-			<ion-title>RIEPILOGO</ion-title>
+			<ion-title>
+				{{'APP.ORDER_SUMMARY.OVERVIEW' | translate}}
+			</ion-title>
 		</ion-toolbar>
 	</ion-header>
-	<div id="list" class="px-4 mt-18 pb-12">
+	<div id="list"
+		class="px-4 mt-18 pb-12">
 		<div class="flex space-between">
 			<div id="tabel-info">
-				<div class="table-label">TAVOLO</div>
+				<div class="table-label">
+					{{'APP.ORDER_SUMMARY.TABLE' | translate}}
+				</div>
 				<div class="table-value">{{table?.name}}</div>
 			</div>
 		</div>
@@ -23,9 +28,15 @@
 			<table id="order-summary">
 				<thead>
 					<tr>
-						<th>Quantità</th>
-						<th>Prodotto</th>
-						<th>Prezzo</th>
+						<th>
+							{{'APP.ORDER_SUMMARY.QTY' | translate}}
+						</th>
+						<th>
+							{{'APP.ORDER_SUMMARY.PRODUCT_NAME' | translate}}
+						</th>
+						<th>
+							{{'APP.ORDER_SUMMARY.PRICE' | translate}}
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,7 +58,7 @@
 			<div class="flex-1">
 				<div class="total-label">TOTALE</div>
 				<div class="total-subtitle">
-					*Totale da pagare all’interno del locale
+					{{'APP.ORDER_SUMMARY.PAYMENT_INFO' | translate}}
 				</div>
 			</div>
 			<div class="total-price">
@@ -65,7 +76,7 @@
 			shape="round"
 			expand="full"
 			color="primary">
-			ORDINA
+			{{'APP.ORDER_SUMMARY.MAKE_ORDER' | translate}}
 		</ion-button>
 	</div>
 

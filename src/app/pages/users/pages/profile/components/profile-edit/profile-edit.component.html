@@ -9,7 +9,7 @@
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 				<div>
-					<small>SEGUACI</small>
+					<small>{{'APP.PROFILE_DETAIL.FOLLOWERS' | translate}}</small>
 				</div>
 			</ion-label>
 		</ion-button>
@@ -20,19 +20,19 @@
 				<ion-icon name="people"
 					slot="end"></ion-icon>
 				<div>
-					<small>SEGUITI</small>
+					<small>{{'APP.PROFILE_DETAIL.FOLLOWING' | translate}}</small>
 				</div>
 			</ion-label>
 		</ion-button>
 		<ion-button color="light"
 			class="w-full" (click)="save()">
-			Salva
+			{{'APP.PROFILE_DETAIL.SAVE' | translate}}
 		</ion-button>
 	</div>
 
 	<!-- PHOTO -->
 	<div class="mt-12">
-		<div class="input-title">Foto profilo</div>
+		<div class="input-title">{{'APP.PROFILE_DETAIL.PHOTO_PROFILE' | translate}}</div>
 		<div class="mt-4">
 
 			<swiper-container pagination="false"
@@ -65,7 +65,7 @@
 	<div class="mt-12">
 		<!-- <div class="title">Foto</div> -->
 		<div>
-			<div class="input-title mb-4">Nome</div>
+			<div class="input-title mb-4">{{'APP.PROFILE_DETAIL.NAME' | translate}}</div>
 			<ion-item lines="none">
 				<ion-input [(ngModel)]="user.firstName"
 					name="firstName"
@@ -75,7 +75,7 @@
 		</div>
 
 		<div class="mt-6">
-			<div class="input-title mb-4">Cognome</div>
+			<div class="input-title mb-4">{{'APP.PROFILE_DETAIL.SURNAME' | translate}}</div>
 			<ion-item lines="none">
 				<ion-input [(ngModel)]="user.lastName"
 					name="lastName"
@@ -87,7 +87,7 @@
 
 	<!-- SOCIAL -->
 	<div class="mt-12">
-		<div class="input-title mb-4">Social</div>
+		<div class="input-title mb-4">{{'APP.PROFILE_DETAIL.SOCIAL' | translate}}</div>
 		<ng-container  *ngFor="let kv of (editedUser?.socials || {}) | keyvalue">
 			<div class="social-item" *ngIf="currentSocialEditing != kv.key" (click)="toggleSocialEdit(kv.key) ">
 				<div>
@@ -130,13 +130,13 @@
 							(click)="$event.stopPropagation()" />
 					</ion-item>
 
-					<ion-button class="mt-2" expand="block" color="success">Salva</ion-button>
+					<ion-button class="mt-2" expand="block" color="success">{{'APP.PROFILE_DETAIL.SAVE' | translate}}</ion-button>
 				</div>
 			</div>
 		</ng-container>
 		<div id="social-buttons" *ngIf="socialsKeys.length">
 			<div>
-				<div class="title">+ AGGIUNGI SOCIAL</div>
+				<div class="title">+ {{'APP.PROFILE_DETAIL.ADD_SOCIAL' | translate}}</div>
 				<div class="buttons">
 					<div class="button" *ngFor="let logo of socialsKeys" (click)="addSocial(logo)">
 						<ion-icon [name]="'logo-' + logo"></ion-icon>
@@ -150,7 +150,7 @@
 	<div class="mt-12">
 		<!-- <div class="title">Foto</div> -->
 		<div>
-			<div class="input-title mb-4">Descrizione</div>
+			<div class="input-title mb-4">{{'APP.PROFILE_DETAIL.DESCRIPTION' | translate}}</div>
 			<ion-item lines="none">
 				<ion-textarea [(ngModel)]="user.description"
 					[rows]="6"
@@ -162,7 +162,7 @@
 				</ion-textarea>
 			</ion-item>
 			<div class="textarea-info mt-1">
-				Max {{descriptionWordLimit}} caratteri
+				{{'APP.PROFILE_DETAIL.MAX_N_CHARACTERS' | translate:({descriptionWordLimit})}}
 			</div>
 		</div>
 	</div>
@@ -171,13 +171,13 @@
 	<div class="mt-12">
 		<!-- <div class="title">Foto</div> -->
 		<div>
-			<div class="input-title mb-4">Interessi</div>
+			<div class="input-title mb-4">{{'APP.PROFILE_DETAIL.INTERESTS' | translate}}</div>
 			<ion-item class="z-1001"
 				lines="none">
 				<ion-input [(ngModel)]="tagsSearch"
 					(ngModelChange)="searchTag()"
 					name="tagsSearch"
-					placeholder="COSA ASCOLTI?"
+					[placeholder]="'APP.PROFILE_DETAIL.WHAT_LISTEN' | translate"
 					required>
 				</ion-input>
 			</ion-item>
@@ -207,13 +207,13 @@
 		expand="block" 
 		class="mt-12"
 		(click)="save()">
-		Salva
+		{{'APP.PROFILE_DETAIL.SAVE' | translate}}
 	</ion-button>
 	<ion-button color="dark"
 		shape="round"
 		expand="block" 
 		class="mt-4"
 		(click)="saved.emit()">
-		Annulla
+		{{'APP.PROFILE_DETAIL.CANCEL' | translate}}
 	</ion-button>
 </div>

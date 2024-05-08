@@ -5,6 +5,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { NavController, Platform, ToastController } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { WebSocketService } from 'src/app/services/web-socket.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthManagerService {
   public currentCity?: string;
 
   private userStore = new BehaviorSubject<LoginUserDataDto | undefined>(undefined);
-  public user$ = this.userStore.asObservable();
+  public user$ = this.userStore.asObservable().pipe(filter((a) => a !== undefined));
   public get user() {
     return this.userStore.getValue();
   }
@@ -38,7 +39,8 @@ export class AuthManagerService {
     private platform: Platform,
     private webSocket: WebSocketService,
     private navCtrl: NavController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private translate: TranslateService
   ) { }
 
   isAuthenticated() {
@@ -60,7 +62,7 @@ export class AuthManagerService {
                   .subscribe(res => {
                     this.logout();
                     this.navCtrl.navigateRoot('/');
-                    this.toastCtrl.create({ message: 'Il tuo account è stato eliminato!', duration: 3000 })
+                    this.toastCtrl.create({ message: this.translate.instant('APP.MESSAGES.USER_DELETED') , duration: 3000 })
                       .then(toast => {
                         toast.present();
                       });
@@ -115,7 +117,7 @@ export class AuthManagerService {
       if (this.platform.is('android') || this.platform.is('ios')) {
         if (!this.platform.is('ios')) {
           let permissionStatus = await Geolocation.checkPermissions().catch(error => {
-            alert("Per poter utilizzare Easydance devi attivare la geolocalizzazione. L'app verrà chiusa dopo questo messaggio!");
+            alert(this.translate.instant('APP.ERRORS.GEOLOCATION_DISABLED'));
             App.exitApp();
           });
           if (permissionStatus?.location != 'granted') {

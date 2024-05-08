@@ -8,6 +8,7 @@ import { ClubDetailPageRoutingModule } from './club-detail-routing.module';
 
 import { ClubDetailPage } from './club-detail.page';
 import { UiModule } from 'src/app/components/ui.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { UiModule } from 'src/app/components/ui.module';
     FormsModule,
     IonicModule,
     ClubDetailPageRoutingModule,
-    UiModule
+    UiModule,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ClubDetailPage]

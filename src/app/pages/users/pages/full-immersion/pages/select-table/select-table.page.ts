@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { ClubBaseDto, ClubService, CurrentParty } from 'src/app/apis';
 import { FullImmersionService } from 'src/app/pages/users/pages/full-immersion/services/full-immersion.service';
@@ -19,7 +20,8 @@ export class SelectTablePage implements OnInit {
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private readonly fullImmersionService: FullImmersionService,
-    private readonly clubsService: ClubService
+    private readonly clubsService: ClubService,
+    private readonly translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,7 @@ export class SelectTablePage implements OnInit {
       return;
     }
 
-    const toast = await this.toastCtrl.create({ message: 'Non esiste nessun tavolo con questo nominativo!', duration: 3000 });
+    const toast = await this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.TABLE_NAME_NOT_EXISTS'), duration: 3000 });
     toast.present();
   }
 

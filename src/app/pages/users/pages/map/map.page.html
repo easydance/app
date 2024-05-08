@@ -12,7 +12,7 @@
 			</div>
 			<div class="flex-1 mr-3">
 				<ion-searchbar id="map-searchbar" [showClearButton]="'always'"
-					[placeholder]="'Cerca...'"
+					[placeholder]="'APP.SEARCH_PLACEHOLDER' | translate"
 					clearIcon="close-outline"></ion-searchbar>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 				size="small"
 				class="mr-2"
 				fill="outline">
-				LOCALI
+				{{'APP.MAP.CLUBS' | translate}}
 			</ion-button>
 			<ion-button [fill]="searchType == 'parties'? 'solid' : 'outline'"
 				[ngClass]="{actived: searchType == 'parties'}"
@@ -50,7 +50,7 @@
 				(click)="changeSearchType('parties')"
 				size="small"
 				class="mr-2">
-				EVENTI
+				{{'APP.MAP.EVENTS' | translate}}
 			</ion-button>
 		</div>
 	</div>
@@ -63,7 +63,7 @@
 		[height]="'100%'"
 		[width]="'100%'"
 		(boundsChanged)="onBoundsChanged($event, map)"
-		(mapDragend)="city = 'IN ZONA'">
+		(mapDragend)="onMapDragEnd()">
 		<map-marker-clusterer [minimumClusterSize]="2"
 			[options]="clusterOptions"
 			[zoomOnClick]="false"
@@ -105,13 +105,13 @@
 				slot="buttons">
 				<ion-button (click)="datetime.cancel(true)"
 					color="medium">
-					Chiudi
+					{{'APP.CLOSE' | translate}}
 				</ion-button>
 				<ion-button (click)="datetime.confirm()"
 					class="px-3"
 					shape="round"
 					color="light">
-					Cerca
+					{{'APP.SEARCH' | translate}}
 				</ion-button>
 			</ion-buttons>
 		</ion-datetime>
@@ -137,7 +137,7 @@
 			<items-list [parties]="selectedParties"
 				[itemOptions]="itemOptions"
 				[footerOpts]="{hidden: true}"
-				[headerOpts]="{ title: 'Eventi' }"></items-list>
+				[headerOpts]="{ title: 'Events' }"></items-list>
 		</div>
 	</ng-template>
 </ion-modal>
@@ -161,7 +161,7 @@
 				shape="round"
 				color="tertiary"
 				style="height: 3.5rem;">
-				VAI ALL'EVENTO
+				{{'APP.MAP.GOTO_EVENT' | translate}}
 			</ion-button>
 			<!-- <event-detail [party]="partyDetail"
 				[config]="{hideMap: true}"
@@ -213,7 +213,9 @@
 
 					<!-- LOCALI CONTACTS -->
 					<div class="paragraph mt-12 w-full">
-						<div class="title">Contatti</div>
+						<div class="title">				
+							{{'APP.MAP.CONTACTS' | translate}}
+						</div>
 						<div class="description flex w-full mt-1">
 							<div class="flex-1">
 								<div *ngIf="selectedClub?.email"
@@ -245,7 +247,7 @@
 					<div *ngIf="partiesWeekend?.length"
 						class="mt-16">
 						<easy-card-slider [parties]="partiesWeekend || []"
-							[title]="'QUESTA WEEKEND'"
+							[title]="'APP.MAP.THIS_WEEKEND' | translate"
 							(partyClick)="goto($event)"></easy-card-slider>
 					</div>
 				</div>

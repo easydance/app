@@ -14,7 +14,6 @@ import { environment } from 'src/environments/environment';
 import "@codetrix-studio/capacitor-google-auth";
 import { I18nHandlerModule } from 'src/app/i18n/custom-translator.loader';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 import { InstanceLogService } from 'src/app/services/instance-log.service';
 import { GlobalErrorHandler } from 'src/app/services/global-error-handler.service';
 import { HotfixUpdaterService } from 'src/app/services/hotfix-updater.service';
@@ -26,16 +25,13 @@ export function apiConfigFactory(): Configuration {
   return new Configuration(params);
 }
 
-const globalErrorInterceptor = () => {
-
-};
-
 const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: HotfixUpdaterService) => () => {
   logger.info('Init app', 'app-module.ts', {});
 
   function loadGoogleMapsScript(key: string) {
     const googleMapsScript = document.createElement('script');
     googleMapsScript.setAttribute('defer', '');
+    googleMapsScript.setAttribute('async', '');
     googleMapsScript.src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=" + key;
     document.head.appendChild(googleMapsScript);
   }
@@ -49,17 +45,18 @@ const init = (http: HttpClient, logger: InstanceLogService, hotfixUpdater: Hotfi
         logger.info('Assign settings to EASY_KEYS', 'app-module.ts', { EASY_KEYS: res });
         window.EASY_KEYS = {};
         Object.assign(window.EASY_KEYS, res);
-        hotfixUpdater.silentInstall(true);
-
-        // try {
-        //   await VersionUpdaterService.init();
-        //   logger.info('Version updater initialize', 'app-module.ts', {});
-        // } catch (err) {
-        //   logger.error('Version updater initialize', 'app-module.ts', { err });
-        //   console.error(err);
-        // }
+        logger.info('Start to load Google maps script', 'app-module.ts', { EASY_KEYS: res });
         loadGoogleMapsScript(res['GOOGLE_MAPS_KEY']);
+        logger.info('Google maps script loaded', 'app-module.ts', { EASY_KEYS: res });
         SplashScreen.hide({ fadeOutDuration: 500 });
+
+        // HOT-FIX UPDATER
+        logger.info('Check new hotfix', 'app-module.ts', { EASY_KEYS: res });
+        hotfixUpdater.askInstall(true);
+
+        setTimeout(() => {
+          SplashScreen.hide({ fadeOutDuration: 500 });
+        }, 15 * 1000)
 
         resolve(true);
       });

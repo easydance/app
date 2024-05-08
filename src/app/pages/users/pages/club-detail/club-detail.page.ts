@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonModal, NavController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
 import { AttachmentBaseDto, ClubBaseDto, ClubReviewService, ClubService, GetClubResponseDto, GetUserResponseDto, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserService, UserToClubFollowerService } from 'src/app/apis';
@@ -44,7 +45,8 @@ export class ClubDetailPage implements OnInit {
     private readonly usersService: UserService,
     private readonly reviewsService: ClubReviewService,
     private readonly changeDetector: ChangeDetectorRef,
-    private readonly webSocket: WebSocketService
+    private readonly webSocket: WebSocketService,
+    private readonly translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -131,7 +133,7 @@ export class ClubDetailPage implements OnInit {
 
       return;
     }
-    this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })
+    this.toastCtrl.create({ duration: 3000, message: this.translate.instant('APP.ERRORS.UNAUTHORIZE_FEATURE') })
       .then(toast => {
         toast.present();
       });
@@ -139,7 +141,7 @@ export class ClubDetailPage implements OnInit {
 
   async openOnBrowser(url: string) {
     if (!url.startsWith('http') && !url.startsWith('tel:') && !url.startsWith('mailto:')) {
-      const toast = await this.toastCtrl.create({ message: 'Link non valido!', duration: 3000 });
+      const toast = await this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.INVALID_LINK'), duration: 3000 });
       toast.present();
       return;
     }
@@ -151,7 +153,7 @@ export class ClubDetailPage implements OnInit {
       modal?.present();
       return;
     }
-    this.toastCtrl.create({ duration: 3000, message: 'Devi essere registrato per poter usufruire di questa funzionalità!' })
+    this.toastCtrl.create({ duration: 3000, message: this.translate.instant('APP.ERRORS.UNAUTHORIZE_FEATURE') })
       .then(toast => {
         toast.present();
       });

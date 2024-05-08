@@ -1,0 +1,11 @@
+swiper-container {
+  height: 100%;
+
+  swiper-slide {
+    height: 100%;
+  }
+}
+
+ion-content {
+  --padding-bottom: calc(65px + var(--ion-safe-area-bottom));
+}

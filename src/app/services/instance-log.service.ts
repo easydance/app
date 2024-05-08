@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, lastValueFrom, of } from 'rxjs';
+import { AuthManagerService } from 'src/app/services/auth-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,14 @@ export class InstanceLogService {
   apiKey = 'bfdf911e-f80a-4edb-b959-e3d45d37cc7b';
   path = 'https://logger.oddacoding.net/logs';
 
-  constructor(private httpService: HttpClient) { }
+  constructor(private httpService: HttpClient, private authManager: AuthManagerService) { }
 
   request(type: string, message: string, path: string, payload: any) {
-    payload['instance'] = this.instance;
+    payload['sessionId'] = this.instance;
+    payload['user'] = {
+      isAuthenticated: this.authManager.isAuthenticated(),
+      userId: this.authManager.user?.id
+    };
     return lastValueFrom(
       this.httpService
         .post(

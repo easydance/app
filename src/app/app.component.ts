@@ -6,6 +6,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { InstanceLogService } from 'src/app/services/instance-log.service';
 import { PushNotificationService } from 'src/app/services/push-notification.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import * as swiper from 'swiper/element/bundle';
@@ -25,7 +26,8 @@ export class AppComponent {
     private platform: Platform,
     private ngZone: NgZone,
     private navCtrl: NavController,
-    private webSocket: WebSocketService
+    private webSocket: WebSocketService,
+    private logger: InstanceLogService
   ) {
 
     ScreenOrientation.lock({ orientation: 'portrait-primary' });
@@ -63,7 +65,7 @@ export class AppComponent {
       document.body.classList.remove('keyboard-open');
     });
 
-    const lang = 'it';
+    const lang = localStorage.getItem('lang') || this.translationService.getBrowserLang() || 'it';
     this.translationService.use(lang);
     setInterval(() => {
       this.translationService.reloadLang(lang).subscribe(res => {
@@ -73,6 +75,7 @@ export class AppComponent {
     }, 5 * 60 * 1000);
 
     this.platform.ready().then(res => {
+      this.logger.info('App ready', 'app.component.ts', {});
       this.pushNotification.initialize();
       const googleAuthClientId = window.EASY_KEYS?.['GOOGLE_AUTH_CLIENT_ID'] || '862020674291-6ltb6ufrfmupsdhi2irtg68ba0eqg2ib.apps.googleusercontent.com';
       console.log("Google auth client id:", googleAuthClientId);
@@ -83,6 +86,7 @@ export class AppComponent {
       });
     }).catch(err => {
       console.error(err);
+      this.logger.error('App ready', 'app.component.ts', {});
     });
 
   }

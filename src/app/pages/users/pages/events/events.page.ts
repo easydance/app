@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 import { UsersPage } from 'src/app/pages/users/users.page';
 import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-events',
@@ -29,7 +30,8 @@ export class EventsPage implements OnInit {
     private readonly partiesService: PartyService,
     private readonly navCtrl: NavController,
     private readonly clubFollowerService: UserToClubFollowerService,
-    public readonly partiesUtils: CommonPartiesUtils
+    public readonly partiesUtils: CommonPartiesUtils,
+    private readonly translate: TranslateService
   ) {
 
     UsersPage.tabClicked.subscribe(res => {
@@ -66,32 +68,32 @@ export class EventsPage implements OnInit {
     return [
       {
         icon: 'calendar-outline',
-        title: 'Oggi',
+        title: this.translate.instant('APP.EVENTS.FILTERS.TODAY'),
         subtitle: DateTime.now().toFormat('dd LLL'),
         onSelect: this.partiesUtils.CommonFilterActions.Today.bind(this.partiesUtils)
       },
       {
         icon: 'bookmark',
-        title: 'Salvati',
-        subtitle: eventSaved + ' salvati',
+        title: this.translate.instant('APP.EVENTS.FILTERS.SAVED'),
+        subtitle: this.translate.instant('APP.EVENTS.FILTERS.SAVED_SUB', { eventSaved }),
         onSelect: this.partiesUtils.CommonFilterActions.Saved.bind(this.partiesUtils)
       },
       {
         icon: 'calendar-outline',
-        title: 'Weekend',
-        subtitle: 'ven - dom',
+        title: this.translate.instant('APP.EVENTS.FILTERS.WEEKEND'),
+        subtitle: this.translate.instant('APP.EVENTS.FILTERS.WEEKEND_SUB'),
         onSelect: this.partiesUtils.CommonFilterActions.Weekend.bind(this.partiesUtils)
       },
       {
         icon: 'calendar-outline',
-        title: 'Locali',
-        subtitle: savedClub + ' locali',
+        title: this.translate.instant('APP.EVENTS.FILTERS.CLUBS'),
+        subtitle: this.translate.instant('APP.EVENTS.FILTERS.CLUBS_SUB', { savedClub }),
         onSelect: this.partiesUtils.CommonFilterActions.FavoritesClubs.bind(this.partiesUtils)
       },
       {
         icon: 'sparkles-sharp',
-        title: 'Per te',
-        subtitle: '9+ eventi',
+        title: this.translate.instant('APP.EVENTS.FILTERS.FOR_YOU'),
+        subtitle: this.translate.instant('APP.EVENTS.FILTERS.FOR_YOU_SUB', { n: 9 }),
         onSelect: this.partiesUtils.CommonFilterActions.ForYou.bind(this.partiesUtils)
       },
     ];
@@ -155,10 +157,10 @@ export class EventsPage implements OnInit {
   goToClubsEventsList(club: ClubBaseDto) {
     this.navCtrl.navigateForward('/events-list', {
       queryParams: {
-        title: 'Eventi al ' + club.name,
+        title: this.translate.instant('APP.GOTO_EVENTLIST_CLUB', { name: club.name }),
         header: {
           title: club.name,
-          subtitle: 'Eventi'
+          subtitle: this.translate.instant('APP.EVENTS')
         },
         filters: JSON.stringify({
           to: {

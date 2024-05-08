@@ -6,7 +6,8 @@ import { environment } from './environments/environment';
 import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 
-SplashScreen.show({ autoHide: false, fadeInDuration: 500 });
+SplashScreen.hide();
+SplashScreen.show({ autoHide: true, showDuration: 5000, fadeInDuration: 0 });
 
 if (environment.production) {
   enableProdMode();

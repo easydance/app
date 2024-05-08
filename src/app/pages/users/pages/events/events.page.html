@@ -35,19 +35,19 @@
 	<div *ngIf="parties"
 		class="mt-16">
 		<easy-card-slider [parties]="parties"
-			[title]="'TOP 5 CONSIGLIATI'"
+			[title]="'APP.EVENTS.TOP_5_PARTIES' | translate"
 			(partyClick)="goToEvent($event)"></easy-card-slider>
 	</div>
 	<div *ngIf="parties"
 		class="mt-16">
 		<easy-card-slider [parties]="partiesTonight || []"
-			[title]="'QUESTA SERA'"
+			[title]="'APP.EVENTS.TONIGHT' | translate"
 			(partyClick)="goToEvent($event)"></easy-card-slider>
 	</div>
 	<div *ngIf="parties"
 		class="mt-16">
 		<easy-card-slider [parties]="parties"
-			[title]="'LAST CHANCE DI QUESTA SETTIMANA'"
+			[title]="'APP.EVENTS.LAST_CHANCE_WEEKEND' | translate"
 			(partyClick)="goToEvent($event)"></easy-card-slider>
 	</div>
 	<div *ngIf="clubs?.length"
