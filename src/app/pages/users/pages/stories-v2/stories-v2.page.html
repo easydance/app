@@ -1,12 +1,11 @@
-<ion-content [fullscreen]="true"
-	init="false">
+<ion-content [fullscreen]="true">
 	<swiper-container #storiesSwiper
+		[attr.effect]="effect"
 		id="stories"
-		init="false"
-		effect="cube"
 		pagination="false">
 		<swiper-slide *ngFor="let el of usersStories">
 			<story [filter]="getFilter(el)"></story>
 		</swiper-slide>
 	</swiper-container>
+	<!-- <story [filter]="defaultFilter"></story> -->
 </ion-content>

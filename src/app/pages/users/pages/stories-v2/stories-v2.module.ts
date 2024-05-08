@@ -25,9 +25,9 @@ import { StoryComponent } from 'src/app/pages/users/pages/stories-v2/components/
     ShorterNumberPipe,
     TranslateModule,
     StoriesV2PageRoutingModule,
+    StoryComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [StoriesV2Page, StoryComponent],
-  exports: [StoryComponent]
+  declarations: [StoriesV2Page],
 })
 export class StoriesV2PageModule { }
