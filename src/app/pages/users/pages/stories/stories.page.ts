@@ -59,6 +59,9 @@ export class StoriesPage implements OnInit {
   }
 
   async ionViewWillLeave() {
+    for (let interval of this.intervalIds) {
+      clearInterval(interval);
+    }
     for (let video of Array.from(document.querySelectorAll<HTMLVideoElement>('swiper-slide video'))) {
       video.currentTime = 0;
       await video.pause();
@@ -208,8 +211,14 @@ export class StoriesPage implements OnInit {
     }
     this.modalCtrl.dismiss(data, role);
     if (this.options.type == 'page') {
-      await this.navCtrl.back();
-      // this.storyCtrl.onStoryClose.emit(role);
+      // await this.navCtrl.back();
+      if (role == 'PREVIOUS_USER') {
+        this.storyCtrl.previousUser.emit();
+      } else if (role == 'NEXT_USER') {
+        this.storyCtrl.nextUser.emit();
+      } else {
+        await this.navCtrl.back();
+      }
     }
   }
 

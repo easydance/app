@@ -180,7 +180,7 @@ export class HomePage implements OnInit {
       this.navCtrl.navigateBack('/story');
       return;
     }
-    this.navCtrl.navigateForward('/stories', {
+    this.navCtrl.navigateForward('/stories/' + $event.user.id, {
       queryParams: {
         filter: JSON.stringify({
           user: { id: $event.user.id },
@@ -189,6 +189,38 @@ export class HomePage implements OnInit {
         type: 'page',
       },
     });
+
+    this.storyCtrl.nextUser.subscribe(res => {
+      const next = this.storyWidget?.getNext($event.user);
+      if (next && next.value.user.id) {
+        this.navCtrl.navigateForward('/stories/' + next.value.user.id, {
+          queryParams: {
+            filter: JSON.stringify({
+              user: { id: next.value.user.id || 'NO-ID' },
+              createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+            }),
+            type: 'page',
+          },
+        });
+      }
+    });
+
+    this.storyCtrl.previousUser.subscribe(res => {
+      const prev = this.storyWidget?.getPrev($event.user);
+      if (prev && prev.value.user.id) {
+        this.navCtrl.navigateBack('/stories/' + prev.value.user.id, {
+          queryParams: {
+            filter: JSON.stringify({
+              user: { id: prev.value.user.id || 'NO-ID' },
+              createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+            }),
+            type: 'page',
+          },
+
+        });
+      }
+    });
+
     // this.storyCtrl.onStoryClose.subscribe(async role => {
     //   if (role == 'NEXT_USER') {
     //     const next = this.storyWidget?.getNext($event.user);

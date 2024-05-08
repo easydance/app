@@ -57,8 +57,8 @@ const routes: Routes = [
         loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
       },
       {
-        path: 'stories',
-        loadChildren: () => import('./pages/stories/stories.module').then( m => m.StoriesPageModule)
+        path: 'stories/:firstUser',
+        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then( m => m.StoriesV2PageModule)
       },
       {
         path: 'map',
@@ -67,6 +67,10 @@ const routes: Routes = [
       {
         path: 'story',
         loadChildren: () => import('./pages/story/story.module').then( m => m.StoryPageModule)
+      },
+      {
+        path: 'stories-v2',
+        loadChildren: () => import('./pages/stories/stories.module').then( m => m.StoriesPageModule)
       },
     ]
   },

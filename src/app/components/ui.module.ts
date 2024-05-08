@@ -18,6 +18,7 @@ import { StoriesWidgetComponent } from 'src/app/components/stories-widget/storie
 import { FollowerModalComponent } from 'src/app/components/follower-modal/follower-modal.component';
 import { ImageFallbackPipe } from 'src/app/pipes/image-fallback.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
@@ -37,7 +38,8 @@ const components = [
     RouterModule,
     ImageFallbackPipe,
     SlicePipe,
-    TranslateModule
+    TranslateModule,
+    BypassTypingPipe
   ]
 })
 export class UiModule { }

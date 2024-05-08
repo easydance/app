@@ -17,7 +17,7 @@ export class AuthManagerService {
   public currentCity?: string;
 
   private userStore = new BehaviorSubject<LoginUserDataDto | undefined>(undefined);
-  public user$ = this.userStore.asObservable();
+  public user$ = this.userStore.asObservable().pipe(filter((a) => a !== undefined));
   public get user() {
     return this.userStore.getValue();
   }
