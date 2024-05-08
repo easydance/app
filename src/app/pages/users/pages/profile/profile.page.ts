@@ -2,8 +2,10 @@ import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router';
 import { Share } from '@capacitor/share';
 import { NavController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { DateTime } from 'luxon';
 import { lastValueFrom } from 'rxjs';
-import { AuthService, ClubBaseDto, GetUserToClubFollowerResponseDto, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
+import { AuthService, ClubBaseDto, GetLanguageResponseDto, GetUserToClubFollowerResponseDto, LanguageService, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { ProfileDetailComponent } from 'src/app/pages/users/pages/profile/components/profile-detail/profile-detail.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { VersionUpdaterService } from 'src/app/services/version-updater.service';
@@ -23,7 +25,8 @@ export class ProfilePage implements OnInit {
   public isEditingMode: boolean = false;
 
   public isOpenDeleteUserModal: boolean = false;
-
+  public currentlang: string = this.translate.currentLang;
+  public languages: GetLanguageResponseDto[] = [];
   public version: string = '';
 
   public options: { enableNotification: boolean; } = {
@@ -37,7 +40,9 @@ export class ProfilePage implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly navCtrl: NavController,
     private readonly toastCtrl: ToastController,
-    private readonly webSocket: WebSocketService
+    private readonly webSocket: WebSocketService,
+    private readonly translate: TranslateService,
+    private readonly languagesService: LanguageService
   ) {
     VersionUpdaterService.getVersion().then(res => {
       this.version = res;
@@ -45,6 +50,11 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
+    this.languagesService.findAll(0, 100)
+      .subscribe(res => {
+        this.languages = res.data;
+      });
+
     this.route.params.subscribe(async res => {
       if (this.user) this.webSocket.unsubscribe(`users/${this.user.id}/follow`);
       if (!res['id']) {
@@ -115,5 +125,22 @@ export class ProfilePage implements OnInit {
     } else {
       localStorage.setItem('enableNotification', 'false');
     }
+  }
+
+  setLanguage(lang: string) {
+    localStorage.setItem('lang', lang);
+    this.translate.use(lang);
+  }
+
+  showStories() {
+    this.navCtrl.navigateForward('/stories/' + this.user?.id, {
+      queryParams: {
+        filter: JSON.stringify({
+          user: { id: this.user?.id || 'NO-ID' },
+          createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+        }),
+        type: 'page',
+      },
+    });
   }
 }

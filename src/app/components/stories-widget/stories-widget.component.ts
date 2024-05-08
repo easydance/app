@@ -26,10 +26,16 @@ export class StoriesWidgetComponent implements OnInit {
   @Output() meClick: EventEmitter<void> = new EventEmitter();
   @Output() newStory: EventEmitter<void> = new EventEmitter();
 
-  constructor(private storiesService: StoryService, public authManager: AuthManagerService, private detector: ChangeDetectorRef) { }
+  constructor(
+    private storiesService: StoryService,
+    public authManager: AuthManagerService,
+    private detector: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
+    this.authManager.user$.subscribe(res => {
+      this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
+    });
   }
 
   findStories(filter: any = {}) {
@@ -55,7 +61,9 @@ export class StoriesWidgetComponent implements OnInit {
         }
         this.users[story.user?.id || ''].stories.push(story);
       }
-      this.userKeyValue = Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
+      this.userKeyValue = Object.keys(this.users)
+        .filter(id => id != (this.authManager.user?.id || 'NO-ID'))
+        .map(key => ({ key, value: this.users[key] }));
       this.detector.detectChanges();
     });
   }
@@ -71,6 +79,15 @@ export class StoriesWidgetComponent implements OnInit {
   onAvatarClick($event: { user: UserBaseDto, stories: GetStoryResponseDto[]; }) {
     this.storyClick.emit($event.stories);
     this.userClick.emit($event);
+  }
+
+  onMeClick() {
+    if (this.users[this.authManager.user?.id!].stories.length == 0) {
+      this.newStory.emit();
+      return;
+    }
+    this.storyClick.emit(this.users[this.authManager.user?.id!].stories);
+    this.userClick.emit(this.authManager.user as any);
   }
 
   getNext(user: UserBaseDto) {

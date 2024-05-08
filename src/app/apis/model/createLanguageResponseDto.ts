@@ -22,6 +22,7 @@ export interface CreateLanguageResponseDto {
     updatedBy?: string | null;
     deletedBy?: string | null;
     name: string;
+    code: string;
     icon: number;
     translations: Array<TranslationBaseDto>;
 }

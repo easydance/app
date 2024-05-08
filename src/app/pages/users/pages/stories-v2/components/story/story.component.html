@@ -1,0 +1,196 @@
+<div class="header px-4">
+	<div class="flex align-center"
+		style="flex-direction: row-reverse;">
+		<div (click)="close()"
+			class="flex align-center gap-1 mb-1">
+			<ion-icon name="close"></ion-icon>
+			{{'APP.CLOSE' | translate}}
+		</div>
+	</div>
+	<div *ngIf="storiesOverview"
+		class="pager flex item-center gap-1 px-1">
+		<div *ngFor="let story of storiesOverview.stories; let i = index"
+			[ngClass]="{ 'active': i < storiesOverview.currentIndex }">
+			<ion-progress-bar *ngIf="i < storiesOverview.currentIndex"
+				[value]="1"
+				color="light"></ion-progress-bar>
+			<ion-progress-bar *ngIf="i ==storiesOverview.currentIndex"
+				[value]="storiesOverview.currentProgress"
+				color="light"></ion-progress-bar>
+		</div>
+	</div>
+</div>
+<swiper-container #swiper
+	*ngIf="storiesOverview"
+	[id]="id">
+	<swiper-slide *ngFor="let storyOverview of storiesOverview.stories"
+		[id]="'story-' + storiesOverview.current.story.id"
+		[swipe]
+		(swipeDown)="close()"
+		(touchstart)="storiesOverview.pause()"
+		(touchend)="storiesOverview.start()">
+		<div class="header px-4">
+			<div class="flex space-between mt-9">
+				<ion-chip [outline]="true"
+					color="light">
+					Start {{storyOverview.story.party.from | date:'HH:mm'}}
+				</ion-chip>
+				<ion-chip [outline]="true"
+					color="light">
+					End {{storyOverview.story.party.to | date:'HH:mm'}}
+				</ion-chip>
+			</div>
+		</div>
+		<div *ngIf="storyOverview.isImage"
+			[ngStyle]="{ 'background': 'url('+ storyOverview.story.attachment.url +') top center no-repeat', 'background-size': 'contain' }"
+			class="z-500"
+			id="img-story"></div>
+		<video #video
+			*ngIf="!storyOverview.isImage"
+			[attr.webkit-playsinline]="'webkit-playsinline'"
+			[controls]="false"
+			autoplay
+			class="z-500"
+			poster="assets/icons/loading.svg"
+			playsinline>
+			<source [src]="storyOverview.story.attachment.url"
+				[type]="storyOverview.story.attachment.mimeType">
+			Your browser does not support the video tag.
+		</video>
+		<div class="absolute w-full h-full top-0 left-0 flex items-center z-510">
+			<div (click)="prev()"
+				id="prev-story"
+				class="flex-1"></div>
+			<div (click)="next()"
+				id="next-story"
+				class="flex-1"></div>
+		</div>
+
+		<div class="footer p-4 z-600">
+			<div (click)="openUserTagged(friendsModal.modal!)"
+				class="mb-4 flex align-center space-between">
+				<div>
+					<users-widget *ngIf="storyOverview.story.userTags?.length"
+						[users]="(storyOverview.story.userTags || [])"
+						[avatarShown]="5"
+						(click)="friendsModal.modal?.present()"
+						style="zoom: 0.5"></users-widget>
+					<follower-modal #friendsModal
+						*ngIf="storyOverview.story.userTags?.length"
+						[options]="{ disableUserRouting: false, autoClose: false }"
+						[followers]="storyOverview.story.userTags"
+						[title]="'APP.STORIES.TAGGED_FRIENDS' | translate"></follower-modal>
+				</div>
+			</div>
+
+			<div class="flex space-between gap-2">
+				<div>
+					<ion-chip (click)="openClubDetails(storyOverview.story.party.club)"
+						class="dark xl"
+						style="zoom: 0.8">
+						<ion-icon color="light"
+							name="location"></ion-icon>
+						<ion-label>
+							{{getClubName(storyOverview.story) || '-'}}
+						</ion-label>
+					</ion-chip>
+					<div (click)="openPartyDetails(storyOverview.story.party)"
+						class="title mt-2">
+						{{storyOverview.story.party.title}}
+					</div>
+					<div class="flex mt-2">
+						<div (click)="openUserProfile(storyOverview.story.user!)"
+							class="flex align-center gap-2">
+							<div>
+								<small>
+									{{'APP.FROM' | translate}}
+								</small>
+							</div>
+							<ion-avatar class="w-5 h-5"
+								style="margin: 0 auto;">
+								<img [src]="storyOverview.story.user?.profileImage?.url"
+									onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'"
+									style="object-fit: cover;">
+							</ion-avatar>
+							<div style="text-align: center;">
+								<small>
+									{{storyOverview.story.user?.firstName}} {{storyOverview.story.user?.lastName}}
+								</small>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class>
+					<div class="stories-buttons">
+						<ion-fab-button (click)="toggleLike(storyOverview.story)"
+							size="small">
+							<ion-icon [name]="storyOverview.story.liked ? 'heart' : 'heart-outline'"></ion-icon>
+							<small *ngIf="storyOverview.story.likes">
+								{{storyOverview.story.likes | shorterNumber}}
+							</small>
+						</ion-fab-button>
+						<ion-fab-button (click)="share(storyOverview.story)"
+							size="small">
+							<ion-icon name="share-outline"></ion-icon>
+						</ion-fab-button>
+						<!-- <ion-fab-button size="small">
+							<ion-icon name="ellipsis-vertical"></ion-icon>
+						</ion-fab-button> -->
+						<ion-fab-button *ngIf="storyOverview.story.createdBy && authManager.user?.uuid && storyOverview.story.createdBy == authManager.user?.uuid"
+							(click)="storiesOverview.pause();modal.present();"
+							size="small">
+							<ion-icon name="trash-outline"></ion-icon>
+						</ion-fab-button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<follower-modal #friendsModal
+			[followers]="storyOverview.story.userTags"
+			[title]="'APP.STORIES.TAGGED_FRIENDS' | translate"
+			(userClick)="openUserProfile($event)"></follower-modal>
+
+	</swiper-slide>
+</swiper-container>
+<div *ngIf="!storiesOverview"
+	id="loading-stories">
+	<easy-thats-all [message]="'APP.LOADING' | translate"></easy-thats-all>
+</div>
+<div *ngIf="storiesOverview && storiesOverview.stories.length"
+	(swipeDown)="close()"
+	swipe
+	id="no-stories">
+	<easy-thats-all [message]="'APP.STORIES.NO_STORIES' | translate"></easy-thats-all>
+</div>
+
+<ion-modal #modal
+	(didDismiss)="storiesOverview?.start();"
+	id="full-immersion-modal"
+	trigger="open-custom-dialog">
+	<ng-template>
+		<div class="wrapper p-8">
+			<div class="title">
+				{{'APP.STORIES.DELETE_STORY' | translate}}
+			</div>
+			<div class="my-10 subtitle">
+				{{'APP.STORIES.DELETE_STORY_SUB' | translate}}
+			</div>
+			<div style="display: flex; align-items: center; gap: 1rem">
+				<ion-button (click)="modal.dismiss()"
+					shape="round"
+					color="dark"
+					expand="block">
+					{{'APP.STORIES.CANCEL' | translate}}
+				</ion-button>
+				<ion-button (click)="deleteStory(storiesOverview!.current.story.id!);modal.dismiss();"
+					class="mt-2"
+					shape="round"
+					color="primary"
+					expand="block">
+					{{'APP.STORIES.CONFIRM' | translate}}
+				</ion-button>
+			</div>
+		</div>
+	</ng-template>
+</ion-modal>

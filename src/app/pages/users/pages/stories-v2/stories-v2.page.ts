@@ -1,0 +1,144 @@
+import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NavController, Platform } from '@ionic/angular';
+import { DateTime } from 'luxon';
+import { catchError, throwError } from 'rxjs';
+import { GetStoryResponseDto, StoryService, UserBaseDto } from 'src/app/apis';
+import { StoryComponent } from 'src/app/pages/users/pages/stories-v2/components/story/story.component';
+import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { SwiperContainer } from 'swiper/element';
+
+@Component({
+  selector: 'stories-v2',
+  templateUrl: './stories-v2.page.html',
+  styleUrls: ['./stories-v2.page.scss'],
+})
+export class StoriesV2Page implements OnInit {
+
+  @ViewChild('storiesSwiper') storiesSwiper?: ElementRef<SwiperContainer>;
+  @ViewChildren(StoryComponent) storyComponents?: QueryList<StoryComponent>;
+
+  @Input() defaultFilter: { [key: string]: any; } = {
+    createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+  };
+
+  firstUser?: number;
+
+  stories: GetStoryResponseDto[] = [];
+  usersStories: { user: UserBaseDto, stories: GetStoryResponseDto[]; }[] = [];
+
+  effect: string = this.platform.is('ios') ? '' : 'cube';
+
+  constructor(
+    private storiesService: StoryService,
+    private navCtrl: NavController,
+    private route: ActivatedRoute,
+    private authManager: AuthManagerService,
+    private platform: Platform
+  ) { }
+
+  ngOnInit() {
+    this.route.params.subscribe(res => {
+      this.firstUser = res['firstUser'];
+      this.storiesService.findAll(
+        0,
+        50,
+        res['filter'] || JSON.stringify(this.defaultFilter),
+        undefined,
+        undefined,
+        'party.club,user,userTags'
+      ).pipe(
+        catchError(err => {
+          return throwError(() => err);
+        })
+      ).subscribe(res => {
+        this.stories = res.data;
+        const usersStories: { user: UserBaseDto, stories: GetStoryResponseDto[]; }[] = [];
+        for (let story of this.stories) {
+          const userStories = usersStories.find(us => us.user.id == story.user?.id);
+          if (userStories) {
+            userStories.stories.push(story);
+            continue;
+          }
+          usersStories.push({
+            stories: [story],
+            user: story.user!
+          });
+        }
+        if (this.firstUser) {
+          const userStories = usersStories.find(us => us.user.id == this.firstUser);
+          const myStories = usersStories.find(us => us.user.id == (this.authManager.user?.id || 'NO-ID'));
+          this.usersStories = [
+            ...(userStories ? [userStories] : []),
+            ...(usersStories.filter(us => ![(this.firstUser || 'NO-ID'), (myStories?.user.id || 'NO-ID')].includes((us.user.id || 'NO-ID').toString()))),
+            ...(myStories ? [myStories] : []),
+          ];
+        } else {
+          this.usersStories = usersStories;
+        }
+
+        this.initSwiper();
+      });
+    });
+  }
+
+  ngAfterViewInit() {
+    this.storyComponents?.changes.subscribe(res => {
+      this.storyComponents?.first.ready.subscribe(self => {
+        self.start();
+      });
+
+      for (const storyComponent of this.storyComponents!.toArray()) {
+        storyComponent.ready.subscribe(() => {
+          storyComponent.onClose.subscribe(() => {
+            this.navCtrl.back();
+          });
+          storyComponent.storiesOverview!.onStoriesEnd.subscribe(res => {
+            if (res.action == 'next') {
+              this.storiesSwiper?.nativeElement.swiper.slideNext();
+            }
+            if (res.action == 'prev') {
+              this.storiesSwiper?.nativeElement.swiper.slidePrev();
+            }
+          });
+        });
+      }
+    });
+  }
+
+  ionViewWillEnter() {
+  }
+
+  ionViewWillLeave() {
+    for (const storyComponent of this.storyComponents?.toArray() || []) {
+      storyComponent.reset();
+    }
+  }
+
+  initSwiper() {
+    const swiperEl = document.querySelector<SwiperContainer>("#stories");
+    // swiperEl!.initialize();
+    swiperEl?.swiper.on('slideChange', () => {
+      console.log('slide changed', swiperEl?.swiper.activeIndex);
+      if (swiperEl && this.storyComponents) {
+        for (const overview of this.storyComponents) {
+          overview.pause();
+        }
+        const currentStoriesOverview = this.storyComponents.toArray()[swiperEl.swiper.activeIndex];
+        currentStoriesOverview.start();
+      }
+
+    });
+    setTimeout(() => {
+      swiperEl?.swiper.update();
+    }, 100);
+  }
+
+  getFilter(el: { user: UserBaseDto, stories: GetStoryResponseDto[]; }) {
+    return {
+      ...this.defaultFilter,
+      user: { id: (el.user.id || 'NO-ID') },
+    };
+  }
+
+}
