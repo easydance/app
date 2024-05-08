@@ -7,19 +7,8 @@
 				<ion-icon name="arrow-back"
 					style="font-size: 1rem;"></ion-icon>
 			</ion-fab-button>
-			<!-- <ion-button (click)="goBack()"
-				color="light"
-				size="icon-only"
-				fill="clear">
-				<ion-icon name="arrow-back-sharp"></ion-icon>
-			</ion-button> -->
 		</ion-buttons>
 		<ion-buttons [slot]="'end'">
-			<!-- <ion-fab-button [routerLink]="'/full-immersion/orders'"
-				class="button m-3 w-9 h-9">
-				<ion-icon name="cart-outline"
-					style="font-size: 1rem;"></ion-icon>
-			</ion-fab-button> -->
 			<div *ngIf="isMe">
 				<ion-fab-button (click)="share()"
 					class="button m-3 w-9 h-9">
@@ -54,10 +43,19 @@
 		</swiper-container>
 		<div class="flex align-center space-between absolute w-full px-4"
 			style="bottom: 12px; z-index: 1;">
-			<div class="info-user">
+			<div class="info-user flex-1">
 				<div class="fullname">
 					{{user?.firstName}} {{user?.lastName}}
 				</div>
+			</div>
+
+			<div *ngIf="user && user.profileImage?.url">
+				<ion-avatar (click)="showStories()"
+					id="avatar-stories">
+					<img [src]="user.profileImage.url"
+						style="object-fit: cover;"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
+				</ion-avatar>
 			</div>
 		</div>
 	</div>
@@ -90,18 +88,20 @@
 		<ng-template>
 			<div class="p-4">
 				<div class="bold pb-4 ion-text-center">
-					Vuoi realmente eliminare l'account?
+					{{'APP.PROFILE.DELETE_USER_TITLE' | translate}}
 				</div>
 				<div class="ion-text-center pb-4">
-					Procedendendo non sarà più possibile recuperare i dati del tuo account!
+					{{'APP.PROFILE.DELETE_USER_SUBTITLE' | translate}}
 				</div>
 				<div class="flex items-center gap-4">
 					<ion-button (click)="isOpenDeleteUserModal = false"
 						fill="clear"
 						color="danger">
-						Annulla
+						{{'APP.PROFILE.CANCEL' | translate}}
 					</ion-button>
-					<ion-button (click)="confirmDeleteUser()">Conferma</ion-button>
+					<ion-button (click)="confirmDeleteUser()">
+						{{'APP.PROFILE.CONFIRM' | translate}}
+					</ion-button>
 				</div>
 			</div>
 		</ng-template>
@@ -111,17 +111,40 @@
 		class="auto-height bottom default">
 		<ng-template>
 			<div class="p-4">
-				<h3>Opzioni utente</h3>
+				<h3>
+					{{'APP.PROFILE.USER_OPTIONS' | translate}}
+				</h3>
 				<ion-item lines="none">
-					<ion-label>Abilita notifiche</ion-label>
+					<ion-label>
+						{{'APP.PROFILE.ENABLE_NOTIFICATIONS' | translate}}
+					</ion-label>
 					<ion-toggle [(ngModel)]="options.enableNotification"
 						(ngModelChange)="setEnableNotification()"></ion-toggle>
 				</ion-item>
-				<ion-item style="border-top: 1px solid white;" (click)="isOpenDeleteUserModal = true"
+				<ion-item lines="none">
+					<ion-label>
+						{{'APP.PROFILE.CHANGE_LANGUAGE' | translate}}
+					</ion-label>
+					<ion-select [(ngModel)]="currentlang"
+						[interfaceOptions]="{
+							header: ('APP.PROFILE.CHANGE_LANGUAGE' | translate)
+						}"
+						(ngModelChange)="setLanguage($event)"
+						interface="alert">
+						<ion-select-option *ngFor="let lang of languages"
+							[value]="lang.code">
+							{{lang.name}}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item (click)="isOpenDeleteUserModal = true"
+					style="border-top: 1px solid white;"
 					class="mt-4"
 					lines="none">
 					<ion-label>
-						<ion-text color="danger">Elimina utente</ion-text>
+						<ion-text color="danger">
+							{{'APP.PROFILE.DELETE_USER' | translate}}
+						</ion-text>
 					</ion-label>
 				</ion-item>
 				<div class="ion-text-right">

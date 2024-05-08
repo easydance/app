@@ -36,7 +36,7 @@
 								type="email"
 								name="email"
 								required
-								label="Email"
+								[label]="'APP.REGISTER.EMAIL' | translate"
 								labelPlacement="floating"></ion-input>
 						</ion-item>
 						<ion-item class="mt-2"
@@ -45,7 +45,7 @@
 								name="confirmEmail"
 								type="email"
 								required
-								label="Conferma email"
+								[label]="'APP.REGISTER.CONFIRM_EMAIL' | translate"
 								labelPlacement="floating"></ion-input>
 						</ion-item>
 						<div *ngIf="formStep0?.controls?.['confirmEmail']?.touched && !getFormValidationErrors().confirmEmail?.['not-same-values'] && getFormValidationErrors().email?.['invalid-email-format']"
@@ -73,7 +73,7 @@
 								[(ngModel)]="user.password"
 								name="password"
 								required
-								label="Password"
+								[label]="'APP.REGISTER.PASSWORD' | translate"
 								labelPlacement="floating"></ion-input>
 
 							<ion-icon [name]="showPassword ? 'eye-off' : 'eye'"
@@ -87,7 +87,7 @@
 								[errorText]
 								name="confirmPassword"
 								required
-								label="Conferma password"
+								[label]="'APP.REGISTER.CONFIRM_PASSWORD' | translate"
 								labelPlacement="floating"></ion-input>
 							<ion-icon [name]="showPassword ? 'eye-off' : 'eye'"
 								(click)="showPassword = !showPassword"
@@ -113,7 +113,7 @@
 				
 					<div id="tec"
 						class="mt-4 left-0 px-4">
-						Cliccando su “prosegui” accetterai i Termini & Condizioni d’uso e Privacy & Cookie Policy
+						{{'APP.REGISTER.TERMS_CONDITIONS' | translate}}
 					</div>
 				</form>
 			</swiper-slide>
@@ -128,13 +128,13 @@
 							<ion-input [(ngModel)]="user.name"
 								name="name"
 								required
-								label="Nome"
+								[label]="'APP.REGISTER.NAME' | translate"
 								labelPlacement="floating"></ion-input>
 						</ion-item>
 						<div *ngIf="formStep1?.controls?.['name']?.touched && getFormValidationErrors().name?.['required']"
 							class="error">
 							<ion-text color="danger">
-								<small>Campo richiesto</small>
+								<small>{{'APP.REGISTER.REQUIRED' | translate}}</small>
 							</ion-text>
 						</div>
 					</div>
@@ -144,13 +144,13 @@
 							<ion-input [(ngModel)]="user.surname"
 								name="surname"
 								required
-								label="Cognome"
+								[label]="'APP.REGISTER.SURNAME' | translate"
 								labelPlacement="floating"></ion-input>
 						</ion-item>
 						<div *ngIf="formStep1?.controls?.['surname']?.touched && getFormValidationErrors().surname?.['required']"
 							class="error">
 							<ion-text color="danger">
-								<small>Campo richiesto</small>
+								<small>{{'APP.REGISTER.REQUIRED' | translate}}</small>
 							</ion-text>
 						</div>
 
@@ -163,7 +163,7 @@
 								readonly="true"
 								name="birth"
 								required
-								label="Data di nascita"
+								[label]="'APP.REGISTER.BORN_DATE' | translate"
 								labelPlacement="floating"></ion-input>
 							<ion-datetime-button id="datetime-button"
 								color="light"
@@ -173,7 +173,7 @@
 						<div *ngIf="formStep1?.controls?.['birth']?.touched && getFormValidationErrors().birth?.['required']"
 							class="error">
 							<ion-text color="danger">
-								<small>Campo richiesto</small>
+								<small>{{'APP.REGISTER.REQUIRED' | translate}}</small>
 							</ion-text>
 						</div>
 
@@ -184,14 +184,14 @@
 							<ion-input [(ngModel)]="user.city"
 								name="city"
 								required
-								label="Città"
+								[label]="'APP.REGISTER.CITY' | translate"
 								labelPlacement="floating"
-								placeholder="Città"></ion-input>
+								[placeholder]="'APP.REGISTER.CITY' | translate"></ion-input>
 						</ion-item>
 						<div *ngIf="formStep1?.controls?.['city']?.touched && getFormValidationErrors().city?.['required']"
 							class="error">
 							<ion-text color="danger">
-								<small>Campo richiesto</small>
+								<small>{{'APP.REGISTER.REQUIRED' | translate}}</small>
 							</ion-text>
 						</div>
 					</div>
@@ -204,7 +204,7 @@
 					[validators]="profileValidator"
 					class="py-12">
 					<div class="photo-title">
-						Scegli un’immagine del profilo
+						{{'APP.REGISTER.CHOOSE_IMAGE' | translate}}
 					</div>
 					<div class="mt-16">
 						<div id="upload-photo"
@@ -231,10 +231,10 @@
 				<form #formStep3="ngForm"
 					class="pt-12">
 					<div id="interests-title">
-						Scegli i generi che preferisci!
+						{{'APP.REGISTER.CHOOSE_GENRE' | translate}}
 					</div>
 					<div id="interests-subtitle">
-						Scegli i generi che preferisci!
+						{{'APP.REGISTER.CHOOSE_GENRE' | translate}}
 					</div>
 					<div id="interests-list"
 						class="mt-8">
@@ -261,14 +261,14 @@
 				shape="round"
 				expand="block"
 				color="neutral-500">
-				Annulla
+				{{'APP.REGISTER.CANCEL' | translate}}
 			</ion-button>
 			<ion-button (click)="goNext(wizard)"
 				class="flex-1"
 				shape="round"
 				expand="block"
 				color="light">
-				prosegui
+				{{'APP.REGISTER.NEXT' | translate}}
 			</ion-button>
 		</div>
 	</ion-toolbar>
@@ -299,19 +299,19 @@
 						src="../../../assets/icons/guy-walk.svg"></ion-icon>
 				</div>
 				<div class="title mt-8">
-					SUUUPER, SEI DENTRO!
+					{{'APP.REGISTER.SUPER' | translate}}
 				</div>
 				<div class="subtitle mt-4">
-					Conferma la registrazione tramite email
+					{{'APP.REGISTER.SUPER_SUBTITLE' | translate}}
 					<br>
-					e comincia a pensare cosa fare stasera!
+					{{'APP.REGISTER.SUPER_SUBTITLE1' | translate}}
 				</div>
 				<div class="mt-12 ion-text-center mb-8">
 					<ion-button [routerLink]="'/home'"
 						(click)="hurraModal.dismiss()"
 						color="light"
 						shape="round">
-						SCROPRI GLI EVENTI
+						{{'APP.REGISTER.DISCOVER_PARTIES' | translate}}
 					</ion-button>
 				</div>
 			</div>

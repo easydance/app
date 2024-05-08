@@ -65,7 +65,7 @@ export class AppComponent {
       document.body.classList.remove('keyboard-open');
     });
 
-    const lang = 'it';
+    const lang = localStorage.getItem('lang') || this.translationService.getBrowserLang() || 'it';
     this.translationService.use(lang);
     setInterval(() => {
       this.translationService.reloadLang(lang).subscribe(res => {

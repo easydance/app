@@ -3,6 +3,7 @@ import { App } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { BundleInfo, CapacitorUpdater } from '@capgo/capacitor-updater';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { InstanceLogService } from 'src/app/services/instance-log.service';
 
 @Injectable({
@@ -14,7 +15,8 @@ export class HotfixUpdaterService {
 
   constructor(
     private readonly logger: InstanceLogService,
-    private readonly toastCtrl: ToastController
+    private readonly toastCtrl: ToastController,
+    private readonly translate: TranslateService
   ) {
     // App.addListener('appStateChange', async (state) => {
     //   if (state.isActive) {
@@ -49,10 +51,10 @@ export class HotfixUpdaterService {
         if (data) {
           this.printBundleInfo(data, 'CURRENT HOTFIX');
           const toast = await this.toastCtrl.create({
-            message: 'Una nuova versione dell\'app è disponibile!',
+            message: this.translate.instant('APP.HOTFIX.NEW_VERSION'),
             buttons: [
               {
-                text: 'Aggiorna',
+                text: this.translate.instant('APP.HOTFIX.UPDATE'),
                 handler: async () => {
                   this.logger.info(`Set new hotfix version`, 'hotfix-updater.service.ts', {
                     data

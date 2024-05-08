@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SelectTablePageRoutingModule } from './select-table-routing.module';
 
 import { SelectTablePage } from './select-table.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SelectTablePageRoutingModule
+    SelectTablePageRoutingModule,
+    TranslateModule
   ],
   declarations: [SelectTablePage]
 })

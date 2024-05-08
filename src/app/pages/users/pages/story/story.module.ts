@@ -8,6 +8,7 @@ import { StoryPageRoutingModule } from './story-routing.module';
 
 import { StoryPage } from './story.page';
 import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { RecordingVideoPreviewComponent } from 'src/app/pages/users/pages/story/
     IonicModule,
     StoryPageRoutingModule,
     RecordingVideoPreviewComponent,
+    TranslateModule
   ],
   providers: [],
   declarations: [StoryPage]

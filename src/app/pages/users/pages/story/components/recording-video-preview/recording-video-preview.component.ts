@@ -8,6 +8,7 @@ import { PartyBaseDto, PartyService, UserBaseDto, UserService } from 'src/app/ap
 import { FormsModule } from '@angular/forms';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 import { UiModule } from 'src/app/components/ui.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type StorySource = { type: 'video' | 'picture', src: string; party?: PartyBaseDto; usersTags: UserBaseDto[]; };
 
@@ -16,7 +17,7 @@ export type StorySource = { type: 'video' | 'picture', src: string; party?: Part
   templateUrl: './recording-video-preview.component.html',
   styleUrls: ['./recording-video-preview.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, DirectivesModule, FormsModule, UiModule]
+  imports: [IonicModule, CommonModule, DirectivesModule, FormsModule, UiModule, TranslateModule]
 })
 export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
   @ViewChild('searchClubModal') searchClubModal?: IonModal;
@@ -43,10 +44,11 @@ export class RecordingVideoPreviewComponent implements OnInit, OnDestroy {
   constructor(private partiesService: PartyService, private partiesUtils: CommonPartiesUtils, private usersService: UserService) { }
 
   ngOnInit(): void {
+    this.initializeCameraPreview()
   }
 
   async ngOnDestroy() {
-    this.stop();
+    // this.stop();
     this.unsetupForCamera();
   }
 

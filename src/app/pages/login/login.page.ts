@@ -8,6 +8,7 @@ import {
   SignInWithAppleResponse,
   SignInWithAppleOptions,
 } from '@capacitor-community/apple-sign-in';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginPage implements OnInit {
     private readonly authManagerService: AuthManagerService,
     private readonly navCtrl: NavController,
     public readonly platform: Platform,
-    private readonly toastCtrl: ToastController
+    private readonly toastCtrl: ToastController,
+    private readonly translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -43,13 +45,13 @@ export class LoginPage implements OnInit {
     this.authManagerService.login(this.username, this.password).pipe(
       catchError(err => {
         if (err.status = 401) {
-          this.toastCtrl.create({ message: 'Email e/o password non valide!', duration: 3000 })
+          this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.INVALID_CREDENTIALS'), duration: 3000 })
             .then(toast => {
               toast.present();
             });
           return throwError(() => err);
         }
-        this.toastCtrl.create({ message: 'Non è stato possibile accedere', duration: 3000 })
+        this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.GENERIC_LOGIN_ERROR'), duration: 3000 })
           .then(toast => {
             toast.present();
           });
@@ -63,7 +65,7 @@ export class LoginPage implements OnInit {
 
   async googleLogin() {
     const user = await GoogleAuth.signIn().catch(error => {
-      this.toastCtrl.create({ message: 'Non è stato possibile accedere con Google', duration: 3000 })
+      this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.GENERIC_GOOGLE_LOGIN_ERROR'), duration: 3000 })
         .then(toast => {
           toast.present();
         });
@@ -94,7 +96,7 @@ export class LoginPage implements OnInit {
           surname: result.response.familyName
         }, result.response.identityToken, 'apple').pipe(
           catchError(err => {
-            this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione', duration: 3000 }).then(toast => {
+            this.toastCtrl.create({ message: this.translate.instant('APP.ERRORS.GENERIC_APPLE_LOGIN_ERROR'), duration: 3000 }).then(toast => {
               toast.present();
             });
             return throwError(() => err);
@@ -105,7 +107,7 @@ export class LoginPage implements OnInit {
       }
     } catch (error: any) {
       if (!error.message.includes('1001')) {
-        const toast = await this.toastCtrl.create({ message: 'Non è stato possibile completare la registrazione: ' + error.message, duration: 3000 });
+        const toast = await this.toastCtrl.create({ message:  this.translate.instant('APP.ERRORS.SPECIFIC_LOGIN_ERROR') + error.message, duration: 3000 });
         toast.present();
       }
 

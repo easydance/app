@@ -54,7 +54,7 @@
 			shape="round">
 			<ion-icon name="document-text"
 				class="mr-2"></ion-icon>
-			{{party?.participation!.pr ? 'MODIFICA LISTA' : 'METTITI IN LISTA'}}
+			{{('APP.EVENT_DETAIL.' + (party?.participation!.pr ? 'EDIT_LIST' : 'ADD_IN_LIST')) | translate}}
 		</ion-button>
 	</div>
 	<div *ngIf="!party?.isWaitingList && authManager.isAuthenticated()"
@@ -67,7 +67,7 @@
 				transition: 'all 0.3s'
 			}" src="assets/icons/guy-walk.svg"
 				class="mr-2"></ion-icon>
-			{{party?.joined ? 'NON Parteciperò': 'PARTECIPA' }}
+			{{('APP.EVENT_DETAIL.' + (party?.joined ? 'JOINED': 'JOIN')) | translate }}
 		</ion-button>
 	</div>
 </ion-content>
@@ -79,7 +79,7 @@
 			<div class="flex space-between items-center header">
 				<div class="title flex align-center flex-1">
 					<div>
-						{{party?.participation!.pr ? 'MODIFICA LISTA' : 'METTITI IN LISTA'}}
+						{{('APP.EVENT_DETAIL.' + (party?.participation!.pr ? 'EDIT_LIST' : 'ADD_IN_LIST')) | translate}}
 					</div>
 				</div>
 				<div class="close">
@@ -93,7 +93,7 @@
 			</div>
 			<div class="body flex gap-4 space-between mt-8">
 				<div class="flex-2">
-					<ion-label class="label mb-2">PR di riferimento</ion-label>
+					<ion-label class="label mb-2">{{'APP.EVENT_DETAIL.PR_NAME' | translate}}</ion-label>
 					<ion-item lines="none">
 						<ion-input [(ngModel)]="party?.participation!.pr"
 							name="pr"
@@ -103,7 +103,7 @@
 					</ion-item>
 				</div>
 				<div class="flex-1">
-					<ion-label class="label mb-2">Partecipanti</ion-label>
+					<ion-label class="label mb-2">{{'APP.EVENT_DETAIL.JOINERS' | translate}}</ion-label>
 					<ion-item lines="none">
 						<ion-input [(ngModel)]="party?.participation!.participants"
 							name="partecipants"
@@ -121,13 +121,13 @@
 					class="flex-1"
 					shape="round"
 					color="dark">
-					CHIUDI
+					{{'APP.EVENT_DETAIL.CLOSE' | translate}}
 				</ion-button>
 				<ion-button (click)="createOrUpdatePartecipation(listModal)"
 					class="flex-1"
 					shape="round"
 					color="primary">
-					SALVA
+					{{'APP.EVENT_DETAIL.SAVE' | translate}}
 				</ion-button>
 			</div>
 		</div>

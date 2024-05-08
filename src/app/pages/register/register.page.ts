@@ -35,19 +35,19 @@ export class RegisterPage implements OnInit {
 
   public formSteps = [
     {
-      title: 'Registrati',
+      title: this.translate.instant('APP.REGISTER.FORMSTEP1_TITLE'),
       index: 0
     },
     {
-      title: 'Informazioni',
+      title: this.translate.instant('APP.REGISTER.FORMSTEP2_TITLE'),
       index: 1
     },
     {
-      title: 'Foto profilo',
+      title: this.translate.instant('APP.REGISTER.FORMSTEP3_TITLE'),
       index: 2
     },
     {
-      title: 'Interessi',
+      title: this.translate.instant('APP.REGISTER.FORMSTEP4_TITLE'),
       index: 3
     },
   ];
@@ -62,44 +62,44 @@ export class RegisterPage implements OnInit {
       inputs: ['email', 'confirmEmail'],
       comparator: IComparator.EQUALS,
       key: 'confirmEmail',
-      messageError: "Le email non coincidono."
+      messageError: this.translate.instant('APP.REGISTER.VALIDATION.EMAIL_MISMATCH')
     },
     {
       inputs: ['password', 'confirmPassword'],
       comparator: IComparator.EQUALS,
       key: 'confirmPassword',
-      messageError: "Le password non coincidono."
+      messageError: this.translate.instant('APP.REGISTER.VALIDATION.PASSWORD_MISMATCH')
     },
     {
       inputs: ['email'],
       comparator: IComparator.VALID_EMAIL,
       key: 'email',
-      messageError: "Email non valida"
+      messageError: this.translate.instant('APP.REGISTER.VALIDATION.INVALID_EMAIL')
     },
     {
       inputs: ['confirmEmail'],
       comparator: IComparator.VALID_EMAIL,
       key: 'confirmEmail',
-      messageError: "Email non valida"
+      messageError: this.translate.instant('APP.REGISTER.VALIDATION.INVALID_EMAIL')
     },
     {
       comparator: (form) => PASSWORD_REGEX.test(form.get('password')?.value),
       key: 'password',
       keyError: 'invalid-password-format',
-      messageError: "La password deve essere di almeno otto caratteri, deve contenere almeno un numero, una lettera maiuscola e un carattere speciale"
+      messageError: this.translate.instant('APP.REGISTER.VALIDATION.INVALID_PASSWORD_FORMAT')
     },
     {
       comparator: (form) => PASSWORD_REGEX.test(form.get('confirmPassword')?.value),
       key: 'confirmPassword',
       keyError: 'invalid-password-format',
-      messageError: "La password deve essere di almeno otto caratteri, deve contenere almeno un numero, una lettera maiuscola e un carattere speciale"
+      messageError: this.translate.instant('APP.REGISTER.VALIDATION.INVALID_PASSWORD_FORMAT')
     }
   ];
   public profileValidator: IValidatorConfig[] = [{
     comparator: (form) => !!this.user.profile,
     keyError: 'required',
     key: 'profile',
-    messageError: 'Foto profilo obbligatoria'
+    messageError: this.translate.instant('APP.REGISTER.VALIDATION.PHOTO_REQUIRED')
   }];
 
   constructor(
@@ -110,7 +110,8 @@ export class RegisterPage implements OnInit {
     private loadingCtrl: LoadingController,
     private ngZone: NgZone,
     private translateService: TranslateService,
-    private usersService: UserService
+    private usersService: UserService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -128,14 +129,14 @@ export class RegisterPage implements OnInit {
 
   async goNext(wizard: HTMLElement) {
     if (this.currentStep.index + 1 == this.formSteps.length) {
-      const loading = await this.loadingCtrl.create({ message: 'Salvataggio...' });
+      const loading = await this.loadingCtrl.create({ message: this.translate.instant('APP.REGISTER.SAVING') });
       loading.present();
       this.authService.signUp(this.user)
         .pipe(
           catchError(err => {
             loading.dismiss();
             this.toastCtrl.create({
-              message: this.translateService.instant(`API_RESPONSE.ERRORS.${err.error.errors.i18n}`) || 'Non è stato possibile completare la registrazione',
+              message: this.translateService.instant(`API_RESPONSE.ERRORS.${err.error.errors.i18n}`) || this.translate.instant('APP.REGISTER.GENERIC_ERROR'),
               duration: 3000
             }).then(f => f.present());
             return throwError(() => err);
@@ -156,7 +157,7 @@ export class RegisterPage implements OnInit {
       ])));
       if (count.data > 0) {
         this.toastCtrl.create({
-          message: this.translateService.instant(`API_RESPONSE.ERRORS.USER_ALREADY_EXISTS`) || 'Non è stato possibile completare la registrazione',
+          message: this.translateService.instant(`API_RESPONSE.ERRORS.USER_ALREADY_EXISTS`) || this.translate.instant('APP.REGISTER.GENERIC_ERROR'),
           duration: 3000
         }).then(f => f.present());
         return;

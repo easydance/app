@@ -11,6 +11,7 @@ import { UiModule } from 'src/app/components/ui.module';
 import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
 import { SwipeDirective } from 'src/app/directives/swipe.directive';
 import { ShorterNumberPipe } from 'src/app/pipes/shorter-number.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { ShorterNumberPipe } from 'src/app/pipes/shorter-number.pipe';
     UiModule,
     BypassTypingPipe,
     SwipeDirective,
-    ShorterNumberPipe
+    ShorterNumberPipe,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [StoriesPage]

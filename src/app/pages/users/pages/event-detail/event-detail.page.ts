@@ -6,6 +6,7 @@ import { GetPartyResponseDto, PartyBaseDto, PartyJoinerService, PartyParticipati
 import { CardOptions } from 'src/app/components/party-card/party-card.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { Share } from '@capacitor/share';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'event-detail-page',
@@ -32,7 +33,8 @@ export class EventDetailPage implements OnInit {
     private readonly changeDetector: ChangeDetectorRef,
     private readonly savedPartiesService: SavedPartyService,
     public readonly authManager: AuthManagerService,
-    private readonly joinerService: PartyJoinerService
+    private readonly joinerService: PartyJoinerService,
+    private readonly translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -70,7 +72,7 @@ export class EventDetailPage implements OnInit {
 
   createOrUpdatePartecipation(modal?: IonModal) {
     if (this.party && this.party.participation && (this.party.participation.participants || 0) > 10) {
-      this.toastCtrl.create({ message: 'Non puoi inserire più di 10 partecipanti!', duration: 2000 })
+      this.toastCtrl.create({ message: this.translate.instant('APP.EVENT_DETAIL.NO_MORE_THAN_10_PEOPLE'), duration: 2000 })
         .then(toast => {
           toast.present();
         });
@@ -82,7 +84,7 @@ export class EventDetailPage implements OnInit {
       this.partecipantsServices.set({ ...this.party.participation, party: { ...party, participation: null } })
         .pipe(
           catchError(err => {
-            this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 })
+            this.toastCtrl.create({ message:  this.translate.instant('APP.EVENT_DETAIL.GENERIC_ERRORS'), duration: 3000 })
               .then(toast => {
                 toast.present();
               });
@@ -93,7 +95,7 @@ export class EventDetailPage implements OnInit {
 
           modal?.dismiss();
           this.toastCtrl.create({
-            message: this.party?.participation?.id ? 'Lista aggiornata!' : 'Sei stato aggiunto alla lista!',
+            message: this.translate.instant(this.party?.participation?.id ? 'APP.EVENT_DETAIL.EDIT_YOUR_LIST' : 'APP.EVENT_DETAIL.NEW_LIST'),
             duration: 3000
           }).then(toast => {
             toast.present();
@@ -119,7 +121,7 @@ export class EventDetailPage implements OnInit {
               this.authManager.me().subscribe(res => { });
             }),
             catchError(err => {
-              this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 })
+              this.toastCtrl.create({ message: this.translate.instant('APP.EVENT_DETAIL.GENERIC_ERRORS'), duration: 3000 })
                 .then(toast => {
                   toast.present();
                 });
@@ -138,9 +140,9 @@ export class EventDetailPage implements OnInit {
             tap(x => {
               this.authManager.me().subscribe(res => { });
             }),
-            catchError(async err => {
-              const toast = await this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 });
-              toast.present();
+            catchError(err => {
+              this.toastCtrl.create({ message: this.translate.instant('APP.EVENT_DETAIL.GENERIC_ERRORS'), duration: 3000 })
+                .then(toast => toast.present());
               return throwError(() => err);
             })
           )
@@ -163,7 +165,7 @@ export class EventDetailPage implements OnInit {
         party: this.party.id!
       }).pipe(
         catchError(err => {
-          this.toastCtrl.create({ message: 'Non è stato possibile completare l\'operazione', duration: 3000 })
+          this.toastCtrl.create({ message: this.translate.instant('APP.EVENT_DETAIL.GENERIC_ERRORS'), duration: 3000 })
             .then(toast => {
               toast.present();
             });
@@ -194,7 +196,7 @@ export class EventDetailPage implements OnInit {
       title: this.party?.title,
       text: this.party?.title,
       url: 'https://easydance.app/event-detail/' + this.party?.id,
-      dialogTitle: 'Condividi questo evento con i tuoi amici',
+      dialogTitle: this.translate.instant('APP.EVENT_DETAIL.SHARE'),
     });
   }
 }

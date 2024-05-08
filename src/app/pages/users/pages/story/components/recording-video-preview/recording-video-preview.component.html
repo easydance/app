@@ -118,14 +118,14 @@
 			shape="round"
 			expand="block"
 			color="neutral-500">
-			Indietro
+			{{'APP.BACK' | translate}}
 		</ion-button>
 		<ion-button (click)="goNext()"
 			class="flex-1"
 			shape="round"
 			expand="block"
 			color="primary">
-			Avanti
+			{{'APP.NEXT' | translate}}
 		</ion-button>
 	</div>
 </div>
@@ -135,7 +135,7 @@
 	<ng-template>
 		<ion-searchbar [showClearButton]="'always'"
 			[debounce]="500"
-			[placeholder]="'Cerca party...'"
+			[placeholder]="'APP.STORY.SEARCH_PARTIES' | translate"
 			(ionInput)="searchClubs($event)"
 			class="my-2"
 			clearIcon="close-outline"></ion-searchbar>
@@ -158,7 +158,7 @@
 	<ng-template>
 		<ion-searchbar [showClearButton]="'always'"
 			[debounce]="500"
-			[placeholder]="'Cerca amici...'"
+			[placeholder]="'APP.STORY.SEARCH_FRIENDS' | translate"
 			(ionInput)="searchUsers($event)"
 			class="my-2"
 			clearIcon="close-outline"></ion-searchbar>
@@ -188,13 +188,13 @@
 				class="flex-1"
 				shape="round"
 				color="dark">
-				CHIUDI
+				{{'APP.CLOSE' | translate}}
 			</ion-button>
 			<ion-button (click)="insertUsers();searchUsersModal.dismiss();"
 				class="flex-1"
 				shape="round"
 				color="primary">
-				Inserisci
+				{{'APP.STORY.INSERT' | translate}}
 			</ion-button>
 		</div>
 	</ng-template>

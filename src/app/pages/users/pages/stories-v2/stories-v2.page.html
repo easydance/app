@@ -1,0 +1,12 @@
+<ion-content [fullscreen]="true"
+	init="false">
+	<swiper-container #storiesSwiper
+		id="stories"
+		init="false"
+		effect="cube"
+		pagination="false">
+		<swiper-slide *ngFor="let el of usersStories">
+			<story [filter]="getFilter(el)"></story>
+		</swiper-slide>
+	</swiper-container>
+</ion-content>
