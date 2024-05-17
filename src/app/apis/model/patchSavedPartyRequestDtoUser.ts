@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { UserBaseDto } from './userBaseDto';
+import { StoryBaseDto } from './storyBaseDto';
 import { RoleBaseDto } from './roleBaseDto';
 import { ClubBaseDto } from './clubBaseDto';
 import { ProfileImageDto } from './profileImageDto';
