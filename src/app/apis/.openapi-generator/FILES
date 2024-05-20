@@ -380,6 +380,7 @@ model/storyBaseDto.ts
 model/storyControllerCreateDefaultResponse.ts
 model/storyControllerFindAllDefaultResponse.ts
 model/storyControllerFindOneDefaultResponse.ts
+model/storyControllerFollowedDefaultResponse.ts
 model/storyControllerReplaceDefaultResponse.ts
 model/storyControllerUpdateDefaultResponse.ts
 model/storyLikeControllerCreateDefaultResponse.ts
