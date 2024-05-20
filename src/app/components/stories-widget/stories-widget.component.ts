@@ -16,13 +16,14 @@ export class StoriesWidgetComponent implements OnInit {
 
   @ViewChild('swiper') swiper?: SwiperContainer;
 
-  stories: GetStoryResponseDto[] = [];
-  users: { [id: string]: { user: UserBaseDto, stories: GetStoryResponseDto[]; }; } = {};
+  users: { [id: string]: { user: UserBaseDto, stories: StoryBaseDto[]; }; } = {};
 
-  public userKeyValue = Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
+  public get userKeyValue() {
+    return Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
+  }
 
-  @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: GetStoryResponseDto[]; }> = new EventEmitter();
-  @Output() storyClick: EventEmitter<GetStoryResponseDto[]> = new EventEmitter();
+  @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: StoryBaseDto[]; }> = new EventEmitter();
+  @Output() storyClick: EventEmitter<StoryBaseDto[]> = new EventEmitter();
   @Output() meClick: EventEmitter<void> = new EventEmitter();
   @Output() newStory: EventEmitter<void> = new EventEmitter();
 
@@ -39,7 +40,7 @@ export class StoriesWidgetComponent implements OnInit {
   }
 
   findStories(filter: any = {}) {
-    this.storiesService.findAll(
+    this.storiesService.followed(
       0,
       50,
       JSON.stringify(filter),
@@ -51,19 +52,9 @@ export class StoriesWidgetComponent implements OnInit {
         return throwError(() => err);
       })
     ).subscribe(res => {
-      this.stories = res.data;
-      for (let story of this.stories) {
-        if (!this.users[story.user?.id || '']) {
-          this.users[story.user?.id || ''] = {
-            user: story.user!,
-            stories: []
-          };
-        }
-        this.users[story.user?.id || ''].stories.push(story);
+      for (const user of res.data) {
+        this.users[user?.id || ''].stories.push(...user.stories);
       }
-      this.userKeyValue = Object.keys(this.users)
-        .filter(id => id != (this.authManager.user?.id || 'NO-ID'))
-        .map(key => ({ key, value: this.users[key] }));
       this.detector.detectChanges();
     });
   }
@@ -76,7 +67,7 @@ export class StoriesWidgetComponent implements OnInit {
     this.meClick.emit();
   }
 
-  onAvatarClick($event: { user: UserBaseDto, stories: GetStoryResponseDto[]; }) {
+  onAvatarClick($event: { user: UserBaseDto, stories: StoryBaseDto[]; }) {
     this.storyClick.emit($event.stories);
     this.userClick.emit($event);
   }
