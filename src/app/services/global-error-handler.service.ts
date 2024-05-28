@@ -14,5 +14,6 @@ export class GlobalErrorHandler implements ErrorHandler {
       stack: error.stack,
       ...error
     });
+    throw error;
   }
 }

@@ -7,7 +7,7 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { ProfilePage } from 'src/app/pages/users/pages/profile/profile.page';
 import { ClubDetailPage } from 'src/app/pages/users/pages/club-detail/club-detail.page';
 import { Share } from '@capacitor/share';
-import { StoryController } from 'src/app/services/story.service';
+import { StoryController } from 'src/app/services/story.controller';
 
 
 @Component({

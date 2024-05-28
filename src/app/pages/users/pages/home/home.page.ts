@@ -8,7 +8,7 @@ import { StoriesPage } from 'src/app/pages/users/pages/stories/stories.page';
 import { UsersPage } from 'src/app/pages/users/users.page';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
-import { StoryController } from 'src/app/services/story.service';
+import { StoryController } from 'src/app/services/story.controller';
 
 @Component({
   selector: 'app-home',

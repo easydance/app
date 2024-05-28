@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { AnimationController, ModalController, NavController, createAnimation } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
-import { StoryBaseDto, UserBaseDto } from 'src/app/apis';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { StoryBaseDto, StoryService, UserBaseDto } from 'src/app/apis';
 import { StoriesPage } from 'src/app/pages/users/pages/stories/stories.page';
 import { StoryPage } from 'src/app/pages/users/pages/story/story.page';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
@@ -11,17 +11,22 @@ import { AuthManagerService } from 'src/app/services/auth-manager.service';
 })
 export class StoryController {
 
-  // private userStore = new BehaviorSubject<string | undefined>(undefined);
-  // public user$ = this.userStore.asObservable();
+  private usersStore = new BehaviorSubject<UserBaseDto[] | undefined>(undefined);
+  public users$ = this.usersStore.asObservable();
+  public get users() {
+    return this.usersStore.getValue();
+  }
 
   public nextUser: EventEmitter<{ currentUserId: number; }> = new EventEmitter();
   public previousUser: EventEmitter<{ currentUserId: number; }> = new EventEmitter();
+  public storiesChanged: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private authManager: AuthManagerService,
     private navCtrl: NavController,
     private animationCtrl: AnimationController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private storyService: StoryService
   ) { }
 
   async makeStory() {
@@ -86,7 +91,6 @@ export class StoryController {
     return this.storyEnterAnimation(baseEl).direction('reverse');
   }
 
-
   pageCubicEnterAnimation(baseEl: HTMLElement, opts: TransitionOptions) {
     const DURATION = 300;
 
@@ -144,6 +148,24 @@ export class StoryController {
 
   cubicLeaveAnimation(baseEl: HTMLElement) {
     return this.storyEnterAnimation(baseEl).direction('reverse');
+  }
+
+  getFollowed(filter: any) {
+    return this.storyService.followed(
+      0,
+      50,
+      JSON.stringify(filter),
+      undefined,
+      undefined,
+      'party.club,user,userTags'
+    ).pipe(
+      tap(res => {
+        this.usersStore.next(res.data);
+      }),
+      catchError(err => {
+        return throwError(() => err);
+      })
+    );
   }
 }
 

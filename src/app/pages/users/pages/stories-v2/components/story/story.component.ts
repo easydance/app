@@ -11,7 +11,7 @@ import { UiModule } from 'src/app/components/ui.module';
 import { StoriesOverview } from 'src/app/pages/users/pages/stories-v2/utils/utils';
 import { ShorterNumberPipe } from 'src/app/pipes/shorter-number.pipe';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
-import { StoryController } from 'src/app/services/story.service';
+import { StoryController } from 'src/app/services/story.controller';
 import { SwiperContainer } from 'swiper/element';
 
 @Component({
@@ -35,6 +35,7 @@ export class StoryComponent implements OnChanges {
 
 
   constructor(
+    private storiesCtrl: StoryController,
     private storiesService: StoryService,
     public authManager: AuthManagerService,
     private storyLikeService: StoryLikeService,
@@ -106,6 +107,7 @@ export class StoryComponent implements OnChanges {
 
   deleteStory(id: number) {
     this.storiesService._delete(Number(id.toString().replace('story-', ''))).subscribe(() => {
+      this.storiesCtrl.storiesChanged.emit();
       this.findStories(this.filter);
     });
   }

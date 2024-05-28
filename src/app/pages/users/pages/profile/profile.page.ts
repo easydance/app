@@ -8,6 +8,7 @@ import { lastValueFrom } from 'rxjs';
 import { AuthService, ClubBaseDto, GetLanguageResponseDto, GetUserToClubFollowerResponseDto, LanguageService, LoginUserDataDto, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { ProfileDetailComponent } from 'src/app/pages/users/pages/profile/components/profile-detail/profile-detail.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { StoryController } from 'src/app/services/story.controller';
 import { VersionUpdaterService } from 'src/app/services/version-updater.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 
@@ -29,6 +30,10 @@ export class ProfilePage implements OnInit {
   public languages: GetLanguageResponseDto[] = [];
   public version: string = '';
 
+  public get hasStories(): boolean {
+    return !!this.storiesCtrl.users?.find(u => u.id == (this.user?.id || 'NO-ID'))?.stories.length;
+  };
+
   public options: { enableNotification: boolean; } = {
     enableNotification: !localStorage.getItem('enableNotification') || localStorage.getItem('enableNotification') == 'true'
   };
@@ -42,7 +47,8 @@ export class ProfilePage implements OnInit {
     private readonly toastCtrl: ToastController,
     private readonly webSocket: WebSocketService,
     private readonly translate: TranslateService,
-    private readonly languagesService: LanguageService
+    private readonly languagesService: LanguageService,
+    private readonly storiesCtrl: StoryController
   ) {
     VersionUpdaterService.getVersion().then(res => {
       this.version = res;
@@ -55,6 +61,7 @@ export class ProfilePage implements OnInit {
         this.languages = res.data;
       });
 
+
     this.route.params.subscribe(async res => {
       if (this.user) this.webSocket.unsubscribe(`users/${this.user.id}/follow`);
       if (!res['id']) {
@@ -62,7 +69,7 @@ export class ProfilePage implements OnInit {
         this.isMe = true;
       } else {
         this.user = (await lastValueFrom(this.usersService.findOne(res['id'], undefined))).data as any;
-        this.isMe = res['id'] === (this.authManager.user?.id || 0);
+        this.isMe = res['id'] == (this.authManager.user?.id || 0);
       }
       this.webSocket.wbReady$.subscribe(res => {
         if (res && this.user) {
@@ -133,12 +140,12 @@ export class ProfilePage implements OnInit {
   }
 
   showStories() {
-    this.navCtrl.navigateForward('/stories/' + this.user?.id, {
+    this.navCtrl.navigateForward(`/users/${this.user?.id}/stories`, {
       queryParams: {
-        filter: JSON.stringify({
-          user: { id: this.user?.id || 'NO-ID' },
-          createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
-        }),
+        // filter: JSON.stringify({
+        //   user: { id: this.user?.id || 'NO-ID' },
+        //   createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() }
+        // }),
         type: 'page',
       },
     });
