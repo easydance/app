@@ -27,6 +27,10 @@ video {
     overflow: hidden;
     background-size: contain !important;
     position: relative;
+
+    > ion-fab-button {
+      top: var(--ion-safe-area-top);
+    }
   }
 
   #play-button,
@@ -152,7 +156,6 @@ ion-modal::part(content) {
     }
   }
 }
-
 
 #controls {
   position: absolute;

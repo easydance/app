@@ -9,3 +9,22 @@ swiper-container {
 ion-content {
   --padding-bottom: calc(65px + var(--ion-safe-area-bottom));
 }
+
+#no-stories,
+#loading-stories {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  > *:not(ion-fab-button) {
+    margin: 0 auto;
+  }
+
+  #back-button {
+    top: var(--ion-safe-area-top) !important;
+  }
+}

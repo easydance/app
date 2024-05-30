@@ -17,9 +17,9 @@
 			</div>
 		</div>
 	</swiper-slide>
-	<swiper-slide (click)="onAvatarClick(users[authManager.user?.id!])">
-		<div style="width: fit-content;"
-			style="border-right: 1px solid var(--ion-color-light);padding-right: 1rem">
+	<swiper-slide *ngIf="users[authManager.user?.id!]"
+		(click)="onAvatarClick(users[authManager.user?.id!])">
+		<div style="width: fit-content; border-right: 1px solid var(--ion-color-light);padding-right: 1rem">
 			<ion-avatar style="margin: 0 auto;">
 				<img [src]="authManager.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
 					style="object-fit: cover;"
@@ -37,9 +37,8 @@
 		(click)="onAvatarClick(kv.value)">
 		<div style="width: fit-content;">
 			<ion-avatar style="margin: 0 auto;">
-				<img [src]="kv.value.user?.profileImage?.url || 'assets/icons/guy-walk.svg'"
-					style="object-fit: cover;"
-					onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
+				<img [src]="kv.value.user?.profileImage?.url"
+					style="object-fit: cover;">
 			</ion-avatar>
 			<div class="mt-1"
 				style="text-align: center;">

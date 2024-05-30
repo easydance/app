@@ -49,7 +49,7 @@
 				</div>
 			</div>
 
-			<div *ngIf="user && user.profileImage?.url">
+			<div *ngIf="user && user.profileImage?.url && (isMe || profileDetail?.isFollowing) && hasStories">
 				<ion-avatar (click)="showStories()"
 					id="avatar-stories">
 					<img [src]="user.profileImage.url"
@@ -116,13 +116,6 @@
 				</h3>
 				<ion-item lines="none">
 					<ion-label>
-						{{'APP.PROFILE.ENABLE_NOTIFICATIONS' | translate}}
-					</ion-label>
-					<ion-toggle [(ngModel)]="options.enableNotification"
-						(ngModelChange)="setEnableNotification()"></ion-toggle>
-				</ion-item>
-				<ion-item lines="none">
-					<ion-label>
 						{{'APP.PROFILE.CHANGE_LANGUAGE' | translate}}
 					</ion-label>
 					<ion-select [(ngModel)]="currentlang"
@@ -136,6 +129,13 @@
 							{{lang.name}}
 						</ion-select-option>
 					</ion-select>
+				</ion-item>
+				<ion-item lines="none">
+					<ion-label>
+						{{'APP.PROFILE.ENABLE_NOTIFICATIONS' | translate}}
+					</ion-label>
+					<ion-toggle [(ngModel)]="options.enableNotification"
+						(ngModelChange)="setEnableNotification()"></ion-toggle>
 				</ion-item>
 				<ion-item (click)="isOpenDeleteUserModal = true"
 					style="border-top: 1px solid white;"

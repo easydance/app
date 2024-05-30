@@ -61,6 +61,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/stories-v2/stories-v2.module').then( m => m.StoriesV2PageModule)
       },
       {
+        path: 'users/:userId/stories',
+        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then( m => m.StoriesV2PageModule)
+      },
+      {
         path: 'map',
         loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule)
       },

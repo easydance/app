@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryBaseDto, StoryService, UserBaseDto } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { StoryController } from 'src/app/services/story.controller';
 import { SwiperContainer } from 'swiper/element';
 
 
@@ -19,7 +20,10 @@ export class StoriesWidgetComponent implements OnInit {
   users: { [id: string]: { user: UserBaseDto, stories: StoryBaseDto[]; }; } = {};
 
   public get userKeyValue() {
-    return Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
+    return Object.keys(this.users).filter(id => {
+      console.log(parseInt(id), ' !== ', (this.authManager.user?.id || ''), ' => ', parseInt(id) !== (this.authManager.user?.id || ''));
+      return parseInt(id) !== (this.authManager.user?.id || '');
+    }).map(key => ({ key, value: this.users[key] }));
   }
 
   @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: StoryBaseDto[]; }> = new EventEmitter();
@@ -28,7 +32,7 @@ export class StoriesWidgetComponent implements OnInit {
   @Output() newStory: EventEmitter<void> = new EventEmitter();
 
   constructor(
-    private storiesService: StoryService,
+    private storiesCtrl: StoryController,
     public authManager: AuthManagerService,
     private detector: ChangeDetectorRef
   ) { }
@@ -37,25 +41,29 @@ export class StoriesWidgetComponent implements OnInit {
     this.authManager.user$.subscribe(res => {
       this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
     });
+
+    this.storiesCtrl.storiesChanged.subscribe(() => {
+      this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
+    });
   }
 
   findStories(filter: any = {}) {
-    this.storiesService.followed(
-      0,
-      50,
-      JSON.stringify(filter),
-      undefined,
-      undefined,
-      'party.club,user,userTags'
-    ).pipe(
-      catchError(err => {
-        return throwError(() => err);
-      })
-    ).subscribe(res => {
+    this.storiesCtrl.getFollowed(filter).subscribe(res => {
+      this.users = {};
       for (const user of res.data) {
-        this.users[user?.id || ''].stories.push(...user.stories);
+        if (!user.stories?.length) {
+          continue;
+        }
+        if (!this.users[user?.id || '']) {
+          this.users[user?.id || ''] = {
+            user,
+            stories: []
+          };
+        }
+        this.users[user?.id || ''].stories.push(...(user?.stories || []));
       }
       this.detector.detectChanges();
+      this.swiper?.swiper?.update();
     });
   }
 

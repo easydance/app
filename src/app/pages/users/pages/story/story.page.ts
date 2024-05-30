@@ -3,6 +3,7 @@ import { IonModal, LoadingController, ModalController, NavController } from '@io
 import { TranslateService } from '@ngx-translate/core';
 import { AttachmentService, StoryService } from 'src/app/apis';
 import { RecordingVideoPreviewComponent, StorySource } from 'src/app/pages/users/pages/story/components/recording-video-preview/recording-video-preview.component';
+import { StoryController } from 'src/app/services/story.controller';
 import { AttachmentHelperService } from 'src/app/services/upload.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class StoryPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
+    private storiesCtrl: StoryController,
     private storiesService: StoryService,
     private attachmentService: AttachmentHelperService,
     private loadingCtrl: LoadingController,
@@ -83,6 +85,7 @@ export class StoryPage implements OnInit {
           // this.storyModal?.present();
           this.completed = true;
           loading.dismiss();
+          this.storiesCtrl.storiesChanged.emit();
         });
     });
 
