@@ -22,7 +22,8 @@
 </div>
 <swiper-container #swiper
 	*ngIf="storiesOverview"
-	[id]="id">
+	[id]="id"
+	speed="150000">
 	<swiper-slide *ngFor="let storyOverview of storiesOverview.stories"
 		[id]="'story-' + storiesOverview.current.story.id"
 		[swipe]
@@ -112,12 +113,13 @@
 									onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'"
 									style="object-fit: cover;">
 							</ion-avatar>
-							<div style="text-align: center;">
-								<small>
-									{{storyOverview.story.user?.firstName}} {{storyOverview.story.user?.lastName}}
-								</small>
+							<div style="text-align: center; font-size: 0.75rem;">
+								{{storyOverview.story.user?.firstName}} {{storyOverview.story.user?.lastName}}
 							</div>
 						</div>
+					</div>
+					<div class="mt-3" style="font-size: 0.65rem;">
+						{{storyOverview.story.createdAt | date:'dd/MM/yyyy HH:mm'}}
 					</div>
 				</div>
 				<div class>

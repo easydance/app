@@ -9,16 +9,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { UserBaseDto } from './userBaseDto';
 
 
 export interface CreateClubRequestDto { 
+    owner?: UserBaseDto;
     name: string;
-    phone: string;
-    email: string;
-    ownerName: string;
-    surname: string;
-    birthDate: string;
-    username: string;
-    password: string;
+    phone?: string;
+    email?: string;
+    ownerName?: string;
+    surname?: string;
+    birthDate?: string;
+    username?: string;
+    password?: string;
 }
 
