@@ -19,12 +19,13 @@ export class StoriesWidgetComponent implements OnInit {
 
   users: { [id: string]: { user: UserBaseDto, stories: StoryBaseDto[]; }; } = {};
 
-  public get userKeyValue() {
-    return Object.keys(this.users).filter(id => {
-      console.log(parseInt(id), ' !== ', (this.authManager.user?.id || ''), ' => ', parseInt(id) !== (this.authManager.user?.id || ''));
-      return parseInt(id) !== (this.authManager.user?.id || '');
-    }).map(key => ({ key, value: this.users[key] }));
-  }
+  public userKeyValue: {
+    key: string;
+    value: {
+      user: UserBaseDto;
+      stories: StoryBaseDto[];
+    };
+  }[] = [];
 
   @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: StoryBaseDto[]; }> = new EventEmitter();
   @Output() storyClick: EventEmitter<StoryBaseDto[]> = new EventEmitter();
@@ -61,6 +62,9 @@ export class StoriesWidgetComponent implements OnInit {
           };
         }
         this.users[user?.id || ''].stories.push(...(user?.stories || []));
+        this.userKeyValue = Object.keys(this.users).filter(id => {
+          return parseInt(id) !== (this.authManager.user?.id || '');
+        }).map(key => ({ key, value: this.users[key] }));
       }
       this.detector.detectChanges();
       this.swiper?.swiper?.update();
