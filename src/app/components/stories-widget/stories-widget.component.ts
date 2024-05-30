@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryBaseDto, StoryService, UserBaseDto } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { StoryController } from 'src/app/services/story.controller';
 import { SwiperContainer } from 'swiper/element';
 
 
@@ -16,18 +17,22 @@ export class StoriesWidgetComponent implements OnInit {
 
   @ViewChild('swiper') swiper?: SwiperContainer;
 
-  stories: GetStoryResponseDto[] = [];
-  users: { [id: string]: { user: UserBaseDto, stories: GetStoryResponseDto[]; }; } = {};
+  users: { [id: string]: { user: UserBaseDto, stories: StoryBaseDto[]; }; } = {};
 
-  public userKeyValue = Object.keys(this.users).map(key => ({ key, value: this.users[key] }));
+  public get userKeyValue() {
+    return Object.keys(this.users).filter(id => {
+      console.log(parseInt(id), ' !== ', (this.authManager.user?.id || ''), ' => ', parseInt(id) !== (this.authManager.user?.id || ''));
+      return parseInt(id) !== (this.authManager.user?.id || '');
+    }).map(key => ({ key, value: this.users[key] }));
+  }
 
-  @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: GetStoryResponseDto[]; }> = new EventEmitter();
-  @Output() storyClick: EventEmitter<GetStoryResponseDto[]> = new EventEmitter();
+  @Output() userClick: EventEmitter<{ user: UserBaseDto, stories: StoryBaseDto[]; }> = new EventEmitter();
+  @Output() storyClick: EventEmitter<StoryBaseDto[]> = new EventEmitter();
   @Output() meClick: EventEmitter<void> = new EventEmitter();
   @Output() newStory: EventEmitter<void> = new EventEmitter();
 
   constructor(
-    private storiesService: StoryService,
+    private storiesCtrl: StoryController,
     public authManager: AuthManagerService,
     private detector: ChangeDetectorRef
   ) { }
@@ -36,35 +41,29 @@ export class StoriesWidgetComponent implements OnInit {
     this.authManager.user$.subscribe(res => {
       this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
     });
+
+    this.storiesCtrl.storiesChanged.subscribe(() => {
+      this.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
+    });
   }
 
   findStories(filter: any = {}) {
-    this.storiesService.findAll(
-      0,
-      50,
-      JSON.stringify(filter),
-      undefined,
-      undefined,
-      'party.club,user,userTags'
-    ).pipe(
-      catchError(err => {
-        return throwError(() => err);
-      })
-    ).subscribe(res => {
-      this.stories = res.data;
-      for (let story of this.stories) {
-        if (!this.users[story.user?.id || '']) {
-          this.users[story.user?.id || ''] = {
-            user: story.user!,
+    this.storiesCtrl.getFollowed(filter).subscribe(res => {
+      this.users = {};
+      for (const user of res.data) {
+        if (!user.stories?.length) {
+          continue;
+        }
+        if (!this.users[user?.id || '']) {
+          this.users[user?.id || ''] = {
+            user,
             stories: []
           };
         }
-        this.users[story.user?.id || ''].stories.push(story);
+        this.users[user?.id || ''].stories.push(...(user?.stories || []));
       }
-      this.userKeyValue = Object.keys(this.users)
-        .filter(id => id != (this.authManager.user?.id || 'NO-ID'))
-        .map(key => ({ key, value: this.users[key] }));
       this.detector.detectChanges();
+      this.swiper?.swiper?.update();
     });
   }
 
@@ -76,7 +75,7 @@ export class StoriesWidgetComponent implements OnInit {
     this.meClick.emit();
   }
 
-  onAvatarClick($event: { user: UserBaseDto, stories: GetStoryResponseDto[]; }) {
+  onAvatarClick($event: { user: UserBaseDto, stories: StoryBaseDto[]; }) {
     this.storyClick.emit($event.stories);
     this.userClick.emit($event);
   }

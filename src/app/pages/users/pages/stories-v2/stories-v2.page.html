@@ -1,12 +1,21 @@
-<ion-content [fullscreen]="true"
-	init="false">
+<ion-content [fullscreen]="true">
 	<swiper-container #storiesSwiper
+		[attr.effect]="effect"
 		id="stories"
-		init="false"
-		effect="cube"
 		pagination="false">
 		<swiper-slide *ngFor="let el of usersStories">
 			<story [filter]="getFilter(el)"></story>
 		</swiper-slide>
 	</swiper-container>
+	<div *ngIf="!usersStories?.length"
+		id="no-stories">
+		<ion-fab-button
+			id="back-button"
+			(click)="navCtrl.pop()"
+			class="button m-3 w-9 h-9 absolute top-0 left-0 z-1010">
+			<ion-icon name="arrow-back-sharp"
+				style="font-size: 1rem;"></ion-icon>
+		</ion-fab-button>
+		<easy-thats-all [message]="'APP.STORIES.NO_STORIES' | translate"></easy-thats-all>
+	</div>
 </ion-content>

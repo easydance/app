@@ -301,6 +301,7 @@ export * from './storyBaseDto';
 export * from './storyControllerCreateDefaultResponse';
 export * from './storyControllerFindAllDefaultResponse';
 export * from './storyControllerFindOneDefaultResponse';
+export * from './storyControllerFollowedDefaultResponse';
 export * from './storyControllerReplaceDefaultResponse';
 export * from './storyControllerUpdateDefaultResponse';
 export * from './storyLikeControllerCreateDefaultResponse';

@@ -14,7 +14,7 @@
 			<ion-progress-bar *ngIf="i < storiesOverview.currentIndex"
 				[value]="1"
 				color="light"></ion-progress-bar>
-			<ion-progress-bar *ngIf="i ==storiesOverview.currentIndex"
+			<ion-progress-bar *ngIf="i == storiesOverview.currentIndex"
 				[value]="storiesOverview.currentProgress"
 				color="light"></ion-progress-bar>
 		</div>
@@ -22,8 +22,7 @@
 </div>
 <swiper-container #swiper
 	*ngIf="storiesOverview"
-	id="stories-slider"
-	allow-touch-move="false">
+	[id]="id">
 	<swiper-slide *ngFor="let storyOverview of storiesOverview.stories"
 		[id]="'story-' + storiesOverview.current.story.id"
 		[swipe]
@@ -59,10 +58,10 @@
 			Your browser does not support the video tag.
 		</video>
 		<div class="absolute w-full h-full top-0 left-0 flex items-center z-510">
-			<div (click)="storiesOverview.prev()"
+			<div (click)="prev()"
 				id="prev-story"
 				class="flex-1"></div>
-			<div (click)="storiesOverview.next()"
+			<div (click)="next()"
 				id="next-story"
 				class="flex-1"></div>
 		</div>
@@ -72,7 +71,7 @@
 				class="mb-4 flex align-center space-between">
 				<div>
 					<users-widget *ngIf="storyOverview.story.userTags?.length"
-						[users]="(storyOverview.story.userTags || []) | bypassTyping"
+						[users]="(storyOverview.story.userTags || [])"
 						[avatarShown]="5"
 						(click)="friendsModal.modal?.present()"
 						style="zoom: 0.5"></users-widget>
@@ -148,7 +147,7 @@
 			</div>
 		</div>
 		<follower-modal #friendsModal
-			[followers]="storyOverview.story.userTags | bypassTyping"
+			[followers]="storyOverview.story.userTags"
 			[title]="'APP.STORIES.TAGGED_FRIENDS' | translate"
 			(userClick)="openUserProfile($event)"></follower-modal>
 

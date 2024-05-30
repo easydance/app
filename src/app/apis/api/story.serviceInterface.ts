@@ -19,6 +19,7 @@ import { PatchStoryRequestDto } from '../model/models';
 import { StoryControllerCreateDefaultResponse } from '../model/models';
 import { StoryControllerFindAllDefaultResponse } from '../model/models';
 import { StoryControllerFindOneDefaultResponse } from '../model/models';
+import { StoryControllerFollowedDefaultResponse } from '../model/models';
 import { StoryControllerReplaceDefaultResponse } from '../model/models';
 import { StoryControllerUpdateDefaultResponse } from '../model/models';
 import { UpdateStoryRequestDto } from '../model/models';
@@ -91,6 +92,19 @@ export interface StoryServiceInterface {
      * @param deleted 
      */
     findOne(id: any, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<StoryControllerFindOneDefaultResponse>;
+
+    /**
+     * 
+     * 
+     * @param page 
+     * @param pageSize 
+     * @param filters 
+     * @param sorting 
+     * @param fields 
+     * @param includes 
+     * @param deleted 
+     */
+    followed(page?: number, pageSize?: number, filters?: string, sorting?: string, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<StoryControllerFollowedDefaultResponse>;
 
     /**
      * 

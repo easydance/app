@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 import { GetPartyParticipationResponseDtoParty } from './getPartyParticipationResponseDtoParty';
-import { GetUserResponseDto } from './getUserResponseDto';
 
 
 export interface GetPartyParticipationResponseDto { 
@@ -24,7 +23,7 @@ export interface GetPartyParticipationResponseDto {
     deletedBy?: string | null;
     pr: string;
     participants?: number;
-    user?: GetUserResponseDto;
+    user?: object;
     checked: boolean;
     party: GetPartyParticipationResponseDtoParty;
 }

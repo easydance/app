@@ -96,7 +96,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
     }), undefined, undefined, 'followed').subscribe(res => {
 
       this.usersService.findAll(0, 1000, JSON.stringify({
-        id: { $in: res.data.map(d => d.followed.id) }
+        id: { $in: res.data.filter(d => d.followed).map(d => d.followed.id) }
       })).subscribe(res => {
         this.followed = res.data;
       });
@@ -108,7 +108,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
       }
     }), undefined, undefined, 'follower').subscribe(res => {
       this.usersService.findAll(0, 1000, JSON.stringify({
-        id: { $in: res.data.map(d => d.follower.id) }
+        id: { $in: res.data.filter(d => d.follower).map(d => d.follower.id) }
       })).subscribe(res => {
         this.followers = res.data;
       });
@@ -123,7 +123,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
         }
       }), undefined, undefined, 'follower').subscribe(res => {
         this.usersService.findAll(0, 1000, JSON.stringify({
-          id: { $in: res.data.map(d => d.follower.id) }
+          id: { $in: res.data.filter(d => d.follower).map(d => d.follower.id) }
         })).subscribe(res => {
           this.followers = res.data;
           modal.present();
@@ -140,7 +140,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
       }), undefined, undefined, 'followed').subscribe(res => {
 
         this.usersService.findAll(0, 1000, JSON.stringify({
-          id: { $in: res.data.map(d => d.followed.id) }
+          id: { $in: res.data.filter(d => d.followed).map(d => d.followed.id) }
         })).subscribe(res => {
           this.followed = res.data;
           modal.present();

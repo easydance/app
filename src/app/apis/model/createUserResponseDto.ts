@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { StoryBaseDto } from './storyBaseDto';
 import { RoleBaseDto } from './roleBaseDto';
 import { ClubBaseDto } from './clubBaseDto';
 import { ProfileImageDto } from './profileImageDto';
@@ -39,5 +40,6 @@ export interface CreateUserResponseDto {
     followingClubs: number;
     isFollowing: boolean;
     city?: string;
+    stories: Array<StoryBaseDto>;
 }
 
