@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { App } from '@capacitor/app';
+import { App, AppInfo } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { BundleInfo, CapacitorUpdater } from '@capgo/capacitor-updater';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
@@ -35,11 +35,19 @@ export class HotfixUpdaterService {
     // });
   }
 
+  private isToUpdate(currentVersion: string, hotfixVersion: string) {
+    const currentNumericVersion = parseInt(currentVersion.split('.').map(n => n.padStart(3, '0')).join('').padEnd(9, '0'));
+    const hotfixNumericVersion = parseInt(hotfixVersion.split('.').map(n => n.padStart(3, '0')).join('').padEnd(9, '0'));
+    return currentNumericVersion < hotfixNumericVersion;
+  }
+
   async askInstall(confirm: boolean) {
     await CapacitorUpdater.notifyAppReady();
+    const appInfo = await App.getInfo();
     const { bundle: currentBundle } = await CapacitorUpdater.current();
-    this.printBundleInfo(currentBundle, 'CURRENT BUNDLE');
-    if (currentBundle.version != window.EASY_KEYS?.['LAST_HOTFIX_VERSION']) {
+    currentBundle.version = currentBundle.version == 'builtin' ? appInfo.version : currentBundle.version;
+    this.printBundleInfo(currentBundle, appInfo, 'CURRENT BUNDLE');
+    if (this.isToUpdate(currentBundle.version, window.EASY_KEYS?.['LAST_HOTFIX_VERSION'])) {
       this.logger.info(`Downloading new hotfix`, 'hotfix-updater.service.ts', {
         url: window.EASY_KEYS?.['LAST_HOTFIX_URL'] || '',
         version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
@@ -49,7 +57,7 @@ export class HotfixUpdaterService {
         version: window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
       }).then(async data => {
         if (data) {
-          this.printBundleInfo(data, 'CURRENT HOTFIX');
+          this.printBundleInfo(data, appInfo, 'CURRENT HOTFIX');
           const toast = await this.toastCtrl.create({
             message: this.translate.instant('APP.HOTFIX.NEW_VERSION'),
             buttons: [
@@ -68,13 +76,14 @@ export class HotfixUpdaterService {
         }
       });
     }
-    SplashScreen.hide({  fadeOutDuration: 500 });
+    SplashScreen.hide({ fadeOutDuration: 500 });
   }
 
   async checkUpdates() {
     await CapacitorUpdater.notifyAppReady();
     const { bundle: currentBundle } = await CapacitorUpdater.current();
-    this.printBundleInfo(currentBundle, 'CURRENT BUNDLE');
+    const appInfo = await App.getInfo();
+    await this.printBundleInfo(currentBundle, appInfo, 'CURRENT BUNDLE');
 
     if (currentBundle.version != window.EASY_KEYS?.['LAST_HOTFIX_VERSION']) {
       this.downloadAndInstall();
@@ -89,7 +98,8 @@ export class HotfixUpdaterService {
   }
 
   async setVersion(data: BundleInfo) {
-    this.printBundleInfo(data, 'LOADED BUNDLE');
+    const appInfo = await App.getInfo();
+    this.printBundleInfo(data, appInfo, 'LOADED BUNDLE');
     this.logger.info(`Show splashscreen in setVersion`, 'hotfix-updater.service.ts', { data });
     SplashScreen.show({ fadeInDuration: 500 });
     try {
@@ -127,7 +137,8 @@ export class HotfixUpdaterService {
       version: version || window.EASY_KEYS?.['LAST_HOTFIX_VERSION'] || '0.0.0',
 
     });
-    this.printBundleInfo(data, 'CURRENT HOTFIX');
+    const appInfo = await App.getInfo();
+    this.printBundleInfo(data, appInfo, 'CURRENT HOTFIX');
 
     if (data) {
       SplashScreen.show({ fadeOutDuration: 500 });
@@ -135,14 +146,21 @@ export class HotfixUpdaterService {
     }
   }
 
-  private printBundleInfo(data: BundleInfo, title?: string) {
+  private async printBundleInfo(data: BundleInfo, appInfo: AppInfo, title?: string) {
     console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     console.log(`||  ${title || 'CURRENT BUNDLE'}: `);
-    console.log('||  -         id: ' + data.id);
-    console.log('||  -     status: ' + data.status);
-    console.log('||  -    version: ' + data.version);
-    console.log('||  -   checksum: ' + data.checksum);
-    console.log('||  -       data: ' + data.downloaded);
+    console.log('||  -             id: ' + data.id);
+    console.log('||  -         status: ' + data.status);
+    console.log('||  -        version: ' + data.version);
+    console.log('||  -       checksum: ' + data.checksum);
+    console.log('||  -           data: ' + data.downloaded);
+    console.log('|| ');
+    console.log('||  NATIVE INFO:');
+    console.log('||  -             ID: ' + appInfo.id);
+    console.log('||  -        version: ' + appInfo.version + ' (' + appInfo.build + ')');
+    console.log('||  -           name: ' + appInfo.name);
+    console.log('|| ');
+    console.log('||  - Is to Update? ' + `${this.isToUpdate(data.version, window.EASY_KEYS?.['LAST_HOTFIX_VERSION'])} (${data.version} < ${window.EASY_KEYS?.['LAST_HOTFIX_VERSION']})`);
     console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||');
     this.logger.info(` ${title || 'CURRENT BUNDLE'}`, 'hotfix-updater.service.ts', { bundle: data });
   }

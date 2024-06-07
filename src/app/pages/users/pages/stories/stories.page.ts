@@ -239,7 +239,7 @@ export class StoriesPage implements OnInit {
     Share.share({
       title: '',
       text: '',
-      url: 'https://easydance.app/?story=' + story?.id,
+      url: 'https://share.easydance.app/u/' + story.user?.id + '/s/' + story?.id,
       dialogTitle: 'Condividi questa story con i tuoi amici',
     });
   }

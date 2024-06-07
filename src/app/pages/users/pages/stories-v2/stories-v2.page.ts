@@ -46,7 +46,7 @@ export class StoriesV2Page implements OnInit {
       const filter = {
         ...this.defaultFilter,
         ...(res['userId'] ? { user: { id: res['userId'] } } : {}),
-        ...(!res['userId'] ? { user: { id: { $in: (this.storiesCtrl.users?.map(u => u.id) || []) } } } : {})
+        ...(res['storyId'] ? { id: res['storyId'] } : {})
       };
 
       this.storiesService.findAll(

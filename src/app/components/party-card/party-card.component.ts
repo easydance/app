@@ -123,7 +123,7 @@ export class PartyCardComponent implements OnInit {
     Share.share({
       title: this.party?.title,
       text: this.party?.title,
-      url: 'https://easydance.app/event-detail/' + this.party?.id,
+      url: 'https://share.easydance.app/e/' + this.party?.id,
       dialogTitle: 'Condividi questo evento con i tuoi amici',
     });
   }

@@ -58,23 +58,51 @@ const routes: Routes = [
       },
       {
         path: 'stories/:firstUser',
-        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then( m => m.StoriesV2PageModule)
+        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then(m => m.StoriesV2PageModule)
       },
       {
         path: 'users/:userId/stories',
-        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then( m => m.StoriesV2PageModule)
+        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then(m => m.StoriesV2PageModule)
       },
       {
         path: 'map',
-        loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule)
+        loadChildren: () => import('./pages/map/map.module').then(m => m.MapPageModule)
       },
       {
         path: 'story',
-        loadChildren: () => import('./pages/story/story.module').then( m => m.StoryPageModule)
+        loadChildren: () => import('./pages/story/story.module').then(m => m.StoryPageModule)
       },
       {
         path: 'stories-v2',
-        loadChildren: () => import('./pages/stories/stories.module').then( m => m.StoriesPageModule)
+        loadChildren: () => import('./pages/stories/stories.module').then(m => m.StoriesPageModule)
+      },
+      ///////////////////////////////
+      // SHARE SHORT LINKS
+      ///////////////////////////////
+      // -- User stories
+      {
+        path: 'u/:userId/s',
+        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then(m => m.StoriesV2PageModule)
+      },
+      // -- User specific story
+      {
+        path: 'u/:userId/s/:storyId',
+        loadChildren: () => import('./pages/stories-v2/stories-v2.module').then(m => m.StoriesV2PageModule)
+      },
+      // -- Specific profile
+      {
+        path: 'p/:id',
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)
+      },
+      // -- Specific event
+      {
+        path: 'e/:id',
+        loadChildren: () => import('./pages/event-detail/event-detail.module').then(m => m.EventDetailPageModule)
+      },
+      // -- Specific club
+      {
+        path: 'c/:id',
+        loadChildren: () => import('./pages/club-detail/club-detail.module').then(m => m.ClubDetailPageModule)
       },
     ]
   },
