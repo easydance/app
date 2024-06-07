@@ -25,6 +25,7 @@ export interface GetPartyParticipationResponseDto {
     participants?: number;
     user?: object;
     checked: boolean;
+    confirmed: number;
     party: GetPartyParticipationResponseDtoParty;
 }
 

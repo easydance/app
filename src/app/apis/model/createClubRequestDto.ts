@@ -13,6 +13,7 @@ import { UserBaseDto } from './userBaseDto';
 
 
 export interface CreateClubRequestDto { 
+    orphan?: boolean | null;
     owner?: UserBaseDto;
     name: string;
     phone?: string;

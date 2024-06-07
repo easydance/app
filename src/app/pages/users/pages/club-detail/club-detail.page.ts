@@ -7,6 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { AttachmentBaseDto, ClubBaseDto, ClubReviewService, ClubService, GetClubResponseDto, GetUserResponseDto, GetUserToClubFollowerResponseDto, PartyBaseDto, PartyService, UserService, UserToClubFollowerService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
+import { customMapStyle } from 'src/app/utils/google-maps.utils';
 
 @Component({
   selector: 'app-club-detail',
@@ -25,6 +26,19 @@ export class ClubDetailPage implements OnInit {
   public followers: GetUserResponseDto[] = [];
 
   public score: number = 0;
+
+  public center?: { lat: number, lng: number; };
+  public options: google.maps.MapOptions = {
+    panControl: false,
+    zoomControl: false,
+    scaleControl: false,
+    rotateControl: false,
+    mapTypeControl: false,
+    fullscreenControl: false,
+    streetViewControl: false,
+    styles: customMapStyle,
+    gestureHandling: 'none'
+  };
 
   public get rating() {
     if (this.club?.rating) {
@@ -55,6 +69,10 @@ export class ClubDetailPage implements OnInit {
       // if (this.club) this.webSocket.unsubscribe(`clubs/${this.club.id}/follow`);
       this.clubsService.findOne(id, undefined, 'address').subscribe(res => {
         this.club = res.data;
+        this.center = {
+          lat: this.club?.address?.lat || 0,
+          lng: this.club?.address?.lng || 0,
+        };
         this.score = res.data.userReview?.rate || 0;
         // const [profile, ...covers] = this.club.covers;
         this.profile = this.club.profile;
@@ -174,5 +192,9 @@ export class ClubDetailPage implements OnInit {
           });
       });
     }
+  }
+
+  navigateToParty() {
+    window.open(`https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${this.club!.address.lat},${this.club!.address.lng}`);
   }
 }
