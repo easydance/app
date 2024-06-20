@@ -10,7 +10,7 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:easydance.app</string>
+		<string>applinks:share.easydance.app</string>
 	</array>
 </dict>
 </plist>
