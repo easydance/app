@@ -44,6 +44,24 @@
 				</ion-label>
 			</ion-item>
 		</ng-container>
+		<ng-container *ngIf="clubs">
+			<ion-item *ngFor="let club of clubs"
+				(click)="gotoClub(club)"
+				detail="false"
+				lines="none">
+				<ion-thumbnail slot="start">
+					<img [src]="club.profile.url">
+				</ion-thumbnail>
+				<ion-label>
+					<div class="title">{{club?.name}}</div>
+					<div>
+						<small>
+							{{club?.address?.street || ''}}, {{club?.address?.streetNumber || ''}} - {{club.address.city}}
+						</small>
+					</div>
+				</ion-label>
+			</ion-item>
+		</ng-container>
 	</div>
 	<div *ngIf="!footerOpts?.hidden"
 		id="footer">

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
-import { GetPartyResponseDto, PartyBaseDto } from 'src/app/apis';
+import { GetClubResponseDto, GetPartyResponseDto, PartyBaseDto } from 'src/app/apis';
 
 @Component({
   selector: 'items-list',
@@ -14,10 +14,11 @@ export class ItemsListComponent implements OnInit {
     title: ''
   };
   @Input() parties?: GetPartyResponseDto[];
-  @Input() itemOptions?: { onItemClick?: (party: GetPartyResponseDto) => void; transparent?: boolean; } = {};
+  @Input() clubs?: GetClubResponseDto[];
+  @Input() itemOptions?: { onItemClick?: (party: GetPartyResponseDto | GetClubResponseDto) => void; transparent?: boolean; } = {};
   @Input() footerOpts?: { buttonLabel?: string; hidden?: boolean; } = {};
 
-  @Output() itemClick: EventEmitter<PartyBaseDto> = new EventEmitter();
+  @Output() itemClick: EventEmitter<PartyBaseDto | GetClubResponseDto> = new EventEmitter();
   @Output() more: EventEmitter<void> = new EventEmitter();
 
   constructor(private navCtrl: NavController) { }
@@ -30,6 +31,14 @@ export class ItemsListComponent implements OnInit {
       return this.itemOptions.onItemClick(party);
     }
     this.navCtrl.navigateForward('/event-detail/' + party.id);
+  }
+
+  gotoClub(club: GetClubResponseDto) {
+    this.itemClick.emit(club);
+    if (this.itemOptions?.onItemClick) {
+      return this.itemOptions.onItemClick(club);
+    }
+    this.navCtrl.navigateForward('/club-detail/' + club.id);
   }
 
   getFrom(party: PartyBaseDto) {

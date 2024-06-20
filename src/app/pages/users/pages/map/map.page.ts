@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateTime } from 'luxon';
 // import { GoogleMap, LatLngBounds } from '@capacitor/google-maps';
 import { Subject, debounceTime, lastValueFrom } from 'rxjs';
-import { BASE_PATH, ClubBaseDto, ClubService, GetPartyResponseDto, PartyBaseDto, PartyService } from 'src/app/apis';
+import { BASE_PATH, ClubBaseDto, ClubService, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService } from 'src/app/apis';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
 import { CommonPartiesUtils } from 'src/app/services/common-parties-utils.service';
 import { customMapStyle } from 'src/app/utils/google-maps.utils';
@@ -23,6 +23,7 @@ export class MapPage implements OnInit, AfterViewChecked {
 
   @ViewChild('eventsModal') eventsModal?: IonModal;
   @ViewChild('clubModal') clubModal?: IonModal;
+  @ViewChild('clubsModal') clubsModal?: IonModal;
   @ViewChild('detailModal') detailModal?: IonModal;
 
   private debounceMarkers = new Subject<google.maps.LatLngBounds>();
@@ -34,6 +35,7 @@ export class MapPage implements OnInit, AfterViewChecked {
   public clubs: ClubBaseDto[] = [];
   public selectedParties?: GetPartyResponseDto[];
   public selectedClub?: ClubBaseDto;
+  public selectedClubs?: ClubBaseDto[];
   public city?: string = this.authManager.currentCity;
   public searchType: SearchType = 'parties';
   public partyDetail?: GetPartyResponseDto;
@@ -105,6 +107,7 @@ export class MapPage implements OnInit, AfterViewChecked {
   ionViewWillLeave() {
     this.eventsModal?.dismiss();
     this.clubModal?.dismiss();
+    this.clubsModal?.dismiss();
     this.detailModal?.dismiss();
   }
 
@@ -233,6 +236,13 @@ export class MapPage implements OnInit, AfterViewChecked {
     this.eventsModal?.present();
   }
 
+  showClubs(cluster: any) {
+    this.selectedClub = undefined;
+    const ids = cluster.getMarkers().map((m: google.maps.Marker) => parseInt(m.get('title')));
+    this.selectedClubs = this.clubs.filter(p => ids.includes(p.id));
+    this.clubsModal?.present();
+  }
+
   fake() { }
 
   async showClub(club: ClubBaseDto) {
@@ -247,10 +257,15 @@ export class MapPage implements OnInit, AfterViewChecked {
   }
 
 
-  goto(party: GetPartyResponseDto | PartyBaseDto) {
-    this.navCtrl.navigateForward('/event-detail/' + party.id, {
+  goto(item: GetPartyResponseDto | PartyBaseDto | GetClubResponseDto) {
+    if ('profile' in item) {
+      this.navCtrl.navigateForward('/club-detail/' + item.id);
+      return;
+    }
+
+    this.navCtrl.navigateForward('/event-detail/' + item.id, {
       queryParams: {
-        forcedDate: DateTime.fromJSDate(this.currentDate).set({ hour: new Date(party.from).getHours(), minute: new Date(party.from).getMinutes() }).toISO()!
+        forcedDate: DateTime.fromJSDate(this.currentDate).set({ hour: new Date(item.from).getHours(), minute: new Date(item.from).getMinutes() }).toISO()!
       }
     });
   }
@@ -281,13 +296,13 @@ export class MapPage implements OnInit, AfterViewChecked {
           lat: newLocation.lat,
           lng: newLocation.lng
         });
-        this.city = 'IN ZONA'
+        this.city = 'IN ZONA';
       }
     });
   }
 
   onMapDragEnd() {
-    this.city = this.translate.instant('APP.MAP.NEAR_ZONE')
+    this.city = this.translate.instant('APP.MAP.NEAR_ZONE');
   }
 
 }
