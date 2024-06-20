@@ -50,7 +50,8 @@ export class EventDetailPage implements OnInit {
             party: { ...party, participation: null },
             pr: '',
             participants: 1,
-            checked: false
+            checked: false,
+            confirmed: 0
           };
         });
       }
@@ -183,7 +184,8 @@ export class EventDetailPage implements OnInit {
                 party: { ...party, participation: null },
                 pr: '',
                 participants: 1,
-                checked: false
+                checked: false,
+                confirmed: 0
               };
             });
           }
@@ -195,7 +197,7 @@ export class EventDetailPage implements OnInit {
     Share.share({
       title: this.party?.title,
       text: this.party?.title,
-      url: 'https://easydance.app/event-detail/' + this.party?.id,
+      url: 'https://share.easydance.app/e/' + this.party?.id,
       dialogTitle: this.translate.instant('APP.EVENT_DETAIL.SHARE'),
     });
   }

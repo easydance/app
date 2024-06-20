@@ -6,6 +6,7 @@ import { catchError, throwError } from 'rxjs';
 import { GetStoryResponseDto, StoryService, UserBaseDto } from 'src/app/apis';
 import { StoryComponent } from 'src/app/pages/users/pages/stories-v2/components/story/story.component';
 import { AuthManagerService } from 'src/app/services/auth-manager.service';
+import { StoryController } from 'src/app/services/story.controller';
 import { SwiperContainer } from 'swiper/element';
 
 @Component({
@@ -31,6 +32,7 @@ export class StoriesV2Page implements OnInit {
   isLastSlide: boolean = false;
 
   constructor(
+    private storiesCtrl: StoryController,
     private storiesService: StoryService,
     public navCtrl: NavController,
     private route: ActivatedRoute,
@@ -43,8 +45,10 @@ export class StoriesV2Page implements OnInit {
       this.firstUser = res['firstUser'];
       const filter = {
         ...this.defaultFilter,
-        ...(res['userId'] ? { user: { id: res['userId'] } } : {})
+        ...(res['userId'] ? { user: { id: res['userId'] } } : {}),
+        ...(res['storyId'] ? { id: res['storyId'] } : {})
       };
+
       this.storiesService.findAll(
         0,
         50,

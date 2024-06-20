@@ -121,7 +121,7 @@ export class ProfilePage implements OnInit {
     Share.share({
       title: 'Scopri il mio profilo',
       text: 'Scopri il mio profilo',
-      url: 'https://easydance.app/profile/' + this.user?.id,
+      url: 'https://share.easydance.app/p/' + this.user?.id,
       dialogTitle: 'Condividi il tuo profilo con i tuoi amici',
     });
   }

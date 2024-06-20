@@ -18,6 +18,7 @@ export interface PatchPartyParticipationRequestDto {
     deletedBy?: string | null;
     pr?: string | null;
     participants?: number | null;
+    confirmed: number;
     party?: PatchPartyParticipationRequestDtoParty | null;
 }
 

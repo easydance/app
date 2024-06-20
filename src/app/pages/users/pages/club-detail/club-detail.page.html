@@ -96,7 +96,9 @@
 
 		<!-- LOCALI CONTACTS -->
 		<div class="paragraph mt-12 w-full">
-			<div class="title">{{'APP.CLUB_DETAIL.CONTACTS' | translate}}</div>
+			<div class="title">
+				{{'APP.CLUB_DETAIL.CONTACTS' | translate}}
+			</div>
 			<div class="description flex w-full mt-1">
 				<div class="flex-1">
 					<div *ngIf="club?.email"
@@ -131,6 +133,27 @@
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<!-- EVENT MAP -->
+		<div class="mt-12 mb-4 flex space-between map-title">
+			<div class="title">DOVE</div>
+			<div (click)="navigateToParty()"
+				class="address">
+				{{club?.address?.street}}, {{club?.address?.streetNumber}}
+			</div>
+		</div>
+		<div *ngIf="center && club?.address?.lat && club?.address?.lng"
+			style="border-radius: 1rem; overflow: hidden;">
+			<google-map [options]="options"
+				[center]="center"
+				[zoom]="16"
+				[height]="250"
+				[width]="'100%'"
+				(mapClick)="navigateToParty()">
+				<map-marker [position]="center"
+					(mapClick)="navigateToParty()"></map-marker>
+			</google-map>
 		</div>
 
 		<!-- TAGS -->

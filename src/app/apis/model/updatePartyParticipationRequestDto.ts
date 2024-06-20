@@ -18,6 +18,7 @@ export interface UpdatePartyParticipationRequestDto {
     deletedBy?: string | null;
     pr: string;
     participants?: number;
+    confirmed: number;
     party: CreatePartyParticipationRequestDtoParty;
 }
 
