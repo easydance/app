@@ -2,7 +2,8 @@
 	<swiper-container #storiesSwiper
 		[attr.effect]="effect"
 		id="stories"
-		pagination="false">
+		pagination="false"
+		speed="15000">
 		<swiper-slide *ngFor="let el of usersStories">
 			<story [filter]="getFilter(el)"></story>
 		</swiper-slide>
