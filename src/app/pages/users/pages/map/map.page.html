@@ -78,11 +78,14 @@
 		</map-marker-clusterer>
 
 		<map-marker-clusterer [minimumClusterSize]="2"
-			[options]="clusterOptions">
+			[options]="clusterOptions"
+			(clusterClick)="showClubs($event)">
 			<map-marker *ngFor="let club of clubs"
 				[position]="{ lat: club.address.lat || 0, lng: club.address.lng || 0}"
 				[icon]="markerIcon"
-				[options]="{  }"
+				[options]="{
+					title: ''+club.id
+				   }"
 				(mapClick)="showClub(club)"></map-marker>
 		</map-marker-clusterer>
 	</google-map>
@@ -253,5 +256,30 @@
 				</div>
 			</div>
 		</ion-content>
+	</ng-template>
+</ion-modal>
+
+
+<!-- CLUBS MODAL -->
+<ion-modal #clubsModal
+	[backdropDismiss]="true"
+	[initialBreakpoint]="0.35"
+	[breakpoints]="[0, 0.8]"
+	id="events-modal"
+	class="blur">
+	<ng-template>
+		<ion-fab-button (click)="clubsModal.dismiss(); selectedClubs = undefined;"
+			class="button m-3 mr-0-i w-9 h-9 absolute z-2000 right-4">
+			<ion-icon name="close"
+				style="font-size: 1rem;"></ion-icon>
+		</ion-fab-button>
+		<!-- MULTIPLE EVENTS -->
+		<div *ngIf="selectedClubs && selectedClubs.length > 1"
+			class="py-8 px-4">
+			<items-list [clubs]="selectedClubs"
+				[itemOptions]="itemOptions"
+				[footerOpts]="{hidden: true}"
+				[headerOpts]="{ title: 'Locali' }"></items-list>
+		</div>
 	</ng-template>
 </ion-modal>
