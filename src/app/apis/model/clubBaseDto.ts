@@ -34,6 +34,7 @@ export interface ClubBaseDto {
     facebook: string;
     instagram: string;
     whatsapp: string;
+    website: string;
     owner: UserBaseDto;
     address: AddressBaseDto;
     parties: Array<PartyBaseDto>;
