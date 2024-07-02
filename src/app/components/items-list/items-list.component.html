@@ -50,7 +50,9 @@
 				detail="false"
 				lines="none">
 				<ion-thumbnail slot="start">
-					<img [src]="club.profile.url">
+					<img [src]="club.profile?.url"
+						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'"
+						style="object-fit: cover;">
 				</ion-thumbnail>
 				<ion-label>
 					<div class="title">{{club?.name}}</div>

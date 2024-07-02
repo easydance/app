@@ -16,6 +16,7 @@ export interface ImportEventDto {
     to: string;
     title: string;
     description: string;
-    club: string;
+    club: object;
+    clubId: number | null;
 }
 
