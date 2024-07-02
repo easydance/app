@@ -197,7 +197,7 @@ export class MapPage implements OnInit, AfterViewChecked {
         }), undefined, undefined, 'address')
       );
       if (clubs.data.length > 0) {
-        this.clubs = Array.from(new Set([...this.clubs, ...clubs.data.filter(p => !this.parties.map(p1 => p1.id).includes(p.id))]));
+        this.clubs = Array.from(new Set([...this.clubs, ...clubs.data.filter(p => !this.clubs.map(p1 => p1.id).includes(p.id))]));
       }
     }
   }
