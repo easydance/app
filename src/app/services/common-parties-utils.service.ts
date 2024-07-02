@@ -21,6 +21,9 @@ const calcWeekend = () => {
 })
 export class CommonPartiesUtils {
 
+  private nearYou: string = this.translate.instant('APP.COMMON.NEAR_YOU');
+  private at: string = this.translate.instant('APP.COMMON.AT');
+
   constructor(
     private authManager: AuthManagerService,
     private navCtrl: NavController,
@@ -75,7 +78,7 @@ export class CommonPartiesUtils {
     Today: () => {
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: this.translate.instant('APP.COMMON_FILTERS.TODAY', { city: this.authManager.currentCity }),
+          title: this.translate.instant('APP.COMMON_FILTERS.TODAY', { city: this.cityLabel() }),
           header: {
             title: this.translate.instant('APP.COMMON_FILTERS.TODAY_TITLE'),
             subtitle: this.translate.instant('APP.COMMON_FILTERS.TODAY_SUBTITLE')
@@ -107,7 +110,7 @@ export class CommonPartiesUtils {
     Weekend: () => {
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: this.translate.instant('APP.COMMON_FILTERS.WEEKEND', { city: this.authManager.currentCity }),
+          title: this.translate.instant('APP.COMMON_FILTERS.WEEKEND', { city: this.cityLabel() }),
           header: {
             title: this.translate.instant('APP.COMMON_FILTERS.WEEKEND_TITLE'),
             subtitle: this.translate.instant('APP.COMMON_FILTERS.WEEKEND_SUBTITLE')
@@ -140,7 +143,7 @@ export class CommonPartiesUtils {
     ForYou: () => {
       this.navCtrl.navigateForward('/events-list', {
         queryParams: {
-          title: this.translate.instant('APP.COMMON_FILTERS.FOR_YOU', { city: this.authManager.currentCity }),
+          title: this.translate.instant('APP.COMMON_FILTERS.FOR_YOU', { city: this.cityLabel() }),
           header: {
             title: this.translate.instant('APP.COMMON_FILTERS.FOR_YOU_TITLE'),
             subtitle: this.translate.instant('APP.COMMON_FILTERS.FOR_YOU_SUBTITLE')
@@ -153,4 +156,8 @@ export class CommonPartiesUtils {
       });
     }
   };
+
+  private cityLabel() {
+    return this.authManager.currentCity ? [this.at, this.authManager.currentCity].join(' ') : this.nearYou;
+  }
 }
