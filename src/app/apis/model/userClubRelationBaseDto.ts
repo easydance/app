@@ -24,5 +24,17 @@ export interface UserClubRelationBaseDto {
     deletedBy?: string | null;
     club: ClubBaseDto;
     user: UserBaseDto;
+    role: UserClubRelationBaseDto.RoleEnum;
 }
+export namespace UserClubRelationBaseDto {
+    export type RoleEnum = 'CLUB_OWNER' | 'STAFF_INGRESS' | 'STAFF_STEWARD' | 'STAFF_WAITER' | 'INHERIT_USER';
+    export const RoleEnum = {
+        ClubOwner: 'CLUB_OWNER' as RoleEnum,
+        StaffIngress: 'STAFF_INGRESS' as RoleEnum,
+        StaffSteward: 'STAFF_STEWARD' as RoleEnum,
+        StaffWaiter: 'STAFF_WAITER' as RoleEnum,
+        InheritUser: 'INHERIT_USER' as RoleEnum
+    };
+}
+
 

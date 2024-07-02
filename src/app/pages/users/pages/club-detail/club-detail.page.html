@@ -94,25 +94,13 @@
 			</div>
 		</div>
 
-		<!-- LOCALI CONTACTS -->
+		<!-- LOCALI SOCIALS -->
 		<div class="paragraph mt-12 w-full">
 			<div class="title">
-				{{'APP.CLUB_DETAIL.CONTACTS' | translate}}
+				{{'APP.CLUB_DETAIL.SOCIAL' | translate}}
 			</div>
 			<div class="description flex w-full mt-1">
 				<div class="flex-1">
-					<div *ngIf="club?.email"
-						(click)="openOnBrowser('mailto:'+club?.email)"
-						class="mt-1">
-						<ion-icon name="mail"></ion-icon>
-						{{club?.email}}
-					</div>
-					<div *ngIf="club?.phone"
-						(click)="openOnBrowser('tel:'+club?.phone)"
-						class="mt-1">
-						<ion-icon name="phone-portrait"></ion-icon>
-						{{club?.phone}}
-					</div>
 					<div *ngIf="club?.socials?.['instagram']"
 						(click)="openOnBrowser(club?.socials?.['instagram']?.['link'] + '')"
 						class="mt-1">
@@ -130,6 +118,47 @@
 						class="mt-1">
 						<ion-icon name="logo-twitter"></ion-icon>
 						{{club?.socials?.['twitter']?.['username']}}
+					</div>
+					<div *ngIf="club?.socials?.['tiktok']"
+						(click)="openOnBrowser(club?.socials?.['tiktok']?.['link'] + '')"
+						class="mt-1">
+						<ion-icon name="logo-tiktok"></ion-icon>
+						{{club?.socials?.['tiktok']?.['username']}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- LOCALI CONTACTS -->
+		<div class="paragraph mt-12 w-full">
+			<div class="title">
+				{{'APP.CLUB_DETAIL.CONTACTS' | translate}}
+			</div>
+			<div class="description flex w-full mt-1">
+				<div class="flex-1">
+					<div *ngIf="club?.email"
+						(click)="openOnBrowser('mailto:'+club?.email)"
+						class="mt-1">
+						<ion-icon name="mail"></ion-icon>
+						{{club?.email}}
+					</div>
+					<div *ngIf="club?.website"
+						(click)="openOnBrowser(club?.website + '')"
+						class="mt-1">
+						<ion-icon name="globe-outline"></ion-icon>
+						{{club?.website}}
+					</div>
+					<div *ngIf="club?.phone"
+						(click)="openOnBrowser('tel:'+club?.phone)"
+						class="mt-1">
+						<ion-icon name="call"></ion-icon>
+						{{club?.phone}}
+					</div>
+					<div *ngIf="club?.whatsapp"
+						(click)="openOnBrowser('https://wa.me/'+club?.whatsapp)"
+						class="mt-1">
+						<ion-icon name="logo-whatsapp"></ion-icon>
+						{{club?.whatsapp}}
 					</div>
 				</div>
 			</div>

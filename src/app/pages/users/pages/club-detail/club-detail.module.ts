@@ -9,6 +9,7 @@ import { ClubDetailPageRoutingModule } from './club-detail-routing.module';
 import { ClubDetailPage } from './club-detail.page';
 import { UiModule } from 'src/app/components/ui.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ClubDetailPageRoutingModule,
     UiModule,
-    TranslateModule
+    TranslateModule,
+    GoogleMapsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ClubDetailPage]
