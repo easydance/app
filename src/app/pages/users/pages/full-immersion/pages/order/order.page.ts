@@ -15,6 +15,14 @@ export class OrderPage implements OnInit {
   public cart?: Cart<CurrentPartyProduct>;
   public currentDetail: number | undefined = undefined;
 
+  public filteredProducts?: CurrentParty['products'];
+  public filters?: string[];
+  public selectFilters: string[] = [];
+
+  public get categories() {
+    return [...new Set(this.party?.products.map(p => p.category?.name).filter(x => x))].sort();
+  }
+
   constructor(
     private navCtrl: NavController,
     private readonly fullImmersionService: FullImmersionService
@@ -27,6 +35,7 @@ export class OrderPage implements OnInit {
     this.table = this.fullImmersionService.selectedTable;
     this.cart = this.fullImmersionService.cart;
     this.party = this.fullImmersionService.currentParty;
+    this.filteredProducts = this.party?.products;
   }
 
   next() {
@@ -43,5 +52,23 @@ export class OrderPage implements OnInit {
       return;
     }
     this.currentDetail = product.id;
+  }
+
+  filterProduct(filters?: string[]) {
+    if (!filters || filters.length == 0) {
+      this.filteredProducts = this.party?.products;
+      return;
+    }
+    this.filteredProducts = this.party?.products.filter(p => filters?.includes(p.category?.name));
+  }
+
+  toggleFilter(filter: string) {
+    // if (this.selectFilters.includes(filter)) {
+    //   this.selectFilters = this.selectFilters.filter(s => s != filter);
+    // } else {
+    //   this.selectFilters.push(filter);
+    // }
+    this.selectFilters = filter ? [filter] : [];
+    this.filterProduct(this.selectFilters);
   }
 }

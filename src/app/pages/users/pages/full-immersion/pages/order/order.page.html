@@ -14,6 +14,7 @@
 			</ion-title>
 		</ion-toolbar>
 	</ion-header>
+
 	<div id="list"
 		class="px-4 mt-18 pb-17">
 		<div class="flex space-between">
@@ -36,18 +37,47 @@
 				</div>
 			</div>
 		</div>
+		<div class="filters mt-4">
+			<ion-button [fill]="selectFilters.length ? 'solid' : 'outline'"
+				[color]="selectFilters.length ? 'dark' : 'light'"
+				(click)="selectFilters = []; filterProduct(selectFilters);"
+				size="small">
+				ALL
+			</ion-button>
+			<ion-button *ngFor="let c of categories"
+				[fill]="!selectFilters.includes(c) ? 'solid' : 'outline'"
+				[color]="!selectFilters.includes(c) ? 'dark' : 'light'"
+				(click)="toggleFilter(c)"
+				size="small">
+				{{c}}
+			</ion-button>
+		</div>
 		<div id="products"
 			class="mt-5 mb-20">
-			<div *ngFor="let product of party?.products"
+			<div *ngFor="let product of filteredProducts"
 				class="w-full">
 				<div [ngClass]="{ active: cart?.getQty(product) || 0 > 0 }"
 					class="product flex-wrap">
-					<div style="width: 60%;">
+					<div>
 						<div>{{product.name}}</div>
+						<div class="category">
+							<!-- {{(product.price / 100) | currency:'€'}} -->
+							{{product.category?.name}}
+						</div>
+					</div>
+
+					<div *ngIf="true || currentDetail == product.id"
+						class="break my-2">
+						<small>
+							{{product.description}}
+						</small>
+					</div>
+					<div class="flex-wrap">
 						<div class="price mt-1">
 							{{(product.price / 100) | currency:'€'}}
 						</div>
 					</div>
+
 					<div>
 						<div class="flex align-center">
 							<ion-button *ngIf="cart?.getQty(product) || 0 > 0"
@@ -72,14 +102,7 @@
 							</ion-button>
 						</div>
 					</div>
-
-					<div *ngIf="currentDetail == product.id"
-						class="break my-2">
-						<small>
-							{{product.description}}
-						</small>
-					</div>
-					<div *ngIf="product.description"
+					<!-- <div *ngIf="product.description"
 						class="break flex align-center">
 						<div (click)="selectDetail(product)"
 							class="more-button flex align-center gap-1">
@@ -87,7 +110,7 @@
 								{{('APP.ORDER.' + (currentDetail == product.id ? 'LESS' : 'MORE') )| translate}}
 							</small>
 						</div>
-					</div>
+					</div> -->
 
 				</div>
 			</div>
