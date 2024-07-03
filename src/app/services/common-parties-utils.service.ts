@@ -21,9 +21,6 @@ const calcWeekend = () => {
 })
 export class CommonPartiesUtils {
 
-  private nearYou: string = this.translate.instant('APP.COMMON.NEAR_YOU');
-  private at: string = this.translate.instant('APP.COMMON.AT');
-
   constructor(
     private authManager: AuthManagerService,
     private navCtrl: NavController,
@@ -158,6 +155,6 @@ export class CommonPartiesUtils {
   };
 
   private cityLabel() {
-    return this.authManager.currentCity ? [this.at, this.authManager.currentCity].join(' ') : this.nearYou;
+    return this.authManager.currentCity ? [this.translate.instant('APP.COMMON.AT'), this.authManager.currentCity].join(' ') : this.translate.instant('APP.COMMON.NEAR_YOU');
   }
 }

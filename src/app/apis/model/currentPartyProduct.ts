@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { ProductCategoryBaseDto } from './productCategoryBaseDto';
 
 
 export interface CurrentPartyProduct { 
@@ -17,5 +18,6 @@ export interface CurrentPartyProduct {
     description: string;
     price: number;
     qty: number;
+    category: ProductCategoryBaseDto;
 }
 
