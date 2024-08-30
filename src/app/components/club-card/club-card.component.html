@@ -1,0 +1,67 @@
+<div [ngStyle]="{ height: options.height || 'auto' }"
+	[routerLink]="'/club-detail/' + club?.id"
+	class="square">
+	<div class="content">
+		<ion-card [button]="button"
+			[ngStyle]="{ backgroundImage: 'url('+ club?.covers?.[0]?.url +')' }"
+			class="easycard">
+			<div class="image-header relative">
+				<ion-skeleton-text *ngIf="!club?.covers"
+					[animated]="true"
+					style="height: 100%;"></ion-skeleton-text>
+				<swiper-container *ngIf="club?.covers || club?.profile?.url"
+					pagination="false"
+					slides-per-view="1"
+					space-between="0"
+					autoplay-delay="2000"
+					speed="1000"
+					autoplay-disable-on-interaction="false"
+					loop="true">
+					<swiper-slide *ngFor="let img of covers"
+						[ngStyle]="{ backgroundImage: 'linear-gradient(179deg, rgba(24, 24, 24, 0) 0%, rgba(24, 24, 24, 1) 100%), url(' + img?.url + ')'}">
+
+					</swiper-slide>
+				</swiper-container>
+				<div class="flex align-center space-between absolute w-full px-4"
+					style="bottom: 12px; z-index: 1;">
+					<div class="info-club">
+						<div class="title">{{club?.name}}</div>
+						<div class="location mt-3">
+							{{club?.address?.formattedAddress}}
+						</div>
+					</div>
+					<div>
+						<ion-avatar *ngIf="club?.profile">
+							<img [src]="club?.profile?.url"
+								style="object-fit: cover;"
+								onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
+						</ion-avatar>
+					</div>
+				</div>
+			</div>
+			<!-- <div *ngIf="!options.hideHeader"
+				class="header">
+				<div>
+					<ion-chip class="blured">
+						<ion-icon *ngIf="distance"
+							color="light"
+							name="location"></ion-icon>
+						<ion-label>
+							{{distance !== '-' ? distance.toFixed(1) : distance}} km
+						</ion-label>
+					</ion-chip>
+				</div>
+			</div>
+			<div [ngClass]="{ mergeWithBg: !!options.mergeWithBg }"
+				class="footer">
+				<div>
+					<div>
+						<div class="info">
+							<div class="title">{{club?.name}}</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</ion-card>
+	</div>
+</div>

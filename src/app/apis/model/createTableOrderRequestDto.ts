@@ -15,5 +15,6 @@ import { CreateTableOrderItemDto } from './createTableOrderItemDto';
 export interface CreateTableOrderRequestDto { 
     rows: Array<CreateTableOrderItemDto>;
     table: number;
+    note?: string;
 }
 

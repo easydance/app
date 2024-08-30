@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PartyBaseDto } from 'src/app/apis';
+import { ClubBaseDto, PartyBaseDto } from 'src/app/apis';
 
 @Component({
   selector: 'easy-card-list',
@@ -10,10 +10,12 @@ export class CardListComponent implements OnInit {
 
   @Input() title: string = '';
   @Input() rightText: string = '';
-  @Input() parties: PartyBaseDto[] = [];
+  @Input() parties?: PartyBaseDto[];
+  @Input() clubs?: ClubBaseDto[];
 
   @Output() rightButton: EventEmitter<void> = new EventEmitter();
   @Output() partyClick: EventEmitter<PartyBaseDto> = new EventEmitter();
+  @Output() clubClick: EventEmitter<ClubBaseDto> = new EventEmitter();
 
   constructor() { }
 

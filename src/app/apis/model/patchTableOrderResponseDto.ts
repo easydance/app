@@ -28,6 +28,7 @@ export interface PatchTableOrderResponseDto {
     user: UserBaseDto;
     rows: Array<TableOrderRowBaseDto>;
     status: PatchTableOrderResponseDto.StatusEnum;
+    note?: string;
 }
 export namespace PatchTableOrderResponseDto {
     export type StatusEnum = 'COMPLETED' | 'IN_PROGRESS' | 'CREATED' | 'PROCESSED' | 'CANCELED' | 'DELIVERED';
