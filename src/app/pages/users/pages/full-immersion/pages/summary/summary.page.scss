@@ -135,4 +135,5 @@ ion-content {
   position: fixed;
   width: 100%;
   bottom: calc(80px + var(--ion-safe-area-bottom));
+  z-index: 10001;
 }

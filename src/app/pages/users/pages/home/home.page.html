@@ -20,13 +20,13 @@
 			(userClick)="handleStories($event)"></stories-widget>
 	</div>
 	<div>
-		<div [innerHTML]="city ? ('APP.HOME.TITLE' | translate:({ city })) : ('APP.HOME.TITLE_ALT' | translate)"
+		<div [innerHTML]="city ? ('APP.HOME.TITLE_CLUB' | translate:({ city })) : ('APP.HOME.TITLE_CLUB_ALT' | translate)"
 			class="title-big my-4 mb-8">
 		</div>
-		<div *ngIf="parties && parties.length === 0">
+		<div *ngIf="topClubs && topClubs.length === 0">
 			<easy-thats-all></easy-thats-all>
 		</div>
-		<ng-container *ngIf="!parties">
+		<ng-container *ngIf="!topClubs">
 			<div id="skeleton">
 				<div *ngFor="let number of [0,1,2]">
 					<ion-skeleton-text animated="true"
@@ -37,13 +37,13 @@
 			</div>
 		</ng-container>
 
-		<ng-container *ngIf="parties?.length || 0 > 0">
+		<ng-container *ngIf="topClubs?.length || 0 > 0">
 			<div>
-				<easy-card-list *ngIf="parties"
-					[parties]="parties"
+				<easy-card-list *ngIf="topClubs"
+					[clubs]="topClubs"
 					(partyClick)="goToEvent($event)"></easy-card-list>
 			</div>
-			<div *ngIf="parties"
+			<!-- <div *ngIf="topClubs"
 				class="mt-16">
 				<div class="home-title ion-text-left mb-1">
 					{{'APP.HOME.LAST_CHANCE' | translate}}
@@ -51,11 +51,11 @@
 				<div class="home-subtitle mb-4">
 					{{'APP.HOME.LAST_CHANCE_SUB' | translate}}
 				</div>
-				<easy-card-slider [parties]="parties"
+				<easy-card-slider [clubs]="topClubs"
 					[rightText]="'APP.SHOW_ALL' | translate"
 					(rightButton)="moreEvents()"
-					(partyClick)="goToEvent($event)"></easy-card-slider>
-			</div>
+					(clubClick)="goToClub($event)"></easy-card-slider>
+			</div> -->
 		</ng-container>
 		<div *ngIf="clubs"
 			class="mt-16">
