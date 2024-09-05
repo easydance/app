@@ -54,6 +54,12 @@
 		</div>
 		<div class="mt-8 pt-8"
 			style="border-top: 1px solid #5C5C5C"></div>
+		<ion-item class="mb-8">
+			<ion-textarea class="pl-4" [(ngModel)]="note"
+				[label]="'APP.ORDER_SUMMARY.NOTE' | translate"
+				[labelPlacement]="'floating'"
+				[rows]="5"></ion-textarea>
+		</ion-item>
 		<div class="flex space-between mb-24">
 			<div class="flex-1">
 				<div class="total-label">TOTALE</div>
@@ -67,10 +73,11 @@
 		</div>
 	</div>
 
-	<div class="ion-text-center"
+	<div *ngIf="showOrderButton"
+		class="ion-text-center"
 		id="order-button">
-		<ion-button [disabled]="(cart?.totalQty || 0) === 0 || (cart?.total || 0) < (table?.minimumBill || 0)"
-			(click)="next()"
+		<ion-button [disabled]="((cart?.totalQty || 0) === 0 || (cart?.total || 0) < (table?.minimumBill || 0)) || forceDisabled"
+			(click)="forceDisabled = true; next()"
 			class="mx-4"
 			size="lg"
 			shape="round"

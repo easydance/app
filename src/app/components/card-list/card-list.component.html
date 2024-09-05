@@ -10,4 +10,7 @@
 	<party-card *ngFor="let party of parties"
 		[party]="party"
 		(click)="partyClick.emit(party)"></party-card>
+	<club-card *ngFor="let club of clubs"
+		[club]="club"
+		(click)="clubClick.emit(club)"></club-card>
 </div>

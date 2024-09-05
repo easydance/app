@@ -28,6 +28,7 @@ export interface CreateTableOrderResponseDto {
     user: UserBaseDto;
     rows: Array<TableOrderRowBaseDto>;
     status: CreateTableOrderResponseDto.StatusEnum;
+    note?: string;
 }
 export namespace CreateTableOrderResponseDto {
     export type StatusEnum = 'COMPLETED' | 'IN_PROGRESS' | 'CREATED' | 'PROCESSED' | 'CANCELED' | 'DELIVERED';

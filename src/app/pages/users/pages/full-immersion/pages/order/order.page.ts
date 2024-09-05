@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CurrentParty, CurrentPartyProduct, CurrentPartyTable, ProductBaseDto } from 'src/app/apis';
 import { Cart, FullImmersionService } from 'src/app/pages/users/pages/full-immersion/services/full-immersion.service';
+import { Keyboard } from "@capacitor/keyboard";
 
 @Component({
   selector: 'app-order',
@@ -9,6 +10,8 @@ import { Cart, FullImmersionService } from 'src/app/pages/users/pages/full-immer
   styleUrls: ['./order.page.scss'],
 })
 export class OrderPage implements OnInit {
+
+  public searchTerm: string = '';
 
   public table?: CurrentPartyTable;
   public party?: CurrentParty;
@@ -19,14 +22,27 @@ export class OrderPage implements OnInit {
   public filters?: string[];
   public selectFilters: string[] = [];
 
+  public showOrderButton: boolean = true;
+
   public get categories() {
     return [...new Set(this.party?.products.map(p => p.category?.name).filter(x => x))].sort();
   }
 
   constructor(
     private navCtrl: NavController,
-    private readonly fullImmersionService: FullImmersionService
-  ) { }
+    private readonly fullImmersionService: FullImmersionService,
+    private readonly changeDetector: ChangeDetectorRef
+  ) {
+
+    Keyboard.addListener('keyboardWillShow', () => {
+      this.showOrderButton = false;
+      this.changeDetector.detectChanges();
+    });
+    Keyboard.addListener('keyboardDidHide', () => {
+      this.showOrderButton = true;
+      this.changeDetector.detectChanges();
+    });
+  }
 
   ngOnInit() {
   }
@@ -55,11 +71,12 @@ export class OrderPage implements OnInit {
   }
 
   filterProduct(filters?: string[]) {
-    if (!filters || filters.length == 0) {
-      this.filteredProducts = this.party?.products;
-      return;
-    }
-    this.filteredProducts = this.party?.products.filter(p => filters?.includes(p.category?.name));
+    // if (!filters || filters.length == 0) {
+    //   this.filteredProducts = this.party?.products;
+    //   return;
+    // }
+    const filtersSearch = filters && filters.length ? filters : this.party?.products.map(p => p.category?.name) || [];
+    this.filteredProducts = this.party?.products.filter(p => filtersSearch.includes(p.category?.name) && p.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
   }
 
   toggleFilter(filter: string) {

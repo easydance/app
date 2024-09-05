@@ -19,13 +19,14 @@ import { FollowerModalComponent } from 'src/app/components/follower-modal/follow
 import { ImageFallbackPipe } from 'src/app/pipes/image-fallback.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { BypassTypingPipe } from 'src/app/pipes/bypass-typing.pipe';
+import { ClubCardComponent } from 'src/app/components/club-card/club-card.component';
 
 const components = [
   CardListComponent, CardSliderComponent, PartyCardComponent,
   ClubsGridComponent, TabsComponent, SuggestButtonsComponent,
   ThatsAllComponent, ItemsListComponent, UsersWidgetComponent,
   SearchHeaderComponent, EventsFiltersComponent, StoriesWidgetComponent,
-  FollowerModalComponent
+  FollowerModalComponent, ClubCardComponent
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AnimationController, ModalController, NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
-import { ClubBaseDto, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, StoryBaseDto, UserBaseDto, UserToClubFollowerService } from 'src/app/apis';
+import { ClubBaseDto, ClubService, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, StoryBaseDto, UserBaseDto, UserToClubFollowerService } from 'src/app/apis';
 import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
 import { StoriesWidgetComponent } from 'src/app/components/stories-widget/stories-widget.component';
 import { StoriesPage } from 'src/app/pages/users/pages/stories/stories.page';
@@ -23,14 +23,16 @@ export class HomePage implements OnInit {
     return this.authManager.isAuthenticated();
   }
 
-  public parties?: GetPartyResponseDto[];
+  // public parties?: GetPartyResponseDto[];
   public clubs?: (GetClubResponseDto & { parties: GetPartyResponseDto[]; })[];
+  public topClubs?: GetClubResponseDto[];
   public city?: string;
   public filter: any = {};
 
 
   constructor(
     private readonly partiesService: PartyService,
+    private readonly clubsService: ClubService,
     private readonly authManager: AuthManagerService,
     private readonly navCtrl: NavController,
     private readonly clubFollowerService: UserToClubFollowerService,
@@ -90,12 +92,16 @@ export class HomePage implements OnInit {
 
       this.filter = {
         ...this.filter,
-        ...this.partiesUtils.Filters().Tonight,
+        // ...this.partiesUtils.Filters().Tonight,
         ...this.partiesUtils.Filters().InCurrentPosition()
       };
 
-      this.partiesService.findAll(0, 5, JSON.stringify(this.filter), '{"distance":"ASC"}', undefined, 'club,address').subscribe(res => {
-        this.parties = res.data;
+      // this.partiesService.findAll(0, 5, JSON.stringify(this.filter), '{"distance":"ASC"}', undefined, 'club,address').subscribe(res => {
+      //   this.parties = res.data;
+      //   resolve(res.data);
+      // });
+      this.clubsService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'address').subscribe(res => {
+        this.topClubs = res.data;
         resolve(res.data);
       });
       if (this.authManager.user) {
@@ -138,6 +144,10 @@ export class HomePage implements OnInit {
 
   goToEvent(party: PartyBaseDto) {
     this.navCtrl.navigateForward('/event-detail/' + party.id);
+  }
+
+  goToClub(club: ClubBaseDto) {
+    this.navCtrl.navigateForward('/club-detail/' + club.id);
   }
 
   goToClubsEventsList(club: ClubBaseDto) {
