@@ -416,6 +416,8 @@ export * from './updateVisualizationRequestDto';
 export * from './updateVisualizationResponseDto';
 export * from './updateWarehouseRequestDto';
 export * from './updateWarehouseResponseDto';
+export * from './upsertUserToClubFollower';
+export * from './upsertUserToUserFollower';
 export * from './userBaseDto';
 export * from './userClubRelationBaseDto';
 export * from './userControllerCreateDefaultResponse';

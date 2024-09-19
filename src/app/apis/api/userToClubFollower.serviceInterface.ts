@@ -17,6 +17,7 @@ import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreateUserToClubFollowerRequestDto } from '../model/models';
 import { PatchUserToClubFollowerRequestDto } from '../model/models';
 import { UpdateUserToClubFollowerRequestDto } from '../model/models';
+import { UpsertUserToClubFollower } from '../model/models';
 import { UserToClubFollowerControllerCreateDefaultResponse } from '../model/models';
 import { UserToClubFollowerControllerFindAllDefaultResponse } from '../model/models';
 import { UserToClubFollowerControllerFindOneDefaultResponse } from '../model/models';
@@ -110,12 +111,12 @@ export interface UserToClubFollowerServiceInterface {
     /**
      * 
      * 
-     * @param updateUserToClubFollowerRequestDto 
+     * @param upsertUserToClubFollower 
      * @param fields 
      * @param includes 
      * @param deleted 
      */
-    set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerSetDefaultResponse>;
+    set(upsertUserToClubFollower: UpsertUserToClubFollower, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserToClubFollowerControllerSetDefaultResponse>;
 
     /**
      * 

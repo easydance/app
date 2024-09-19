@@ -27,6 +27,8 @@ import { PatchUserToClubFollowerRequestDto } from '../model/patchUserToClubFollo
 // @ts-ignore
 import { UpdateUserToClubFollowerRequestDto } from '../model/updateUserToClubFollowerRequestDto';
 // @ts-ignore
+import { UpsertUserToClubFollower } from '../model/upsertUserToClubFollower';
+// @ts-ignore
 import { UserToClubFollowerControllerCreateDefaultResponse } from '../model/userToClubFollowerControllerCreateDefaultResponse';
 // @ts-ignore
 import { UserToClubFollowerControllerFindAllDefaultResponse } from '../model/userToClubFollowerControllerFindAllDefaultResponse';
@@ -757,19 +759,19 @@ export class UserToClubFollowerService implements UserToClubFollowerServiceInter
     }
 
     /**
-     * @param updateUserToClubFollowerRequestDto 
+     * @param upsertUserToClubFollower 
      * @param fields 
      * @param includes 
      * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToClubFollowerControllerSetDefaultResponse>;
-    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToClubFollowerControllerSetDefaultResponse>>;
-    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToClubFollowerControllerSetDefaultResponse>>;
-    public set(updateUserToClubFollowerRequestDto: UpdateUserToClubFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (updateUserToClubFollowerRequestDto === null || updateUserToClubFollowerRequestDto === undefined) {
-            throw new Error('Required parameter updateUserToClubFollowerRequestDto was null or undefined when calling set.');
+    public set(upsertUserToClubFollower: UpsertUserToClubFollower, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToClubFollowerControllerSetDefaultResponse>;
+    public set(upsertUserToClubFollower: UpsertUserToClubFollower, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToClubFollowerControllerSetDefaultResponse>>;
+    public set(upsertUserToClubFollower: UpsertUserToClubFollower, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToClubFollowerControllerSetDefaultResponse>>;
+    public set(upsertUserToClubFollower: UpsertUserToClubFollower, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (upsertUserToClubFollower === null || upsertUserToClubFollower === undefined) {
+            throw new Error('Required parameter upsertUserToClubFollower was null or undefined when calling set.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -837,7 +839,7 @@ export class UserToClubFollowerService implements UserToClubFollowerServiceInter
         return this.httpClient.request<UserToClubFollowerControllerSetDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateUserToClubFollowerRequestDto,
+                body: upsertUserToClubFollower,
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
