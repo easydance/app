@@ -30,7 +30,7 @@
 			<div id="skeleton">
 				<div *ngFor="let number of [0,1,2]">
 					<ion-skeleton-text animated="true"
-						class="square mt-5">
+						class="mt-5" style="height: 240px;">
 						<div class="content"></div>
 					</ion-skeleton-text>
 				</div>
@@ -66,7 +66,10 @@
 					(more)="goToClubsEventsList(club)"></items-list>
 			</ng-container>
 		</div>
-		<div class="mt-20">
+		<ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+			<ion-infinite-scroll-content></ion-infinite-scroll-content>
+		</ion-infinite-scroll>
+		<div class="mt-20" *ngIf="finishLoad">
 			<events-filters></events-filters>
 		</div>
 	</div>

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { AnimationController, ModalController, NavController } from '@ionic/angular';
+import { AnimationController, InfiniteScrollCustomEvent, ModalController, NavController } from '@ionic/angular';
 import { DateTime } from 'luxon';
 import { ClubBaseDto, ClubService, GetClubResponseDto, GetPartyResponseDto, PartyBaseDto, PartyService, StoryBaseDto, UserBaseDto, UserToClubFollowerService } from 'src/app/apis';
 import { SearchHeaderComponent } from 'src/app/components/search-header/search-header.component';
@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
   public topClubs?: GetClubResponseDto[];
   public city?: string;
   public filter: any = {};
+  public finishLoad: boolean = false;
 
 
   constructor(
@@ -49,7 +50,7 @@ export class HomePage implements OnInit {
     });
 
     this.authManager.geocoding$.subscribe(res => {
-      this.searchEvents().then(() => {
+      this.searchClubs().then(() => {
         this.changeDetector.detectChanges();
       });
     });
@@ -87,7 +88,7 @@ export class HomePage implements OnInit {
     }, 5 * 60 * 1000);
   }
 
-  searchEvents() {
+  searchClubs() {
     return new Promise((resolve, reject) => {
 
       this.filter = {
@@ -100,7 +101,14 @@ export class HomePage implements OnInit {
       //   this.parties = res.data;
       //   resolve(res.data);
       // });
-      this.clubsService.findAll(0, 5, JSON.stringify(this.filter), undefined, undefined, 'address').subscribe(res => {
+      this.clubsService.findAll(
+        0,
+        20,
+        JSON.stringify(this.filter),
+        '{"distance":"ASC"}',
+        undefined,
+        'address'
+      ).subscribe(res => {
         this.topClubs = res.data;
         resolve(res.data);
       });
@@ -171,7 +179,8 @@ export class HomePage implements OnInit {
   }
 
   refresh($event: any) {
-    this.searchEvents().then(res => {
+    this.finishLoad = false;
+    this.searchClubs().then(res => {
       $event.target.complete();
     });
     this.storyWidget?.findStories({ createdAt: { $gte: DateTime.now().plus({ hours: -24 }).toISO() } });
@@ -265,4 +274,21 @@ export class HomePage implements OnInit {
 
   }
 
+  onIonInfinite(ev: any) {
+    const page = (this.topClubs?.length || 0) / 20;
+    this.clubsService.findAll(
+      Math.floor(page),
+      20,
+      JSON.stringify(this.filter),
+      '{"distance":"ASC"}',
+      undefined,
+      'address'
+    ).subscribe(res => {
+      this.topClubs?.push(...res.data);
+      if ((this.topClubs?.length || 0) >= res.totalCount) {
+        this.finishLoad = true;
+      }
+      ev.target.complete();
+    });
+  }
 }

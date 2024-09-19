@@ -1,6 +1,6 @@
 /**
  * 
- * Your api
+ * Easydance
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -28,19 +28,7 @@ export interface DefaultServiceInterface {
      * 
      * 
      */
-    appController(extraHttpRequestParams?: any): Observable<{}>;
-
-    /**
-     * 
-     * 
-     */
     get(extraHttpRequestParams?: any): Observable<{}>;
-
-    /**
-     * 
-     * 
-     */
-    getHello(extraHttpRequestParams?: any): Observable<{}>;
 
     /**
      * 
