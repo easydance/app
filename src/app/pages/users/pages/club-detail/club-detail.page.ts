@@ -130,21 +130,28 @@ export class ClubDetailPage implements OnInit {
 
   unfollowClub() {
     if (this.isFollowing?.id) {
-      this.clubFollowerService._delete(this.isFollowing.id).subscribe(res => {
+      this.clubFollowerService.set({ id: this.club?.id! }).subscribe(res => {
         this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
           if (this.club) this.club.followerCount = res.data.followerCount;
         });
         this.isFollowing = undefined;
       });
+      // this.clubFollowerService._delete(this.isFollowing.id).subscribe(res => {
+      //   this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
+      //     if (this.club) this.club.followerCount = res.data.followerCount;
+      //   });
+      //   this.isFollowing = undefined;
+      // });
     }
   }
 
   followClub() {
     if (this.authManager.isAuthenticated()) {
-      this.clubFollowerService.create({
-        club: { id: this.club?.id } as any,
-        user: { id: this.authManager.user?.id } as any,
-      }).subscribe(res => {
+      // this.clubFollowerService.create({
+      //   club: { id: this.club?.id } as any,
+      //   user: { id: this.authManager.user?.id } as any,
+      // })
+      this.clubFollowerService.set({ id: this.club?.id! }).subscribe(res => {
         this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
           if (this.club) this.club.followerCount = res.data.followerCount;
         });
