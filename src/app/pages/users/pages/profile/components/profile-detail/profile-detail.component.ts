@@ -53,12 +53,25 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
         }
       })));
       this.isFollowing = result.data[0];
-      this.clubFollowerService.findAll(0, 8, JSON.stringify({ user: { id: this.user?.id || 'NO-ID' } }), undefined, undefined, 'club.address')
-        .subscribe(res => {
-          this.clubsService.findAll(0, 12, JSON.stringify({ id: { $in: res.data.map(d => d.club.id) } }), undefined, undefined, 'address').subscribe(clubsData => {
-            this.clubs = clubsData.data;
-          });
+      this.clubFollowerService.findAll(
+        0,
+        8,
+        JSON.stringify({ user: { id: this.user?.id || 'NO-ID' } }),
+        undefined,
+        undefined,
+        'club.address'
+      ).subscribe(res => {
+        this.clubsService.findAll(
+          0,
+          12,
+          JSON.stringify({ id: { $in: res.data.filter(x => x.club).map(d => d.club.id) } }),
+          undefined,
+          undefined,
+          'address'
+        ).subscribe(clubsData => {
+          this.clubs = clubsData.data;
         });
+      });
 
       const user = changes['user'].currentValue || this.authManager.user;
       // this.refreshSocials(user);
@@ -71,21 +84,27 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
 
   unfollow() {
     if (this.isFollowing?.id) {
-      this.userFollowerService._delete(this.isFollowing?.id).subscribe(res => {
-        // this.refreshSocials(this.user!);
-        this.isFollowing = undefined;
+      this.userFollowerService.set({ id: this.user?.id } as any).subscribe(res => {
+        this.isFollowing = res.data || undefined;
       });
+      // this.userFollowerService._delete(this.isFollowing?.id).subscribe(res => {
+      //   // this.refreshSocials(this.user!);
+      //   this.isFollowing = undefined;
+      // });
     }
   }
 
   follow() {
-    this.userFollowerService.create({
-      followed: { id: this.user?.id } as any,
-      follower: { id: this.authManager.user?.id } as any,
-    }).subscribe(res => {
-      // this.refreshSocials(this.user!);
-      this.isFollowing = res.data;
+    this.userFollowerService.set({ id: this.user?.id } as any).subscribe(res => {
+      this.isFollowing = res.data || undefined;
     });
+    // this.userFollowerService.create({
+    //   followed: { id: this.user?.id } as any,
+    //   follower: { id: this.authManager.user?.id } as any,
+    // }).subscribe(res => {
+    //   // this.refreshSocials(this.user!);
+    //   this.isFollowing = res.data;
+    // });
   }
 
   refreshSocials(user: { id?: number; }) {

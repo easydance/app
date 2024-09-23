@@ -493,6 +493,8 @@ model/updateVisualizationRequestDto.ts
 model/updateVisualizationResponseDto.ts
 model/updateWarehouseRequestDto.ts
 model/updateWarehouseResponseDto.ts
+model/upsertUserToClubFollower.ts
+model/upsertUserToUserFollower.ts
 model/userBaseDto.ts
 model/userClubRelationBaseDto.ts
 model/userControllerCreateDefaultResponse.ts

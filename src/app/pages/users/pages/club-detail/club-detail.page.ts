@@ -69,6 +69,9 @@ export class ClubDetailPage implements OnInit {
       // if (this.club) this.webSocket.unsubscribe(`clubs/${this.club.id}/follow`);
       this.clubsService.findOne(id, undefined, 'address').subscribe(res => {
         this.club = res.data;
+        if (this.club?.whatsapp) {
+          this.club.whatsapp = this.club.whatsapp.replace(/ /gm, '');
+        }
         this.center = {
           lat: this.club?.address?.lat || 0,
           lng: this.club?.address?.lng || 0,

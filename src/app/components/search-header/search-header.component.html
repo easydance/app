@@ -3,7 +3,7 @@
 	class="ion-no-border">
 	<ion-toolbar>
 		<ion-searchbar [showClearButton]="'always'"
-			[debounce]="500"
+			[debounce]="700"
 			[placeholder]="'Cerca...'"
 			(ionInput)="onChange($event)"
 			(ionChange)="onChange($event)"
@@ -28,13 +28,6 @@
 			color="dark">
 			Luogo
 		</ion-button> -->
-		<ion-button [fill]="filterType != 'tags' ? undefined : 'outline'"
-			[color]="filterType != 'tags' ? 'dark' : 'light'"
-			(click)="filter('tags')"
-			xs
-			color="dark">
-			{{'APP.SEARCH_HEADER.TAGS' | translate}}
-		</ion-button>
 		<ion-button [fill]="filterType != 'clubs' ? undefined : 'outline'"
 			[color]="filterType != 'clubs' ? 'dark' : 'light'"
 			(click)="filter('clubs')"
@@ -56,6 +49,13 @@
 			xs
 			color="dark">
 			{{'APP.SEARCH_HEADER.USERS' | translate}}
+		</ion-button>
+		<ion-button [fill]="filterType != 'tags' ? undefined : 'outline'"
+			[color]="filterType != 'tags' ? 'dark' : 'light'"
+			(click)="filter('tags')"
+			xs
+			color="dark">
+			{{'APP.SEARCH_HEADER.TAGS' | translate}}
 		</ion-button>
 	</div>
 	<div>
@@ -106,9 +106,11 @@
 						onerror="src = 'assets/icons/guy-walk.svg'; style.objectFit = 'contain'">
 				</ion-avatar>
 				<ion-label>
-					<div class="title">{{user.email}}</div>
-					<div class="subtitle">
+					<div class="title">
 						{{user.firstName}} {{user.lastName}}
+					</div>
+					<div class="subtitle">
+						{{(user | bypassTyping)?.socials?.instagram ? '@' + (user | bypassTyping)?.socials?.instagram?.username : ''}}
 					</div>
 				</ion-label>
 			</ion-item>

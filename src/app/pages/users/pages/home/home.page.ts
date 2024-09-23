@@ -284,7 +284,14 @@ export class HomePage implements OnInit {
       undefined,
       'address'
     ).subscribe(res => {
-      this.topClubs?.push(...res.data);
+      if (this.topClubs) {
+        this.topClubs.push(...res.data);
+        this.topClubs = this.topClubs.filter((value, index, self) =>
+          index === self.findIndex((t) => (
+            t.id === value.id
+          ))
+        );
+      }
       if ((this.topClubs?.length || 0) >= res.totalCount) {
         this.finishLoad = true;
       }

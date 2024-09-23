@@ -17,6 +17,7 @@ import { AddressControllerCountDefaultResponse } from '../model/models';
 import { CreateUserToUserFollowerRequestDto } from '../model/models';
 import { PatchUserToUserFollowerRequestDto } from '../model/models';
 import { UpdateUserToUserFollowerRequestDto } from '../model/models';
+import { UpsertUserToUserFollower } from '../model/models';
 import { UserToUserFollowerControllerCreateDefaultResponse } from '../model/models';
 import { UserToUserFollowerControllerFindAllDefaultResponse } from '../model/models';
 import { UserToUserFollowerControllerFindOneDefaultResponse } from '../model/models';
@@ -110,12 +111,12 @@ export interface UserToUserFollowerServiceInterface {
     /**
      * 
      * 
-     * @param updateUserToUserFollowerRequestDto 
+     * @param upsertUserToUserFollower 
      * @param fields 
      * @param includes 
      * @param deleted 
      */
-    set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerSetDefaultResponse>;
+    set(upsertUserToUserFollower: UpsertUserToUserFollower, fields?: string, includes?: string, deleted?: string, extraHttpRequestParams?: any): Observable<UserToUserFollowerControllerSetDefaultResponse>;
 
     /**
      * 
