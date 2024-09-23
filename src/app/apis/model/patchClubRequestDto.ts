@@ -1,6 +1,6 @@
 /**
  * 
- * Your api
+ * Easydance
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -45,5 +45,6 @@ export interface PatchClubRequestDto {
     followerCount: number;
     rating: number;
     userReview: GetClubReviewResponseDto;
+    distance: number;
 }
 

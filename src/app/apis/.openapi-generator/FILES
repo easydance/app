@@ -52,8 +52,6 @@ api/tableCategory.service.ts
 api/tableCategory.serviceInterface.ts
 api/tableOrder.service.ts
 api/tableOrder.serviceInterface.ts
-api/tableOrderRow.service.ts
-api/tableOrderRow.serviceInterface.ts
 api/tablePartyRule.service.ts
 api/tablePartyRule.serviceInterface.ts
 api/tableReservation.service.ts
@@ -155,8 +153,6 @@ model/createTableCategoryResponseDto.ts
 model/createTableOrderItemDto.ts
 model/createTableOrderRequestDto.ts
 model/createTableOrderResponseDto.ts
-model/createTableOrderRowRequestDto.ts
-model/createTableOrderRowResponseDto.ts
 model/createTablePartyRuleRequestDto.ts
 model/createTablePartyRuleResponseDto.ts
 model/createTableRequestDto.ts
@@ -219,7 +215,6 @@ model/getStoryResponseDto.ts
 model/getSubscriptionResponseDto.ts
 model/getTableCategoryResponseDto.ts
 model/getTableOrderResponseDto.ts
-model/getTableOrderRowResponseDto.ts
 model/getTablePartyRuleResponseDto.ts
 model/getTableReservationResponseDto.ts
 model/getTableResponseDto.ts
@@ -311,8 +306,6 @@ model/patchTableCategoryRequestDto.ts
 model/patchTableCategoryResponseDto.ts
 model/patchTableOrderRequestDto.ts
 model/patchTableOrderResponseDto.ts
-model/patchTableOrderRowRequestDto.ts
-model/patchTableOrderRowResponseDto.ts
 model/patchTablePartyRuleRequestDto.ts
 model/patchTablePartyRuleResponseDto.ts
 model/patchTableRequestDto.ts
@@ -413,11 +406,6 @@ model/tableOrderControllerFindOneDefaultResponse.ts
 model/tableOrderControllerReplaceDefaultResponse.ts
 model/tableOrderControllerUpdateDefaultResponse.ts
 model/tableOrderRowBaseDto.ts
-model/tableOrderRowControllerCreateDefaultResponse.ts
-model/tableOrderRowControllerFindAllDefaultResponse.ts
-model/tableOrderRowControllerFindOneDefaultResponse.ts
-model/tableOrderRowControllerReplaceDefaultResponse.ts
-model/tableOrderRowControllerUpdateDefaultResponse.ts
 model/tablePartyRuleBaseDto.ts
 model/tablePartyRuleControllerCreateDefaultResponse.ts
 model/tablePartyRuleControllerFindAllDefaultResponse.ts
@@ -485,8 +473,6 @@ model/updateTableCategoryRequestDto.ts
 model/updateTableCategoryResponseDto.ts
 model/updateTableOrderRequestDto.ts
 model/updateTableOrderResponseDto.ts
-model/updateTableOrderRowRequestDto.ts
-model/updateTableOrderRowResponseDto.ts
 model/updateTablePartyRuleRequestDto.ts
 model/updateTablePartyRuleResponseDto.ts
 model/updateTableRequestDto.ts
@@ -507,6 +493,8 @@ model/updateVisualizationRequestDto.ts
 model/updateVisualizationResponseDto.ts
 model/updateWarehouseRequestDto.ts
 model/updateWarehouseResponseDto.ts
+model/upsertUserToClubFollower.ts
+model/upsertUserToUserFollower.ts
 model/userBaseDto.ts
 model/userClubRelationBaseDto.ts
 model/userControllerCreateDefaultResponse.ts

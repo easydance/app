@@ -69,6 +69,9 @@ export class ClubDetailPage implements OnInit {
       // if (this.club) this.webSocket.unsubscribe(`clubs/${this.club.id}/follow`);
       this.clubsService.findOne(id, undefined, 'address').subscribe(res => {
         this.club = res.data;
+        if (this.club?.whatsapp) {
+          this.club.whatsapp = this.club.whatsapp.replace(/ /gm, '');
+        }
         this.center = {
           lat: this.club?.address?.lat || 0,
           lng: this.club?.address?.lng || 0,
@@ -127,21 +130,28 @@ export class ClubDetailPage implements OnInit {
 
   unfollowClub() {
     if (this.isFollowing?.id) {
-      this.clubFollowerService._delete(this.isFollowing.id).subscribe(res => {
+      this.clubFollowerService.set({ id: this.club?.id! }).subscribe(res => {
         this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
           if (this.club) this.club.followerCount = res.data.followerCount;
         });
         this.isFollowing = undefined;
       });
+      // this.clubFollowerService._delete(this.isFollowing.id).subscribe(res => {
+      //   this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
+      //     if (this.club) this.club.followerCount = res.data.followerCount;
+      //   });
+      //   this.isFollowing = undefined;
+      // });
     }
   }
 
   followClub() {
     if (this.authManager.isAuthenticated()) {
-      this.clubFollowerService.create({
-        club: { id: this.club?.id } as any,
-        user: { id: this.authManager.user?.id } as any,
-      }).subscribe(res => {
+      // this.clubFollowerService.create({
+      //   club: { id: this.club?.id } as any,
+      //   user: { id: this.authManager.user?.id } as any,
+      // })
+      this.clubFollowerService.set({ id: this.club?.id! }).subscribe(res => {
         this.clubsService.findOne(this.club!.id, undefined, 'address').subscribe(res => {
           if (this.club) this.club.followerCount = res.data.followerCount;
         });

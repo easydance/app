@@ -64,6 +64,7 @@ export class ProfilePage implements OnInit {
 
     this.route.params.subscribe(async res => {
       if (this.user) this.webSocket.unsubscribe(`users/${this.user.id}/follow`);
+      this.user = undefined;
       if (!res['id']) {
         this.user = this.authManager.user;
         this.isMe = true;
@@ -85,8 +86,11 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.user = undefined;
     if (!this.route.snapshot.params['id']) {
-      this.authManager.me().subscribe(res => { });
+      this.authManager.me().subscribe(res => {
+        this.user = this.authManager.user;
+      });
     }
   }
 

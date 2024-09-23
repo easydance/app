@@ -1,6 +1,6 @@
 /**
  * 
- * Your api
+ * Easydance
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -26,6 +26,8 @@ import { CreateUserToUserFollowerRequestDto } from '../model/createUserToUserFol
 import { PatchUserToUserFollowerRequestDto } from '../model/patchUserToUserFollowerRequestDto';
 // @ts-ignore
 import { UpdateUserToUserFollowerRequestDto } from '../model/updateUserToUserFollowerRequestDto';
+// @ts-ignore
+import { UpsertUserToUserFollower } from '../model/upsertUserToUserFollower';
 // @ts-ignore
 import { UserToUserFollowerControllerCreateDefaultResponse } from '../model/userToUserFollowerControllerCreateDefaultResponse';
 // @ts-ignore
@@ -757,19 +759,19 @@ export class UserToUserFollowerService implements UserToUserFollowerServiceInter
     }
 
     /**
-     * @param updateUserToUserFollowerRequestDto 
+     * @param upsertUserToUserFollower 
      * @param fields 
      * @param includes 
      * @param deleted 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToUserFollowerControllerSetDefaultResponse>;
-    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToUserFollowerControllerSetDefaultResponse>>;
-    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToUserFollowerControllerSetDefaultResponse>>;
-    public set(updateUserToUserFollowerRequestDto: UpdateUserToUserFollowerRequestDto, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        if (updateUserToUserFollowerRequestDto === null || updateUserToUserFollowerRequestDto === undefined) {
-            throw new Error('Required parameter updateUserToUserFollowerRequestDto was null or undefined when calling set.');
+    public set(upsertUserToUserFollower: UpsertUserToUserFollower, fields?: string, includes?: string, deleted?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserToUserFollowerControllerSetDefaultResponse>;
+    public set(upsertUserToUserFollower: UpsertUserToUserFollower, fields?: string, includes?: string, deleted?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserToUserFollowerControllerSetDefaultResponse>>;
+    public set(upsertUserToUserFollower: UpsertUserToUserFollower, fields?: string, includes?: string, deleted?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserToUserFollowerControllerSetDefaultResponse>>;
+    public set(upsertUserToUserFollower: UpsertUserToUserFollower, fields?: string, includes?: string, deleted?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+        if (upsertUserToUserFollower === null || upsertUserToUserFollower === undefined) {
+            throw new Error('Required parameter upsertUserToUserFollower was null or undefined when calling set.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
@@ -837,7 +839,7 @@ export class UserToUserFollowerService implements UserToUserFollowerServiceInter
         return this.httpClient.request<UserToUserFollowerControllerSetDefaultResponse>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateUserToUserFollowerRequestDto,
+                body: upsertUserToUserFollower,
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
