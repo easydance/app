@@ -1,5 +1,6 @@
 ion-content.login {
-  --background: url(../../../assets/feedback-bkg.png) no-repeat top center / contain;
+  --background: url(../../../assets/feedback-bkg.png) no-repeat top center /
+    contain;
 }
 
 .modal-content {
@@ -13,6 +14,12 @@ ion-content.login {
   bottom: 0;
   // max-height: 70%;
   width: 100%;
+}
+
+.modal-content.max-height {
+  max-height: 70%;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .header {

@@ -9,6 +9,8 @@ import {
   SignInWithAppleOptions,
 } from '@capacitor-community/apple-sign-in';
 import { TranslateService } from '@ngx-translate/core';
+import { Keyboard } from '@capacitor/keyboard';
+
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,8 @@ export class LoginPage implements OnInit {
   public showPassword: boolean = false;
   public username: string = '';
   public password: string = '';
+
+  keyboardOpen: boolean = false;
 
   constructor(
     private readonly authManagerService: AuthManagerService,
@@ -38,6 +42,12 @@ export class LoginPage implements OnInit {
       this.navCtrl.navigateRoot('home');
       return;
     }
+    Keyboard.addListener('keyboardWillShow', () => {
+      this.keyboardOpen = true;
+    });
+    Keyboard.addListener('keyboardDidHide', () => {
+      this.keyboardOpen = false;
+    });
   }
 
 
