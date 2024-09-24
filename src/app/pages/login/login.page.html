@@ -20,7 +20,7 @@
 	<div class="header">
 		<img src="../../assets/easydance-nologo.svg">
 	</div>
-	<div class="modal-content">
+	<div class="modal-content" [ngClass]="{ 'max-height': keyboardOpen }">
 		<form #loginForm="ngForm">
 			<div class="label-lg mb-4">
 				{{'APP.LOGIN.TITLE' | translate}}

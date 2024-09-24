@@ -85,7 +85,7 @@ export class ProfileDetailComponent implements OnInit, OnChanges {
   unfollow() {
     if (this.isFollowing?.id) {
       this.userFollowerService.set({ id: this.user?.id } as any).subscribe(res => {
-        this.isFollowing = res.data || undefined;
+        this.isFollowing = undefined;
       });
       // this.userFollowerService._delete(this.isFollowing?.id).subscribe(res => {
       //   // this.refreshSocials(this.user!);
